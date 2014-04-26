@@ -10,4 +10,5 @@
 	<string name="cancel">取消</string>
 	<string name="title_waitting">请稍候</string>
 	<string name="title_progressbar">正在下载文件</string>
+	<string name="noNetTips">请您确认已开通手机上网功能，并在手机上设置正确的上网方式</string>
 </resources>
