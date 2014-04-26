@@ -72,7 +72,8 @@ public class LKHttpRequest {
 	
 	public void post(){
 //		this.client.addHeader("SOAPAction", "http://tempuri.org/"+TransferRequestTag.getRequestTagMap().get(this.getRequestDataMap().get(Constants.kMETHODNAME)));
-		this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getRequestDataMap().get(Constants.kMETHODNAME)), this.getHttpEntity(this), "text/xml; charset=utf-8", this.responseHandler);
+		Log.i("url--- ", TransferRequestTag.getRequestTagMap().get(this.getRequestDataMap().get(Constants.kMETHODNAME)));
+		this.client.post(ApplicationEnvironment.getInstance().getApplication(),"http://211.147.87.22:8092/posm/"+ TransferRequestTag.getRequestTagMap().get(this.getRequestDataMap().get(Constants.kMETHODNAME)), this.getHttpEntity(this), "text/xml; charset=utf-8", this.responseHandler);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -80,7 +81,7 @@ public class LKHttpRequest {
 		HashMap<String, Object> reqMap = request.getRequestDataMap();
 		
 		StringBuffer bodySB = new StringBuffer();
-		bodySB.append("<?xml version=\"1.0\" encoding=\"utf-8\"?><EPOSPROTOCOL>");
+		bodySB.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><EPOSPROTOCOL>");
 		bodySB.append(this.param2String((HashMap<String, Object>)reqMap.get(Constants.kPARAMNAME)));
 		bodySB.append("</EPOSPROTOCOL>");
 		
@@ -103,12 +104,11 @@ public class LKHttpRequest {
 		StringBuffer sb = new StringBuffer();
 		for	(String key : paramMap.keySet()){
 			Object obj = paramMap.get(key);
-			sb.append("<").append(key).append(">").append(this.hashMap2XML((HashMap<String, Object>)obj)).append("</").append(key).append(">");
-//			if (obj instanceof String){
-//				sb.append("<").append(key).append("><![CDATA[").append(obj).append("]]></").append(key).append(">");
-//			} else {
-//				sb.append("<").append(key).append(">").append(this.hashMap2XML((HashMap<String, Object>)obj)).append("</").append(key).append(">");
-//			}
+			if (obj instanceof String){
+				sb.append("<").append(key).append(">").append(obj).append("</").append(key).append(">");
+			} else {
+				sb.append("<").append(key).append(">").append(this.hashMap2XML((HashMap<String, Object>)obj)).append("</").append(key).append(">");
+			}
 		}
 		return sb.toString();
 	}

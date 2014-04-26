@@ -21,6 +21,8 @@ public class LoginActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		login();
 	}
 
 	@Override
@@ -28,7 +30,7 @@ public class LoginActivity extends BaseActivity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.login, menu);
 		
-		login();
+		
 		return true;
 	}
 
@@ -42,7 +44,7 @@ public class LoginActivity extends BaseActivity {
 	tempMap.put("TRANCODE", "199002");
 	tempMap.put("PHONENUMBER", "15900715775");
 	tempMap.put("PASSWORD", "ASdf1234");
-	tempMap.put("PCSIM", "PCSIM");
+	tempMap.put("PCSIM", "获取不到");
 	tempMap.put("PACKAGEMAC", "DAC120F8A425F9E4B42A2E24BCE7414A");
 	
 	map.put(Constants.kPARAMNAME, tempMap);
