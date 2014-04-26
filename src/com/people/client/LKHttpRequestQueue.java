@@ -33,7 +33,7 @@ public class LKHttpRequestQueue {
 	
 	public void executeQueue(String prompt, LKHttpRequestQueueDone queueDone){
 		if (!ApplicationEnvironment.getInstance().checkNetworkAvailable()){
-			BaseActivity.getTopActivity().showToast("�?�?�???��????????�?请�????????�?");
+			BaseActivity.getTopActivity().showToast("网络连接不可用，请稍候重试");
 			return;
 		}
 		
@@ -58,7 +58,7 @@ public class LKHttpRequestQueue {
 			this.completedTag += tag;
 			
 			if (completedTag == (int)Math.pow(2, this.requestList.size()) - 1) {
-				// ???updataFinishedTag�?�?
+				// 在updataFinishedTag清空
 				//requestList.clear();
 				this.queueDone.onComplete();
 			}

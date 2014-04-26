@@ -32,7 +32,7 @@ public class ParseResponseXML {
 		
 		try{
 			switch(reqType){
-			case TransferRequestTag.GETLOGININFOSERVICE:
+			case TransferRequestTag.Login:
 				return login();
 				
 			}			
