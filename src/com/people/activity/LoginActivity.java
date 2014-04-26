@@ -15,7 +15,7 @@ import com.people.client.LKHttpRequestQueue;
 import com.people.client.LKHttpRequestQueueDone;
 import com.people.client.TransferRequestTag;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

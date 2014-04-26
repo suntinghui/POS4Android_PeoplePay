@@ -103,11 +103,12 @@ public class LKHttpRequest {
 		StringBuffer sb = new StringBuffer();
 		for	(String key : paramMap.keySet()){
 			Object obj = paramMap.get(key);
-			if (obj instanceof String){
-				sb.append("<").append(key).append("><![CDATA[").append(obj).append("]]></").append(key).append(">");
-			} else {
-				sb.append("<").append(key).append(">").append(this.hashMap2XML((HashMap<String, Object>)obj)).append("</").append(key).append(">");
-			}
+			sb.append("<").append(key).append(">").append(this.hashMap2XML((HashMap<String, Object>)obj)).append("</").append(key).append(">");
+//			if (obj instanceof String){
+//				sb.append("<").append(key).append("><![CDATA[").append(obj).append("]]></").append(key).append(">");
+//			} else {
+//				sb.append("<").append(key).append(">").append(this.hashMap2XML((HashMap<String, Object>)obj)).append("</").append(key).append(">");
+//			}
 		}
 		return sb.toString();
 	}
