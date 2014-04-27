@@ -31,7 +31,6 @@ public abstract class LKAsyncHttpResponseHandler extends AsyncHttpResponseHandle
 	}
 
 	public void onSuccess(String content) {
-		content= "7719abddab705fdfa19060520335d0afed617d7297115a1e4fc03a7846446c6b6e55bfb8d401ebc10ee1105710f5a3434e5c3ed4be1f1fbcc617c90e17eb839e0c9feaa7b48d631cef72e656f85ce8c5b477419afdd3723ff6dea031f9bbbdfd57250b2afe11810d992255ca059422c08d413a746fe815e812544216cf60032d52e3f20a84400b97795b8d71812b569e48ac91c2ec67d94c264448beaa9e5babdf6940cc06991390535da877486bd3c8199cd685acda33a158cb2990972dfc1295097678a92e52e2836335d4b5bfe8dd";
 		Log.e("RESPONSE", content);
 		
 		String aesContent = null;
