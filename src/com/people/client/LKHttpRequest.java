@@ -7,6 +7,8 @@ import org.apache.http.HttpEntity;
 import org.apache.http.entity.StringEntity;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.people.util.AESUtil;
+import com.people.util.MD5Util;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -89,9 +91,17 @@ public class LKHttpRequest {
 		
 		Log.e("reqest body:", bodySB.toString());
 		
+		String AESValue = "";
+		try {
+			 AESValue = AESUtil.encryptString(bodySB.toString(), MD5Util.MD5Crypto(Constants.AESKEY));
+			 Log.e("REQUEST:", AESValue);
+		} catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		
 		HttpEntity entity = null;
 		try {
-			entity = new StringEntity(bodySB.toString());
+			entity = new StringEntity(AESValue);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}

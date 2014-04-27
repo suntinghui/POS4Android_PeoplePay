@@ -10,6 +10,8 @@ public class Constants {
 		// http://124.205.53.178:9596/lkoa5/WapService/
 		public static final String DEFAULTHOST				= "http://211.147.87.22:8092/posm/";
 		
+		public static final String AESKEY 					= "dynamicode";
+		
 		public static final String kHOSTNAME 				= "hostName";
 		public static final String kREALHOST				= "RealHost"; // 存储真正的连网地址
 		
