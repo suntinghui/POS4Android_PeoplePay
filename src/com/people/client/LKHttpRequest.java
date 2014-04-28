@@ -73,7 +73,6 @@ public class LKHttpRequest {
 	/****************************************/
 	
 	public void post(){
-//		this.client.addHeader("SOAPAction", "http://tempuri.org/"+TransferRequestTag.getRequestTagMap().get(this.getRequestDataMap().get(Constants.kMETHODNAME)));
 		Log.i("url--- ", TransferRequestTag.getRequestTagMap().get(this.getRequestDataMap().get(Constants.kMETHODNAME)));
 		this.client.post(ApplicationEnvironment.getInstance().getApplication(),"http://211.147.87.22:8092/posm/"+ TransferRequestTag.getRequestTagMap().get(this.getRequestDataMap().get(Constants.kMETHODNAME)), this.getHttpEntity(this), "text/xml; charset=utf-8", this.responseHandler);
 	}
@@ -86,8 +85,6 @@ public class LKHttpRequest {
 		bodySB.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><EPOSPROTOCOL>");
 		bodySB.append(this.param2String((HashMap<String, Object>)reqMap.get(Constants.kPARAMNAME)));
 		bodySB.append("</EPOSPROTOCOL>");
-		
-//		request.getClient().addHeader("Content-Length", bodySB.length()+"");
 		
 		Log.e("reqest body:", bodySB.toString());
 		
@@ -112,6 +109,7 @@ public class LKHttpRequest {
 	@SuppressWarnings("unchecked")
 	private String param2String(HashMap<String, Object> paramMap){
 		StringBuffer sb = new StringBuffer();
+		
 		for	(String key : paramMap.keySet()){
 			Object obj = paramMap.get(key);
 			if (obj instanceof String){
@@ -120,6 +118,9 @@ public class LKHttpRequest {
 				sb.append("<").append(key).append(">").append(this.hashMap2XML((HashMap<String, Object>)obj)).append("</").append(key).append(">");
 			}
 		}
+		String PCSIM = MD5Util.MD5Crypto(sb.toString());
+		int macLocation = sb.indexOf("<PACKAGEMAC>");
+		sb.insert(macLocation+12, PCSIM);
 		return sb.toString();
 	}
 	
