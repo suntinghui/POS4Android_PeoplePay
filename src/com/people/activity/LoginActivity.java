@@ -151,6 +151,8 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 		device_list.setOnItemClickListener(this);
 
 		c.setListener(mBtl);// 监听必须放到界面初始化完毕，否则回调则会界面无初始化导致崩溃
+		
+		login();
 	}
 
 	// 蓝牙监听
@@ -367,21 +369,13 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 	}
 
 	private void login(){
-		
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put(Constants.kMETHODNAME, TransferRequestTag.Login);
-		
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199002");
 		tempMap.put("PHONENUMBER", "18811068526");
 		tempMap.put("PASSWORD", "1234qwer");
-		tempMap.put("PCSIM", "获取不到");
-		tempMap.put("PACKAGEMAC", "");
+		tempMap.put("PCSIM", "不能获取");
 		
-		map.put(Constants.kPARAMNAME, tempMap);
-		
-		LKHttpRequest req1 = new LKHttpRequest(map, getLoginHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Login, tempMap, getLoginHandler());
 		
 		new LKHttpRequestQueue().addHttpRequest(req1)
 		.executeQueue("正在登录请稍候...", new LKHttpRequestQueueDone(){

@@ -47,9 +47,8 @@ public abstract class LKAsyncHttpResponseHandler extends AsyncHttpResponseHandle
 			return;
 		}
 		
-		int tag = (Integer)request.getRequestDataMap().get(Constants.kMETHODNAME);
-		Object obj = ParseResponseXML.parseXML(tag, aesContent);
-		Log.e("success", "try to do success action..." + TransferRequestTag.getRequestTagMap().get(tag));
+		Object obj = ParseResponseXML.parseXML(request.getMethodTag(), aesContent);
+		Log.e("success", "try to do success action..." + TransferRequestTag.getRequestTagMap().get(request.getMethodTag()));
 		
 		successAction(obj);
 		

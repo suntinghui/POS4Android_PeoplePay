@@ -16,8 +16,6 @@ public class Constants {
 		public static final String kREALHOST				= "RealHost"; // 存储真正的连网地址
 		
 		public static final String kWEBSERVICENAME			= "WebServiceName";
-		public static final String kMETHODNAME 				= "methodName";
-		public static final String kPARAMNAME 				= "paramName";
 		
 		public static final String kUSERNAME				= "userName";
 		public static final String kPASSWORD 				= "password"; // 保存用户输入的密码
