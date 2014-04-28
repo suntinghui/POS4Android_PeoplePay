@@ -112,9 +112,11 @@ public class LKHttpRequest {
 
 		HttpEntity entity = null;
 		try {
+			
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(); 
             nameValuePairs.add(new BasicNameValuePair("requestParam", AESValue)); 
             entity = new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8);
+            
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
