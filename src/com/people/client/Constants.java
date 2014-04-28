@@ -8,7 +8,7 @@ public class Constants {
 		
 		// 注意此值并不是真正的联网地址，真正的地址在登录成功后返回，存于 kREALHOST 中
 		// http://124.205.53.178:9596/lkoa5/WapService/
-		public static final String DEFAULTHOST				= "http://211.147.87.22:8092/posm/";
+		public static final String DEFAULTHOST				= "http://211.147.87.22:8092/";
 		
 		public static final String AESKEY 					= "dynamicode";
 		

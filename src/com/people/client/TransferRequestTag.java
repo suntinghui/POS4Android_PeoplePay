@@ -15,7 +15,7 @@ public class TransferRequestTag {
 		if (null == requestTagMap) {
 			requestTagMap = new HashMap<Integer, String>();
 			
-			requestTagMap.put(Login, "199002.tran5");
+			requestTagMap.put(Login, "posm/199002.tran5");
 			
 		}
 		

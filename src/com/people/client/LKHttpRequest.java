@@ -84,7 +84,7 @@ public class LKHttpRequest {
 	/****************************************/
 
 	public void post() {
-		this.client.post(ApplicationEnvironment.getInstance().getApplication(), "http://211.147.87.22:8092/posm/" + TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
+		this.client.post(ApplicationEnvironment.getInstance().getApplication(), Constants.DEFAULTHOST + TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
 	}
 
 	private HttpEntity getHttpEntity(LKHttpRequest request) {
