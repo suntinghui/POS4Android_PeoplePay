@@ -367,8 +367,8 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 	private void login(){
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199002");
-		tempMap.put("PHONENUMBER", "18811068526");
-		tempMap.put("PASSWORD", "1234qwer");
+		tempMap.put("PHONENUMBER", "13838387438");
+		tempMap.put("PASSWORD", "Asdf1234");
 		tempMap.put("PCSIM", "不能获取");
 		
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Login, tempMap, getLoginHandler());
@@ -398,7 +398,10 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 			if (obj instanceof HashMap){
 				// 登录成功
 				Log.e("success:", obj.toString());
-				if(((HashMap) obj).get("RSPMSG").toString().length() != 0){
+				if(((HashMap) obj).get("RSPCOD").toString().equals("000000")){
+					Toast.makeText(getApplicationContext(), "登录成功",
+						     Toast.LENGTH_SHORT).show();
+				}else if(((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0){
 					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(),
 						     Toast.LENGTH_SHORT).show();
 				}
@@ -443,7 +446,7 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 			login();
 			break;
 		case R.id.btn_register:
-			Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+			Intent intent = new Intent(LoginActivity.this, ForgetLoginPwdActivity.class);
 			startActivity(intent);
 			break;
 		default:
