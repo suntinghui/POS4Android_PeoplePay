@@ -104,7 +104,7 @@ public class LKHttpRequest {
 
 		String AESValue = "";
 		try {
-			AESValue = AESUtil.encryptString(result, "AA70CD77125FC304FEBF5E3EA4E9AFBD");
+			AESValue = AESUtil.encryptString(result, MD5Util.MD5Crypto(Constants.AESKEY));
 			Log.e("REQUEST:", AESValue);
 		} catch (Exception e1) {
 			e1.printStackTrace();
