@@ -7,6 +7,7 @@ import java.util.HashMap;
 public class TransferRequestTag {
 	
 	public static final int Login						= 1 ;
+	public static final int Register						= 2 ;
 	
 	
 	private static HashMap<Integer, String> requestTagMap 	= null;
@@ -16,6 +17,7 @@ public class TransferRequestTag {
 			requestTagMap = new HashMap<Integer, String>();
 			
 			requestTagMap.put(Login, "posm/199002.tran5");
+			requestTagMap.put(Register, "posm/199001.tran5");
 			
 		}
 		

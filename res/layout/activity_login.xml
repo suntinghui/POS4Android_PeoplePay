@@ -130,39 +130,6 @@
                     android:text="获取终端号" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout1"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="休眠时间:" />
-
-                <EditText
-                    android:id="@+id/sleeptime"
-                    android:layout_width="100dip"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" >
-
-                    <requestFocus />
-                </EditText>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="S" />
-
-                <Button
-                    android:id="@+id/btnSleep"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:onClick="fun_click"
-                    android:text="设置休眠时间" />
-            </LinearLayout>
 
             <Button
                 android:id="@+id/btnGetVes"
@@ -188,13 +155,6 @@
                 android:onClick="fun_click"
                 android:text="只输入6位密码" />
 
-            <Button
-                android:id="@+id/btnPwd4"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="fun_click"
-                android:text="只输入4位密码" />
 
             <Button
                 android:id="@+id/btnMagPwd"
@@ -204,13 +164,7 @@
                 android:onClick="fun_click"
                 android:text="刷卡+6位密码" />
 
-            <Button
-                android:id="@+id/btnMagPwd4"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="fun_click"
-                android:text="刷卡+4位密码" />
+            
 
             <Button
                 android:id="@+id/btn3"
@@ -226,6 +180,28 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="" />
+            
+            <RelativeLayout android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip">
+                
+                <Button
+                android:id="@+id/btn_login"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="fun_click"
+                android:text="登录"
+                 />
+                <Button
+                android:id="@+id/btn_register"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:onClick="fun_click"
+                android:layout_alignParentRight="true"
+                android:text="注册" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -270,13 +246,8 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
-            <Button
-                android:id="@+id/dialog_data_load_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:onClick="fun_click"
-                android:text="取消" />
+            
+            
         </LinearLayout>
     </LinearLayout>
 

@@ -3,17 +3,17 @@ package com.people.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnKeyListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.people.R;
-import com.people.client.Constants;
 import com.people.client.LKAsyncHttpResponseHandler;
 import com.people.client.LKHttpRequest;
 import com.people.client.LKHttpRequestQueue;
@@ -48,7 +47,7 @@ import dspread.voicemodem.DeviceBean;
 import dspread.voicemodem.onPOSListener;
 import dspread.voicemodem.util;
 
-public class LoginActivity extends BaseActivity implements OnKeyListener, OnDismissListener, OnItemClickListener {
+public class LoginActivity extends BaseActivity implements OnKeyListener, OnDismissListener, OnItemClickListener, OnClickListener {
 	private Thread mSthread, mCthread;
 	// QPos
 	private CardReader c = null;
@@ -84,7 +83,6 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 		setContentView(R.layout.activity_login);
 		status = (TextView) findViewById(R.id.status);
 		deviceaddress = (TextView) findViewById(R.id.deviceaddress);
-		sleeptime = (EditText) findViewById(R.id.sleeptime);
 		text1 = (TextView) findViewById(R.id.text1);
 		dialog_data_load = (LinearLayout) findViewById(R.id.dialog_data_load);
 		dialog_data_load.setOnTouchListener(new OnTouchListener() {
@@ -96,8 +94,13 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 			}
 		});
 		dialog_data_load_txt = (TextView) findViewById(R.id.dialog_data_load_txt);
-		dialog_data_load_btn = (Button) findViewById(R.id.dialog_data_load_btn);
 
+		Button btn_login = (Button)this.findViewById(R.id.btn_login);
+		Button btn_register = (Button)this.findViewById(R.id.btn_register);
+		btn_login.setOnClickListener(this);
+		btn_register.setOnClickListener(this);
+		
+		
 		// 选择弹出框
 		mChooseDialog = new Dialog(this, R.style.ContentOverlay);
 		mChooseDialog.setContentView(R.layout.choose_device);
@@ -152,7 +155,6 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 
 		c.setListener(mBtl);// 监听必须放到界面初始化完毕，否则回调则会界面无初始化导致崩溃
 		
-		login();
 	}
 
 	// 蓝牙监听
@@ -322,12 +324,6 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 			mSthread = new ThreadSwip_SixPass(mHandler, this, c, fakekey);
 			mSthread.start();
 			break;
-		case R.id.dialog_data_load_btn:
-			dialog_data_load_txt.setText("正在取消！");
-			mCthread = new ThreadCancel(mHandler, this, c);
-			mSthread.interrupt();
-			mCthread.start();
-			break;
 		}
 	}
 
@@ -390,9 +386,11 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 
 	}
 
+	@SuppressLint("ShowToast")
 	private LKAsyncHttpResponseHandler getLoginHandler(){
 	 return new LKAsyncHttpResponseHandler(){
 		 
+		@SuppressWarnings("rawtypes")
 		@Override
 		public void successAction(Object obj) {
 			Log.e("success:", obj.toString());
@@ -400,6 +398,10 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 			if (obj instanceof HashMap){
 				// 登录成功
 				Log.e("success:", obj.toString());
+				if(((HashMap) obj).get("RSPMSG").toString().length() != 0){
+					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(),
+						     Toast.LENGTH_SHORT).show();
+				}
 			} else {
 			}
 			
@@ -432,5 +434,21 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 	@Override
 	public boolean onKey(DialogInterface arg0, int arg1, KeyEvent arg2) {
 		return true;
+	}
+
+	@Override
+	public void onClick(View arg0) {
+		switch (arg0.getId()) {
+		case R.id.btn_login:
+			login();
+			break;
+		case R.id.btn_register:
+			Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+			startActivity(intent);
+			break;
+		default:
+			break;
+		}
+		
 	}
 }

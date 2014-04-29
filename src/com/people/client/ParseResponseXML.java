@@ -34,7 +34,9 @@ public class ParseResponseXML {
 			switch(reqType){
 			case TransferRequestTag.Login:
 				return login();
+			case TransferRequestTag.Register:
 				
+				return register();
 			}			
 		} catch(XmlPullParserException e){
 			e.printStackTrace();
@@ -59,6 +61,45 @@ public class ParseResponseXML {
 	
 	private static Object login() throws XmlPullParserException, IOException{
 		// 如果程序存在Qry标签，则说明登录成功，返回HASHMAP；如果没有Qry标签，则说明登录失败，则返回String，代表错误码。
+		HashMap<String, String> respMap = null;
+		String errorCode = null;
+		boolean isLoginSuccess = false;
+		
+		XmlPullParser parser = Xml.newPullParser();
+        parser.setInput(inStream, "UTF-8");  
+        int eventType = parser.getEventType();//产生第一个事件  
+        while(eventType!=XmlPullParser.END_DOCUMENT){  
+            switch(eventType){
+            case XmlPullParser.START_TAG:
+            	if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())){
+            		respMap = new HashMap<String, String>();
+            	} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())){
+            		respMap.put("PHONENUMBER", parser.nextText());
+            	} else if ("RSPCOD".equalsIgnoreCase(parser.getName())){
+            		respMap.put("RSPCOD", parser.nextText());
+            	} else if ("RSPMSG".equalsIgnoreCase(parser.getName())){
+            		respMap.put("RSPMSG", parser.nextText());
+            	} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())){
+            		respMap.put("PACKAGEMAC", parser.nextText());
+            	}
+            	break;
+            	
+            case XmlPullParser.TEXT:
+            	// 不止一个，但是最后一个最我想要的。
+            	errorCode = parser.getText();
+            	break;
+            	
+            case XmlPullParser.END_TAG:
+            	return respMap;
+            }
+            
+            eventType = parser.next();
+        }
+		
+		return null;
+	}
+	
+	private static Object register() throws XmlPullParserException, IOException{
 		HashMap<String, String> respMap = null;
 		String errorCode = null;
 		boolean isLoginSuccess = false;
@@ -127,6 +168,4 @@ public class ParseResponseXML {
 		
 		return null;
 	}
-	
-	
 }
