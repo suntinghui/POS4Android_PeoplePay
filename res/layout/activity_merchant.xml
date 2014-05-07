@@ -3,7 +3,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <LinearLayout
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white" >
+
+        <LinearLayout
             android:id="@+id/layout1"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -13,11 +18,12 @@
             <Button
                 
                 android:layout_gravity="center"
-                android:id="@+id/btn_login"
+                android:id="@+id/btn_register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="fun_click"
-                android:text="登录" />
+                android:text="商户" />
         </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
