@@ -372,7 +372,7 @@ public class LoginActivity extends BaseActivity implements OnKeyListener, OnDism
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199002");
 		tempMap.put("PHONENUMBER", "13838387438");
-		tempMap.put("PASSWORD", "Asdf1234");
+		tempMap.put("PASSWORD", "88888888");
 		tempMap.put("PCSIM", "不能获取");
 		
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Login, tempMap, getLoginHandler());
