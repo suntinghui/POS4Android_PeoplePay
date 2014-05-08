@@ -1,5 +1,7 @@
 package com.people.client;
 
+import java.util.ArrayList;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -71,4 +73,22 @@ public class ApplicationEnvironment {
 		getApplication().startActivity(intent);
 	}
 
+	public void ForceLogout() {
+		try {
+
+			cleanUp();
+			
+			appEnv = null;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void cleanUp() {
+		// 停止超时服务
+		this.getApplication().stopService(new Intent("com.dhc.timeoutService"));
+		
+	}
 }
