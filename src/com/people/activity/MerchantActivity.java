@@ -25,8 +25,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_merchant);
 		
-		Button btn_register = (Button)this.findViewById(R.id.btn_register);
-		btn_register.setOnClickListener(this);
 		
 		
 	}
@@ -34,9 +32,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
-		case R.id.btn_register:
-			actionRegister();
-			break;
 
 		default:
 			break;

@@ -3,27 +3,109 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@android:color/white" >
+        android:orientation="vertical" >
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/top" />
+
+        <Button
+            android:id="@+id/btn_msg"
+            android:layout_marginTop="10dip"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip" 
+            android:background="@null"/>
+        <RelativeLayout android:layout_width="fill_parent"
+            android:id="@+id/layout_msg"
+            android:layout_height="40dip"
+            >
+            <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"/>
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/black_16"
+                android:layout_marginLeft="25dip"
+                android:text="@string/in_account_msg"
+                />
+            <ImageView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:layout_alignParentRight="true"/>
+            
+        </RelativeLayout>
 
         <LinearLayout
-            android:id="@+id/layout1"
+            android:id="@+id/layout_msg"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical" 
-            android:paddingTop="100dip">
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-            <Button
-                
-                android:layout_gravity="center"
-                android:id="@+id/btn_register"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:onClick="fun_click"
-                android:text="商户" />
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dip" >
+
+                <TextView
+                    style="@style/gray_15"
+                    android:layout_width="80dip"
+                    android:layout_height="30dip"
+                    android:gravity="right"
+                    android:text="@string/bank_no" />
+                
+                <TextView
+                    style="@style/gray_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dip" 
+                    android:text="123"
+                    android:layout_marginLeft="20dip"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dip" >
+
+                <TextView
+                    style="@style/gray_15"
+                    android:layout_width="80dip"
+                    android:layout_height="30dip"
+                    android:gravity="right"
+                    android:text="@string/open_account_name" />
+                
+                <TextView
+                    style="@style/gray_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dip" 
+                    android:text="123"
+                    android:layout_marginLeft="20dip"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginLeft="15dip" >
+
+                <TextView
+                    style="@style/gray_15"
+                    android:layout_width="80dip"
+                    android:layout_height="30dip"
+                    android:gravity="right"
+                    android:text="@string/open_account_bank" />
+                
+                <TextView
+                    style="@style/gray_15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dip" 
+                    android:text="123"
+                    android:layout_marginLeft="20dip"/>
+            </LinearLayout>
         </LinearLayout>
-    </ScrollView>
+    </LinearLayout>
 
 </RelativeLayout>

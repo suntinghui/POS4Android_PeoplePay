@@ -1,6 +1,9 @@
 package com.people.activity;
 
+import android.app.AlertDialog;
 import android.app.TabActivity;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -64,5 +67,9 @@ public class CatalogActivity extends TabActivity {
         tabHost.addTab(settingSpec);  
           
         tabHost.setCurrentTab(0);  
+        
+        if (this.getIntent().getBooleanExtra("TIMEOUT", false)){
+
+        }
     }
 }  

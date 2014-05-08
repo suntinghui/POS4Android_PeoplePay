@@ -57,6 +57,13 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
         android:debuggable="true">
+        
+        <!-- 超时退出服务 -->
+         <service android:name=".activity.TimeoutService" android:enabled="true" android:exported="true" >
+             <intent-filter>
+                 <action android:name="com.people.timeoutService" />
+             </intent-filter>
+         </service>
         <activity
             android:name="com.people.activity.SplashActivity"
             android:label="@string/app_name" >
@@ -143,6 +150,14 @@
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
                 <action android:name="com.people.ToolActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.LockScreenActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.LockScreenActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
