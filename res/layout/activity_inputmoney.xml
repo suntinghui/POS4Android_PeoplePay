@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/topbarLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_0"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="13dip"
+            >
+        </Button>
+
+        <TextView
+            android:id="@+id/titleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="刷卡"
+            style="@style/white_18" />
+        
+    </RelativeLayout>
+    
+    <TableLayout   
+    android:layout_width="fill_parent"   
+    android:layout_height="wrap_content"  
+    android:stretchColumns="0,1,2,3">  
+        <TableRow>  
+            <Button android:id="@+id/btn_1" android:text="1"/>  
+            <Button android:id="@+id/btn_2" android:text="2" />  
+            <Button android:id="@+id/btn_3" android:text="3" />  
+            <Button android:id="@+id/btn_add" android:text="+" />  
+        </TableRow>  
+        <TableRow>  
+            <Button android:id="@+id/btn_4" android:text="4" />  
+            <Button android:id="@+id/btn_5" android:text="5" />  
+            <Button android:id="@+id/btn_6" android:text="6" />  
+            <Button android:id="@+id/btn_sub" android:text="-" />  
+        </TableRow>  
+        <TableRow>  
+            <Button android:id="@+id/btn_7" android:text="7" />  
+            <Button android:id="@+id/btn_8" android:text="8" />  
+            <Button android:id="@+id/btn_9" android:text="9" />  
+            <Button android:id="@+id/btn_mul" android:text="*" />  
+        </TableRow>  
+        <TableRow>  
+            <Button android:id="@+id/btn_c" android:text="c" />  
+            <Button android:id="@+id/btn_0" android:text="0" />  
+            <Button android:id="@+id/btn_eq" android:text="=" />  
+            <Button android:id="@+id/btn_div" android:text="/" />  
+        </TableRow>  
+    </TableLayout> 
+
+</LinearLayout>
