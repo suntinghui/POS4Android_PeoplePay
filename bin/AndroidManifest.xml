@@ -57,6 +57,13 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" 
         android:debuggable="true">
+        
+        <!-- 超时退出服务 -->
+         <service android:name=".activity.TimeoutService" android:enabled="true" android:exported="true" >
+             <intent-filter>
+                 <action android:name="com.people.timeoutService" />
+             </intent-filter>
+         </service>
         <activity
             android:name="com.people.activity.SplashActivity"
             android:label="@string/app_name" >
@@ -83,7 +90,85 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".activity.ModifyLoginPwdActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.ModifyLoginPwdActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         
+        <activity android:name=".activity.ForgetLoginPwdActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.ForgetLoginPwdActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".activity.SignInActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.SignInActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".activity.CatalogActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.CatalogActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".activity.SwipCardActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.SwipCardActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".activity.CashFlowActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.CashFlowActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".activity.MerchantActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.MerchantActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.ToolActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.ToolActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.LockScreenActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.LockScreenActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.InputMoneyActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.InputMoneyActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
