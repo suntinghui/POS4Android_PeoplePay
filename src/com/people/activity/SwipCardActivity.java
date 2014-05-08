@@ -1,6 +1,7 @@
 package com.people.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import android.widget.ImageView;
 
 import com.people.R;
 
-// 刷卡
+// 刷卡主界面
 public class SwipCardActivity extends BaseActivity implements OnClickListener {
 	private Integer[] imageIds = { R.drawable.swip_icon_n_0,
 			R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2,
@@ -29,7 +30,7 @@ public class SwipCardActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_swip);
+		setContentView(R.layout.activity_swip_card);
 
 		gridView = (GridView) findViewById(R.id.gridveiw);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -57,54 +58,54 @@ public class SwipCardActivity extends BaseActivity implements OnClickListener {
 				long arg3) {
 			switch (arg2) {
 			case 0: // 余额查询
-				// Intent intent0 = new Intent(CatalogActivity.this,
-				// MsgAnnCatalogActivity.class);
-				// startActivity(intent0);
+				 Intent intent0 = new Intent(SwipCardActivity.this,
+						 SwipActivity.class);
+				 startActivity(intent0);
 				break;
 
 			case 1: // 参考信息
-				// Intent intent1 = new Intent(CatalogActivity.this,
+				// Intent intent1 = new Intent(SwipCardActivity.this,
 				// PayListActivity.class);
 				// startActivity(intent1);
 				break;
 
 			case 2: // 官方微博
-				// Intent intent2 = new Intent(CatalogActivity.this,
+				// Intent intent2 = new Intent(SwipCardActivity.this,
 				// ReimbursementListActivity.class);
 				// startActivity(intent2);
 				break;
 
 			case 3: // 卡卡转账
-				// Intent intent3 = new Intent(CatalogActivity.this,
+				// Intent intent3 = new Intent(SwipCardActivity.this,
 				// TravelexpenseListActivity.class);
 				// startActivity(intent3);
 				break;
 
 			case 4: // 交易分享
-				// Intent intent4 = new Intent(CatalogActivity.this,
+				// Intent intent4 = new Intent(SwipCardActivity.this,
 				// OthersActivity.class);
 				// startActivity(intent4);
 				break;
 
 			case 5: // 推荐我们
-				// Intent intent5 = new Intent(CatalogActivity.this,
+				// Intent intent5 = new Intent(SwipCardActivity.this,
 				// SettingActivity.class);
 				// startActivity(intent5);
 				break;
 			case 6: // 信用卡还款
-				// Intent intent3 = new Intent(CatalogActivity.this,
+				// Intent intent3 = new Intent(SwipCardActivity.this,
 				// TravelexpenseListActivity.class);
 				// startActivity(intent3);
 				break;
 
 			case 7: // 手机充值
-				// Intent intent4 = new Intent(CatalogActivity.this,
+				// Intent intent4 = new Intent(SwipCardActivity.this,
 				// OthersActivity.class);
 				// startActivity(intent4);
 				break;
 
 			case 8: // 支付宝充值
-				// Intent intent5 = new Intent(CatalogActivity.this,
+				// Intent intent5 = new Intent(SwipCardActivity.this,
 				// SettingActivity.class);
 				// startActivity(intent5);
 				break;
