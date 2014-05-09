@@ -17,4 +17,7 @@
 	<string name="more_setting">更多设置</string>
 	<string name="conect">联系客服</string>
 	<string name="exit_safity">安全退出</string>
+	<string name="str_user_hint">请输入用户名</string>
+    <string name="str_pwd_hint">请输入密码</string>
+    <string name="str_login">登录</string>
 </resources>
