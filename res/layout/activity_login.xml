@@ -2,37 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/login_bg"
     android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dip"
+        android:background="@drawable/login_logo" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="44dip"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
-        android:layout_marginTop="30dip" >
+        android:layout_marginTop="40dip" >
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dip"
-            android:src="@drawable/btn_user" />
+            android:src="@drawable/login_icon_user" />
 
         <EditText
             android:id="@+id/et_user"
+            android:textColor="@color/white"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dip"
+            android:layout_marginLeft="18dip"
+            android:textColorHint="@color/white"
             android:background="@null"
-            android:hint="@string/str_user_hint" />
+            android:hint="@string/str_user_hint"
+            android:singleLine="true"  />
     </LinearLayout>
 
-    <View
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:layout_marginTop="15dip"
-        android:background="#808080" />
+        android:layout_marginLeft="30dip"
+        android:layout_marginRight="30dip"
+        android:layout_marginTop="12dip"
+        android:background="@drawable/login_line" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -46,35 +59,41 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="5dip"
-            android:src="@drawable/btn_password" />
+            android:src="@drawable/login_icon_pwd" />
 
         <EditText
             android:id="@+id/et_pwd"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dip"
-            android:background="@null"
+            android:layout_marginLeft="18dip"
             android:hint="@string/str_pwd_hint"
             android:inputType="textPassword"
+            android:textColorHint="@color/white"
+            android:background="@null"
             android:singleLine="true" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_marginTop="15dip"
-        android:background="#808080" />
-
-
     <Button
         android:id="@+id/btn_login"
+        style="@style/white_20"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
-        android:layout_marginTop="25dip"
-        android:text="@string/str_login"
-        android:textColor="@color/white" />
+        android:layout_marginTop="35dip"
+        android:background="@drawable/login_btn"
+        android:text="@string/str_login" />
+
+    <Button
+        android:id="@+id/btn_forget_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:background="@color/clear"
+        android:textSize="17sp"
+        android:text="@string/login_forget_pwd"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@drawable/text_green_blue" />
 
 </LinearLayout>

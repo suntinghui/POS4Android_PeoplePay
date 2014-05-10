@@ -8,7 +8,7 @@
         android:id="@+id/topbarLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/btn_login_n"
+        android:background="@drawable/nav_bar_bg"
         android:orientation="horizontal" >
 
         <Button
@@ -16,8 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:background="@drawable/btn_back"
-             />
+            android:layout_marginLeft="15dip"
+            android:background="@drawable/btn_back" />
 
         <TextView
             style="@style/white_20"

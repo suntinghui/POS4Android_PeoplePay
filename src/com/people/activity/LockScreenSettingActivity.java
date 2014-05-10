@@ -144,15 +144,6 @@ public class LockScreenSettingActivity extends Activity implements
 					}
 				}
 
-				// Toast.makeText(LockScreenSettingActivity.this,
-				// String.valueOf(success), Toast.LENGTH_SHORT).show();
-				// if(success){
-				// LockScreenSettingActivity.this.finish();
-				// // 启动超时退出服务
-				// Intent intent = new Intent(BaseActivity.getTopActivity(),
-				// TimeoutService.class);
-				// BaseActivity.getTopActivity().startService(intent);
-				// }
 			}
 		});
 	}

@@ -1,99 +1,144 @@
 package com.people.activity;
 
-import java.util.HashMap;
-
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.Toast;
+import android.widget.GridView;
 
 import com.people.R;
-import com.people.client.LKAsyncHttpResponseHandler;
-import com.people.client.LKHttpRequest;
-import com.people.client.LKHttpRequestQueue;
-import com.people.client.LKHttpRequestQueueDone;
-import com.people.client.TransferRequestTag;
 
 public class InputMoneyActivity extends BaseActivity implements OnClickListener {
+	private GridView gridView = null;
+	private CatalogAdapter adapter = null;
+	private String[] num = { "1", "2", "3", "+", "4", "5", "6", "-", "7", "8",
+			"9", "*", "C", "0", "=", "/" };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inputmoney);
 
-		
-		
-	}
+		gridView = (GridView) findViewById(R.id.gridveiw);
+		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
+		gridView.setOnItemClickListener(onclickcistener);
 
-	private void login(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199002");
-		tempMap.put("PHONENUMBER", "13838387438");
-		tempMap.put("PASSWORD", "1234qwer");
-		tempMap.put("PCSIM", "不能获取");
-		
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Login, tempMap, getLoginHandler());
-		
-		new LKHttpRequestQueue().addHttpRequest(req1)
-		.executeQueue("正在登录请稍候...", new LKHttpRequestQueueDone(){
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-				
-			}
-			
-		});	
+		adapter = new CatalogAdapter(this);
+		gridView.setAdapter(adapter);
 
 	}
 
-	@SuppressLint("ShowToast")
-	private LKAsyncHttpResponseHandler getLoginHandler(){
-	 return new LKAsyncHttpResponseHandler(){
-		 
-		@SuppressWarnings("rawtypes")
-		@Override
-		public void successAction(Object obj) {
-			Log.e("success:", obj.toString());
-			
-			if (obj instanceof HashMap){
-				// 登录成功
-				Log.e("success:", obj.toString());
-				if(((HashMap) obj).get("RSPCOD").toString().equals("000000")){
-					Toast.makeText(getApplicationContext(), "登录成功",
-						     Toast.LENGTH_SHORT).show();
-				}else if(((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0){
-					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(),
-						     Toast.LENGTH_SHORT).show();
-				}
-			} else {
+	// 点击事件
+	private OnItemClickListener onclickcistener = new OnItemClickListener() {
+
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+			switch (arg2) {
+			case 0: //
+				break;
+
+			case 1: //
+				break;
+
+			case 2: //
+				break;
+
+			case 3: //
+				break;
+
+			case 4: //
+				break;
+
+			case 5: //
+				break;
+			case 6: //
+				break;
+
+			case 7: //
+				break;
+
+			case 8: //
+				break;
+			default:
+				break;
 			}
-			
+
 		}
 
 	};
-	}
-
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_login:
-//			login();
-			Intent intent = new Intent(InputMoneyActivity.this, CatalogActivity.class);
+			// login();
+			Intent intent = new Intent(InputMoneyActivity.this,
+					CatalogActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.btn_register:
-			Intent intent1 = new Intent(InputMoneyActivity.this, ForgetLoginPwdActivity.class);
+			Intent intent1 = new Intent(InputMoneyActivity.this,
+					ForgetLoginPwdActivity.class);
 			startActivity(intent1);
 			break;
 		default:
 			break;
 		}
-		
+
 	}
+
+	public final class CatalogHolder {
+		public Button btn_num;
+	}
+
+	public class CatalogAdapter extends BaseAdapter {
+
+		private LayoutInflater mInflater;
+
+		public CatalogAdapter(Context context) {
+			this.mInflater = LayoutInflater.from(context);
+		}
+
+		public int getCount() {
+			return num.length;
+		}
+
+		public Object getItem(int arg0) {
+			return arg0;
+		}
+
+		public long getItemId(int arg0) {
+			return arg0;
+		}
+
+		public View getView(int position, View convertView, ViewGroup parent) {
+			CatalogHolder holder = null;
+
+			if (null == convertView) {
+				convertView = this.mInflater.inflate(R.layout.item_inputmoney,
+						null);
+				holder = new CatalogHolder();
+
+				holder.btn_num = (Button) convertView
+						.findViewById(R.id.btn_num);
+
+				convertView.setTag(holder);
+			} else {
+				holder = (CatalogHolder) convertView.getTag();
+			}
+
+			holder.btn_num.setText(num[position]);
+			return convertView;
+		}
+	}
+
 }

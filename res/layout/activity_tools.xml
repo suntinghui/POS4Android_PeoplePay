@@ -9,7 +9,7 @@
         
          <ImageView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/top"/>
+            android:background="@drawable/tool_top"/>
          
          <GridView
             android:id="@+id/gridveiw"

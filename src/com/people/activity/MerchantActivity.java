@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 public class MerchantActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout layout_msg_blow ;
 	private Boolean isClicked = false;
+	private ImageView iv_pull;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,6 +45,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 		RelativeLayout layout_connect = (RelativeLayout) findViewById(R.id.layout_connect);
 		layout_connect.setOnClickListener(this);
 		
+		iv_pull = (ImageView) findViewById(R.id.iv_pull);
+		
 		
 	}
 
@@ -53,8 +57,10 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 			isClicked = !isClicked;
 			if (isClicked) {
 				layout_msg_blow.setVisibility(View.VISIBLE);
+				iv_pull.setBackgroundResource(R.drawable.merchant_icon_push);
 			}else{
 				layout_msg_blow.setVisibility(View.GONE);
+				iv_pull.setBackgroundResource(R.drawable.merchant_icon_pull);
 			}
 			break;
 		case R.id.layout_modify_pwd:

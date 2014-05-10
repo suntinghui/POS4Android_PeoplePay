@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 九宫格每一格的布局 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:descendantFocusability="blocksDescendants"
+     >
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal"
+         >
+
+        <Button
+            android:id="@+id/btn_num"
+            android:layout_width="100dip"
+            android:layout_height="fill_parent"
+            android:contentDescription="功能图标"/>
+
+    </FrameLayout>
+
+</LinearLayout>

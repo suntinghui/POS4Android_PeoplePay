@@ -43,7 +43,7 @@ public class Constants {
 		public static final String kBPUSH_USERID			="userid";
 		public static final String kBPUSH_CHANNELID			="channelid";
 		
-		public static final int overtime    				= 1;
+		public static final int overtime    				= 3;
 		public static final String LockKey					="LockKey";
 		public static final String FirstLogin      			="FirstLogin";
 		public static final String GestureClose      		="GestureClose";
