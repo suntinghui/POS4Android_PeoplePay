@@ -162,6 +162,7 @@
                 android:background="#808080" />
 
             <RelativeLayout
+                android:id="@+id/layout_modify_pwd"
                 android:layout_width="fill_parent"
                 android:layout_height="40dip"
                 android:layout_marginTop="5dip"
@@ -193,6 +194,7 @@
                 android:background="#808080" />
 
             <RelativeLayout
+                android:id="@+id/layout_more_setting"
                 android:layout_width="fill_parent"
                 android:layout_height="40dip"
                 android:layout_marginTop="5dip"
@@ -224,6 +226,7 @@
                 android:background="#808080" />
 
             <RelativeLayout
+                android:id="@+id/layout_connect"
                 android:layout_width="fill_parent"
                 android:layout_height="40dip"
                 android:layout_marginTop="5dip"

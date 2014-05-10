@@ -1,9 +1,6 @@
 package com.people.activity;
 
-import android.app.AlertDialog;
 import android.app.TabActivity;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
@@ -26,15 +23,16 @@ public class CatalogActivity extends TabActivity {
           
         TabView view = null;  
           
-        // 最近联系人   
+        //刷卡
         view = new TabView(this, R.drawable.icon_n_0, R.drawable.icon_s_0);  
         view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_0));  
               
         TabSpec recentContactSpec=tabHost.newTabSpec("RecentContact");  
         recentContactSpec.setIndicator(view);  
-        Intent recentContactIntent = new Intent(this, SwipCardActivity.class);  
+        Intent recentContactIntent = new Intent(this, InputMoneyActivity.class);  
         recentContactSpec.setContent(recentContactIntent);  
-        // 联系人   
+
+        //流水
         view = new TabView(this, R.drawable.icon_n_1, R.drawable.icon_s_1);  
         view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_1));  
           
@@ -43,7 +41,7 @@ public class CatalogActivity extends TabActivity {
         Intent contactBookIntent = new Intent(this,CashFlowActivity.class);  
         contactBookSpec.setContent(contactBookIntent);  
           
-        // 短信   
+        //商户 
         view = new TabView(this, R.drawable.icon_n_2, R.drawable.icon_s_2);  
         view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_2));  
           
@@ -52,13 +50,13 @@ public class CatalogActivity extends TabActivity {
         Intent smsMessageIntent = new Intent(this, MerchantActivity.class);  
         smsMessageSpec.setContent(smsMessageIntent);  
           
-        //设置    
+        //工具
         view = new TabView(this, R.drawable.icon_n_3, R.drawable.icon_s_3);  
         view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_3));  
           
         TabSpec settingSpec = tabHost.newTabSpec("Setting");  
         settingSpec.setIndicator(view);  
-        Intent settingIntent = new Intent(this, ToolActivity.class);  
+        Intent settingIntent = new Intent(this, ToolsActivity.class);  
         settingSpec.setContent(settingIntent);  
           
         tabHost.addTab(recentContactSpec);  

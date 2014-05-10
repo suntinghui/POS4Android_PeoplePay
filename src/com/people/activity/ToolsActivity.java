@@ -17,8 +17,8 @@ import android.widget.ImageView;
 
 import com.people.R;
 
-// 刷卡主界面
-public class SwipCardActivity extends BaseActivity implements OnClickListener {
+// 工具
+public class ToolsActivity extends BaseActivity implements OnClickListener {
 	private Integer[] imageIds = { R.drawable.swip_icon_n_0,
 			R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2,
 			R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5,
@@ -30,7 +30,7 @@ public class SwipCardActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_swip_card);
+		setContentView(R.layout.activity_tools);
 
 		gridView = (GridView) findViewById(R.id.gridveiw);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -58,7 +58,7 @@ public class SwipCardActivity extends BaseActivity implements OnClickListener {
 				long arg3) {
 			switch (arg2) {
 			case 0: // 余额查询
-				 Intent intent0 = new Intent(SwipCardActivity.this,
+				 Intent intent0 = new Intent(ToolsActivity.this,
 						 SwipActivity.class);
 				 startActivity(intent0);
 				break;

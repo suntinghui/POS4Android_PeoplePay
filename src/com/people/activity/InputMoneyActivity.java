@@ -25,11 +25,6 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inputmoney);
 
-		Button btn_login = (Button)this.findViewById(R.id.btn_login);
-//		Button btn_register = (Button)this.findViewById(R.id.btn_register);
-		btn_login.setOnClickListener(this);
-//		btn_register.setOnClickListener(this);
-		
 		
 		
 	}

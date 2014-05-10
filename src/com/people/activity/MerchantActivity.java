@@ -9,6 +9,7 @@ import com.people.client.LKHttpRequestQueue;
 import com.people.client.LKHttpRequestQueueDone;
 import com.people.client.TransferRequestTag;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 
@@ -32,6 +34,14 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 		layout_msg_top.setOnClickListener(this);
 		layout_msg_blow = (LinearLayout) findViewById(R.id.layout_msg_blow);
 		
+		RelativeLayout layout_modify_pwd = (RelativeLayout) findViewById(R.id.layout_modify_pwd);
+		layout_modify_pwd.setOnClickListener(this);
+		
+		RelativeLayout layout_more_setting = (RelativeLayout) findViewById(R.id.layout_more_setting);
+		layout_more_setting.setOnClickListener(this);
+		
+		RelativeLayout layout_connect = (RelativeLayout) findViewById(R.id.layout_connect);
+		layout_connect.setOnClickListener(this);
 		
 		
 	}
@@ -46,6 +56,16 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 			}else{
 				layout_msg_blow.setVisibility(View.GONE);
 			}
+			break;
+		case R.id.layout_modify_pwd:
+			
+			break;
+		case R.id.layout_more_setting:
+			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
+			startActivity(intent2);
+			break;
+		case R.id.layout_connect:
+			
 			break;
 		default:
 			break;

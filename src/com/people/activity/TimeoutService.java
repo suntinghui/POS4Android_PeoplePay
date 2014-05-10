@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.people.client.Constants;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +19,7 @@ public class TimeoutService extends Service {
 	
 	private static final int CHECK_FREQUENCY 	= 20000; // 每隔20S检测一次是否超时
 	
-	private static long MAX_TIMEOUT 	   	    = 1 * 60 * 1000;
+	private static long MAX_TIMEOUT 	   	    = Constants.overtime * 60 * 1000;
 	
 	public static long	LastSystemTimeMillis   	= System.currentTimeMillis();
 	
@@ -32,7 +34,7 @@ public class TimeoutService extends Service {
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-		MAX_TIMEOUT = 1 * 60 * 1000;
+		MAX_TIMEOUT = Constants.overtime * 60 * 1000;
 		
 		if (null != mTimer && null != mTask){
 			mTask.cancel();

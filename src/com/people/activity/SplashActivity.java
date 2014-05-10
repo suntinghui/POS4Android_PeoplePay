@@ -19,9 +19,6 @@ public class SplashActivity extends BaseActivity {
 	    getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //设置全屏
         
         setContentView(R.layout.activity_splash);
-     // 启动超时退出服务
-		Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
-		BaseActivity.getTopActivity().startService(intent);
 		
         new SplashTask().execute();
 	}

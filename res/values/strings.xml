@@ -20,4 +20,6 @@
 	<string name="str_user_hint">请输入用户名</string>
     <string name="str_pwd_hint">请输入密码</string>
     <string name="str_login">登录</string>
+    <string name="str_setting_title">更多</string>
+    <string name="draw_lock_tips">绘制解锁图案</string>
 </resources>

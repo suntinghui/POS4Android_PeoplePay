@@ -38,6 +38,8 @@ public class GestureLockView extends View {
 	private int LINE_COLOR          = Color.argb(127, 002, 210, 255);  // 连接线颜色
 	private int ERROR_COLOR         = Color.argb(127, 255, 000, 000);  // 连接错误醒目提示颜色
 	
+	public Boolean isSetting = false;
+	
 	public void setOnGestureFinishListener(
 			OnGestureFinishListener onGestureFinishListener) {
 		this.onGestureFinishListener = onGestureFinishListener;
@@ -47,6 +49,10 @@ public class GestureLockView extends View {
 		this.key = key;
 	}
 
+	public String getKey(){
+		return this.key;
+	}
+	
 	public String getCurrentKey(){
 		return this.currentKey;
 	}
@@ -123,7 +129,7 @@ public class GestureLockView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		for (int i = 0; i < cycles.length; i++) {
-			if (!canContinue && !result) {
+			if (!canContinue && !result && !isSetting) {
 				paintOnTouch.setColor(ERROR_COLOR);
 				paintInnerCycle.setColor(ERROR_COLOR);
 				paintLines.setColor(ERROR_COLOR);
@@ -196,7 +202,12 @@ public class GestureLockView extends View {
 					sb.append(linedCycles.get(i));
 				}
 				this.currentKey = sb.toString();
-				result = key.equals(sb.toString());
+				if(isSetting && key == null){
+
+				}else{
+					result = key.equals(sb.toString());
+				}
+				
 				if (onGestureFinishListener != null) {
 					onGestureFinishListener.OnGestureFinish(result);
 				}

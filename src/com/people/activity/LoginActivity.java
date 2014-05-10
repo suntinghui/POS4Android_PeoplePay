@@ -6,8 +6,10 @@ import java.util.HashMap;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnDismissListener;
 import android.content.DialogInterface.OnKeyListener;
+import android.content.SharedPreferences.Editor;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,6 +31,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.people.R;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
 import com.people.client.LKAsyncHttpResponseHandler;
 import com.people.client.LKHttpRequest;
 import com.people.client.LKHttpRequestQueue;
@@ -118,6 +122,19 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.btn_login:
 //			login();
+			Boolean firstLogin = ApplicationEnvironment.getInstance().getPreferences().getBoolean(Constants.FirstLogin, true);
+			if(firstLogin){
+				SharedPreferences pre = ApplicationEnvironment.getInstance().getPreferences();
+				Editor editor = pre.edit();
+				editor.putBoolean(Constants.FirstLogin, false);
+				editor.commit();
+			}
+			Boolean gestureClose = ApplicationEnvironment.getInstance().getPreferences().getBoolean(Constants.GestureClose, true);
+			if(!gestureClose){
+				 Intent intent = new Intent(BaseActivity.getTopActivity(),
+				 TimeoutService.class);
+				 BaseActivity.getTopActivity().startService(intent);
+			}
 			Intent intent = new Intent(LoginActivity.this, CatalogActivity.class);
 			startActivity(intent);
 			break;
