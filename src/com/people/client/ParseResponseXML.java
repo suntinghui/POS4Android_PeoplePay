@@ -340,8 +340,10 @@ public class ParseResponseXML {
 	}
 
 	private static Object flowQuery() throws XmlPullParserException, IOException {
-		HashMap<String, String> respMap = null;
+		HashMap<String, Object> respMap = null;
 
+		ArrayList<TradeModel> list = new ArrayList<TradeModel>();
+		TradeModel model = null;
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
 		int eventType = parser.getEventType();
@@ -349,25 +351,47 @@ public class ParseResponseXML {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
-					respMap = new HashMap<String, String>();
+					respMap = new HashMap<String, Object>();
 				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPCOD", parser.nextText());
 				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PHONENUMBER", parser.nextText());
-				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
-					// TODO
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+					
+					model = new TradeModel();
+				} else if("SYSDAT".equalsIgnoreCase(parser.getName())){
+					model.setSysDate(parser.nextText());
+				} else if("MERNAM".equalsIgnoreCase(parser.getName())){
+					model.setMerName(parser.nextText());
+				} else if("LOGDAT".equalsIgnoreCase(parser.getName())){
+					model.setLogDate(parser.nextText());
+				} else if("LOGNO".equalsIgnoreCase(parser.getName())){
+					model.setLogNo(parser.nextText());
+				} else if("TXNCD".equalsIgnoreCase(parser.getName())){
+					model.setTxncd(parser.nextText());
+				} else if("TXNSTS".equalsIgnoreCase(parser.getName())){
+					model.setTxnsts(parser.nextText());
+				} else if("TXNAMT".equalsIgnoreCase(parser.getName())){
+					model.setTxnamt(parser.nextText());
+				} else if("CRDNO".equalsIgnoreCase(parser.getName())){
+					model.setCrdNo(parser.nextText());
 				}
 				break;
-
+			case XmlPullParser.END_TAG:
+				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+					list.add(model);
+				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("list", list);
+				}
+				break;
 			}
-
+			
 			eventType = parser.next();
 		}
-
 		return respMap;
 	}
 

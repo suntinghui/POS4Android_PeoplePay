@@ -1,358 +1,388 @@
 package com.people.util;
 
-import android.text.Html;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+import java.util.Vector;
+import java.util.regex.Pattern;
+
+import android.util.Base64;
 
 public class StringUtil {
+	private final static String DES = "DES"; 
 
 	/**
-	 * Get a string where internal characters that are escaped for HTML are
-	 * unescaped For example, '&amp;' becomes '&' Handles &#32; and &#x32; cases
-	 * as well
+	 * @param str
+	 * @param defaultValue
+	 * @return
+	 */
+	public static int getInt(String str, int defaultValue) {
+		if (str == null)
+			return defaultValue;
+		try {
+			return Integer.parseInt(str);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	/**
+	 * @param str
+	 * @param defaultValue
+	 * @return
+	 */
+	public static double getDouble(String str, double defaultValue) {
+		if (str == null)
+			return defaultValue;
+		try {
+			return Double.parseDouble(str);
+		} catch (Exception e) {
+			return defaultValue;
+		}
+	}
+
+	public static double Currency2Double(String str) {
+		if (str == null)
+			return 0.0;
+		try {
+			StringBuffer sb = new StringBuffer();
+			String[] temp = StringUtil.split(str, ",");
+			for (int i = 0; i < temp.length; i++) {
+				sb.append(temp[i]);
+			}
+			return Double.parseDouble(sb.toString());
+		} catch (Exception e) {
+			return 0.0;
+		}
+	}
+
+	public static String[] split(String original, String separator) {
+		Vector nodes = new Vector();
+
+		// Parse nodes into vector
+		int index = original.indexOf(separator);
+		while (index >= 0) {
+			nodes.addElement(original.substring(0, index));
+			original = original.substring(index + separator.length());
+			index = original.indexOf(separator);
+		}
+		// Get the last node
+		nodes.addElement(original);
+
+		// Create splitted string array
+		String[] result = new String[nodes.size()];
+		if (nodes.size() > 0) {
+			for (int loop = 0; loop < nodes.size(); loop++)
+				result[loop] = (String) nodes.elementAt(loop);
+		}
+		return result;
+	}
+
+	public static String GetDisplayTitle(String alias, String creditCode) {
+		StringBuffer sb = new StringBuffer();
+		if (alias != null && alias.trim() != "") {
+			sb.append("[");
+			sb.append(alias.trim());
+			sb.append("] ");
+		}
+		if (creditCode != null && creditCode.trim() != "") {
+			if (creditCode.length() > 10) {
+				sb.append(creditCode.substring(0, 6));
+				sb.append("...");
+				sb.append(creditCode.substring(creditCode.length() - 4, 4));
+			} else
+				sb.append(creditCode);
+		}
+		return sb.toString();
+	}
+
+	public static String formatAccountNo(String accountNo) {
+		try {
+			StringBuffer s = new StringBuffer();
+			for (int i = 0; i < accountNo.length() - 10; i++) {
+				s.append("*");
+			}
+
+			StringBuffer sb = new StringBuffer(accountNo);
+			sb.replace(6, accountNo.length() - 4, s.toString());
+			return sb.toString();
+		} catch (Exception e) {
+			return accountNo;
+		}
+	}
+
+	public static boolean getBool(String str, boolean b) {
+		return null != str && str.equalsIgnoreCase("true") ? true : false;
+	}
+
+	public static InputStream getInputStream(String str) {
+		InputStream inputStream = new ByteArrayInputStream(str.getBytes());
+		return inputStream;
+	}
+
+	/**
+	 * 返回字节数组
+	 * 
+	 * @param in输入的流
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] InputStram2byteArray(InputStream in) {
+		try {
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			if (in != null) {
+				byte[] buffer = new byte[1024];
+				int length = 0;
+				while ((length = in.read(buffer)) != -1) {
+					out.write(buffer, 0, length);
+				}
+				out.close();
+				in.close();
+				return out.toByteArray();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	public static String inputStreamToString(InputStream stream) {
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(stream), 8192);
+			StringBuilder sb = new StringBuilder();
+			String line = null;
+			while ((line = reader.readLine()) != null) {
+				if (line.trim().length() > 0) {
+					sb.append(line);
+				}
+			}
+			return sb.toString();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+
+		}
+
+		return "";
+	}
+
+	public static String Image2Base64(String imageName) {
+		// 对文件的操作
+		try {
+			FileInputStream in = new FileInputStream(imageName);
+			byte buffer[] = StringUtil.InputStram2byteArray(in);// 把图片文件流转成byte数组
+			byte[] encode = Base64.encode(buffer, Base64.DEFAULT);// 使用base64编码
+			return new String(encode);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+
+	public static boolean isNumeric(String str) {
+		Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+		return pattern.matcher(str).matches();
+	}
+
+	/**
+	 * 12->12.00 or 11111.1 -> 1,111.10
 	 * 
 	 * @param str
 	 * @return
 	 */
-	/***
-	 * // ??????�? public static String unescapingFromHTML(String str) { return
-	 * Html.fromHtml(str).toString(); }
-	 **/
-
-	public static String unescapingFromHTML(String url) {
-		if (null == url){
+	public static String formatAmount(float f) {
+		try {
+			DecimalFormat df = new DecimalFormat("###,###.00");
+			return df.format(f);
+		} catch (Exception e) {
 			return "";
 		}
-		
-		return url.replace("&amp;", "&").replace("&lt;", "<")
-				.replace("&gt;", ">").replace("&apos;", "\'")
-				.replace("&quot;", "\"").replace("&nbsp;", " ")
-				.replace("&copy;", "@").replace("&reg;", "?");
-
 	}
 
 	/**
-	 * 
-	 * �?�?�?串�???????? Unicode 形�?????�?�?�?. �? "�?" to "\u9EC4"
-	 * 
-	 * Converts unicodes to encoded \\uxxxx and escapes
-	 * 
-	 * special characters with a preceding slash
-	 * 
-	 * 
-	 * 
-	 * @param theString
-	 * 
-	 *            �?�???��??Unicode�???????�?�?串�??
-	 * 
-	 * @param escapeSpace
-	 * 
-	 *            ??????忽�?�空??��??�?true??��?�空??��????��????????�?????????????
-	 * 
-	 * @return �????�???��??Unicode�???????�?�?串�??
+	 * 将金额转化银联要求的12位长字符串格式 12.08 -> 0000000001208 点付宝也可以直接使用
 	 */
-
-	public static String toEncodedUnicode(String theString, boolean escapeSpace) {
-		if (null == theString || theString.trim().equals(""))
-			return "";
-		
-
-		int len = theString.length();
-
-		int bufLen = len * 2;
-
-		if (bufLen < 0) {
-
-			bufLen = Integer.MAX_VALUE;
-
-		}
-
-		StringBuffer outBuffer = new StringBuffer(bufLen);
-
-		for (int x = 0; x < len; x++) {
-
-			char aChar = theString.charAt(x);
-
-			// Handle common case first, selecting largest block that
-
-			// avoids the specials below
-
-			if ((aChar > 61) && (aChar < 127)) {
-
-				if (aChar == '\\') {
-
-					outBuffer.append('\\');
-
-					outBuffer.append('\\');
-
-					continue;
-
-				}
-
-				outBuffer.append(aChar);
-
-				continue;
-
-			}
-
-			switch (aChar) {
-
-			case ' ':
-
-				if (x == 0 || escapeSpace)
-					outBuffer.append('\\');
-
-				outBuffer.append(' ');
-
-				break;
-
-			case '\t':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('t');
-
-				break;
-
-			case '\n':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('n');
-
-				break;
-
-			case '\r':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('r');
-
-				break;
-
-			case '\f':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('f');
-
-				break;
-
-			case '=': // Fall through
-
-			case ':': // Fall through
-
-			case '#': // Fall through
-
-			case '!':
-
-				outBuffer.append('\\');
-
-				outBuffer.append(aChar);
-
-				break;
-
-			default:
-
-				if ((aChar < 0x0020) || (aChar > 0x007e)) {
-
-					// �?�?unicode???16�?�?�????�?对�?????16�???��??�?�?�?�???��??�?
-
-					outBuffer.append('\\');
-
-					outBuffer.append('u');
-
-					outBuffer.append(toHex((aChar >> 12) & 0xF));
-
-					outBuffer.append(toHex((aChar >> 8) & 0xF));
-
-					outBuffer.append(toHex((aChar >> 4) & 0xF));
-
-					outBuffer.append(toHex(aChar & 0xF));
-
-				} else {
-
-					outBuffer.append(aChar);
-
-				}
-
-			}
-
-		}
-
-		return outBuffer.toString();
-
+	public static String amount2String(String amount) {
+		String temp = amount.replace(".", "").replace(",", "");
+		return String.format("%012d", Long.parseLong(temp));
 	}
 
 	/**
+	 * 将12位长的银联格式的字符串转为金额格式 ￥ 1,200.00
 	 * 
-	 * �? Unicode 形�?????�?�?串转??��??对�?????�?????????��??�?�?串�?? �? "\u9EC4" to "�?".
-	 * 
-	 * Converts encoded \\uxxxx to unicode chars
-	 * 
-	 * and changes special saved chars to their original forms
-	 * 
-	 * 
-	 * 
-	 * @param in
-	 * 
-	 *            Unicode�???????�?�???��?????
-	 * 
-	 * @param off
-	 * 
-	 *            �???��??起�?????移�?????
-	 * 
-	 * @param len
-	 * 
-	 *            �???��??�?�???�度???
-	 * 
-	 * @param convtBuf
-	 * 
-	 *            �???��??�?�?�?�???��?????
-	 * 
-	 * @return �????�????�?�????�????????????��??�?�?串�??
+	 * @param str
+	 * @return
 	 */
-
-	public static String fromEncodedUnicode(char[] in, int off, int len) {
-
-		char aChar;
-
-		char[] out = new char[len]; // ??????�????
-
-		int outLen = 0;
-
-		int end = off + len;
-
-		while (off < end) {
-
-			aChar = in[off++];
-
-			if (aChar == '\\') {
-
-				aChar = in[off++];
-
-				if (aChar == 'u') {
-
-					// Read the xxxx
-
-					int value = 0;
-
-					for (int i = 0; i < 4; i++) {
-
-						aChar = in[off++];
-
-						switch (aChar) {
-
-						case '0':
-
-						case '1':
-
-						case '2':
-
-						case '3':
-
-						case '4':
-
-						case '5':
-
-						case '6':
-
-						case '7':
-
-						case '8':
-
-						case '9':
-
-							value = (value << 4) + aChar - '0';
-
-							break;
-
-						case 'a':
-
-						case 'b':
-
-						case 'c':
-
-						case 'd':
-
-						case 'e':
-
-						case 'f':
-
-							value = (value << 4) + 10 + aChar - 'a';
-
-							break;
-
-						case 'A':
-
-						case 'B':
-
-						case 'C':
-
-						case 'D':
-
-						case 'E':
-
-						case 'F':
-
-							value = (value << 4) + 10 + aChar - 'A';
-
-							break;
-
-						default:
-
-							throw new IllegalArgumentException(
-									"Malformed \\uxxxx encoding.");
-
-						}
-
-					}
-
-					out[outLen++] = (char) value;
-
-				} else {
-
-					if (aChar == 't') {
-
-						aChar = '\t';
-
-					} else if (aChar == 'r') {
-
-						aChar = '\r';
-
-					} else if (aChar == 'n') {
-
-						aChar = '\n';
-
-					} else if (aChar == 'f') {
-
-						aChar = '\f';
-
-					}
-
-					out[outLen++] = aChar;
-
-				}
-
-			} else {
-
-				out[outLen++] = (char) aChar;
-
-			}
-
+	public static String String2SymbolAmount(String str) {
+		try {
+			String tempStr = NumberFormat.getNumberInstance().format(Long.parseLong(str, 10)).replace(",", "");
+			double temp = Long.parseLong(tempStr) / 100.00;
+			return NumberFormat.getCurrencyInstance(Locale.CHINA).format(temp);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return str;
+		}
+	}
+
+	public static double String2AmountFloat(String str) {
+		try {
+			String tempStr = NumberFormat.getNumberInstance().format(Long.parseLong(str, 10)).replace(",", "");
+			return Long.parseLong(tempStr) / 100.00;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0.00;
+		}
+	}
+
+	public static String MD5Crypto(String str) {
+		try {
+			// Create MD5 Hash
+			MessageDigest digest = MessageDigest.getInstance("MD5");
+			digest.update(str.getBytes());
+			byte messageDigest[] = digest.digest();
+			return toHexString(messageDigest);
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
 		}
 
-		return new String(out, 0, outLen);
-
+		return "";
 	}
 
-	private static char toHex(int nibble) {
+	private static String toHexString(byte[] b) { // String to byte
+		char HEX_DIGITS[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
-		return hexDigit[(nibble & 0xF)];
-
+		StringBuilder sb = new StringBuilder(b.length * 2);
+		for (int i = 0; i < b.length; i++) {
+			sb.append(HEX_DIGITS[(b[i] & 0xf0) >>> 4]);
+			sb.append(HEX_DIGITS[b[i] & 0x0f]);
+		}
+		return sb.toString();
 	}
 
-	private static final char[] hexDigit = { '0', '1', '2', '3', '4', '5', '6',
-			'7', '8', '9', 'A',
+	/**
+	 * Convert byte[] to hex string.
+	 * 这里我们可以将byte转换成int，然后利用Integer.toHexString(int)来转换成16进制字符串。
+	 * 
+	 * @param data
+	 *            需要进行hex的字节数组数据
+	 * @return hex String (大写)
+	 */
+	public static String bytes2HexString(byte[] data) {
+		String ret = "";
+		for (int i = 0; i < data.length; i++) {
+			String hex = Integer.toHexString(data[i] & 0xFF);
+			if (hex.length() == 1) {
+				hex = '0' + hex;
+			}
+			ret += hex.toUpperCase();
+		}
+		return ret;
+	}
 
-			'B', 'C', 'D', 'E', 'F' };
+	/**
+	 * Convert hex string to byte[]
+	 * 
+	 * @param hexString
+	 *            the hex string
+	 * @return byte[]
+	 */
+	public static byte[] hexStringToBytes(String hexString) {
+		if (hexString == null || hexString.equals("")) {
+			return null;
+		}
+		hexString = hexString.toUpperCase();
+		int length = hexString.length() / 2;
+		char[] hexChars = hexString.toCharArray();
+		byte[] d = new byte[length];
+		for (int i = 0; i < length; i++) {
+			int pos = i * 2;
+			d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
+		}
+		return d;
+	}
 
+	/**
+	 * Convert char to byte
+	 * 
+	 * @param c
+	 *            char
+	 * @return byte
+	 */
+	private static byte charToByte(char c) {
+		return (byte) "0123456789ABCDEF".indexOf(c);
+	}
+
+//	/*
+//	 * 异或运算 count 几位异或
+//	 */
+//	public static String yiHuoToSixteen(String str, int count) {
+//		String newStr = null;
+//
+//		StringBuilder newBuilder = new StringBuilder(str);
+//		ArrayList<String> array = new ArrayList<String>();
+//		if (str.length() % count != 0) {
+//			for (int i = 0; i < count - str.length()%count; i++) {
+//				newBuilder.append("0");
+//			}
+//			
+//		}
+//		Log.i("length", newBuilder.length()/count+" count"+newBuilder.length());
+//		String []strs=new String[newBuilder.length()/count];
+//		for(int i=0;i<newBuilder.length()/count;i++){
+//			strs[i]=newBuilder.toString().substring(i*count,i*count+count);
+//			array.add(strs[i]);
+//		System.out.println(strs[i]);
+//		}
+//		for(int i=0;i<array.size();i++){
+//			
+//		}
+//		return newStr;
+//	}
+//	
+//	/** 
+//	* 加密 
+//	* @param src 数据源 
+//	* @param key 密钥，长度必须是8的倍数 
+//	* @return 返回加密后的数据 
+//	* @throws Exception 
+//	*/ 
+//	public static byte[] encrypt(byte[] src, byte[] key)throws Exception { 
+//	//DES算法要求有一个可信任的随机数源 
+//	SecureRandom sr = new SecureRandom(); 
+//	// 从原始密匙数据创建DESKeySpec对象 
+//	DESKeySpec dks = new DESKeySpec(key); 
+//	// 创建一个密匙工厂，然后用它把DESKeySpec转换成 
+//	// 一个SecretKey对象 
+//	SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES); 
+//	SecretKey securekey = keyFactory.generateSecret(dks); 
+//	// Cipher对象实际完成加密操作 
+//	Cipher cipher = Cipher.getInstance(DES); 
+//	// 用密匙初始化Cipher对象 
+//	cipher.init(Cipher.ENCRYPT_MODE, securekey, sr); 
+//	// 现在，获取数据并加密 
+//	// 正式执行加密操作 
+//	return cipher.doFinal(src); 
+//	} 
+
+	public static String dateStringFormate(String date){
+		String year = date.substring(0, 4);
+		String month = date.substring(4, 6);
+		String day = date.substring(6, 8);
+		String hour = date.substring(8, 10);
+		String minite = date.substring(10, 12);
+		String second = date.substring(12, 14);
+		
+		return year+"-"+month+"-"+day+" "+hour+":"+minite+":"+second;
+	}
 }

@@ -155,6 +155,27 @@
                 android:layout_marginLeft="20dip"
                 android:text="merchant name" />
         </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/gray_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tranfer_detail_flow_num" />
+
+            <TextView
+                android:id="@+id/tv_flow_num"
+                style="@style/gray_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:text="flownum" />
+        </LinearLayout>
     </LinearLayout>
 
     <View

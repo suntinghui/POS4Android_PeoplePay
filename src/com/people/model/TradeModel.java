@@ -1,7 +1,13 @@
 package com.people.model;
 
-public class TradeModel {
+import java.io.Serializable;
 
+public class TradeModel implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String sysDate;
 	private String merName;
 	private String logDate;
@@ -10,6 +16,10 @@ public class TradeModel {
 	private String txnsts;
 	private String amount;
 	private String cardNo;
+	private String txnamt;
+	
+
+	private String crdNo;
 
 	public String getSysDate() {
 		return sysDate;
@@ -75,4 +85,19 @@ public class TradeModel {
 		this.cardNo = cardNo;
 	}
 
+	public String getTxnamt() {
+		return txnamt;
+	}
+
+	public void setTxnamt(String txnamt) {
+		this.txnamt = txnamt;
+	}
+
+	public String getCrdNo() {
+		return crdNo;
+	}
+
+	public void setCrdNo(String crdNo) {
+		this.crdNo = crdNo;
+	}
 }
