@@ -94,7 +94,7 @@
         android:layout_marginTop="20dip"
         android:background="@color/clear"
         android:text="@string/login_forget_pwd"
-        android:textColor="@drawable/text_green_blue"
+        android:textColor="@drawable/text_white_blue"
         android:textSize="17sp" />
 
 </LinearLayout>
