@@ -8,12 +8,12 @@ import android.widget.ImageView;
 
 import com.people.R;
 
-public class SearchAndSwapActivity extends BaseActivity implements OnClickListener {
+public class SearchAndSwipeActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_search_swip);
+		setContentView(R.layout.activity_search_swipe);
 
 		ImageView iv_swip = (ImageView) this.findViewById(R.id.iv_swip);
 		iv_swip.setBackgroundResource(R.anim.swipcard);
