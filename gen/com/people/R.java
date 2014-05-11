@@ -259,7 +259,7 @@ public final class R {
         public static final int activity_login=0x7f030005;
         public static final int activity_merchant=0x7f030006;
         public static final int activity_modify_login_pwd=0x7f030007;
-        public static final int activity_search_swip=0x7f030008;
+        public static final int activity_search_swipe=0x7f030008;
         public static final int activity_setting=0x7f030009;
         public static final int activity_splash=0x7f03000a;
         public static final int activity_tools=0x7f03000b;

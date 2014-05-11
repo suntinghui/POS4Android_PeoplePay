@@ -5,21 +5,21 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_alert">提示</string>
     <string name="ok">确定</string>
-	<string name="cancel">取消</string>
-	<string name="title_waitting">请稍候</string>
-	<string name="title_progressbar">正在下载文件</string>
-	<string name="noNetTips">请您确认已开通手机上网功能，并在手机上设置正确的上网方式</string>
-	<string name="bank_no">银行卡号:</string>
-	<string name="open_account_name">开户名:</string>
-	<string name="open_account_bank">开户银行:</string>
-	<string name="in_account_msg">入账信息</string>
-	<string name="modify_pwd">修改密码</string>
-	<string name="more_setting">更多设置</string>
-	<string name="conect">联系客服</string>
-	<string name="exit_safity">安全退出</string>
-	<string name="str_user_hint">请输入账号</string>
+    <string name="cancel">取消</string>
+    <string name="title_waitting">请稍候</string>
+    <string name="title_progressbar">正在下载文件</string>
+    <string name="noNetTips">请您确认已开通手机上网功能，并在手机上设置正确的上网方式</string>
+    <string name="bank_no">银行卡号:</string>
+    <string name="open_account_name">开户名:</string>
+    <string name="open_account_bank">开户银行:</string>
+    <string name="in_account_msg">入账信息</string>
+    <string name="modify_pwd">修改密码</string>
+    <string name="more_setting">更多设置</string>
+    <string name="conect">联系客服</string>
+    <string name="exit_safity">安全退出</string>
+    <string name="str_user_hint">请输入账号</string>
     <string name="str_pwd_hint">请输入密码</string>
-    <string name="str_login">登&#160;&#160;&#160;&#160;录</string>
+    <string name="str_login">登    录</string>
     <string name="str_setting_title">更多</string>
     <string name="draw_lock_tips">绘制解锁图案</string>
     <string name="login_forget_pwd">忘记密码？</string>
@@ -33,20 +33,17 @@
     <string name="inputmoeny_title">输入金额</string>
     <string name="inputmoeny_click_swipe">点击刷卡</string>
     <string name="inputmoeny_cash">现金记账</string>
-    <string name="tranfer_list_title">交易明细列表</string>
-    <string name="tranfer_detail_title">交易明细详情</string>
+    <string name="tranfer_list_title">交易列表</string>
+    <string name="tranfer_detail_title">交易详情</string>
     <string name="tranfer_detail_date">交易日期</string>
     <string name="tranfer_detail_account">账号</string>
     <string name="tranfer_detail_money">交易金额</string>
     <string name="tranfer_detail_merchant_name">商户名称</string>
     <string name="tranfer_detail_btn_revoke">撤销</string>
-    
-    
     <string name="app_list_header_refresh_down">下拉刷新</string>
     <string name="app_list_header_refreshing">正在刷新</string>
     <string name="app_list_header_refresh_up">松开刷新</string>
     <string name="app_list_header_refresh_last_update">上次更新于:%s</string>
     <string name="app_list_footer_more">更多</string>
     <string name="app_list_footer_loading">正在加载</string>
-    
 </resources>

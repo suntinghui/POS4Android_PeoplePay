@@ -58,7 +58,7 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 				long arg3) {
 			switch (arg2) {
 			case 0: // 余额查询
-				 Intent intent0 = new Intent(ToolsActivity.this, SearchAndSwapActivity.class);
+				 Intent intent0 = new Intent(ToolsActivity.this, SearchAndSwipeActivity.class);
 				 startActivity(intent0);
 				break;
 

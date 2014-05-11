@@ -1,6 +1,5 @@
 package com.people.activity;
 
-import android.R.drawable;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -8,22 +7,19 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
-import com.people.util.CartoonUtil;
 import com.people.view.GestureLockView;
 import com.people.view.GestureLockView.OnGestureFinishListener;
 
