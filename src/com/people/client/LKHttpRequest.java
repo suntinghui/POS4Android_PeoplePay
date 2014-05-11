@@ -39,16 +39,6 @@ public class LKHttpRequest {
 		}
 	}
 
-	public String getRequestURL() {
-		SharedPreferences pre = ApplicationEnvironment.getInstance().getPreferences();
-		String hostStr = pre.getString(Constants.kREALHOST, null);
-		if (null == hostStr || hostStr.trim().equals("")) {
-			hostStr = pre.getString(Constants.kHOSTNAME, Constants.DEFAULTHOST);
-		}
-
-		return hostStr + requestDataMap.get(Constants.kWEBSERVICENAME);
-	}
-
 	public int getTag() {
 		return tag;
 	}
@@ -84,7 +74,7 @@ public class LKHttpRequest {
 	/****************************************/
 
 	public void post() {
-		this.client.post(ApplicationEnvironment.getInstance().getApplication(), Constants.DEFAULTHOST + TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
+		this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
 	}
 
 	private HttpEntity getHttpEntity(LKHttpRequest request) {

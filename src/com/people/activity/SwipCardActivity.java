@@ -19,10 +19,7 @@ import com.people.R;
 
 // 刷卡主界面
 public class SwipCardActivity extends BaseActivity implements OnClickListener {
-	private Integer[] imageIds = { R.drawable.swip_icon_n_0,
-			R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2,
-			R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5,
-			R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8};
+	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 };
 
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
@@ -54,13 +51,11 @@ public class SwipCardActivity extends BaseActivity implements OnClickListener {
 	// 点击事件
 	private OnItemClickListener onclickcistener = new OnItemClickListener() {
 
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			switch (arg2) {
 			case 0: // 余额查询
-				 Intent intent0 = new Intent(SwipCardActivity.this,
-						 SwipActivity.class);
-				 startActivity(intent0);
+				Intent intent0 = new Intent(SwipCardActivity.this, SwipActivity.class);
+				startActivity(intent0);
 				break;
 
 			case 1: // 参考信息
@@ -145,12 +140,10 @@ public class SwipCardActivity extends BaseActivity implements OnClickListener {
 			CatalogHolder holder = null;
 
 			if (null == convertView) {
-				convertView = this.mInflater.inflate(R.layout.item_catalog,
-						null);
+				convertView = this.mInflater.inflate(R.layout.item_catalog, null);
 				holder = new CatalogHolder();
 
-				holder.CatalogCellImage = (ImageView) convertView
-						.findViewById(R.id.catalogCellImage);
+				holder.CatalogCellImage = (ImageView) convertView.findViewById(R.id.catalogCellImage);
 
 				convertView.setTag(holder);
 			} else {
