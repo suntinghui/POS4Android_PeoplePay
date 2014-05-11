@@ -10,11 +10,10 @@ import java.util.HashMap;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.people.model.TradeModel;
-
-import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.util.Xml;
+
+import com.people.model.TradeModel;
 
 public class ParseResponseXML {
 
@@ -33,54 +32,54 @@ public class ParseResponseXML {
 			switch (reqType) {
 			case TransferRequestTag.Login:
 				return login();
+				
 			case TransferRequestTag.Register:
-
 				return register();
 			case TransferRequestTag.ModifyLoginPwd:
-
 				return modifyLoginPwd();
+				
 			case TransferRequestTag.ForgetLoginPwd:
-
 				return forgetLoginPwd();
+				
 			case TransferRequestTag.SignIn:
-
 				return signIn();
+				
 			case TransferRequestTag.Consume:
-
 				return consume();
+				
 			case TransferRequestTag.ConsumeCancel:
-
 				return consumeCancel();
+				
 			case TransferRequestTag.BalanceQuery:
-
 				return balanceQuery();
+				
 			case TransferRequestTag.FlowQuery:
-
 				return flowQuery();
+				
 			case TransferRequestTag.CreditCardApply:
-
 				return creditCardApply();
+				
 			case TransferRequestTag.ClearQuery:
-
 				return clearQuery();
+				
 			case TransferRequestTag.AppCommend:
-
 				return appCommend();
+				
 			case TransferRequestTag.ReferenceMsg:
-
 				return referenceMsg();
+				
 			case TransferRequestTag.ShareTransfer:
-
 				return shareTransfer();
+				
 			case TransferRequestTag.ExaminePhone:
-
 				return examinePhone();
+				
 			case TransferRequestTag.SmsSend:
-
 				return smsSend();
+				
 			case TransferRequestTag.SmsCheck:
-
 				return smsCheck();
+				
 			}
 		} catch (XmlPullParserException e) {
 			e.printStackTrace();
@@ -102,7 +101,6 @@ public class ParseResponseXML {
 	}
 
 	private static Object login() throws XmlPullParserException, IOException {
-		// 如果程序存在Qry标签，则说明登录成功，返回HASHMAP；如果没有Qry标签，则说明登录失败，则返回String，代表错误码。
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
