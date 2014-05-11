@@ -36,7 +36,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		passwordEdit = (EditText) this.findViewById(R.id.et_pwd);
 		passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
-		
+
 		Button btn_login = (Button) this.findViewById(R.id.btn_login);
 		btn_login.setOnClickListener(this);
 
@@ -91,11 +91,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onComplete() {
 				super.onComplete();
-
 			}
-
 		});
-
 	}
 
 	private LKAsyncHttpResponseHandler getLoginHandler() {
