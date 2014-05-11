@@ -1,7 +1,5 @@
 package com.people.client;
 
-import java.util.ArrayList;
-
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
@@ -15,7 +13,7 @@ import com.people.activity.BaseActivity;
 
 public class ApplicationEnvironment {
 	
-	public static final String LKOA4ANDROID 		= "LKOA4ANDROID";
+	public static final String POS_PEOPLE 		= "POS_PEOPLE";
 	
 	private static ApplicationEnvironment appEnv 	= null;
 	private Application application 				= null;
@@ -46,10 +44,17 @@ public class ApplicationEnvironment {
 	
 	public SharedPreferences getPreferences(){
 		if (null == preferences)
-			preferences = this.getApplication().getSharedPreferences(ApplicationEnvironment.LKOA4ANDROID, Context.MODE_PRIVATE);
+			preferences = this.getApplication().getSharedPreferences(ApplicationEnvironment.POS_PEOPLE, Context.MODE_PRIVATE);
 		
 		return preferences;
 	}
+	
+	public SharedPreferences getPreferences(Context context){
+		if (null == preferences)
+			preferences = context.getSharedPreferences(ApplicationEnvironment.POS_PEOPLE, Context.MODE_PRIVATE);
+		
+		return preferences;
+	} 
 	
 	public boolean checkNetworkAvailable() {
 		ConnectivityManager manager = (ConnectivityManager) this.getApplication().getSystemService(Context.CONNECTIVITY_SERVICE);

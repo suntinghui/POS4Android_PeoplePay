@@ -1,13 +1,11 @@
 package com.people.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -17,7 +15,7 @@ import android.widget.GridView;
 
 import com.people.R;
 
-public class InputMoneyActivity extends BaseActivity implements OnClickListener {
+public class InputMoneyActivity extends BaseActivity {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
 	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除", "0", "." };
@@ -81,24 +79,6 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 
 	};
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_login:
-			// login();
-			Intent intent = new Intent(InputMoneyActivity.this, CatalogActivity.class);
-			startActivity(intent);
-			break;
-		case R.id.btn_register:
-			Intent intent1 = new Intent(InputMoneyActivity.this, ForgetLoginPwdActivity.class);
-			startActivity(intent1);
-			break;
-		default:
-			break;
-		}
-
-	}
-
 	public final class CatalogHolder {
 		public Button btn_num;
 	}
@@ -133,6 +113,7 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 				holder.btn_num = (Button) convertView.findViewById(R.id.btn_num);
 
 				convertView.setTag(holder);
+				
 			} else {
 				holder = (CatalogHolder) convertView.getTag();
 			}

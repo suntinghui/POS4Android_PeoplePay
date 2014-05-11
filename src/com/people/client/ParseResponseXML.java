@@ -30,7 +30,7 @@ public class ParseResponseXML {
 
 		try {
 			switch (reqType) {
-			case TransferRequestTag.Login:
+			case TransferRequestTag.Login: // 登录
 				return login();
 				
 			case TransferRequestTag.Register:
@@ -100,8 +100,9 @@ public class ParseResponseXML {
 		return null;
 	}
 
-	private static Object login() throws XmlPullParserException, IOException {
-		HashMap<String, String> respMap = null;
+	// 登录
+	private static HashMap<String, Object> login() throws XmlPullParserException, IOException {
+		HashMap<String, Object> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
@@ -110,7 +111,7 @@ public class ParseResponseXML {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
-					respMap = new HashMap<String, String>();
+					respMap = new HashMap<String, Object>();
 				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PHONENUMBER", parser.nextText());
 				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
