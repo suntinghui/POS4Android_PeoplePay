@@ -35,7 +35,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		usernameEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		passwordEdit = (EditText) this.findViewById(R.id.et_pwd);
-
+		passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
+		
 		Button btn_login = (Button) this.findViewById(R.id.btn_login);
 		btn_login.setOnClickListener(this);
 
@@ -111,6 +112,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				if (RSPCOD.equals("000000")) {
 					Editor editor = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).edit();
 					editor.putString(Constants.kUSERNAME, PHONENUMBER);
+					editor.putString(Constants.kPASSWORD, passwordEdit.getText().toString().trim());
 					editor.commit();
 
 					Intent intent = new Intent(LoginActivity.this, CatalogActivity.class);
