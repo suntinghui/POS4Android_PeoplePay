@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class LKAlertDialog extends Dialog {
-	
+
 	private Context context;
 	private String title;
 	private String message;
@@ -27,7 +27,7 @@ public class LKAlertDialog extends Dialog {
 	public LKAlertDialog(Context context) {
 		super(context, R.style.Dialog);
 		this.context = context;
-		
+
 	}
 
 	public LKAlertDialog(Context context, int theme) {
@@ -55,29 +55,25 @@ public class LKAlertDialog extends Dialog {
 	 * @param positiveButtonText
 	 * @return
 	 */
-	public LKAlertDialog setPositiveButton(int positiveButtonText,
-			DialogInterface.OnClickListener listener) {
+	public LKAlertDialog setPositiveButton(int positiveButtonText, DialogInterface.OnClickListener listener) {
 		this.positiveButtonText = (String) context.getText(positiveButtonText);
 		this.positiveButtonClickListener = listener;
 		return this;
 	}
 
-	public LKAlertDialog setPositiveButton(String positiveButtonText,
-			DialogInterface.OnClickListener listener) {
+	public LKAlertDialog setPositiveButton(String positiveButtonText, DialogInterface.OnClickListener listener) {
 		this.positiveButtonText = positiveButtonText;
 		this.positiveButtonClickListener = listener;
 		return this;
 	}
 
-	public LKAlertDialog setNegativeButton(int negativeButtonText,
-			DialogInterface.OnClickListener listener) {
+	public LKAlertDialog setNegativeButton(int negativeButtonText, DialogInterface.OnClickListener listener) {
 		this.negativeButtonText = (String) context.getText(negativeButtonText);
 		this.negativeButtonClickListener = listener;
 		return this;
 	}
 
-	public LKAlertDialog setNegativeButton(String negativeButtonText,
-			DialogInterface.OnClickListener listener) {
+	public LKAlertDialog setNegativeButton(String negativeButtonText, DialogInterface.OnClickListener listener) {
 		this.negativeButtonText = negativeButtonText;
 		this.negativeButtonClickListener = listener;
 		return this;
@@ -92,15 +88,13 @@ public class LKAlertDialog extends Dialog {
 		((TextView) layout.findViewById(R.id.title)).setText(title);
 		// set the confirm button
 		if (positiveButtonText != null) {
-			((Button) layout.findViewById(R.id.positiveButton))
-					.setText(positiveButtonText);
+			((Button) layout.findViewById(R.id.positiveButton)).setText(positiveButtonText);
 			if (positiveButtonClickListener != null) {
-				((Button) layout.findViewById(R.id.positiveButton))
-						.setOnClickListener(new View.OnClickListener() {
-							public void onClick(View v) {
-								positiveButtonClickListener.onClick(LKAlertDialog.this,DialogInterface.BUTTON_POSITIVE);
-							}
-						});
+				((Button) layout.findViewById(R.id.positiveButton)).setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						positiveButtonClickListener.onClick(LKAlertDialog.this, DialogInterface.BUTTON_POSITIVE);
+					}
+				});
 			}
 		} else {
 			// if no confirm button just set the visibility to GONE
@@ -108,20 +102,17 @@ public class LKAlertDialog extends Dialog {
 		}
 		// set the cancel button
 		if (negativeButtonText != null) {
-			((Button) layout.findViewById(R.id.negativeButton))
-					.setText(negativeButtonText);
+			((Button) layout.findViewById(R.id.negativeButton)).setText(negativeButtonText);
 			if (negativeButtonClickListener != null) {
-				((Button) layout.findViewById(R.id.negativeButton))
-						.setOnClickListener(new View.OnClickListener() {
-							public void onClick(View v) {
-								negativeButtonClickListener.onClick(LKAlertDialog.this,DialogInterface.BUTTON_NEGATIVE);
-							}
-						});
+				((Button) layout.findViewById(R.id.negativeButton)).setOnClickListener(new View.OnClickListener() {
+					public void onClick(View v) {
+						negativeButtonClickListener.onClick(LKAlertDialog.this, DialogInterface.BUTTON_NEGATIVE);
+					}
+				});
 			}
 		} else {
 			// if no confirm button just set the visibility to GONE
-			layout.findViewById(R.id.negativeButton).setVisibility(
-					View.GONE);
+			layout.findViewById(R.id.negativeButton).setVisibility(View.GONE);
 		}
 		// set the content message
 		if (message != null) {
@@ -129,18 +120,14 @@ public class LKAlertDialog extends Dialog {
 		} else if (contentView != null) {
 			// if no message set
 			// add the contentView to the dialog body
-			((LinearLayout) layout.findViewById(R.id.message))
-					.removeAllViews();
-			((LinearLayout) layout.findViewById(R.id.message)).addView(
-					contentView, new LayoutParams(
-							LayoutParams.WRAP_CONTENT,
-							LayoutParams.WRAP_CONTENT));
+			((LinearLayout) layout.findViewById(R.id.message)).removeAllViews();
+			((LinearLayout) layout.findViewById(R.id.message)).addView(contentView, new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
 		}
-		
+
 		this.setContentView(layout);
-		
+
 		this.setCancelable(cancelable);
-		
+
 		return this;
 	}
 }

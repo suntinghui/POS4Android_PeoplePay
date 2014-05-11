@@ -1,42 +1,30 @@
 package com.people.activity;
 
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.people.R;
 
-public class SearchAndSwipeActivity extends BaseActivity implements OnClickListener {
+public class SearchAndSwipeActivity extends BaseActivity {
+	
+	private TextView titleView = null;
+	private ImageView animImageView = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_swipe);
-
-		ImageView iv_swip = (ImageView) this.findViewById(R.id.iv_swip);
-		iv_swip.setBackgroundResource(R.anim.swipcard);
-		AnimationDrawable animaition = (AnimationDrawable) iv_swip.getBackground();
-
-		animaition.setOneShot(false);
-
-		if (animaition.isRunning())// 是否正在运行？
-
-		{
-			animaition.stop();// 停止
-
-		}
-		animaition.start();// 启动
+		
+		titleView = (TextView) this.findViewById(R.id.titleView);
+		animImageView = (ImageView) this.findViewById(R.id.iv_swipe);
 
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		default:
-			break;
-		}
-
+	
+	public void backAction(View view){
+		this.finish();
 	}
+
 }

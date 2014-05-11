@@ -19,6 +19,7 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.view.BLDeviceDialog;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -43,7 +44,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		Button btn_forget_pwd = (Button) findViewById(R.id.btn_forget_pwd);
 		btn_forget_pwd.setOnClickListener(this);
 	}
-
+	
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {

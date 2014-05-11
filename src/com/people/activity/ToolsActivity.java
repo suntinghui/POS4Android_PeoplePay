@@ -1,7 +1,6 @@
 package com.people.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -19,10 +18,7 @@ import com.people.R;
 
 // 工具
 public class ToolsActivity extends BaseActivity implements OnClickListener {
-	private Integer[] imageIds = { R.drawable.swip_icon_n_0,
-			R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2,
-			R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5,
-			R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8};
+	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 };
 
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
@@ -51,62 +47,34 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 
 	}
 
-	// 点击事件
 	private OnItemClickListener onclickcistener = new OnItemClickListener() {
 
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			switch (arg2) {
 			case 0: // 余额查询
-				 Intent intent0 = new Intent(ToolsActivity.this, SearchAndSwipeActivity.class);
-				 startActivity(intent0);
 				break;
 
 			case 1: // 参考信息
-				// Intent intent1 = new Intent(SwipCardActivity.this,
-				// PayListActivity.class);
-				// startActivity(intent1);
 				break;
 
 			case 2: // 官方微博
-				// Intent intent2 = new Intent(SwipCardActivity.this,
-				// ReimbursementListActivity.class);
-				// startActivity(intent2);
 				break;
 
 			case 3: // 卡卡转账
-				// Intent intent3 = new Intent(SwipCardActivity.this,
-				// TravelexpenseListActivity.class);
-				// startActivity(intent3);
 				break;
 
 			case 4: // 交易分享
-				// Intent intent4 = new Intent(SwipCardActivity.this,
-				// OthersActivity.class);
-				// startActivity(intent4);
 				break;
 
 			case 5: // 推荐我们
-				// Intent intent5 = new Intent(SwipCardActivity.this,
-				// SettingActivity.class);
-				// startActivity(intent5);
 				break;
 			case 6: // 信用卡还款
-				// Intent intent3 = new Intent(SwipCardActivity.this,
-				// TravelexpenseListActivity.class);
-				// startActivity(intent3);
 				break;
 
 			case 7: // 手机充值
-				// Intent intent4 = new Intent(SwipCardActivity.this,
-				// OthersActivity.class);
-				// startActivity(intent4);
 				break;
 
 			case 8: // 支付宝充值
-				// Intent intent5 = new Intent(SwipCardActivity.this,
-				// SettingActivity.class);
-				// startActivity(intent5);
 				break;
 			default:
 				break;
@@ -144,12 +112,10 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 			CatalogHolder holder = null;
 
 			if (null == convertView) {
-				convertView = this.mInflater.inflate(R.layout.item_catalog,
-						null);
+				convertView = this.mInflater.inflate(R.layout.item_catalog, null);
 				holder = new CatalogHolder();
 
-				holder.CatalogCellImage = (ImageView) convertView
-						.findViewById(R.id.catalogCellImage);
+				holder.CatalogCellImage = (ImageView) convertView.findViewById(R.id.catalogCellImage);
 
 				convertView.setTag(holder);
 			} else {
