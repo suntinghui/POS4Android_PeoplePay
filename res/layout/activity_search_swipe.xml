@@ -17,14 +17,16 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="15dip"
-            android:background="@drawable/btn_back" />
+            android:background="@drawable/btn_back"
+            android:onClick="backAction" />
 
         <TextView
             style="@style/white_20"
+            android:id="@+id/titleView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="刷卡" />
+            android:text="检测设备" />
     </RelativeLayout>
 
     <LinearLayout
@@ -34,7 +36,7 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/iv_swip"
+            android:id="@+id/iv_swipe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />

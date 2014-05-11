@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp" >
+    android:paddingBottom="5dip"
+    android:paddingTop="5dip" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,7 +15,7 @@
             android:id="@+id/device_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/black"
+            android:textColor="@color/blue_1"
             android:textSize="18sp" />
 
         <TextView
@@ -35,13 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@android:color/black"
-            android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/device_rssi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/black" />
+            android:textSize="15sp" />
     </LinearLayout>
 
 </RelativeLayout>
