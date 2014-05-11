@@ -26,10 +26,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 
 		Button btn_login = (Button) this.findViewById(R.id.btn_login);
-		// Button btn_register = (Button)this.findViewById(R.id.btn_register);
 		btn_login.setOnClickListener(this);
-		// btn_register.setOnClickListener(this);
-
+		
+		Button btn_forget_pwd = (Button) findViewById(R.id.btn_forget_pwd);
+		btn_forget_pwd.setOnClickListener(this);
 	}
 
 	// 登录
@@ -288,17 +288,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.btn_login:
 			login();
-			
-			
-			
-			
-			// Intent intent = new Intent(LoginActivity.this, CatalogActivity.class);
-			// startActivity(intent);
 			break;
-		case R.id.btn_register:
-			Intent intent1 = new Intent(LoginActivity.this, ForgetLoginPwdActivity.class);
+			
+		case R.id.btn_forget_pwd:
+			Intent intent1 = new Intent(LoginActivity.this, ForgetPwdActivity.class);
 			startActivity(intent1);
 			break;
+			
 		default:
 			break;
 		}

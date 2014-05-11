@@ -13,7 +13,7 @@ public class SearchAndSwapActivity extends BaseActivity implements OnClickListen
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_swip);
+		setContentView(R.layout.activity_search_swip);
 
 		ImageView iv_swip = (ImageView) this.findViewById(R.id.iv_swip);
 		iv_swip.setBackgroundResource(R.anim.swipcard);

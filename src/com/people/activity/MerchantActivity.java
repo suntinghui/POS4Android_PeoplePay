@@ -9,13 +9,16 @@ import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 
@@ -23,6 +26,7 @@ import android.widget.Toast;
 public class MerchantActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout layout_msg_blow ;
 	private Boolean isClicked = false;
+	private ImageView iv_pull;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,6 +36,16 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 		layout_msg_top.setOnClickListener(this);
 		layout_msg_blow = (LinearLayout) findViewById(R.id.layout_msg_blow);
 		
+		RelativeLayout layout_modify_pwd = (RelativeLayout) findViewById(R.id.layout_modify_pwd);
+		layout_modify_pwd.setOnClickListener(this);
+		
+		RelativeLayout layout_more_setting = (RelativeLayout) findViewById(R.id.layout_more_setting);
+		layout_more_setting.setOnClickListener(this);
+		
+		RelativeLayout layout_connect = (RelativeLayout) findViewById(R.id.layout_connect);
+		layout_connect.setOnClickListener(this);
+		
+		iv_pull = (ImageView) findViewById(R.id.iv_pull);
 		
 		
 	}
@@ -43,9 +57,21 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 			isClicked = !isClicked;
 			if (isClicked) {
 				layout_msg_blow.setVisibility(View.VISIBLE);
+				iv_pull.setBackgroundResource(R.drawable.merchant_icon_push);
 			}else{
 				layout_msg_blow.setVisibility(View.GONE);
+				iv_pull.setBackgroundResource(R.drawable.merchant_icon_pull);
 			}
+			break;
+		case R.id.layout_modify_pwd:
+			
+			break;
+		case R.id.layout_more_setting:
+			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
+			startActivity(intent2);
+			break;
+		case R.id.layout_connect:
+			
 			break;
 		default:
 			break;

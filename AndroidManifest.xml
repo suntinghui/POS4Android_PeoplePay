@@ -130,14 +130,6 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".activity.CashFlowActivity"  android:exported="false" 
-            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
-        	<intent-filter >
-                <action android:name="com.people.CashFlowActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
         <activity android:name=".activity.MerchantActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
@@ -146,10 +138,10 @@
             </intent-filter>
         </activity>
         
-         <activity android:name=".activity.ToolActivity"  android:exported="false" 
+         <activity android:name=".activity.ToolsActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
-                <action android:name="com.people.ToolActivity" />
+                <action android:name="com.people.ToolsActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -170,10 +162,42 @@
             </intent-filter>
         </activity>
         
-         <activity android:name=".activity.SwipActivity"  android:exported="false" 
+         <activity android:name=".activity.SearchAndSwapActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
-                <action android:name="com.people.SwipActivity" />
+                <action android:name="com.people.SearchAndSwapActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.SettingActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.SettingActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.LockScreenSettingActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.LockScreenSettingActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.ForgetPwdActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.ForgetPwdActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.TransferListActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.TransferListActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
