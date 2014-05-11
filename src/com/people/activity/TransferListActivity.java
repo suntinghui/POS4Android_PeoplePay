@@ -1,14 +1,6 @@
 package com.people.activity;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-
-import com.people.R;
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,14 +11,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.people.R;
+import com.people.view.RefreshListView.RefreshListener;
+
 // 流水
-public class TransferListActivity extends BaseActivity implements OnClickListener, OnItemClickListener {
+public class TransferListActivity extends BaseActivity implements OnClickListener, RefreshListener, OnItemClickListener {
 	
 	private Button btn_back = null;
 	private ListView listView = null;
@@ -43,14 +37,11 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		super.onCreate(savedInstanceState);
 		
 		this.setContentView(R.layout.activity_transfer_list);
-		
-		btn_back = (Button) this.findViewById(R.id.btn_back);
-		btn_back.setOnClickListener(this);
-		
+		Log.i("refresh: ", "------00");
 		
 		listView = (ListView)this.findViewById(R.id.listview);
 		
-		
+		Log.i("refresh: ", "------2");
 		adapter = new Adapter(this);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener(){
@@ -185,5 +176,23 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	
 	private void loadMoreData(){
 //		refresh();
+	}
+
+	@Override
+	public Object refreshing() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void refreshed(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void more() {
+		// TODO Auto-generated method stub
+		
 	}
 }
