@@ -8,8 +8,11 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.view.LKAlertDialog;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -71,7 +74,26 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 			startActivity(intent2);
 			break;
 		case R.id.layout_connect:
-			
+			LKAlertDialog dialog = new LKAlertDialog(this);
+			dialog.setTitle("提示");
+			dialog.setMessage("客服热线：4006269987");
+			dialog.setCancelable(false);
+			dialog.setPositiveButton("拨打", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					dialog.dismiss();
+					Intent intent=new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+"4006269987"));
+					startActivity(intent);
+				}
+			});
+			dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			dialog.create().show();
 			break;
 		default:
 			break;

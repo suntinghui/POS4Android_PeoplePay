@@ -172,6 +172,7 @@ public final class R {
         public static final int btn_num=0x7f09003e;
         public static final int btn_register=0x7f090024;
         public static final int btn_revoke=0x7f09002c;
+        public static final int btn_securitycode=0x7f090003;
         public static final int catalogCellImage=0x7f09003d;
         public static final int contentLayout=0x7f09003f;
         public static final int detail=0x7f090052;
@@ -190,7 +191,6 @@ public final class R {
         public static final int gridveiw=0x7f09000a;
         public static final int gv=0x7f09000b;
         public static final int ibtn_head=0x7f090016;
-        public static final int ibtn_securitycode=0x7f090003;
         public static final int iv_0=0x7f090019;
         public static final int iv_1=0x7f09001d;
         public static final int iv_2=0x7f09001f;

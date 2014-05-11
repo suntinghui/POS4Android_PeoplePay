@@ -75,12 +75,14 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="18dip"
                     android:background="@null"
+                    android:inputType="phone"
+                    android:maxLength="11"
                     android:hint="@string/forgetpwd_phone_hint"
                     android:singleLine="true" />
             </LinearLayout>
 
-            <ImageButton
-                android:id="@+id/ibtn_securitycode"
+            <Button
+                android:id="@+id/btn_securitycode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -120,6 +122,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="18dip"
                 android:background="@null"
+                android:inputType="number"
+                android:maxLength="6"
                 android:hint="@string/forgetpwd_securitycode_hint"
                 android:singleLine="true" />
         </LinearLayout>
@@ -140,6 +144,6 @@
         android:layout_marginRight="25dip"
         android:layout_marginTop="35dip"
         android:background="@drawable/btn_next"
-        android:text="@string/forgetpwd_next" />
+        android:text="确 定" />
 
 </LinearLayout>
