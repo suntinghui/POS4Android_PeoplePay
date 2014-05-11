@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_alignParentTop="true"
-            android:textSize="12dip"
+            android:textSize="15sp"
             android:textColor="#192F06"
             android:paddingTop="8dip"
             android:text="@string/app_list_header_refresh_down"/>
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_below="@id/refresh_list_header_text"
-            android:textSize="12dip"
+            android:textSize="15sp"
             android:textColor="#192F06"
             android:paddingBottom="8dip"
             android:text="@string/app_list_header_refresh_last_update"/>

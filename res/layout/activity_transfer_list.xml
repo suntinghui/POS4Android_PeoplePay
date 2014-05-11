@@ -118,6 +118,7 @@
             android:descendantFocusability="blocksDescendants"
             android:divider="@color/clear"
             android:dividerHeight="8dip"
+            android:fadingEdge="none" 
             android:listSelector="@android:color/transparent" >
         </com.people.view.RefreshListView>
     </RelativeLayout>

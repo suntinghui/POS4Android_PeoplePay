@@ -1,6 +1,7 @@
 package com.people.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -60,13 +61,11 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	
 	public final class ViewHolder{
 		public LinearLayout contentLayout;
-		public RelativeLayout moreLayout;
 		
 		public TextView tv_date;
 		public TextView tv_amount;
 		public TextView tv_cardnum;
 		
-		public Button moreButton;
 	}
 	
 	public class Adapter extends BaseAdapter{
@@ -100,13 +99,10 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 				convertView = mInflater.inflate(R.layout.list_item_transfer, null);
 				
 				holder.contentLayout = (LinearLayout) convertView.findViewById(R.id.contentLayout);
-				holder.moreLayout = (RelativeLayout) convertView.findViewById(R.id.moreLayout);
 				
 				holder.tv_amount = (TextView) convertView.findViewById(R.id.tv_amount);
 				holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 				holder.tv_cardnum = (TextView) convertView.findViewById(R.id.tv_cardnum);
-				holder.moreButton = (Button) convertView.findViewById(R.id.moreButton);
-				holder.moreButton.setOnClickListener(TransferListActivity.this);
 				
 				convertView.setTag(holder);
 			} else {
@@ -155,7 +151,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		
-		
+		Intent intent = new Intent(TransferListActivity.this, TransferDetailActivity.class);
+		startActivity(intent);
 		
 	}
 
@@ -166,16 +163,9 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		case R.id.btn_back:
 			this.finish();
 			break;
-		case R.id.moreButton:
-			loadMoreData();
-			break;
 		default:
 			break;
 		}
-	}
-	
-	private void loadMoreData(){
-//		refresh();
 	}
 
 	@Override
