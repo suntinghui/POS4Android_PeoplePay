@@ -20,8 +20,7 @@ import com.people.R;
 public class InputMoneyActivity extends BaseActivity implements OnClickListener {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
-	private String[] num = { "1", "2", "3","4", "5", "6", "7", "8",
-			"9", "删除", "0", "."};
+	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除", "0", "." };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +39,7 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 	// 点击事件
 	private OnItemClickListener onclickcistener = new OnItemClickListener() {
 
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			switch (arg2) {
 			case 0: //
 				break;
@@ -72,7 +70,7 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 				break;
 			case 10: //
 				break;
-				
+
 			case 11: // dot
 				break;
 			default:
@@ -88,13 +86,11 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 		switch (v.getId()) {
 		case R.id.btn_login:
 			// login();
-			Intent intent = new Intent(InputMoneyActivity.this,
-					CatalogActivity.class);
+			Intent intent = new Intent(InputMoneyActivity.this, CatalogActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.btn_register:
-			Intent intent1 = new Intent(InputMoneyActivity.this,
-					ForgetLoginPwdActivity.class);
+			Intent intent1 = new Intent(InputMoneyActivity.this, ForgetLoginPwdActivity.class);
 			startActivity(intent1);
 			break;
 		default:
@@ -131,12 +127,10 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 			CatalogHolder holder = null;
 
 			if (null == convertView) {
-				convertView = this.mInflater.inflate(R.layout.item_inputmoney,
-						null);
+				convertView = this.mInflater.inflate(R.layout.item_inputmoney, null);
 				holder = new CatalogHolder();
 
-				holder.btn_num = (Button) convertView
-						.findViewById(R.id.btn_num);
+				holder.btn_num = (Button) convertView.findViewById(R.id.btn_num);
 
 				convertView.setTag(holder);
 			} else {

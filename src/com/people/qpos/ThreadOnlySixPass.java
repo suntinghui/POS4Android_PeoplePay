@@ -1,7 +1,5 @@
 package com.people.qpos;
 
-import com.people.util.Utils;
-
 import android.content.Context;
 import android.os.Handler;
 import dspread.voicemodem.CardReader;
@@ -15,48 +13,50 @@ import dspread.voicemodem.CardReader;
 public class ThreadOnlySixPass extends Thread {
 	private Handler mHandler;
 	private Context mContext;
-	private CardReader c;
-	private byte[] fakekey;
+	private String amountStr;
 
-	public ThreadOnlySixPass(Handler mHandler, Context mContext, CardReader c, byte[] fakekey) {
+	public ThreadOnlySixPass(Handler mHandler, Context mContext, String amountStr) {
 		this.mHandler = mHandler;
 		this.mContext = mContext;
-		this.c = c;
-		this.fakekey = fakekey;
+		this.amountStr = amountStr;
 	}
 
 	@Override
 	public void run() {
 		// TCK
-		c.setDesKey(fakekey);
-		int r = c.doTradeEx("100", 5, "123", "1000", 60); // please slide
-		if (r == CardReader.SUCCESS) {// card,
-			r = c.waitUser(1, 60);
-			if (r == CardReader.TIMEOUT) {
-				Utils.HandData(mHandler, "time out", 0);
-			} else if (r == CardReader.SUCCESS) {
+		QPOS.getCardReader().setDesKey(QPOS.fakekey);
 
-				String pin = c.getTradeResultCardPwd();
-				String ms = c.getTradeResultMacString();
-				Utils.HandData(mHandler, "PINBlock encrypted:" + pin + "\nMAC:" + ms, 0);
-			} else if (r == CardReader.MACERROR) {
+		int resultCode = QPOS.getCardReader().doTradeEx(this.amountStr, 5, "123", "1000", 60);
+		if (resultCode == CardReader.SUCCESS) {
+			resultCode = QPOS.getCardReader().waitUser(1, 60);
 
-				Utils.HandData(mHandler, "communication MAC ERROR", 0);
-			} else if (r == CardReader.USERCANCEL) {
+			if (resultCode == CardReader.SUCCESS) {
+				String pin = QPOS.getCardReader().getTradeResultCardPwd();
+				String ms = QPOS.getCardReader().getTradeResultMacString();
+				QPOS.HandData(mHandler, "PINBlock encrypted:" + pin + "\nMAC:" + ms, CardReader.SUCCESS);
 
-				Utils.HandData(mHandler, "User cancel password", 0);
-			} else if (r == CardReader.NOTSUPPORTED) {
+			} else if (resultCode == CardReader.TIMEOUT) {
+				QPOS.HandData(mHandler, "time out", CardReader.TIMEOUT);
 
-				Utils.HandData(mHandler, "Transaction mode does not support", 0);
-			} else if (r == CardReader.CMDTIMEOUT) {
+			} else if (resultCode == CardReader.MACERROR) {
+				QPOS.HandData(mHandler, "communication MAC ERROR", CardReader.MACERROR);
 
-				Utils.HandData(mHandler, "Command time out", 0);
-			} else if (r == CardReader.UNKNOWNERROR) {
-				Utils.HandData(mHandler, "unknow error", 0);
+			} else if (resultCode == CardReader.USERCANCEL) {
+				QPOS.HandData(mHandler, "User cancel password", CardReader.USERCANCEL);
+
+			} else if (resultCode == CardReader.NOTSUPPORTED) {
+				QPOS.HandData(mHandler, "Transaction mode does not support", CardReader.NOTSUPPORTED);
+
+			} else if (resultCode == CardReader.CMDTIMEOUT) {
+				QPOS.HandData(mHandler, "Command time out", CardReader.CMDTIMEOUT);
+
+			} else if (resultCode == CardReader.UNKNOWNERROR) {
+				QPOS.HandData(mHandler, "unknow error", CardReader.UNKNOWNERROR);
+
 			}
 
-		} else if (r == CardReader.TIMEOUT) {
-			Utils.HandData(mHandler, "time out", 0);
+		} else if (resultCode == CardReader.TIMEOUT) {
+			QPOS.HandData(mHandler, "time out", CardReader.TIMEOUT);
 		}
 	}
 

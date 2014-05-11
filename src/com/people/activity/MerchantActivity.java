@@ -3,11 +3,11 @@ package com.people.activity;
 import java.util.HashMap;
 
 import com.people.R;
-import com.people.client.LKAsyncHttpResponseHandler;
-import com.people.client.LKHttpRequest;
-import com.people.client.LKHttpRequestQueue;
-import com.people.client.LKHttpRequestQueueDone;
 import com.people.client.TransferRequestTag;
+import com.people.network.LKAsyncHttpResponseHandler;
+import com.people.network.LKHttpRequest;
+import com.people.network.LKHttpRequestQueue;
+import com.people.network.LKHttpRequestQueueDone;
 
 import android.content.Intent;
 import android.os.Bundle;

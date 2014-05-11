@@ -1,4 +1,4 @@
-package com.people.client;
+package com.people.network;
 
 import android.util.Log;
 

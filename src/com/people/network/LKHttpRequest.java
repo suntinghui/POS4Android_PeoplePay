@@ -1,4 +1,4 @@
-package com.people.client;
+package com.people.network;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -13,6 +13,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
+import com.people.client.TransferRequestTag;
 import com.people.util.AESUtil;
 import com.people.util.MD5Util;
 
@@ -37,16 +40,6 @@ public class LKHttpRequest {
 		if (null != this.responseHandler) {
 			this.responseHandler.setRequest(this);
 		}
-	}
-
-	public String getRequestURL() {
-		SharedPreferences pre = ApplicationEnvironment.getInstance().getPreferences();
-		String hostStr = pre.getString(Constants.kREALHOST, null);
-		if (null == hostStr || hostStr.trim().equals("")) {
-			hostStr = pre.getString(Constants.kHOSTNAME, Constants.DEFAULTHOST);
-		}
-
-		return hostStr + requestDataMap.get(Constants.kWEBSERVICENAME);
 	}
 
 	public int getTag() {
@@ -84,7 +77,7 @@ public class LKHttpRequest {
 	/****************************************/
 
 	public void post() {
-		this.client.post(ApplicationEnvironment.getInstance().getApplication(), Constants.DEFAULTHOST + TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
+		this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
 	}
 
 	private HttpEntity getHttpEntity(LKHttpRequest request) {

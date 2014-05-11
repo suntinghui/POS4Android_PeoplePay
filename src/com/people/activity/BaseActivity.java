@@ -13,7 +13,7 @@ import android.view.Window;
 import android.widget.Toast;
 
 import com.people.client.ApplicationEnvironment;
-import com.people.client.LKHttpRequestQueue;
+import com.people.network.LKHttpRequestQueue;
 import com.people.view.LKAlertDialog;
 import com.people.view.LKProgressDialog;
 

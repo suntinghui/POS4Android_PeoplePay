@@ -4,10 +4,13 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+
+import com.people.model.TradeModel;
 
 import android.content.SharedPreferences.Editor;
 import android.util.Log;
@@ -18,11 +21,6 @@ public class ParseResponseXML {
 	private static InputStream inStream = null;
 
 	public static Object parseXML(int reqType, String responseStr) {
-		// 在项目管理与资金管理的报文中，在内部又有XML的头标签，需要去掉，否则解析出错。是不是觉得很恶心。。。
-		responseStr = responseStr.replace("&lt;", "<").replace("&gt;", ">")
-				.replace("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", "")
-				.replace("<?xml version=\'1.0\' encoding=\'UTF-8\'?>", "");
-
 		Log.e("response:", responseStr);
 
 		try {
@@ -78,10 +76,10 @@ public class ParseResponseXML {
 
 				return examinePhone();
 			case TransferRequestTag.SmsSend:
-	
+
 				return smsSend();
 			case TransferRequestTag.SmsCheck:
-		
+
 				return smsCheck();
 			}
 		} catch (XmlPullParserException e) {
@@ -103,14 +101,13 @@ public class ParseResponseXML {
 		return null;
 	}
 
-	
 	private static Object login() throws XmlPullParserException, IOException {
 		// 如果程序存在Qry标签，则说明登录成功，返回HASHMAP；如果没有Qry标签，则说明登录失败，则返回String，代表错误码。
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -128,18 +125,12 @@ public class ParseResponseXML {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				}
 				break;
-
-			case XmlPullParser.TEXT:
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
 
 	private static Object register() throws XmlPullParserException, IOException {
@@ -147,7 +138,7 @@ public class ParseResponseXML {
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -161,27 +152,20 @@ public class ParseResponseXML {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				}
 				break;
-
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object modifyLoginPwd() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -197,27 +181,20 @@ public class ParseResponseXML {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				}
 				break;
-
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object forgetLoginPwd() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -235,27 +212,20 @@ public class ParseResponseXML {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				}
 				break;
-
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object signIn() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -281,27 +251,20 @@ public class ParseResponseXML {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				}
 				break;
-
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object consume() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -317,28 +280,21 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				}
 				break;
-
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object consumeCancel() throws XmlPullParserException, IOException {
-		
+
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -355,54 +311,41 @@ public class ParseResponseXML {
 				}
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object balanceQuery() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
 					respMap = new HashMap<String, String>();
-				} 
+				}
 				break;
-
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object flowQuery() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -413,7 +356,7 @@ public class ParseResponseXML {
 				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PHONENUMBER", parser.nextText());
 				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
-					//TODO
+					// TODO
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
@@ -421,122 +364,129 @@ public class ParseResponseXML {
 				}
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object creditCardApply() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
 					respMap = new HashMap<String, String>();
 				}
-				//TODO
+				// TODO
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object clearQuery() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
 					respMap = new HashMap<String, String>();
-				} 
-				//TODO
+				}
+				// TODO
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object appCommend() throws XmlPullParserException, IOException {
-		HashMap<String, String> respMap = null;
+		HashMap<String, Object> respMap = null;
+		ArrayList<TradeModel> tradeList = null;
+		TradeModel trade = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
-					respMap = new HashMap<String, String>();
+					respMap = new HashMap<String, Object>();
 				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPCOD", parser.nextText());
 				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PHONENUMBER", parser.nextText());
-				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
-					//TODO
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
+					tradeList = new ArrayList<TradeModel>();
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
+					trade = new TradeModel();
+				} else if ("SYSDAT".equalsIgnoreCase(parser.getName())) {
+					trade.setSysDate(parser.nextText());
+				} else if ("MERNAM".equalsIgnoreCase(parser.getName())) {
+					trade.setMerName(parser.nextText());
+				} else if ("SYSDAT".equalsIgnoreCase(parser.getName())) {
+					trade.setSysDate(parser.nextText());
+				} else if ("LOGDAT".equalsIgnoreCase(parser.getName())) {
+					trade.setLogDate(parser.nextText());
+				} else if ("LOGNO".equalsIgnoreCase(parser.getName())) {
+					trade.setLogNo(parser.nextText());
+				} else if ("TXNCD".equalsIgnoreCase(parser.getName())) {
+					trade.setTxncd(parser.nextText());
+				} else if ("TXNSTS".equalsIgnoreCase(parser.getName())) {
+					trade.setTxnsts(parser.nextText());
+				} else if ("TXNAMT".equalsIgnoreCase(parser.getName())) {
+					trade.setAmount(parser.nextText());
+				} else if ("CRDNO".equalsIgnoreCase(parser.getName())) {
+					trade.setCardNo(parser.nextText());
 				}
-				break;
-
-			case XmlPullParser.TEXT:
 
 				break;
 
 			case XmlPullParser.END_TAG:
-				return respMap;
+				if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("TRANDETAILS", tradeList);
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
+					tradeList.add(trade);
+				}
+				break;
+
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object referenceMsg() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -555,26 +505,20 @@ public class ParseResponseXML {
 				}
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object shareTransfer() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -591,26 +535,20 @@ public class ParseResponseXML {
 				}
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object examinePhone() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -627,26 +565,20 @@ public class ParseResponseXML {
 				}
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object smsSend() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -663,26 +595,20 @@ public class ParseResponseXML {
 				}
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 	private static Object smsCheck() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();// 产生第一个事件
+		int eventType = parser.getEventType();
 		while (eventType != XmlPullParser.END_DOCUMENT) {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
@@ -699,18 +625,12 @@ public class ParseResponseXML {
 				}
 				break;
 
-			case XmlPullParser.TEXT:
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				return respMap;
 			}
 
 			eventType = parser.next();
 		}
 
-		return null;
+		return respMap;
 	}
-	
+
 }

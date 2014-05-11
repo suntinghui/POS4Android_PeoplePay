@@ -58,7 +58,7 @@ public class LockScreenSettingActivity extends Activity implements
 		radioOpen = (RadioButton) this.findViewById(R.id.radioOpen);
 		radioClose = (RadioButton) this.findViewById(R.id.radioClose);
 		
-		Boolean gestureClose = ApplicationEnvironment.getInstance().getPreferences().getBoolean(Constants.GestureClose, false);
+		Boolean gestureClose = ApplicationEnvironment.getInstance().getPreferences().getBoolean(Constants.kGESTRUECLOSE, false);
 		if(gestureClose){
 			radioGroup.check(R.id.radioClose);
 			layout_lock.setVisibility(View.GONE);
@@ -82,8 +82,8 @@ public class LockScreenSettingActivity extends Activity implements
 					SharedPreferences pre = ApplicationEnvironment
 							.getInstance().getPreferences();
 					Editor editor = pre.edit();
-					editor.putString(Constants.LockKey, "");
-					editor.putBoolean(Constants.GestureClose, true);
+					editor.putString(Constants.kLOCKKEY, "");
+					editor.putBoolean(Constants.kGESTRUECLOSE, true);
 					editor.commit();
 					layout_lock.setVisibility(View.GONE);
 					ApplicationEnvironment.getInstance().getApplication().stopService(new Intent("com.people.timeoutService"));
@@ -92,7 +92,7 @@ public class LockScreenSettingActivity extends Activity implements
 					SharedPreferences pre = ApplicationEnvironment
 							.getInstance().getPreferences();
 					Editor editor = pre.edit();
-					editor.putBoolean(Constants.GestureClose, false);
+					editor.putBoolean(Constants.kGESTRUECLOSE, false);
 					editor.commit();
 					tv_tips.setText("请绘制新手势");
 					tv_tips.setTextColor(LockScreenSettingActivity.this
@@ -119,8 +119,8 @@ public class LockScreenSettingActivity extends Activity implements
 						SharedPreferences pre = ApplicationEnvironment
 								.getInstance().getPreferences();
 						Editor editor = pre.edit();
-						editor.putString(Constants.LockKey, secondKey);
-						editor.putBoolean(Constants.GestureClose, false);
+						editor.putString(Constants.kLOCKKEY, secondKey);
+						editor.putBoolean(Constants.kGESTRUECLOSE, false);
 						editor.commit();
 						gv.setKey(secondKey);
 						tv_tips.setText("修改成功");
