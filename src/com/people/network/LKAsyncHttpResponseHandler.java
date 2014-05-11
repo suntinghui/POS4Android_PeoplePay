@@ -1,4 +1,4 @@
-package com.people.client;
+package com.people.network;
 
 import org.apache.http.client.HttpResponseException;
 
@@ -7,6 +7,9 @@ import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.people.activity.BaseActivity;
+import com.people.client.Constants;
+import com.people.client.ParseResponseXML;
+import com.people.client.TransferRequestTag;
 import com.people.util.AESUtil;
 import com.people.util.MD5Util;
 import com.people.view.LKAlertDialog;

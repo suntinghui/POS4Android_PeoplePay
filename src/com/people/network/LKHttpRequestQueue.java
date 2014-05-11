@@ -1,8 +1,9 @@
-package com.people.client;
+package com.people.network;
 
 import java.util.ArrayList;
 
 import com.people.activity.BaseActivity;
+import com.people.client.ApplicationEnvironment;
 
 public class LKHttpRequestQueue {
 	

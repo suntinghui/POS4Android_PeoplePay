@@ -54,7 +54,7 @@ public class SwipCardActivity extends BaseActivity implements OnClickListener {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			switch (arg2) {
 			case 0: // 余额查询
-				Intent intent0 = new Intent(SwipCardActivity.this, SwipActivity.class);
+				Intent intent0 = new Intent(SwipCardActivity.this, SearchAndSwapActivity.class);
 				startActivity(intent0);
 				break;
 

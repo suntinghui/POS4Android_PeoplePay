@@ -1,4 +1,4 @@
-package com.people.client;
+package com.people.network;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -13,6 +13,9 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 
 import com.loopj.android.http.AsyncHttpClient;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
+import com.people.client.TransferRequestTag;
 import com.people.util.AESUtil;
 import com.people.util.MD5Util;
 
