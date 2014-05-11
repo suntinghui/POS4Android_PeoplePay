@@ -21,7 +21,7 @@ import com.people.R;
 import com.people.view.RefreshListView.RefreshListener;
 
 // 流水
-public class TransferListActivity extends BaseActivity implements OnClickListener, RefreshListener, OnItemClickListener {
+public class TransferListActivity extends BaseActivity implements OnClickListener, RefreshListener {
 	
 	private Button btn_back = null;
 	private ListView listView = null;
@@ -38,20 +38,17 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		super.onCreate(savedInstanceState);
 		
 		this.setContentView(R.layout.activity_transfer_list);
-		Log.i("refresh: ", "------00");
 		
 		listView = (ListView)this.findViewById(R.id.listview);
 		
-		Log.i("refresh: ", "------2");
 		adapter = new Adapter(this);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener(){
 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-//				Intent intent = new Intent(TransferListActivity.this, TransferDetailActivity.class);
-//				intent.putExtra("model", modelList.get(arg2));
-//				TransferListActivity.this.startActivity(intent);
+				Intent intent = new Intent(TransferListActivity.this, TransferDetailActivity.class);
+				startActivity(intent);
 			}
 			
 		});
@@ -109,51 +106,9 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 				holder = (ViewHolder) convertView.getTag();
 			}
 			
-//			if (currentPage < totalPage) {
-//				if (position == modelList.size()){
-//					holder.contentLayout.setVisibility(View.GONE);
-//					holder.moreLayout.setVisibility(View.VISIBLE);
-//				} else {
-//					holder.contentLayout.setVisibility(View.VISIBLE);
-//					holder.moreLayout.setVisibility(View.GONE);
-//					
-//					TransferDetailModel model = modelList.get(position);
-//					if(model.getFlag().equals("3")){
-//						holder.iv_revoke.setVisibility(View.VISIBLE);
-//					}else{
-//						holder.iv_revoke.setVisibility(View.GONE);
-//					}
-//					
-//					holder.tv_account1.setText(modelList.get(position).getAccount1()==null?"":modelList.get(position).getAccount1());
-//					holder.tv_amount.setText(modelList.get(position).getAmount()==null?"":("¥ " + modelList.get(position).getAmount()));
-//					holder.tv_local_log.setText(modelList.get(position).getSnd_log()==null?"":modelList.get(position).getSnd_log());
-//				}
-//			} else {
-//				holder.contentLayout.setVisibility(View.VISIBLE);
-//				holder.moreLayout.setVisibility(View.GONE);
-//				
-//				TransferDetailModel model = modelList.get(position);
-//				if(model.getFlag().equals("3")){
-//					holder.iv_revoke.setVisibility(View.VISIBLE);
-//				}else{
-//					holder.iv_revoke.setVisibility(View.GONE);
-//				}
-//				
-//				holder.tv_account1.setText(modelList.get(position).getAccount1()==null?"":modelList.get(position).getAccount1());
-//				holder.tv_amount.setText(modelList.get(position).getAmount()==null?"":("¥ " + modelList.get(position).getAmount()));
-//				holder.tv_local_log.setText(modelList.get(position).getSnd_log()==null?"":modelList.get(position).getSnd_log());
-//			}
 			
 			return convertView;
 		}
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		
-		Intent intent = new Intent(TransferListActivity.this, TransferDetailActivity.class);
-		startActivity(intent);
-		
 	}
 
 	@Override
