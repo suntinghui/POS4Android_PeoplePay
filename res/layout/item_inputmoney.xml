@@ -9,15 +9,20 @@
 
     <FrameLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="80dip"
         android:layout_gravity="center_horizontal"
+        android:padding="0.7dip"
          >
 
         <Button
             android:id="@+id/btn_num"
-            android:layout_width="100dip"
             android:layout_height="fill_parent"
-            android:contentDescription="功能图标"/>
+            android:layout_width="fill_parent"
+            android:contentDescription="功能图标"
+            android:background="@drawable/inputmoney_btn_selector"
+            android:textColor="@color/gray"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
 
     </FrameLayout>
 

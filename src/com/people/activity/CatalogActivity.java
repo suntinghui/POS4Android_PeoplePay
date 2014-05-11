@@ -38,7 +38,7 @@ public class CatalogActivity extends TabActivity {
           
         TabSpec contactBookSpec=tabHost.newTabSpec("ContactBook");  
         contactBookSpec.setIndicator(view);  
-        Intent contactBookIntent = new Intent(this,CashFlowActivity.class);  
+        Intent contactBookIntent = new Intent(this,TransferListActivity.class);  
         contactBookSpec.setContent(contactBookIntent);  
           
         //商户 

@@ -20,8 +20,8 @@ import com.people.R;
 public class InputMoneyActivity extends BaseActivity implements OnClickListener {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
-	private String[] num = { "1", "2", "3", "+", "4", "5", "6", "-", "7", "8",
-			"9", "*", "C", "0", "=", "/" };
+	private String[] num = { "1", "2", "3","4", "5", "6", "7", "8",
+			"9", "删除", "0", "."};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +67,13 @@ public class InputMoneyActivity extends BaseActivity implements OnClickListener 
 				break;
 
 			case 8: //
+				break;
+			case 9: // 删除
+				break;
+			case 10: //
+				break;
+				
+			case 11: // dot
 				break;
 			default:
 				break;

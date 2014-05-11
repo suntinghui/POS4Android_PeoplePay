@@ -31,5 +31,6 @@
     <string name="forgetpwd_securitycode_hint">请输入验证码</string>
     <string name="forgetpwd_next">下一步</string>
     <string name="inputmoeny_title">输入金额</string>
+    <string name="tranfer_list_title">交易明细列表</string>
     
 </resources>
