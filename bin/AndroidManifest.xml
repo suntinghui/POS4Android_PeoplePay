@@ -82,34 +82,10 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".activity.RegisterActivity"  android:exported="false" 
-            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
-        	<intent-filter >
-                <action android:name="com.people.RegisterActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
         <activity android:name=".activity.ModifyLoginPwdActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
                 <action android:name="com.people.ModifyLoginPwdActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity android:name=".activity.ForgetLoginPwdActivity"  android:exported="false" 
-            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
-        	<intent-filter >
-                <action android:name="com.people.ForgetLoginPwdActivity" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        
-        <activity android:name=".activity.SignInActivity"  android:exported="false" 
-            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
-        	<intent-filter >
-                <action android:name="com.people.SignInActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -162,10 +138,10 @@
             </intent-filter>
         </activity>
         
-         <activity android:name=".activity.SearchAndSwapActivity"  android:exported="false" 
+         <activity android:name=".activity.SearchAndSwipeActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
-                <action android:name="com.people.SearchAndSwapActivity" />
+                <action android:name="com.people.SearchAndSwipeActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
