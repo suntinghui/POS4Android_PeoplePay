@@ -7,10 +7,10 @@ public class Constants {
 
 	public static final String AESKEY 					= "dynamicode";
 	
-	public static final int overtime    				= 3;
+	public static final int OVERTIME    				= 3;
 	
-	public static final String LockKey					="LockKey";
-	public static final String FirstLogin      			="FirstLogin";
-	public static final String GestureClose      		="GestureClose";
+	public static final String kLOCKKEY					="LockKey";
+	public static final String kFIRSTLOGIN      		="FirstLogin";
+	public static final String kGESTRUECLOSE      		="GestureClose";
 
 }

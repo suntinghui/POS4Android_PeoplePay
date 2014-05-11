@@ -23,7 +23,7 @@ public class LockScreenActivity  extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lock_screen);
 		GestureLockView gv = (GestureLockView) findViewById(R.id.gv);
-		gv.setKey(ApplicationEnvironment.getInstance().getPreferences().getString(Constants.LockKey, "")); // Z 字型
+		gv.setKey(ApplicationEnvironment.getInstance().getPreferences().getString(Constants.kLOCKKEY, "")); // Z 字型
 		gv.setOnGestureFinishListener(new OnGestureFinishListener() {
 			@Override
 			public void OnGestureFinish(boolean success) {

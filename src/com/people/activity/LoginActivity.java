@@ -66,7 +66,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				if (obj instanceof HashMap) {
 					// 登录成功
 					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-						Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+						Intent intent = new Intent(LoginActivity.this, CatalogActivity.class);
+						LoginActivity.this.startActivity(intent);
+						
 					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 					}
