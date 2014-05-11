@@ -148,6 +148,7 @@ public final class R {
         public static final int swipe_gesture08=0x7f02005f;
         public static final int swipe_gesture09=0x7f020060;
         public static final int text=0x7f020061;
+<<<<<<< HEAD
         public static final int text_white_blue=0x7f020062;
         public static final int tool_top=0x7f020063;
         public static final int top=0x7f020064;
@@ -242,6 +243,109 @@ public final class R {
         public static final int tv_totalmoney=0x7f090028;
         public static final int tv_totalnum=0x7f090027;
         public static final int tv_week=0x7f09003d;
+=======
+        public static final int text_blue_gray=0x7f020062;
+        public static final int text_white_blue=0x7f020063;
+        public static final int tool_top=0x7f020064;
+        public static final int top=0x7f020065;
+        public static final int touming_bg=0x7f020066;
+        public static final int transfer_detail_btn_revoke=0x7f020067;
+        public static final int transfer_detail_gou=0x7f020068;
+        public static final int transfer_item_normal=0x7f020069;
+        public static final int transfer_item_pressed=0x7f02006a;
+        public static final int transfer_item_selector=0x7f02006b;
+        public static final int usage_list_dark=0x7f02006c;
+        public static final int usage_list_green=0x7f02006d;
+    }
+    public static final class id {
+        public static final int bottomLayout=0x7f090047;
+        public static final int btn_back=0x7f090001;
+        public static final int btn_cash=0x7f090009;
+        public static final int btn_exit=0x7f090022;
+        public static final int btn_forget_pwd=0x7f090015;
+        public static final int btn_login=0x7f090014;
+        public static final int btn_next=0x7f090005;
+        public static final int btn_num=0x7f09003e;
+        public static final int btn_register=0x7f090024;
+        public static final int btn_revoke=0x7f09002c;
+        public static final int catalogCellImage=0x7f09003d;
+        public static final int contentLayout=0x7f09003f;
+        public static final int detail=0x7f090052;
+        public static final int device_address=0x7f09003a;
+        public static final int device_bonded=0x7f09003b;
+        public static final int device_btn=0x7f090038;
+        public static final int device_list=0x7f090037;
+        public static final int device_name=0x7f090039;
+        public static final int device_progress=0x7f090035;
+        public static final int device_rssi=0x7f09003c;
+        public static final int device_txt=0x7f090036;
+        public static final int et_account=0x7f090002;
+        public static final int et_pwd=0x7f090013;
+        public static final int et_securitycode=0x7f090004;
+        public static final int et_user=0x7f090012;
+        public static final int gridveiw=0x7f09000a;
+        public static final int gv=0x7f09000b;
+        public static final int ibtn_head=0x7f090016;
+        public static final int ibtn_securitycode=0x7f090003;
+        public static final int iv_0=0x7f090019;
+        public static final int iv_1=0x7f09001d;
+        public static final int iv_2=0x7f09001f;
+        public static final int iv_3=0x7f090021;
+        public static final int iv_gou=0x7f090027;
+        public static final int iv_left=0x7f090040;
+        public static final int iv_pull=0x7f09001a;
+        public static final int iv_swip=0x7f090025;
+        public static final int iv_switch_cursor=0x7f090054;
+        public static final int layout=0x7f09000c;
+        public static final int layout1=0x7f090023;
+        public static final int layout_connect=0x7f090020;
+        public static final int layout_lock=0x7f090010;
+        public static final int layout_modify_pwd=0x7f09001c;
+        public static final int layout_more_setting=0x7f09001e;
+        public static final int layout_msg_blow=0x7f09001b;
+        public static final int layout_msg_top=0x7f090018;
+        public static final int layout_swip=0x7f090006;
+        public static final int layout_total=0x7f09002d;
+        public static final int listview=0x7f090026;
+        public static final int listview0=0x7f090030;
+        public static final int message=0x7f090032;
+        public static final int negativeButton=0x7f090034;
+        public static final int positiveButton=0x7f090033;
+        public static final int progress=0x7f090051;
+        public static final int progressBar=0x7f090050;
+        public static final int radioClose=0x7f09000f;
+        public static final int radioGroup=0x7f09000d;
+        public static final int radioOpen=0x7f09000e;
+        public static final int refresh_list_footer_progressbar=0x7f09004a;
+        public static final int refresh_list_footer_text=0x7f090049;
+        public static final int refresh_list_header_last_update=0x7f09004f;
+        public static final int refresh_list_header_progressbar=0x7f09004b;
+        public static final int refresh_list_header_pull_down=0x7f09004c;
+        public static final int refresh_list_header_release_up=0x7f09004d;
+        public static final int refresh_list_header_text=0x7f09004e;
+        public static final int spinnerImageView=0x7f090048;
+        public static final int sv_container=0x7f090053;
+        public static final int switch_text_false=0x7f090056;
+        public static final int switch_text_true=0x7f090055;
+        public static final int tab_iv_icon=0x7f090042;
+        public static final int title=0x7f090031;
+        public static final int topbarLayout=0x7f090000;
+        public static final int tv_account=0x7f09002a;
+        public static final int tv_amount=0x7f090045;
+        public static final int tv_cardnum=0x7f090044;
+        public static final int tv_content=0x7f090041;
+        public static final int tv_date=0x7f090029;
+        public static final int tv_head=0x7f090017;
+        public static final int tv_merchant_name=0x7f09002b;
+        public static final int tv_money=0x7f090028;
+        public static final int tv_revoke=0x7f090046;
+        public static final int tv_show_money=0x7f090007;
+        public static final int tv_tip=0x7f090008;
+        public static final int tv_tips=0x7f090011;
+        public static final int tv_totalmoney=0x7f09002f;
+        public static final int tv_totalnum=0x7f09002e;
+        public static final int tv_week=0x7f090043;
+>>>>>>> 5e85479fe595a2716623a9fc507d2349b3b8e707
     }
     public static final class layout {
         public static final int activity_catalog=0x7f030000;
@@ -252,6 +356,7 @@ public final class R {
         public static final int activity_login=0x7f030005;
         public static final int activity_merchant=0x7f030006;
         public static final int activity_modify_login_pwd=0x7f030007;
+<<<<<<< HEAD
         public static final int activity_search_swipe=0x7f030008;
         public static final int activity_setting=0x7f030009;
         public static final int activity_splash=0x7f03000a;
@@ -271,15 +376,37 @@ public final class R {
         public static final int refresh_list_header=0x7f030018;
         public static final int schedule_dialog_layout=0x7f030019;
         public static final int switch_view=0x7f03001a;
+=======
+        public static final int activity_search_swip=0x7f030008;
+        public static final int activity_setting=0x7f030009;
+        public static final int activity_splash=0x7f03000a;
+        public static final int activity_tools=0x7f03000b;
+        public static final int activity_transfer_detail=0x7f03000c;
+        public static final int activity_transfer_list=0x7f03000d;
+        public static final int alert_dialog_layout=0x7f03000e;
+        public static final int choose_device=0x7f03000f;
+        public static final int device_item=0x7f030010;
+        public static final int item_catalog=0x7f030011;
+        public static final int item_inputmoney=0x7f030012;
+        public static final int item_setting=0x7f030013;
+        public static final int layout_tab=0x7f030014;
+        public static final int list_item_transfer=0x7f030015;
+        public static final int progress_dialog_layout=0x7f030016;
+        public static final int progress_hud=0x7f030017;
+        public static final int refresh_list_footer=0x7f030018;
+        public static final int refresh_list_header=0x7f030019;
+        public static final int schedule_dialog_layout=0x7f03001a;
+        public static final int switch_view=0x7f03001b;
+>>>>>>> 5e85479fe595a2716623a9fc507d2349b3b8e707
     }
     public static final class string {
         public static final int action_settings=0x7f070001;
-        public static final int app_list_footer_loading=0x7f070025;
-        public static final int app_list_footer_more=0x7f070024;
-        public static final int app_list_header_refresh_down=0x7f070020;
-        public static final int app_list_header_refresh_last_update=0x7f070023;
-        public static final int app_list_header_refresh_up=0x7f070022;
-        public static final int app_list_header_refreshing=0x7f070021;
+        public static final int app_list_footer_loading=0x7f07002d;
+        public static final int app_list_footer_more=0x7f07002c;
+        public static final int app_list_header_refresh_down=0x7f070028;
+        public static final int app_list_header_refresh_last_update=0x7f07002b;
+        public static final int app_list_header_refresh_up=0x7f07002a;
+        public static final int app_list_header_refreshing=0x7f070029;
         public static final int app_name=0x7f070000;
         public static final int bank_no=0x7f070009;
         public static final int cancel=0x7f070005;
@@ -295,6 +422,8 @@ public final class R {
         public static final int forgetpwd_title=0x7f070017;
         public static final int hello_world=0x7f070002;
         public static final int in_account_msg=0x7f07000c;
+        public static final int inputmoeny_cash=0x7f070020;
+        public static final int inputmoeny_click_swipe=0x7f07001f;
         public static final int inputmoeny_title=0x7f07001e;
         public static final int login_forget_pwd=0x7f070016;
         public static final int modify_pwd=0x7f07000d;
@@ -310,7 +439,13 @@ public final class R {
         public static final int title_alert=0x7f070003;
         public static final int title_progressbar=0x7f070007;
         public static final int title_waitting=0x7f070006;
-        public static final int tranfer_list_title=0x7f07001f;
+        public static final int tranfer_detail_account=0x7f070024;
+        public static final int tranfer_detail_btn_revoke=0x7f070027;
+        public static final int tranfer_detail_date=0x7f070023;
+        public static final int tranfer_detail_merchant_name=0x7f070026;
+        public static final int tranfer_detail_money=0x7f070025;
+        public static final int tranfer_detail_title=0x7f070022;
+        public static final int tranfer_list_title=0x7f070021;
     }
     public static final class style {
         public static final int Animation=0x7f08000b;
