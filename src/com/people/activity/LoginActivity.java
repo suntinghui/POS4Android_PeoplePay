@@ -2,16 +2,18 @@ package com.people.activity;
 
 import java.util.HashMap;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.people.R;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
@@ -20,24 +22,66 @@ import com.people.network.LKHttpRequestQueueDone;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
+	private EditText usernameEdit = null;
+	private EditText passwordEdit = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_login);
+
+		usernameEdit = (EditText) this.findViewById(R.id.et_user);
+		usernameEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+
+		passwordEdit = (EditText) this.findViewById(R.id.et_pwd);
+		passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
 
 		Button btn_login = (Button) this.findViewById(R.id.btn_login);
 		btn_login.setOnClickListener(this);
-		
+
 		Button btn_forget_pwd = (Button) findViewById(R.id.btn_forget_pwd);
 		btn_forget_pwd.setOnClickListener(this);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btn_login:
+			if (checkValue()) {
+				login();
+			}
+			break;
+
+		case R.id.btn_forget_pwd:
+			Intent intent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
+			startActivity(intent);
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+	private boolean checkValue() {
+		if ("".equals(usernameEdit.getText().toString().trim())) {
+			Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
+			return false;
+		} else if ("".equals(passwordEdit.getText().toString().trim())) {
+			Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+
+		return true;
 	}
 
 	// 登录
 	private void login() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199002");
-		tempMap.put("PHONENUMBER", "18811068526");
-		tempMap.put("PASSWORD", "1234qwer");
+		tempMap.put("PHONENUMBER", usernameEdit.getText().toString().trim());
+		tempMap.put("PASSWORD", passwordEdit.getText().toString().trim());
 		tempMap.put("PCSIM", "不能获取");
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Login, tempMap, getLoginHandler());
@@ -47,259 +91,36 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onComplete() {
 				super.onComplete();
-
 			}
-
 		});
-
 	}
 
-	@SuppressLint("ShowToast")
 	private LKAsyncHttpResponseHandler getLoginHandler() {
 		return new LKAsyncHttpResponseHandler() {
 
-			@SuppressWarnings("rawtypes")
 			@Override
 			public void successAction(Object obj) {
-				Log.e("success:", obj.toString());
+				@SuppressWarnings("unchecked")
+				HashMap<String, Object> map = (HashMap<String, Object>) obj;
+				String RSPCOD = (String) map.get("RSPCOD");
+				String RSPMSG = (String) map.get("RSPMSG");
+				String PHONENUMBER = (String) map.get("PHONENUMBER");
 
-				if (obj instanceof HashMap) {
-					// 登录成功
-					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-						Intent intent = new Intent(LoginActivity.this, CatalogActivity.class);
-						LoginActivity.this.startActivity(intent);
-						
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-					}
+				if (RSPCOD.equals("000000")) {
+					Editor editor = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).edit();
+					editor.putString(Constants.kUSERNAME, PHONENUMBER);
+					editor.putString(Constants.kPASSWORD, passwordEdit.getText().toString().trim());
+					editor.commit();
+
+					Intent intent = new Intent(LoginActivity.this, CatalogActivity.class);
+					LoginActivity.this.startActivity(intent);
 				} else {
+					Toast.makeText(LoginActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
 				}
 
 			}
 
 		};
 	}
-	
-	// 修改登录密码
-	private void modifyLoginPwd(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199003");
-		tempMap.put("PHONENUMBER", "18811068526");
-		tempMap.put("PASSWORD", "88888888");
-		tempMap.put("PASSWORDNEW", "123456");
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ModifyLoginPwd, tempMap, getModifyLoginPwdHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-
-			}
-
-		});
-	}
-	
-	private LKAsyncHttpResponseHandler getModifyLoginPwdHandler() {
-		return new LKAsyncHttpResponseHandler() {
-
-			@SuppressWarnings("rawtypes")
-			@Override
-			public void successAction(Object obj) {
-				Log.e("success:", obj.toString());
-
-				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-						Toast.makeText(getApplicationContext(), "登录密码修改成功", Toast.LENGTH_SHORT).show();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-					}
-				} else {
-				}
-
-			}
-
-		};
-	}
-	
-	// 签到
-	private void signin(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199020");
-		tempMap.put("PHONENUMBER", "18811068526");
-		tempMap.put("TERMINALNUMBER", "00000100000200000046");// 终端号（设备编号）
-		tempMap.put("PSAMCARDNO", "UN201410000046"); // PSAM卡号
-		tempMap.put("TERMINALSERIANO", "000002"); // 终端流水号
-
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SignIn, tempMap, getModifyLoginPwdHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-
-			}
-
-		});
-	}
-	
-	// 发送短信
-	private void sendSMS(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199018");
-		tempMap.put("PHONENUMBER", "18811068526");
-		tempMap.put("TOPHONENUMBER ", "18500972879");
-		tempMap.put("TYPE", "100002"); // 100001－注册  100002－忘记密码
-
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsSend, tempMap, sendSMSHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-
-			}
-
-		});
-	}
-	
-	private LKAsyncHttpResponseHandler sendSMSHandler() {
-		return new LKAsyncHttpResponseHandler() {
-
-			@SuppressWarnings("rawtypes")
-			@Override
-			public void successAction(Object obj) {
-				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-						Toast.makeText(getApplicationContext(), "短信发送成功", Toast.LENGTH_SHORT).show();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-					}
-				} else {
-				}
-
-			}
-
-		};
-	}
-	
-	// 交易
-	private void transfer(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199005");
-		tempMap.put("PHONENUMBER", "18811068526"); // 手机号
-		tempMap.put("TERMINALNUMBER", "00000100000200000046"); // 终端号
-		tempMap.put("PCSIM", "获取不到");
-		tempMap.put("TRACK", "20F7459D3FBA79BA1940D1A0A9A4011AEFE97D4DEB4244E806E97D4DEB4244E80611930B680F404FEE554E201410000046000001000002000000464541444133384441");
-		tempMap.put("TSEQNO", "000009"); // 终端流水号
-		tempMap.put("CTXNAT", "000000000100"); // 消费金额
-		tempMap.put("TPINBLK", "11930B680F404FEE554E2014"); // 支付密码???
-		tempMap.put("CRDNO", "");  // 卡号
-		tempMap.put("CHECKX", "0.0");  // 横坐标
-		tempMap.put("APPTOKEN", "apptoken");
-		tempMap.put("TTXNTM", "143030");  // 交易时间
-		tempMap.put("TTXNDT", "0509"); // 交易日期
-		tempMap.put("PSAMCARDNO", "UN123451234582"); // PSAM卡号 ???
-		tempMap.put("MAC", "5A80F34A"); // MAC ???
-
-
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Consume, tempMap, transferHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-
-			}
-
-		});
-	}
-	
-	
-	private LKAsyncHttpResponseHandler transferHandler() {
-		return new LKAsyncHttpResponseHandler() {
-
-			@SuppressWarnings("rawtypes")
-			@Override
-			public void successAction(Object obj) {
-
-				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-						Toast.makeText(getApplicationContext(), "交易成功", Toast.LENGTH_SHORT).show();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-					}
-				} else {
-				}
-
-			}
-
-		};
-	}
-	
-	// 取得商户信息
-	
-	
-	// 查询交易明细
-	private void queryHistory(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199008");
-		tempMap.put("PHONENUMBER", "18811068526");
-
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.FlowQuery, tempMap, sendSMSHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-
-			}
-
-		});
-	}
-	
-	// 清算
-	private void queryClear(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199009");
-		tempMap.put("PHONENUMBER", "18811068526");
-
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ClearQuery, tempMap, sendSMSHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-
-			}
-
-		});
-	}
-	
-	
-	
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.btn_login:
-			login();
-			break;
-			
-		case R.id.btn_forget_pwd:
-			Intent intent1 = new Intent(LoginActivity.this, ForgetPwdActivity.class);
-			startActivity(intent1);
-			break;
-			
-		default:
-			break;
-		}
-
-	}
 }

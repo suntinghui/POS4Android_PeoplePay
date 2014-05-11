@@ -7,6 +7,9 @@ public class Constants {
 
 	public static final String AESKEY 					= "dynamicode";
 	
+	public static final String kUSERNAME				= "kUSERNAME";
+	public static final String kPASSWORD				= "kPASSWORD";
+	
 	public static final int OVERTIME    				= 3;
 	
 	public static final String kLOCKKEY					="LockKey";

@@ -13,7 +13,7 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_forgetpwd);
+		setContentView(R.layout.activity_forget_pwd);
 
 		Button btn_back = (Button)this.findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
