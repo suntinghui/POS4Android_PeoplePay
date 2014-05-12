@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.people.R;
@@ -23,9 +24,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private ListView listView = null;
 	private Adapter adapter = null;
 
-	private Integer[] imageIds = { R.drawable.btn_abot, R.drawable.btn_abot, R.drawable.btn_opinion, R.drawable.btn_update };
+	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
 
-	private String[] titles = { "设置锁屏手势", "关于系统", "意见反馈", "检查更新" };
+	private String[] titles = { "设置锁屏手势", "关于系统", "意见反馈", "检查更新", "帮助" };
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_setting);
 
 		listView = (ListView) this.findViewById(R.id.listview);
-
+		Button btn_back = (Button) findViewById(R.id.btn_back);
+		btn_back.setOnClickListener(this);
+		
 		adapter = new Adapter(this);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -66,18 +69,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 		});
 
-		Button btn_back = (Button) this.findViewById(R.id.btn_back);
-		btn_back.setOnClickListener(this);
 
 	}
 
 
 	public final class ViewHolder {
-		public LinearLayout contentLayout;
+		public RelativeLayout contentLayout;
 
 		public TextView tv_content;
 		public ImageView iv_left;
-
 	}
 
 	public class Adapter extends BaseAdapter {
@@ -107,7 +107,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 				convertView = mInflater.inflate(R.layout.item_setting, null);
 
-				holder.contentLayout = (LinearLayout) convertView.findViewById(R.id.contentLayout);
+				holder.contentLayout = (RelativeLayout) convertView.findViewById(R.id.contentLayout);
 				holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
 				holder.iv_left = (ImageView) convertView.findViewById(R.id.iv_left);
 

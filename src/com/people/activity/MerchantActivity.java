@@ -3,15 +3,19 @@ package com.people.activity;
 import java.util.HashMap;
 
 import com.people.R;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.util.StringUtil;
 import com.people.view.LKAlertDialog;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -30,6 +35,10 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 	private LinearLayout layout_msg_blow ;
 	private Boolean isClicked = false;
 	private ImageView iv_pull;
+	
+	private TextView tv_bank_no;
+	private TextView tv_open_account_name;
+	private TextView tv_open_account_bank;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +59,10 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 		
 		iv_pull = (ImageView) findViewById(R.id.iv_pull);
 		
-		
+		tv_bank_no = (TextView) findViewById(R.id.tv_bank_no);
+		tv_open_account_name = (TextView) findViewById(R.id.tv_open_account_name);
+		tv_open_account_bank = (TextView) findViewById(R.id.tv_open_account_bank);
+		merchantQuery();
 	}
 
 	@Override
@@ -101,49 +113,47 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 		
 	}
 
-	private void actionRegister(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199003");
-		tempMap.put("PHONENUMBER", "13838387438");
-		tempMap.put("PASSWORD", "1234qwer");
-		tempMap.put("PASSWORDNEW", "Asdf1234");
-		
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ModifyLoginPwd, tempMap, getRegisterHandler());
-		
-		new LKHttpRequestQueue().addHttpRequest(req1)
-		.executeQueue("正在修改请稍候...", new LKHttpRequestQueueDone(){
+	// 商户信息查询
+	private void merchantQuery() {
+			HashMap<String, Object> tempMap = new HashMap<String, Object>();
+			tempMap.put("TRANCODE", "199011");
+			tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-			@Override
-			public void onComplete() {
-				super.onComplete();
-				
-			}
-			
-		});	
-	}
-	
-	private LKAsyncHttpResponseHandler getRegisterHandler(){
-		 return new LKAsyncHttpResponseHandler(){
-			 
-			@Override
-			public void successAction(Object obj) {
-				Log.e("success:", obj.toString());
-				
-				if (obj instanceof HashMap){
-					Log.e("success:", obj.toString());
-					if(((HashMap<?, ?>) obj).get("RSPCOD").toString().equals("000000")){
-						Toast.makeText(getApplicationContext(), "密码修改成功",
-							     Toast.LENGTH_SHORT).show();
-					}else if(((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0){
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(),
-							     Toast.LENGTH_SHORT).show();
-					}
-				} else {
+			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.MerchantQuery, tempMap, getLoginHandler());
+
+			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
+
+				@Override
+				public void onComplete() {
+					super.onComplete();
 				}
-				
-			}
+			});
+		}
 
-		};
+		private LKAsyncHttpResponseHandler getLoginHandler() {
+			return new LKAsyncHttpResponseHandler() {
+
+				@Override
+				public void successAction(Object obj) {
+					@SuppressWarnings("unchecked")
+					HashMap<String, Object> map = (HashMap<String, Object>) obj;
+					String RSPCOD = (String) map.get("RSPCOD");
+					String RSPMSG = (String) map.get("RSPMSG");
+					String ACTNO = (String) map.get("ACTNO");
+					String ACTNAM = (String) map.get("ACTNAM");
+					String OPNBNK = (String) map.get("OPNBNK");
+
+					if (RSPCOD.equals("000000")) {
+						tv_bank_no.setText(ACTNO == null ? "":StringUtil.formatAccountNo(ACTNO));
+						tv_open_account_name.setText(ACTNAM == null ? "":ACTNAM);
+						tv_open_account_bank.setText(OPNBNK == null ? "":OPNBNK); 
+					} else {
+						Toast.makeText(MerchantActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
+					}
+
+				}
+
+			};
 		}
 
 }

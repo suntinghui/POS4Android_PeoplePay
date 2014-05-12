@@ -26,6 +26,7 @@ public class TransferRequestTag {
 	public static final int CompareOldPwd = 16;// 对比原密码是否正确
 	public static final int SmsSend = 17;// 短信发送
 	public static final int SmsCheck = 18;// 短信码验证
+	public static final int MerchantQuery = 19;// 商户信息查询
 
 	private static HashMap<Integer, String> requestTagMap = null;
 
@@ -51,6 +52,7 @@ public class TransferRequestTag {
 			requestTagMap.put(CompareOldPwd, "http://211.147.87.24:8092/posm/199017.tran5");
 			requestTagMap.put(SmsSend, "http://211.147.87.24:8092/posm/199018.tran5");
 			requestTagMap.put(SmsCheck, "http://211.147.87.24:8092/posm/199019.tran5");
+			requestTagMap.put(MerchantQuery, "http://211.147.87.23:8088/posp/199011.tran");
 
 		}
 

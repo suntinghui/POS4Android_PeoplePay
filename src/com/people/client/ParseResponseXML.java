@@ -80,7 +80,10 @@ public class ParseResponseXML {
 			case TransferRequestTag.SmsCheck:
 				return smsCheck();
 				
+			case TransferRequestTag.MerchantQuery:
+				return merchantQuery();
 			}
+			
 		} catch (XmlPullParserException e) {
 			e.printStackTrace();
 
@@ -655,5 +658,44 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
+	
+	private static Object merchantQuery() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
 
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				}else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PHONENUMBER", parser.nextText());
+				} else if ("STATUS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("STATUS", parser.nextText());
+				} else if ("MERNAM".equalsIgnoreCase(parser.getName())) {
+					respMap.put("MERNAM", parser.nextText());
+				} else if ("ACTNO".equalsIgnoreCase(parser.getName())) {
+					respMap.put("ACTNO", parser.nextText());
+				} else if ("ACTNAM".equalsIgnoreCase(parser.getName())) {
+					respMap.put("ACTNAM", parser.nextText());
+				} else if ("OPNBNK".equalsIgnoreCase(parser.getName())) {
+					respMap.put("OPNBNK", parser.nextText());
+				}  
+				break;
+
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
 }

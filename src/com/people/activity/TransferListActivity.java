@@ -95,7 +95,8 @@ public class TransferListActivity extends BaseActivity implements
 		}
 
 		public int getCount() {
-			return array.size();
+//			return array.size();
+			return 3;
 		}
 
 		public Object getItem(int arg0) {
@@ -132,16 +133,16 @@ public class TransferListActivity extends BaseActivity implements
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			TradeModel model = array.get(position);
-			String cardNum = model.getCrdNo();
-			if(cardNum != null){
-				holder.tv_cardnum.setText(StringUtil.formatAccountNo(cardNum));
-			}
-			String amount = model.getTxnamt();
-			if(amount != null){
-				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
-			}
-			holder.tv_date.setText(model.getSysDate()==null ? "": model.getSysDate());
+//			TradeModel model = array.get(position);
+//			String cardNum = model.getCrdNo();
+//			if(cardNum != null){
+//				holder.tv_cardnum.setText(StringUtil.formatAccountNo(cardNum));
+//			}
+//			String amount = model.getTxnamt();
+//			if(amount != null){
+//				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
+//			}
+//			holder.tv_date.setText(model.getSysDate()==null ? "": model.getSysDate());
 			return convertView;
 		}
 	}
