@@ -1,11 +1,13 @@
 package com.people.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -40,9 +42,12 @@ public class InputMoneyActivity extends BaseActivity {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			switch (arg2) {
 			case 0: //
+				
+				
 				break;
 
 			case 1: //
+				
 				break;
 
 			case 2: //
@@ -119,8 +124,21 @@ public class InputMoneyActivity extends BaseActivity {
 			}
 
 			holder.btn_num.setText(num[position]);
+			holder.btn_num.setOnClickListener(listener);
+			
 			return convertView;
 		}
 	}
+	
+	private OnClickListener listener = new OnClickListener(){
+
+		@Override
+		public void onClick(View arg0) {
+			Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
+			intent.putExtra("AMOUNT", "1");
+			startActivity(intent);
+		}
+		
+	};
 
 }

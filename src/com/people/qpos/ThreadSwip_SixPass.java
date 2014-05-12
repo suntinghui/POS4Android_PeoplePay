@@ -15,17 +15,19 @@ public class ThreadSwip_SixPass extends Thread {
 	private Handler mHandler;
 	private Context mContext;
 	private String amountStr;
+	private String extraStr;
 
-	public ThreadSwip_SixPass(Handler mHandler, Context mContext, String amountStr) {
+	public ThreadSwip_SixPass(Handler mHandler, Context mContext, String amountStr, String extraStr) {
 		this.mHandler = mHandler;
 		this.mContext = mContext;
 		this.amountStr = amountStr;
+		this.extraStr = amountStr;
 	}
 
 	@Override
 	public void run() {
 		QPOS.getCardReader().setDesKey(QPOS.fakekey);
-		int resultCode = QPOS.getCardReader().doTradeEx(this.amountStr, 1, null, "1990050000000001000000010427011209323031303130303030313131", 60); 
+		int resultCode = QPOS.getCardReader().doTradeEx(this.amountStr, 1, null, this.extraStr, 60); 
 		
 		if (resultCode == CardReader.SUCCESS) {
 			resultCode = QPOS.getCardReader().waitUser(1, 120);
@@ -38,9 +40,12 @@ public class ThreadSwip_SixPass extends Thread {
 				String pin = QPOS.getCardReader().getTradeResultCardPwd();
 				String ms = QPOS.getCardReader().getTradeResultMacString();
 				String AllData = QPOS.getCardReader().getTradeResultAllData();
+				String cardInfo = QPOS.getCardReader().getTradeResultCardInfo();
 				
 				Log.e("===", "pin:"+pin);
 				Log.e("===", "mac:"+ms);
+				Log.e("===", "cardInfo:"+cardInfo);
+				
 				Log.e("===", "all:"+AllData);
 				Log.e("===", "no:"+QPOS.getCardReader().getTradeResultCardNO());
 				Log.e("===", "psam:"+QPOS.getCardReader().getTradeResultPsamID());
