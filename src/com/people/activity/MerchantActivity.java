@@ -57,6 +57,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 		RelativeLayout layout_connect = (RelativeLayout) findViewById(R.id.layout_connect);
 		layout_connect.setOnClickListener(this);
 		
+		Button btn_exit = (Button) findViewById(R.id.btn_exit);
+		btn_exit.setOnClickListener(this);
+		
 		iv_pull = (ImageView) findViewById(R.id.iv_pull);
 		
 		tv_bank_no = (TextView) findViewById(R.id.tv_bank_no);
@@ -79,7 +82,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.layout_modify_pwd:
-			
+			Intent intent1 = new Intent(MerchantActivity.this, ModifyLoginPwdActivity.class);
+			startActivity(intent1);
 			break;
 		case R.id.layout_more_setting:
 			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
@@ -106,6 +110,27 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 				}
 			});
 			dialog.create().show();
+			break;
+		case R.id.btn_exit:
+			LKAlertDialog dialog1 = new LKAlertDialog(this);
+			dialog1.setTitle("提示");
+			dialog1.setMessage("你确定要退出吗？");
+			dialog1.setCancelable(false);
+			dialog1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					dialog.dismiss();
+					MerchantActivity.this.finish();
+				}
+			});
+			dialog1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
+			dialog1.create().show();
 			break;
 		default:
 			break;

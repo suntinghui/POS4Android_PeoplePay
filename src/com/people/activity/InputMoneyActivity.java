@@ -1,10 +1,13 @@
 package com.people.activity;
 
+import java.util.regex.Pattern;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,71 +17,42 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.people.R;
 
 public class InputMoneyActivity extends BaseActivity {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
-	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除", "0", "." };
+	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除",
+			"0", "." };
+
+	private TextView tv_show_money;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inputmoney);
 
+		tv_show_money = (TextView) findViewById(R.id.tv_show_money);
 		gridView = (GridView) findViewById(R.id.gridveiw);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
 		gridView.setOnItemClickListener(onclickcistener);
 
 		adapter = new CatalogAdapter(this);
 		gridView.setAdapter(adapter);
+		
+		RelativeLayout layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
+		layout_swip.setOnClickListener(listener);
 
 	}
 
 	// 点击事件
 	private OnItemClickListener onclickcistener = new OnItemClickListener() {
 
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-			switch (arg2) {
-			case 0: //
-				
-				
-				break;
-
-			case 1: //
-				
-				break;
-
-			case 2: //
-				break;
-
-			case 3: //
-				break;
-
-			case 4: //
-				break;
-
-			case 5: //
-				break;
-			case 6: //
-				break;
-
-			case 7: //
-				break;
-
-			case 8: //
-				break;
-			case 9: // 删除
-				break;
-			case 10: //
-				break;
-
-			case 11: // dot
-				break;
-			default:
-				break;
-			}
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
 
 		}
 
@@ -112,33 +86,111 @@ public class InputMoneyActivity extends BaseActivity {
 			CatalogHolder holder = null;
 
 			if (null == convertView) {
-				convertView = this.mInflater.inflate(R.layout.item_inputmoney, null);
+				convertView = this.mInflater.inflate(R.layout.item_inputmoney,
+						null);
 				holder = new CatalogHolder();
 
-				holder.btn_num = (Button) convertView.findViewById(R.id.btn_num);
-
+				holder.btn_num = (Button) convertView
+						.findViewById(R.id.btn_num);
+				holder.btn_num.setTag(1000 + position);
+				holder.btn_num.setOnClickListener(listener);
 				convertView.setTag(holder);
-				
+
 			} else {
 				holder = (CatalogHolder) convertView.getTag();
 			}
 
 			holder.btn_num.setText(num[position]);
-			holder.btn_num.setOnClickListener(listener);
-			
+
 			return convertView;
 		}
 	}
-	
-	private OnClickListener listener = new OnClickListener(){
+
+	private OnClickListener listener = new OnClickListener() {
 
 		@Override
 		public void onClick(View arg0) {
-			Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
-			intent.putExtra("AMOUNT", "1");
-			startActivity(intent);
+			if(arg0.getId() == R.id.layout_swip){
+				Intent intent = new Intent(InputMoneyActivity.this,
+						 SearchAndSwipeActivity.class);
+						 intent.putExtra("AMOUNT", tv_show_money.getText());
+						 startActivity(intent);
+			}else{
+				String tmp = "";
+				String tv_str = tv_show_money.getText().toString();
+				switch ((Integer) arg0.getTag()) {
+				case 1000:
+				case 1001:
+				case 1002:
+				case 1003:
+				case 1004:
+				case 1005:
+				case 1006:
+				case 1007:
+				case 1008:
+					if (tv_str.length() > 11) {
+						break;
+					}
+
+					if (tv_show_money.getText().toString().contains(".")) {
+						int index = tv_str.indexOf(".");
+						if(tv_str.length()-index == 3){
+							break;
+						}
+					}
+					tmp = (Integer) arg0.getTag() - 1000 + 1 + "";
+					if (tv_str.length() == 1 && tv_str.equals("0")) {
+						tv_show_money.setText("");
+					}
+					tv_show_money.setText(tv_show_money.getText() + tmp);
+					break;
+				case 1009: // 删除
+
+					if (tv_str.length() == 1) {
+						tv_show_money.setText("0");
+
+					} else {
+						tv_show_money.setText(tv_str.toString().substring(0,
+								tv_str.length() - 1));
+					}
+					break;
+				case 1010: // 0
+					if (tv_str.length() > 11 || tv_str.equals("0")
+							|| tv_str.equals("0.0") || tv_str.equals("0.00")) {
+						break;
+					}
+					
+					if (tv_show_money.getText().toString().contains(".")) {
+						int index = tv_str.indexOf(".");
+						if(tv_str.length()-index == 3){
+							break;
+						}
+					}
+					tv_show_money.setText(tv_show_money.getText() + "0");
+					break;
+
+				case 1011: // dot
+					if (tv_str.length() > 11) {
+						break;
+					}
+
+					if (tv_show_money.getText().toString().contains(".")) {
+
+					} else {
+						tv_show_money.setText(tv_str + ".");
+					}
+					break;
+				default:
+					break;
+				}				
+			}
+
 		}
-		
+
 	};
 
+	public static boolean isDouble(String str) {
+		Pattern pattern = Pattern.compile("^[0-9]+\\.{0,1}[0-9]{0,2}$/g");
+		return pattern.matcher(str).matches();
+	}
 }

@@ -44,11 +44,12 @@
 
         <TextView
             style="@style/black_16"
+            android:id="@+id/tv_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dip"
             android:background="@null"
-            android:text="交易成功！" />
+            />
     </LinearLayout>
 
     <View
@@ -76,7 +77,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dip"
-            android:text="￥600.00"
             android:textSize="30sp"
             android:textStyle="bold" />
     </RelativeLayout>
@@ -103,6 +103,27 @@
                 style="@style/gray_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/tranfer_detail_flow_num" />
+
+            <TextView
+                android:id="@+id/tv_flow_num"
+                style="@style/gray_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dip"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/gray_15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/tranfer_detail_date" />
 
             <TextView
@@ -110,8 +131,8 @@
                 style="@style/gray_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dip"
-                android:text="2014-04-09" />
+                android:layout_marginLeft="35dip"
+                 />
         </LinearLayout>
 
         <LinearLayout
@@ -131,8 +152,8 @@
                 style="@style/gray_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dip"
-                android:text="6226*****666" />
+                android:layout_marginLeft="65dip"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -152,30 +173,10 @@
                 style="@style/gray_15"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dip"
-                android:text="merchant name" />
+                android:layout_marginLeft="35dip"
+                />
         </LinearLayout>
         
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dip"
-            android:orientation="horizontal" >
-
-            <TextView
-                style="@style/gray_15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tranfer_detail_flow_num" />
-
-            <TextView
-                android:id="@+id/tv_flow_num"
-                style="@style/gray_15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dip"
-                android:text="flownum" />
-        </LinearLayout>
     </LinearLayout>
 
     <View
@@ -194,6 +195,7 @@
         android:layout_marginRight="25dip"
         android:layout_marginTop="50dip"
         android:background="@drawable/transfer_detail_btn_revoke"
-        android:text="@string/tranfer_detail_btn_revoke" />
+        android:text="@string/tranfer_detail_btn_revoke" 
+        android:visibility="gone"/>
 
 </LinearLayout>
