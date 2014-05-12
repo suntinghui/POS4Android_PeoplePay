@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.people.R;
@@ -41,6 +42,9 @@ public class InputMoneyActivity extends BaseActivity {
 
 		adapter = new CatalogAdapter(this);
 		gridView.setAdapter(adapter);
+		
+		RelativeLayout layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
+		layout_swip.setOnClickListener(listener);
 
 	}
 
@@ -106,77 +110,79 @@ public class InputMoneyActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View arg0) {
-			// Intent intent = new Intent(InputMoneyActivity.this,
-			// SearchAndSwipeActivity.class);
-			// intent.putExtra("AMOUNT", "1");
-			// startActivity(intent);
-
-			String tmp = "";
-			String tv_str = tv_show_money.getText().toString();
-			switch ((Integer) arg0.getTag()) {
-			case 1000:
-			case 1001:
-			case 1002:
-			case 1003:
-			case 1004:
-			case 1005:
-			case 1006:
-			case 1007:
-			case 1008:
-				if (tv_str.length() > 11) {
-					break;
-				}
-
-				if (tv_show_money.getText().toString().contains(".")) {
-					int index = tv_str.indexOf(".");
-					if(tv_str.length()-index == 3){
+			if(arg0.getId() == R.id.layout_swip){
+				Intent intent = new Intent(InputMoneyActivity.this,
+						 SearchAndSwipeActivity.class);
+						 intent.putExtra("AMOUNT", tv_show_money.getText());
+						 startActivity(intent);
+			}else{
+				String tmp = "";
+				String tv_str = tv_show_money.getText().toString();
+				switch ((Integer) arg0.getTag()) {
+				case 1000:
+				case 1001:
+				case 1002:
+				case 1003:
+				case 1004:
+				case 1005:
+				case 1006:
+				case 1007:
+				case 1008:
+					if (tv_str.length() > 11) {
 						break;
 					}
-				}
-				tmp = (Integer) arg0.getTag() - 1000 + 1 + "";
-				if (tv_str.length() == 1 && tv_str.equals("0")) {
-					tv_show_money.setText("");
-				}
-				tv_show_money.setText(tv_show_money.getText() + tmp);
-				break;
-			case 1009: // 删除
 
-				if (tv_str.length() == 1) {
-					tv_show_money.setText("0");
-
-				} else {
-					tv_show_money.setText(tv_str.toString().substring(0,
-							tv_str.length() - 1));
-				}
-				break;
-			case 1010: // 0
-				if (tv_str.length() > 11 || tv_str.equals("0")
-						|| tv_str.equals("0.0") || tv_str.equals("0.00")) {
+					if (tv_show_money.getText().toString().contains(".")) {
+						int index = tv_str.indexOf(".");
+						if(tv_str.length()-index == 3){
+							break;
+						}
+					}
+					tmp = (Integer) arg0.getTag() - 1000 + 1 + "";
+					if (tv_str.length() == 1 && tv_str.equals("0")) {
+						tv_show_money.setText("");
+					}
+					tv_show_money.setText(tv_show_money.getText() + tmp);
 					break;
-				}
-				
-				if (tv_show_money.getText().toString().contains(".")) {
-					int index = tv_str.indexOf(".");
-					if(tv_str.length()-index == 3){
+				case 1009: // 删除
+
+					if (tv_str.length() == 1) {
+						tv_show_money.setText("0");
+
+					} else {
+						tv_show_money.setText(tv_str.toString().substring(0,
+								tv_str.length() - 1));
+					}
+					break;
+				case 1010: // 0
+					if (tv_str.length() > 11 || tv_str.equals("0")
+							|| tv_str.equals("0.0") || tv_str.equals("0.00")) {
 						break;
 					}
-				}
-				tv_show_money.setText(tv_show_money.getText() + "0");
-				break;
-
-			case 1011: // dot
-				if (tv_str.length() > 11) {
+					
+					if (tv_show_money.getText().toString().contains(".")) {
+						int index = tv_str.indexOf(".");
+						if(tv_str.length()-index == 3){
+							break;
+						}
+					}
+					tv_show_money.setText(tv_show_money.getText() + "0");
 					break;
-				}
 
-				if (tv_show_money.getText().toString().contains(".")) {
+				case 1011: // dot
+					if (tv_str.length() > 11) {
+						break;
+					}
 
-				} else {
-					tv_show_money.setText(tv_str + ".");
-				}
-				break;
-			default:
-				break;
+					if (tv_show_money.getText().toString().contains(".")) {
+
+					} else {
+						tv_show_money.setText(tv_str + ".");
+					}
+					break;
+				default:
+					break;
+				}				
 			}
 
 		}

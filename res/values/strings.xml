@@ -24,6 +24,7 @@
     <string name="draw_lock_tips">绘制解锁图案</string>
     <string name="login_forget_pwd">忘记密码？</string>
     <string name="forgetpwd_title">忘记密码</string>
+    <string name="about_title">关于系统</string>
     <string name="forgetpwd_tips">请输入注册时使用的手机与，点击“发送”按钮来获取验证码。将取得的验证码直接输入下边的文本框</string>
     <string name="forgetpwd_account">账号：</string>
     <string name="forgetpwd_securitycode">验证码:</string>
@@ -47,4 +48,15 @@
     <string name="app_list_header_refresh_last_update">上次更新于:%s</string>
     <string name="app_list_footer_more">更多</string>
     <string name="app_list_footer_loading">正在加载</string>
+    <string name="str_about_access">访问公司主页</string>
+    <string name="str_about_version">众付宝 For Android V1.0</string>
+    <string name="str_about_bottom1">---北京众人科技股份有限公司版权所有---</string>
+    <string name="str_about_bottom2">Copyright © 2006-2014 by 众付宝 All rights reserved</string>
+    <string name="modifypwd_title">修改密码</string>
+    <string name="modifypwd_oldpwd">原密码</string>
+    <string name="modifypwd_newpwd">新密码</string>
+    <string name="modifypwd_confirmpwd">确认密码</string>
+    <string name="modifypwd_oldpwd_hint">请输入原密码</string>
+    <string name="modifypwd_newpwd_hint">请输入新密码</string>
+    <string name="modifypwd_confirmpwd_hint">请输入确认密码</string>
 </resources>
