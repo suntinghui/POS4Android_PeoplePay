@@ -382,7 +382,7 @@ public class StringUtil {
 		String hour = date.substring(8, 10);
 		String minite = date.substring(10, 12);
 		String second = date.substring(12, 14);
-		
+
 		return year+"-"+month+"-"+day+" "+hour+":"+minite+":"+second;
 	}
 }

@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.people.R;
@@ -24,7 +24,7 @@ import dspread.voicemodem.CardReader;
 import dspread.voicemodem.DeviceBean;
 import dspread.voicemodem.onPOSListener;
 
-public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemClickListener {
+public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemClickListener, OnDismissListener {
 
 	private Context context;
 
@@ -39,6 +39,8 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 
 	public Device_List_Adapter mDevice_List_Adapter;
 	public ArrayList<DeviceBean> mDevices, mBondedDevices;
+	
+	private OnSelectBLListener onSelectBLListener = null;
 
 	public BLDeviceDialog(Context context) {
 		super(context, R.style.Dialog);
@@ -49,6 +51,10 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 	public BLDeviceDialog(Context context, int theme) {
 		super(context, theme);
 		this.context = context;
+	}
+	
+	public void setOnSelectBLListener(OnSelectBLListener listener){
+		this.onSelectBLListener = listener;
 	}
 
 	public BLDeviceDialog create() {
@@ -82,6 +88,8 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 		listView.setOnItemClickListener(this);
 
 		this.setCancelable(true);
+		this.setCanceledOnTouchOutside(false);
+		this.setOnDismissListener(this);
 
 		QPOS.getCardReader().setListener(mBtl);
 
@@ -146,13 +154,24 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 		}
 
 	}
+	
+	@Override
+	public void onDismiss(DialogInterface arg0) {
+		QPOS.getCardReader().cancelDiscovery();
+	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		DeviceBean mRemoteDevice = mDevices.get(arg2);
 		QPOS.getCardReader().set_peer_address(mRemoteDevice.getAddress());
-		if (this.isShowing())
+		if (this.isShowing()) {
 			this.dismiss();
+		}
+		
+		if (this.onSelectBLListener != null){
+			this.onSelectBLListener.onSelect();
+		}
+		
 	}
 
 	// 蓝牙监听
@@ -250,5 +269,10 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 		}
 
 	};
+	
+	public interface OnSelectBLListener{
+		public void onSelect();
+	}
 
 }
+
