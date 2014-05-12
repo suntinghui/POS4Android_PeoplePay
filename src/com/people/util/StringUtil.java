@@ -1,7 +1,5 @@
 package com.people.util;
 
-<<<<<<< HEAD
-=======
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,7 +16,6 @@ import java.util.Vector;
 import java.util.regex.Pattern;
 
 import android.util.Base64;
->>>>>>> f7d5ae13e5b5ee0bbe0d1c269a2504387bc30ec8
 
 public class StringUtil {
 	private final static String DES = "DES"; 
@@ -28,16 +25,6 @@ public class StringUtil {
 	 * @param defaultValue
 	 * @return
 	 */
-<<<<<<< HEAD
-	/***
-	 * // ??????�? public static String unescapingFromHTML(String str) { return
-	 * Html.fromHtml(str).toString(); }
-	 **/
-
-	public static String unescapingFromHTML(String url) {
-		if (null == url){
-			return "";
-=======
 	public static int getInt(String str, int defaultValue) {
 		if (str == null)
 			return defaultValue;
@@ -45,35 +32,13 @@ public class StringUtil {
 			return Integer.parseInt(str);
 		} catch (Exception e) {
 			return defaultValue;
->>>>>>> f7d5ae13e5b5ee0bbe0d1c269a2504387bc30ec8
 		}
 	}
 
 	/**
-<<<<<<< HEAD
-	 * 
-	 * �?�?�?串�???????? Unicode 形�?????�?�?�?. �? "�?" to "\u9EC4"
-	 * 
-	 * Converts unicodes to encoded \\uxxxx and escapes
-	 * 
-	 * special characters with a preceding slash
-	 * 
-	 * 
-	 * 
-	 * @param theString
-	 * 
-	 *            �?�???��??Unicode�???????�?�?串�??
-	 * 
-	 * @param escapeSpace
-	 * 
-	 *            ??????忽�?�空??��??�?true??��?�空??��????��????????�?????????????
-	 * 
-	 * @return �????�???��??Unicode�???????�?�?串�??
-=======
 	 * @param str
 	 * @param defaultValue
 	 * @return
->>>>>>> f7d5ae13e5b5ee0bbe0d1c269a2504387bc30ec8
 	 */
 	public static double getDouble(String str, double defaultValue) {
 		if (str == null)
@@ -100,87 +65,8 @@ public class StringUtil {
 		}
 	}
 
-<<<<<<< HEAD
-			switch (aChar) {
-
-			case ' ':
-
-				if (x == 0 || escapeSpace)
-					outBuffer.append('\\');
-
-				outBuffer.append(' ');
-
-				break;
-
-			case '\t':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('t');
-
-				break;
-
-			case '\n':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('n');
-
-				break;
-
-			case '\r':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('r');
-
-				break;
-
-			case '\f':
-
-				outBuffer.append('\\');
-
-				outBuffer.append('f');
-
-				break;
-
-			case '=': // Fall through
-
-			case ':': // Fall through
-
-			case '#': // Fall through
-
-			case '!':
-
-				outBuffer.append('\\');
-
-				outBuffer.append(aChar);
-
-				break;
-
-			default:
-
-				if ((aChar < 0x0020) || (aChar > 0x007e)) {
-
-					// �?�?unicode???16�?�?�????�?对�?????16�???��??�?�?�?�???��??�?
-
-					outBuffer.append('\\');
-
-					outBuffer.append('u');
-
-					outBuffer.append(toHex((aChar >> 12) & 0xF));
-
-					outBuffer.append(toHex((aChar >> 8) & 0xF));
-
-					outBuffer.append(toHex((aChar >> 4) & 0xF));
-
-					outBuffer.append(toHex(aChar & 0xF));
-
-				} else {
-=======
 	public static String[] split(String original, String separator) {
 		Vector nodes = new Vector();
->>>>>>> f7d5ae13e5b5ee0bbe0d1c269a2504387bc30ec8
 
 		// Parse nodes into vector
 		int index = original.indexOf(separator);
@@ -246,37 +132,9 @@ public class StringUtil {
 	/**
 	 * 返回字节数组
 	 * 
-<<<<<<< HEAD
-	 * �? Unicode 形�?????�?�?串转??��??对�?????�?????????��??�?�?串�?? �? "\u9EC4" to "�?".
-	 * 
-	 * Converts encoded \\uxxxx to unicode chars
-	 * 
-	 * and changes special saved chars to their original forms
-	 * 
-	 * 
-	 * 
-	 * @param in
-	 * 
-	 *            Unicode�???????�?�???��?????
-	 * 
-	 * @param off
-	 * 
-	 *            �???��??起�?????移�?????
-	 * 
-	 * @param len
-	 * 
-	 *            �???��??�?�???�度???
-	 * 
-	 * @param convtBuf
-	 * 
-	 *            �???��??�?�?�?�???��?????
-	 * 
-	 * @return �????�????�?�????�????????????��??�?�?串�??
-=======
 	 * @param in输入的流
 	 * @return
 	 * @throws Exception
->>>>>>> f7d5ae13e5b5ee0bbe0d1c269a2504387bc30ec8
 	 */
 	public static byte[] InputStram2byteArray(InputStream in) {
 		try {
@@ -295,105 +153,8 @@ public class StringUtil {
 			e.printStackTrace();
 		}
 
-<<<<<<< HEAD
-	public static String fromEncodedUnicode(char[] in, int off, int len) {
-
-		char aChar;
-
-		char[] out = new char[len]; // ??????�????
-
-		int outLen = 0;
-
-		int end = off + len;
-
-		while (off < end) {
-
-			aChar = in[off++];
-
-			if (aChar == '\\') {
-
-				aChar = in[off++];
-
-				if (aChar == 'u') {
-
-					// Read the xxxx
-
-					int value = 0;
-
-					for (int i = 0; i < 4; i++) {
-
-						aChar = in[off++];
-
-						switch (aChar) {
-
-						case '0':
-
-						case '1':
-
-						case '2':
-
-						case '3':
-
-						case '4':
-
-						case '5':
-
-						case '6':
-
-						case '7':
-
-						case '8':
-
-						case '9':
-
-							value = (value << 4) + aChar - '0';
-
-							break;
-
-						case 'a':
-
-						case 'b':
-
-						case 'c':
-
-						case 'd':
-
-						case 'e':
-
-						case 'f':
-
-							value = (value << 4) + 10 + aChar - 'a';
-
-							break;
-
-						case 'A':
-
-						case 'B':
-
-						case 'C':
-
-						case 'D':
-
-						case 'E':
-
-						case 'F':
-
-							value = (value << 4) + 10 + aChar - 'A';
-
-							break;
-
-						default:
-
-							throw new IllegalArgumentException(
-									"Malformed \\uxxxx encoding.");
-
-						}
-
-					}
-=======
 		return null;
 	}
->>>>>>> f7d5ae13e5b5ee0bbe0d1c269a2504387bc30ec8
 
 	public static String inputStreamToString(InputStream stream) {
 		try {
@@ -621,7 +382,7 @@ public class StringUtil {
 		String hour = date.substring(8, 10);
 		String minite = date.substring(10, 12);
 		String second = date.substring(12, 14);
-		
+
 		return year+"-"+month+"-"+day+" "+hour+":"+minite+":"+second;
 	}
 }

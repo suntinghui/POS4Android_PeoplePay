@@ -180,23 +180,6 @@ public final class R {
         public static final int btn_forget_pwd=0x7f090015;
         public static final int btn_login=0x7f090014;
         public static final int btn_next=0x7f090005;
-<<<<<<< HEAD
-        public static final int btn_num=0x7f09003e;
-        public static final int btn_register=0x7f090024;
-        public static final int btn_revoke=0x7f09002d;
-        public static final int btn_securitycode=0x7f090003;
-        public static final int cancelButton=0x7f090045;
-        public static final int catalogCellImage=0x7f09003d;
-        public static final int contentLayout=0x7f09003f;
-        public static final int detail=0x7f090056;
-        public static final int device_address=0x7f09003b;
-        public static final int device_bonded=0x7f09003c;
-        public static final int device_btn=0x7f090039;
-        public static final int device_list=0x7f090038;
-        public static final int device_name=0x7f09003a;
-        public static final int device_progress=0x7f090036;
-        public static final int device_txt=0x7f090037;
-=======
         public static final int btn_num=0x7f090040;
         public static final int btn_revoke=0x7f09002f;
         public static final int btn_securitycode=0x7f090003;
@@ -211,7 +194,6 @@ public final class R {
         public static final int device_name=0x7f09003c;
         public static final int device_progress=0x7f090038;
         public static final int device_txt=0x7f090039;
->>>>>>> f7d5ae13e5b5ee0bbe0d1c269a2504387bc30ec8
         public static final int et_account=0x7f090002;
         public static final int et_pwd=0x7f090013;
         public static final int et_securitycode=0x7f090004;
