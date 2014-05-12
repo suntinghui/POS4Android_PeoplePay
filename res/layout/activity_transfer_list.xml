@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dip"
-                android:text="5"
+                android:text="0"
                 android:textColor="@color/blue_1"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -68,7 +68,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dip"
             android:layout_marginTop="5dip"
-            android:text="￥398.00"
+            android:text="￥0.00"
             android:textColor="@color/orange"
             android:textSize="22sp"
             android:textStyle="bold" />

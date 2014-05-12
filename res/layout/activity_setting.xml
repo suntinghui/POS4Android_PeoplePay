@@ -39,13 +39,13 @@
             android:layout_marginBottom="10dip"
             android:layout_marginLeft="10dip"
             android:layout_marginRight="10dip"
-            android:layout_marginTop="20dip"
-            android:background="@null"
+            android:layout_marginTop="30dip"
+            android:background="@drawable/setting_list_corner_round"
             android:cacheColorHint="#00000000"
             android:choiceMode="singleChoice"
             android:descendantFocusability="blocksDescendants"
-            android:divider="#00000000"
-            android:dividerHeight="10dip"
+            android:divider="@color/gray"
+            android:dividerHeight="0.8dip"
             android:listSelector="@android:color/transparent" />
 
     </LinearLayout>

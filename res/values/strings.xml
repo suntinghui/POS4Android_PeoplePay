@@ -38,6 +38,7 @@
     <string name="tranfer_detail_date">交易日期</string>
     <string name="tranfer_detail_account">账号</string>
     <string name="tranfer_detail_money">交易金额</string>
+    <string name="tranfer_detail_flow_num">交易流水号</string>
     <string name="tranfer_detail_merchant_name">商户名称</string>
     <string name="tranfer_detail_btn_revoke">撤销</string>
     <string name="app_list_header_refresh_down">下拉刷新</string>

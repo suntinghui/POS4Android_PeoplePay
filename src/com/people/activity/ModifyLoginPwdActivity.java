@@ -25,8 +25,8 @@ public class ModifyLoginPwdActivity extends BaseActivity implements OnClickListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_modify_login_pwd);
 		
-		Button btn_register = (Button)this.findViewById(R.id.btn_register);
-		btn_register.setOnClickListener(this);
+		Button btn_back = (Button)this.findViewById(R.id.btn_back);
+		btn_back.setOnClickListener(this);
 		
 		
 	}
@@ -34,8 +34,8 @@ public class ModifyLoginPwdActivity extends BaseActivity implements OnClickListe
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
-		case R.id.btn_register:
-			actionRegister();
+		case R.id.btn_back:
+			modifyAction();
 			break;
 
 		default:
@@ -44,25 +44,25 @@ public class ModifyLoginPwdActivity extends BaseActivity implements OnClickListe
 		
 	}
 
-	private void actionRegister(){
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199003");
-		tempMap.put("PHONENUMBER", "13838387438");
-		tempMap.put("PASSWORD", "1234qwer");
-		tempMap.put("PASSWORDNEW", "Asdf1234");
-		
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ModifyLoginPwd, tempMap, getRegisterHandler());
-		
-		new LKHttpRequestQueue().addHttpRequest(req1)
-		.executeQueue("正在修改请稍候...", new LKHttpRequestQueueDone(){
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-				
-			}
-			
-		});	
+	private void modifyAction(){
+//		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+//		tempMap.put("TRANCODE", "199003");
+//		tempMap.put("PHONENUMBER", "13838387438");
+//		tempMap.put("PASSWORD", "1234qwer");
+//		tempMap.put("PASSWORDNEW", "Asdf1234");
+//		
+//		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ModifyLoginPwd, tempMap, getRegisterHandler());
+//		
+//		new LKHttpRequestQueue().addHttpRequest(req1)
+//		.executeQueue("正在修改请稍候...", new LKHttpRequestQueueDone(){
+//
+//			@Override
+//			public void onComplete() {
+//				super.onComplete();
+//				
+//			}
+//			
+//		});	
 	}
 	
 	private LKAsyncHttpResponseHandler getRegisterHandler(){

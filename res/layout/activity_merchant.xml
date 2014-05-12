@@ -108,11 +108,11 @@
 
                     <TextView
                         style="@style/gray_15"
-                        android:layout_toRightOf="@id/iv_0"
+                        android:id="@+id/tv_bank_no"
                         android:layout_width="wrap_content"
                         android:layout_height="30dip"
                         android:layout_marginLeft="20dip"
-                        android:text="123" />
+                         />
                 </LinearLayout>
 
                 <LinearLayout
@@ -129,10 +129,11 @@
 
                     <TextView
                         style="@style/gray_15"
+                        android:id="@+id/tv_open_account_name"
                         android:layout_width="wrap_content"
                         android:layout_height="30dip"
                         android:layout_marginLeft="20dip"
-                        android:text="123" />
+                         />
                 </LinearLayout>
 
                 <LinearLayout
@@ -149,10 +150,11 @@
 
                     <TextView
                         style="@style/gray_15"
+                        android:id="@+id/tv_open_account_bank"
                         android:layout_width="wrap_content"
                         android:layout_height="30dip"
                         android:layout_marginLeft="20dip"
-                        android:text="123" />
+                        />
                 </LinearLayout>
 
                 <View
