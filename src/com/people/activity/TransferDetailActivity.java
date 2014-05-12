@@ -21,6 +21,24 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		
 		TradeModel model = (TradeModel) this.getIntent().getSerializableExtra("model");
 		
+		String TXNSTS = model.getTxnsts();
+		if(TXNSTS.equalsIgnoreCase("S")){
+			TXNSTS = "交易成功";
+		}else if(TXNSTS.equalsIgnoreCase("R")){
+			TXNSTS = "撤销成功";
+		}else if(TXNSTS.equalsIgnoreCase("0")){
+			TXNSTS = "预计";
+		}else if(TXNSTS.equalsIgnoreCase("C")){
+			TXNSTS = "冲正";
+		}else if(TXNSTS.equalsIgnoreCase("T")){
+			TXNSTS = "超时";
+		}else if(TXNSTS.equalsIgnoreCase("F")){
+			TXNSTS = "失败";
+		}else if(TXNSTS.equalsIgnoreCase("E")){
+			TXNSTS = "完成";
+		}
+		TextView tv_status = (TextView) findViewById(R.id.tv_status);
+		tv_status.setText(TXNSTS);
 		TextView tv_money = (TextView) findViewById(R.id.tv_money);
 		TextView tv_date = (TextView) findViewById(R.id.tv_date);
 		TextView tv_account = (TextView) findViewById(R.id.tv_account);

@@ -37,7 +37,7 @@ import com.people.view.RefreshListView.RefreshListener;
 
 // 流水
 public class TransferListActivity extends BaseActivity implements
-		OnClickListener, RefreshListener {
+		OnClickListener {
 
 	private ListView listView = null;
 	private Adapter adapter = null;
@@ -53,6 +53,9 @@ public class TransferListActivity extends BaseActivity implements
 
 		this.setContentView(R.layout.activity_transfer_list);
 
+		Button btn_refresh = (Button) findViewById(R.id.btn_refresh);
+		btn_refresh.setOnClickListener(this);
+		
 		tv_totalnum = (TextView) findViewById(R.id.tv_totalnum);
 		tv_totalmoney = (TextView) findViewById(R.id.tv_totalmoney);
 		listView = (ListView) this.findViewById(R.id.listview);
@@ -95,8 +98,8 @@ public class TransferListActivity extends BaseActivity implements
 		}
 
 		public int getCount() {
-//			return array.size();
-			return 3;
+			return array.size();
+//			return 4;
 		}
 
 		public Object getItem(int arg0) {
@@ -133,50 +136,50 @@ public class TransferListActivity extends BaseActivity implements
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-//			TradeModel model = array.get(position);
-//			String cardNum = model.getCrdNo();
-//			if(cardNum != null){
-//				holder.tv_cardnum.setText(StringUtil.formatAccountNo(cardNum));
-//			}
-//			String amount = model.getTxnamt();
-//			if(amount != null){
-//				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
-//			}
-//			holder.tv_date.setText(model.getSysDate()==null ? "": model.getSysDate());
+			TradeModel model = array.get(position);
+			String cardNum = model.getCrdNo();
+			if(cardNum != null){
+				holder.tv_cardnum.setText(StringUtil.formatAccountNo(cardNum));
+			}
+			String amount = model.getTxnamt();
+			if(amount != null){
+				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
+			}
+			holder.tv_date.setText(model.getSysDate()==null ? "": model.getSysDate());
+			String TXNSTS = model.getTxnsts();
+			if(TXNSTS.equalsIgnoreCase("S")){
+				TXNSTS = "交易成功";
+			}else if(TXNSTS.equalsIgnoreCase("R")){
+				TXNSTS = "撤销成功";
+			}else if(TXNSTS.equalsIgnoreCase("0")){
+				TXNSTS = "预计";
+			}else if(TXNSTS.equalsIgnoreCase("C")){
+				TXNSTS = "冲正";
+			}else if(TXNSTS.equalsIgnoreCase("T")){
+				TXNSTS = "超时";
+			}else if(TXNSTS.equalsIgnoreCase("F")){
+				TXNSTS = "失败";
+			}else if(TXNSTS.equalsIgnoreCase("E")){
+				TXNSTS = "完成";
+			}
+			holder.tv_revoke.setText(TXNSTS);
 			return convertView;
 		}
 	}
 
 	@Override
 	public void onClick(View arg0) {
-		// TODO Auto-generated method stub
 		switch (arg0.getId()) {
 		case R.id.btn_back:
 			this.finish();
 			break;
+		case R.id.btn_refresh:
+			array.clear();
+			queryHistory();
+			break;
 		default:
 			break;
 		}
-	}
-
-	@Override
-	public Object refreshing() {
-		array.clear();
-		queryHistory();
-		return null;
-	}
-
-	@Override
-	public void refreshed(Object obj) {
-		array.clear();
-		queryHistory();
-
-	}
-
-	@Override
-	public void more() {
-		// TODO Auto-generated method stub
-
 	}
 
 	// 查询交易明细
@@ -192,7 +195,7 @@ public class TransferListActivity extends BaseActivity implements
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.FlowQuery,
 				tempMap, queryHistoryHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...",
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
 				new LKHttpRequestQueueDone() {
 
 					@Override
