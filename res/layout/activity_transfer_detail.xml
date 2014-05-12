@@ -195,6 +195,7 @@
         android:layout_marginRight="25dip"
         android:layout_marginTop="50dip"
         android:background="@drawable/transfer_detail_btn_revoke"
-        android:text="@string/tranfer_detail_btn_revoke" />
+        android:text="@string/tranfer_detail_btn_revoke" 
+        android:visibility="gone"/>
 
 </LinearLayout>

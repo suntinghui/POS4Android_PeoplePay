@@ -1,6 +1,9 @@
 package com.people.activity;
 
+import java.text.SimpleDateFormat;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -49,6 +52,17 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		tv_account.setText(StringUtil.formatAccountNo(model.getCrdNo()));
 		tv_merchant_name.setText(model.getMerName());
 		tv_flow_num.setText(model.getTxncd());
+		
+		Button btn_revoke = (Button) findViewById(R.id.btn_revoke);
+		btn_revoke.setOnClickListener(this);
+		
+	    SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");  
+	    String date=sdf.format(new java.util.Date());  
+		if(model.getTxnsts().equalsIgnoreCase("S") && model.getSysDate().substring(0, 9).equalsIgnoreCase(date)){
+			btn_revoke.setVisibility(View.VISIBLE);
+		}else{
+			btn_revoke.setVisibility(View.GONE);
+		}
 	}
 	
 
