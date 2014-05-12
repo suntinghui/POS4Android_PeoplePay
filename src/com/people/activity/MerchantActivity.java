@@ -82,7 +82,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener{
 			}
 			break;
 		case R.id.layout_modify_pwd:
-			
+			Intent intent1 = new Intent(MerchantActivity.this, ModifyLoginPwdActivity.class);
+			startActivity(intent1);
 			break;
 		case R.id.layout_more_setting:
 			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);

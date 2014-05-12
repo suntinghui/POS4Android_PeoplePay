@@ -71,6 +71,10 @@
         <item name="android:textColor">#FF6600</item>
     </style>
 
+    <style name="gray_13">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">#666666</item>
+    </style> 
     <style name="gray_14">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#666666</item>

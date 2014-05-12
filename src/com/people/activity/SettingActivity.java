@@ -51,8 +51,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					break;
 
 				case 1:
-//					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
-//					SettingActivity.this.startActivity(intent1);
+					Intent intent1 = new Intent(SettingActivity.this, AboutSystemActivity.class);
+					SettingActivity.this.startActivity(intent1);
 					break;
 				case 2:
 //					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
