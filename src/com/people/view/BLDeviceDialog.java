@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.people.R;
 import com.people.qpos.QPOS;
 
+import dspread.voicemodem.BlueToothConnection;
 import dspread.voicemodem.CardReader;
 import dspread.voicemodem.DeviceBean;
 import dspread.voicemodem.onPOSListener;
@@ -158,6 +159,7 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 	@Override
 	public void onDismiss(DialogInterface arg0) {
 		QPOS.getCardReader().cancelDiscovery();
+		//this.context.unregisterReceiver(BlueToothConnection.getInstance(this.context));
 	}
 
 	@Override

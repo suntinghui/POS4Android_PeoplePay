@@ -11,6 +11,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
 import java.util.regex.Pattern;
@@ -18,7 +20,6 @@ import java.util.regex.Pattern;
 import android.util.Base64;
 
 public class StringUtil {
-	private final static String DES = "DES"; 
 
 	/**
 	 * @param str
@@ -244,6 +245,16 @@ public class StringUtil {
 			return 0.00;
 		}
 	}
+	
+	public static long String2AmountFloat4QPOS(String str) {
+		try {
+			String tempStr = NumberFormat.getNumberInstance().format(Long.parseLong(str, 10)).replace(",", "");
+			return Long.parseLong(tempStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	public static String MD5Crypto(String str) {
 		try {
@@ -271,8 +282,7 @@ public class StringUtil {
 	}
 
 	/**
-	 * Convert byte[] to hex string.
-	 * 这里我们可以将byte转换成int，然后利用Integer.toHexString(int)来转换成16进制字符串。
+	 * Convert byte[] to hex string. 这里我们可以将byte转换成int，然后利用Integer.toHexString(int)来转换成16进制字符串。
 	 * 
 	 * @param data
 	 *            需要进行hex的字节数组数据
@@ -323,66 +333,37 @@ public class StringUtil {
 		return (byte) "0123456789ABCDEF".indexOf(c);
 	}
 
-//	/*
-//	 * 异或运算 count 几位异或
-//	 */
-//	public static String yiHuoToSixteen(String str, int count) {
-//		String newStr = null;
-//
-//		StringBuilder newBuilder = new StringBuilder(str);
-//		ArrayList<String> array = new ArrayList<String>();
-//		if (str.length() % count != 0) {
-//			for (int i = 0; i < count - str.length()%count; i++) {
-//				newBuilder.append("0");
-//			}
-//			
-//		}
-//		Log.i("length", newBuilder.length()/count+" count"+newBuilder.length());
-//		String []strs=new String[newBuilder.length()/count];
-//		for(int i=0;i<newBuilder.length()/count;i++){
-//			strs[i]=newBuilder.toString().substring(i*count,i*count+count);
-//			array.add(strs[i]);
-//		System.out.println(strs[i]);
-//		}
-//		for(int i=0;i<array.size();i++){
-//			
-//		}
-//		return newStr;
-//	}
-//	
-//	/** 
-//	* 加密 
-//	* @param src 数据源 
-//	* @param key 密钥，长度必须是8的倍数 
-//	* @return 返回加密后的数据 
-//	* @throws Exception 
-//	*/ 
-//	public static byte[] encrypt(byte[] src, byte[] key)throws Exception { 
-//	//DES算法要求有一个可信任的随机数源 
-//	SecureRandom sr = new SecureRandom(); 
-//	// 从原始密匙数据创建DESKeySpec对象 
-//	DESKeySpec dks = new DESKeySpec(key); 
-//	// 创建一个密匙工厂，然后用它把DESKeySpec转换成 
-//	// 一个SecretKey对象 
-//	SecretKeyFactory keyFactory = SecretKeyFactory.getInstance(DES); 
-//	SecretKey securekey = keyFactory.generateSecret(dks); 
-//	// Cipher对象实际完成加密操作 
-//	Cipher cipher = Cipher.getInstance(DES); 
-//	// 用密匙初始化Cipher对象 
-//	cipher.init(Cipher.ENCRYPT_MODE, securekey, sr); 
-//	// 现在，获取数据并加密 
-//	// 正式执行加密操作 
-//	return cipher.doFinal(src); 
-//	} 
+	public static String dateStringFormate(String yyyyMMddhhmmss) {
+		try {
+			SimpleDateFormat format1 = new SimpleDateFormat("yyyyMMddHHmmss");
+			Date date = format1.parse(yyyyMMddhhmmss.replace(" ", ""));
 
-	public static String dateStringFormate(String date){
-		String year = date.substring(0, 4);
-		String month = date.substring(4, 6);
-		String day = date.substring(6, 8);
-		String hour = date.substring(8, 10);
-		String minite = date.substring(10, 12);
-		String second = date.substring(12, 14);
-
-		return year+"-"+month+"-"+day+" "+hour+":"+minite+":"+second;
+			SimpleDateFormat format2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return format2.format(date);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return yyyyMMddhhmmss;
+		}
 	}
+
+	public static String hexToASCII(String hex) {
+		StringBuilder sb = new StringBuilder();
+		// Convert Hex 0232343536AB into two characters stream.
+		for (int i = 0; i < hex.length() - 1; i += 2) {
+			String output = hex.substring(i, (i + 2));
+			int decimal = Integer.parseInt(output, 16);
+			sb.append((char) decimal);
+		}
+		return sb.toString();
+	}
+
+	public static String asciiToHex(String ascii) {
+		StringBuilder hex = new StringBuilder();
+
+		for (int i = 0; i < ascii.length(); i++) {
+			hex.append(Integer.toHexString(ascii.charAt(i)));
+		}
+		return hex.toString();
+	}
+
 }

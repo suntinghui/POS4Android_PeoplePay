@@ -1,5 +1,9 @@
 package com.people.qpos;
 
+import java.util.HashMap;
+
+import com.people.util.StringUtil;
+
 import android.content.Context;
 import android.os.Handler;
 import dspread.voicemodem.CardReader;
@@ -24,8 +28,15 @@ public class ThreadDeviceID extends Thread {
 	public void run() {
 		int r = QPOS.getCardReader().doGetTerminalID();
 		if (r == CardReader.SUCCESS) {
-			String id = QPOS.getCardReader().getTerminalIDTid();
-			QPOS.HandData(mHandler, id, CardReader.SUCCESS);
+			String tid = QPOS.getCardReader().getTerminalIDTid();
+			String pid = QPOS.getCardReader().getTerminalIDPid();
+			
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put("TID", tid); // TerminalID
+			// TODO
+			map.put("PID", StringUtil.hexToASCII(pid)); // PSAMID
+			
+			QPOS.HandData(mHandler, map, CardReader.SUCCESS);
 		} else {
 			QPOS.HandData(mHandler, null, -1);
 		}

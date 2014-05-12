@@ -19,7 +19,6 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
-import com.people.view.BLDeviceDialog;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
