@@ -7,13 +7,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -21,12 +18,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.people.R;
+import com.people.client.AppDataCenter;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
+import com.people.client.TransferRequestTag;
+import com.people.util.DateUtil;
+import com.people.util.StringUtil;
 
 public class InputMoneyActivity extends BaseActivity {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
-	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除",
-			"0", "." };
+	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除", "0", "." };
 
 	private TextView tv_show_money;
 
@@ -38,25 +40,14 @@ public class InputMoneyActivity extends BaseActivity {
 		tv_show_money = (TextView) findViewById(R.id.tv_show_money);
 		gridView = (GridView) findViewById(R.id.gridveiw);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		gridView.setOnItemClickListener(onclickcistener);
 
 		adapter = new CatalogAdapter(this);
 		gridView.setAdapter(adapter);
-		
+
 		RelativeLayout layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
 		layout_swip.setOnClickListener(listener);
 
 	}
-
-	// 点击事件
-	private OnItemClickListener onclickcistener = new OnItemClickListener() {
-
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-				long arg3) {
-
-		}
-
-	};
 
 	public final class CatalogHolder {
 		public Button btn_num;
@@ -86,12 +77,10 @@ public class InputMoneyActivity extends BaseActivity {
 			CatalogHolder holder = null;
 
 			if (null == convertView) {
-				convertView = this.mInflater.inflate(R.layout.item_inputmoney,
-						null);
+				convertView = this.mInflater.inflate(R.layout.item_inputmoney, null);
 				holder = new CatalogHolder();
 
-				holder.btn_num = (Button) convertView
-						.findViewById(R.id.btn_num);
+				holder.btn_num = (Button) convertView.findViewById(R.id.btn_num);
 				holder.btn_num.setTag(1000 + position);
 				holder.btn_num.setOnClickListener(listener);
 				convertView.setTag(holder);
@@ -110,12 +99,24 @@ public class InputMoneyActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View arg0) {
-			if(arg0.getId() == R.id.layout_swip){
-				Intent intent = new Intent(InputMoneyActivity.this,
-						 SearchAndSwipeActivity.class);
-						 intent.putExtra("AMOUNT", tv_show_money.getText());
-						 startActivity(intent);
-			}else{
+			if (arg0.getId() == R.id.layout_swip) {
+				Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
+				
+				intent.putExtra("TYPE", TransferRequestTag.Consume);
+				intent.putExtra("TRANCODE", "199005");
+				intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
+				intent.putExtra("PCSIM", "获取不到");
+				intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
+				intent.putExtra("CTXNAT", StringUtil.amount2String(tv_show_money.getText().toString()));
+				intent.putExtra("CRDNO", "");
+				intent.putExtra("CHECKX", "0.0");
+				intent.putExtra("APPTOKEN", "APPTOKEN");
+				intent.putExtra("TTXNTM", DateUtil.getSystemTime());
+				intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
+				
+				startActivityForResult(intent, 0);
+				
+			} else {
 				String tmp = "";
 				String tv_str = tv_show_money.getText().toString();
 				switch ((Integer) arg0.getTag()) {
@@ -134,7 +135,7 @@ public class InputMoneyActivity extends BaseActivity {
 
 					if (tv_show_money.getText().toString().contains(".")) {
 						int index = tv_str.indexOf(".");
-						if(tv_str.length()-index == 3){
+						if (tv_str.length() - index == 3) {
 							break;
 						}
 					}
@@ -144,25 +145,25 @@ public class InputMoneyActivity extends BaseActivity {
 					}
 					tv_show_money.setText(tv_show_money.getText() + tmp);
 					break;
+					
 				case 1009: // 删除
 
 					if (tv_str.length() == 1) {
 						tv_show_money.setText("0");
 
 					} else {
-						tv_show_money.setText(tv_str.toString().substring(0,
-								tv_str.length() - 1));
+						tv_show_money.setText(tv_str.toString().substring(0, tv_str.length() - 1));
 					}
 					break;
+					
 				case 1010: // 0
-					if (tv_str.length() > 11 || tv_str.equals("0")
-							|| tv_str.equals("0.0") || tv_str.equals("0.00")) {
+					if (tv_str.length() > 11 || tv_str.equals("0") || tv_str.equals("0.0") || tv_str.equals("0.00")) {
 						break;
 					}
-					
+
 					if (tv_show_money.getText().toString().contains(".")) {
 						int index = tv_str.indexOf(".");
-						if(tv_str.length()-index == 3){
+						if (tv_str.length() - index == 3) {
 							break;
 						}
 					}
@@ -180,9 +181,10 @@ public class InputMoneyActivity extends BaseActivity {
 						tv_show_money.setText(tv_str + ".");
 					}
 					break;
+					
 				default:
 					break;
-				}				
+				}
 			}
 
 		}

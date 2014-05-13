@@ -1,5 +1,9 @@
 package com.people.qpos;
 
+import java.util.HashMap;
+
+import com.people.util.StringUtil;
+
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
@@ -21,12 +25,13 @@ public class ThreadSwip_SixPass extends Thread {
 		this.mHandler = mHandler;
 		this.mContext = mContext;
 		this.amountStr = amountStr;
-		this.extraStr = amountStr;
+		this.extraStr = extraStr;
 	}
 
 	@Override
 	public void run() {
 		QPOS.getCardReader().setDesKey(QPOS.fakekey);
+		
 		int resultCode = QPOS.getCardReader().doTradeEx(this.amountStr, 1, null, this.extraStr, 60); 
 		
 		if (resultCode == CardReader.SUCCESS) {
@@ -38,20 +43,26 @@ public class ThreadSwip_SixPass extends Thread {
 					ci = "data is UNKNOWNERROR";
 				}
 				String pin = QPOS.getCardReader().getTradeResultCardPwd();
-				String ms = QPOS.getCardReader().getTradeResultMacString();
-				String AllData = QPOS.getCardReader().getTradeResultAllData();
-				String cardInfo = QPOS.getCardReader().getTradeResultCardInfo();
+				String macTemp = QPOS.getCardReader().getTradeResultMacString();
+				String mac = StringUtil.hexToASCII(macTemp);
+				// 磁道信息前两位表示长度，从长度后开始截取。
+				String cardInfoTemp = QPOS.getCardReader().getTradeResultCardInfo();
+				String cardInfo = formatCardInfo(cardInfoTemp);
+				String psam = QPOS.getCardReader().getTradeResultPsamID();
 				
 				Log.e("===", "pin:"+pin);
-				Log.e("===", "mac:"+ms);
-				Log.e("===", "cardInfo:"+cardInfo);
+				Log.e("===", "mac:"+macTemp);
+				Log.e("===", "cardInfo:"+cardInfoTemp);
+				Log.e("===", "psam:"+psam);
 				
-				Log.e("===", "all:"+AllData);
-				Log.e("===", "no:"+QPOS.getCardReader().getTradeResultCardNO());
-				Log.e("===", "psam:"+QPOS.getCardReader().getTradeResultPsamID());
+				HashMap <String, String> map = new HashMap<String, String>();
+				map.put("PIN", pin);
+				map.put("MAC", mac);
+				map.put("CARD", cardInfo);
+				map.put("PSAM", psam);
 				
 				
-				QPOS.HandData(mHandler, "ISO card\ntrackBlock encrypted:\n" + ci + "\nPINBlock encrypted:" + pin + "\nMAC:" + ms + "\nAllData" + AllData, CardReader.SUCCESS);
+				QPOS.HandData(mHandler, map, CardReader.SUCCESS);
 				
 			} else if (resultCode == CardReader.TIMEOUT) {
 				QPOS.HandData(mHandler, "time out", CardReader.TIMEOUT);
@@ -92,5 +103,11 @@ public class ThreadSwip_SixPass extends Thread {
 			QPOS.HandData(mHandler, "doTradeEx奇怪的返回：" + resultCode, -1);
 		}
 
+	}
+	
+	private String formatCardInfo(String cardInfo){
+		int len = Integer.parseInt(cardInfo.substring(0, 2), 16);
+		String temp = cardInfo.substring(2, len*2+2);
+		return temp;
 	}
 }

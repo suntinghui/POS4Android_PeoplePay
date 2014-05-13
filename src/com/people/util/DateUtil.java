@@ -8,10 +8,10 @@ import java.util.Date;
 public class DateUtil {
 	
 	/**
-	 * å°??????¡å?¨å??åº????å­?ç¬?ä¸²è½¬ä¸ºæ?¥æ??
+	 * å°†æœåŠ¡å™¨å“åº”çš„å­—ç¬¦ä¸²è½¬ä¸ºæ—¥æœŸ
 	 * 
-	 * @param yyyyMMdd å­?ç¬?ä¸²æ?¼å?? 
-	 * @return ??¥æ??
+	 * @param yyyyMMdd å­—ç¬¦ä¸²æ ¼å¼ 
+	 * @return æ—¥æœŸ
 	 */
 	public static Date string2Date(String yyyyMMdd){
 		if (null != yyyyMMdd && yyyyMMdd.matches("^\\d{8}$")){
@@ -57,7 +57,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * ??¹æ????¥æ??è¿????yyyy-MM-dd 
+	 * æ ¹æ®æ—¥æœŸè¿”å›yyyy-MM-dd 
 	 * 
 	 * @param date
 	 * @return
@@ -71,7 +71,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * ??¹æ????¥æ??è¿????yyyyMMdd 
+	 * æ ¹æ®æ—¥æœŸè¿”å›yyyyMMdd 
 	 * 
 	 * @param date
 	 * @return
@@ -85,7 +85,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * ??¹æ????¥æ??è¿????HHmmss
+	 * æ ¹æ®æ—¥æœŸè¿”å›HHmmss
 	 * 
 	 * @param date
 	 * @return
@@ -99,7 +99,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * ???å¾??????ºæ?¥æ?? yyyy-MM-dd
+	 * å–å¾—æ‰‹æœºæ—¥æœŸ yyyy-MM-dd
 	 * @return
 	 */
 	public static String getSystemDate(){
@@ -107,7 +107,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * ??¹æ????¥æ??è¿????MMdd
+	 * æ ¹æ®æ—¥æœŸè¿”å›MMdd
 	 * 
 	 * @param date
 	 * @return
@@ -117,7 +117,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * ???å¾??????ºæ?¶é??
+	 * å–å¾—æ‰‹æœºæ—¶é—´
 	 * 
 	 * @return HHmmss
 	 */
@@ -126,7 +126,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * ???å¾??????ºæ?¥æ????¶é?? MMddHHmmss
+	 * å–å¾—æ‰‹æœºæ—¥æœŸæ—¶é—´ MMddHHmmss
 	 * @return
 	 */
 	public static String getSystemDateTime(){
@@ -145,7 +145,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * å°?yyyyMMddhhmmss??¼å???????°æ??è½????ä¸?yyyy-MM-dd hh:mm:ss??¼å??
+	 * å°†yyyyMMddhhmmssæ ¼å¼çš„æ•°æ®è½¬åŒ–ä¸ºyyyy-MM-dd hh:mm:ssæ ¼å¼
 	 * 
 	 * @param yyyyMMddhhmmss
 	 * @return
@@ -180,7 +180,7 @@ public class DateUtil {
 	}
 	
 	/**
-	 * è®¡ç??ä¸¤ä¸ª??¥æ??ä¹???´ç?¸å·®???å¤©æ?°ã??æ³¨æ??è¿?????????¨ç?????java.sql.Date???
+	 * è®¡ç®—ä¸¤ä¸ªæ—¥æœŸä¹‹é—´ç›¸å·®çš„å¤©æ•°ã€‚æ³¨æ„è¿™é‡Œé‡‡ç”¨çš„æ˜¯java.sql.Dateã€‚
 	 * 
 	 * @param date1
 	 * @param date2

@@ -24,15 +24,15 @@ public class QPOS {
 		return reader;
 	}
 
-	public static CardReader resetCardReader(int model) {
-		reader = CardReader.getInstance(BaseActivity.getTopActivity(), model);
+	public static CardReader changeCardReader(int model) {
+		reader = CardReader.changeReader(BaseActivity.getTopActivity(), model);
 		util.turnUpVolume(BaseActivity.getTopActivity().getBaseContext(), 8);
 		return reader;
 	}
 	
-	public static void HandData(Handler mHandler, Object mStr, int num) {
+	public static void HandData(Handler mHandler, Object obj, int num) {
 		Message message = mHandler.obtainMessage();
-		message.obj = mStr;
+		message.obj = obj;
 		message.what = num;
 		mHandler.sendMessage(message);
 	}
