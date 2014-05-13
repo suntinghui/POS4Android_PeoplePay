@@ -33,11 +33,6 @@ public class LockScreenSettingActivity extends Activity implements
 	private String firstKey = "";
 	private String secondKey = "";
 	private LinearLayout layout_lock;
-	private RadioGroup radioGroup = null;
-	private RadioButton radioOpen = null;
-	private RadioButton radioClose = null;
-
-	private int gender = 1;// 0: 关 1: 开
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,54 +45,6 @@ public class LockScreenSettingActivity extends Activity implements
 		tv_tips = (TextView) findViewById(R.id.tv_tips);
 		tv_tips.setText("请绘制新手势");
 		
-		radioGroup = (RadioGroup) this.findViewById(R.id.radioGroup);
-		radioOpen = (RadioButton) this.findViewById(R.id.radioOpen);
-		radioClose = (RadioButton) this.findViewById(R.id.radioClose);
-		
-		Boolean gestureClose = ApplicationEnvironment.getInstance().getPreferences().getBoolean(Constants.kGESTRUECLOSE, false);
-		if(gestureClose){
-			radioGroup.check(R.id.radioClose);
-			layout_lock.setVisibility(View.GONE);
-		}else{
-			radioGroup.check(R.id.radioOpen);
-		}
-		
-		radioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-			@Override
-			public void onCheckedChanged(RadioGroup arg0, int arg1) {
-				// 获取变更后的选中项的ID
-				int radioButtonId = arg0.getCheckedRadioButtonId();
-				// 根据ID获取RadioButton的实例
-				RadioButton rb = (RadioButton) LockScreenSettingActivity.this
-						.findViewById(radioButtonId);
-				String text = rb.getText().toString();
-				if (text.equals("关")) {
-					
-					gender = 1;
-					SharedPreferences pre = ApplicationEnvironment
-							.getInstance().getPreferences();
-					Editor editor = pre.edit();
-					editor.putString(Constants.kLOCKKEY, "");
-					editor.putBoolean(Constants.kGESTRUECLOSE, true);
-					editor.commit();
-					layout_lock.setVisibility(View.GONE);
-					ApplicationEnvironment.getInstance().getApplication().stopService(new Intent("com.people.timeoutService"));
-				} else {
-					gender = 0;
-					SharedPreferences pre = ApplicationEnvironment
-							.getInstance().getPreferences();
-					Editor editor = pre.edit();
-					editor.putBoolean(Constants.kGESTRUECLOSE, false);
-					editor.commit();
-					tv_tips.setText("请绘制新手势");
-					tv_tips.setTextColor(LockScreenSettingActivity.this
-							.getResources().getColor(R.color.white));
-					layout_lock.setVisibility(View.VISIBLE);
-				}
-			}
-
-		});
 
 		tv_tips = (TextView) findViewById(R.id.tv_tips);
 		gv = (GestureLockView) findViewById(R.id.gv);

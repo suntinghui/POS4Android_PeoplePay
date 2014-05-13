@@ -242,7 +242,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 					if (obj instanceof HashMap) {
 						if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-							Toast.makeText(getApplicationContext(), "交易成功", Toast.LENGTH_SHORT).show();
+							Intent intent = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
+							startActivity(intent);
 						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 							Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 						}
@@ -355,7 +356,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 					if (obj instanceof HashMap) {
 						if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-							Toast.makeText(getApplicationContext(), "交易成功", Toast.LENGTH_SHORT).show();
+							
+							Intent intent = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
+							startActivity(intent);
 						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 							Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 						}
