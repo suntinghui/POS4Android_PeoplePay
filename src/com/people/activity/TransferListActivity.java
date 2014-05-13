@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,7 +16,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,12 +29,9 @@ import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.StringUtil;
-import com.people.view.LKAlertDialog;
-import com.people.view.RefreshListView.RefreshListener;
 
 // 流水
-public class TransferListActivity extends BaseActivity implements
-		OnClickListener {
+public class TransferListActivity extends BaseActivity implements OnClickListener {
 
 	private ListView listView = null;
 	private Adapter adapter = null;
@@ -55,7 +49,7 @@ public class TransferListActivity extends BaseActivity implements
 
 		Button btn_refresh = (Button) findViewById(R.id.btn_refresh);
 		btn_refresh.setOnClickListener(this);
-		
+
 		tv_totalnum = (TextView) findViewById(R.id.tv_totalnum);
 		tv_totalmoney = (TextView) findViewById(R.id.tv_totalmoney);
 		listView = (ListView) this.findViewById(R.id.listview);
@@ -65,10 +59,8 @@ public class TransferListActivity extends BaseActivity implements
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				Intent intent = new Intent(TransferListActivity.this,
-						TransferDetailActivity.class);
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				Intent intent = new Intent(TransferListActivity.this, TransferDetailActivity.class);
 				TradeModel model = array.get(arg2);
 				intent.putExtra("model", model);
 				startActivity(intent);
@@ -99,7 +91,6 @@ public class TransferListActivity extends BaseActivity implements
 
 		public int getCount() {
 			return array.size();
-//			return 4;
 		}
 
 		public Object getItem(int arg0) {
@@ -115,54 +106,32 @@ public class TransferListActivity extends BaseActivity implements
 			if (null == convertView) {
 				holder = new ViewHolder();
 
-				convertView = mInflater.inflate(R.layout.list_item_transfer,
-						null);
+				convertView = mInflater.inflate(R.layout.list_item_transfer, null);
 
-				holder.contentLayout = (LinearLayout) convertView
-						.findViewById(R.id.contentLayout);
+				holder.contentLayout = (LinearLayout) convertView.findViewById(R.id.contentLayout);
 
-				holder.tv_amount = (TextView) convertView
-						.findViewById(R.id.tv_amount);
-				holder.tv_week = (TextView) convertView
-						.findViewById(R.id.tv_week);
-				holder.tv_date = (TextView) convertView
-						.findViewById(R.id.tv_date);
-				holder.tv_cardnum = (TextView) convertView
-						.findViewById(R.id.tv_cardnum);
-				holder.tv_revoke = (TextView) convertView
-						.findViewById(R.id.tv_revoke);
+				holder.tv_amount = (TextView) convertView.findViewById(R.id.tv_amount);
+				holder.tv_week = (TextView) convertView.findViewById(R.id.tv_week);
+				holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
+				holder.tv_cardnum = (TextView) convertView.findViewById(R.id.tv_cardnum);
+				holder.tv_revoke = (TextView) convertView.findViewById(R.id.tv_revoke);
 
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
+			
 			TradeModel model = array.get(position);
-			String cardNum = model.getCrdNo();
-			if(cardNum != null){
+			String cardNum = model.getCardNo();
+			if (cardNum != null) {
 				holder.tv_cardnum.setText(StringUtil.formatAccountNo(cardNum));
 			}
 			String amount = model.getTxnamt();
-			if(amount != null){
+			if (amount != null) {
 				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
 			}
-			holder.tv_date.setText(model.getSysDate()==null ? "": model.getSysDate());
-			String TXNSTS = model.getTxnsts();
-			if(TXNSTS.equalsIgnoreCase("S")){
-				TXNSTS = "交易成功";
-			}else if(TXNSTS.equalsIgnoreCase("R")){
-				TXNSTS = "撤销成功";
-			}else if(TXNSTS.equalsIgnoreCase("0")){
-				TXNSTS = "预计";
-			}else if(TXNSTS.equalsIgnoreCase("C")){
-				TXNSTS = "冲正";
-			}else if(TXNSTS.equalsIgnoreCase("T")){
-				TXNSTS = "超时";
-			}else if(TXNSTS.equalsIgnoreCase("F")){
-				TXNSTS = "失败";
-			}else if(TXNSTS.equalsIgnoreCase("E")){
-				TXNSTS = "完成";
-			}
-			holder.tv_revoke.setText(TXNSTS);
+			holder.tv_date.setText(model.getSysDate() == null ? "" : model.getSysDate());
+			holder.tv_revoke.setText(model.formatTxnsts());
 			return convertView;
 		}
 	}
@@ -176,6 +145,7 @@ public class TransferListActivity extends BaseActivity implements
 		case R.id.btn_refresh:
 			array.clear();
 			queryHistory();
+			
 			break;
 		default:
 			break;
@@ -186,25 +156,19 @@ public class TransferListActivity extends BaseActivity implements
 	private void queryHistory() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199008");
-		tempMap.put(
-				"PHONENUMBER",
-				ApplicationEnvironment.getInstance()
-						.getPreferences(TransferListActivity.this)
-						.getString(Constants.kUSERNAME, ""));
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(TransferListActivity.this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.FlowQuery,
-				tempMap, queryHistoryHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.FlowQuery, tempMap, queryHistoryHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-					}
+			}
 
-				});
+		});
 	}
 
 	private LKAsyncHttpResponseHandler queryHistoryHandler() {
@@ -214,24 +178,19 @@ public class TransferListActivity extends BaseActivity implements
 			@Override
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString()
-							.equals("000000")) {
+					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
 						float totalAmount = 0;
-						array.addAll((ArrayList<TradeModel>)((HashMap) obj).get("list"));
-						for(int i = 0;i<array.size();i++){
+						array.addAll((ArrayList<TradeModel>) ((HashMap) obj).get("list"));
+						for (int i = 0; i < array.size(); i++) {
 							TradeModel model = array.get(i);
 							String amount = StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1);
-							totalAmount+=Float.valueOf(amount);
+							totalAmount += Float.valueOf(amount);
 						}
-						tv_totalmoney.setText("￥"+totalAmount);
-						tv_totalnum.setText(array.size()+"");
+						tv_totalmoney.setText("￥" + totalAmount);
+						tv_totalnum.setText(array.size() + "");
 						adapter.notifyDataSetChanged();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null
-							&& ((HashMap) obj).get("RSPMSG").toString()
-									.length() != 0) {
-						Toast.makeText(getApplicationContext(),
-								((HashMap) obj).get("RSPMSG").toString(),
-								Toast.LENGTH_SHORT).show();
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 					}
 				} else {
 				}

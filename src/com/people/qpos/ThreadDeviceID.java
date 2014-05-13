@@ -34,7 +34,7 @@ public class ThreadDeviceID extends Thread {
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("TID", tid); // TerminalID
 			// TODO
-			map.put("PID", StringUtil.hexToASCII(pid)); // PSAMID
+			map.put("PID", "UN201410000046"); // PSAMID
 			
 			QPOS.HandData(mHandler, map, CardReader.SUCCESS);
 		} else {

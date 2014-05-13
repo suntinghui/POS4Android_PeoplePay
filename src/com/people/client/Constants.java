@@ -15,5 +15,7 @@ public class Constants {
 	public static final String kLOCKKEY					="LockKey";
 	public static final String kFIRSTLOGIN      		="FirstLogin";
 	public static final String kGESTRUECLOSE      		="GestureClose";
+	
+	public static final String kTRACEAUDITNUM 			= "kTRACEAUDITNUM";
 
 }

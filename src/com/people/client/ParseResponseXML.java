@@ -32,58 +32,58 @@ public class ParseResponseXML {
 			switch (reqType) {
 			case TransferRequestTag.Login: // 登录
 				return login();
-				
+
 			case TransferRequestTag.Register:
 				return register();
 			case TransferRequestTag.ModifyLoginPwd:
 				return modifyLoginPwd();
-				
+
 			case TransferRequestTag.ForgetLoginPwd:
 				return forgetLoginPwd();
-				
+
 			case TransferRequestTag.SignIn:
 				return signIn();
-				
+
 			case TransferRequestTag.Consume:
 				return consume();
-				
+
 			case TransferRequestTag.ConsumeCancel:
 				return consumeCancel();
-				
+
 			case TransferRequestTag.BalanceQuery:
 				return balanceQuery();
-				
+
 			case TransferRequestTag.FlowQuery:
 				return flowQuery();
-				
+
 			case TransferRequestTag.CreditCardApply:
 				return creditCardApply();
-				
+
 			case TransferRequestTag.ClearQuery:
 				return clearQuery();
-				
+
 			case TransferRequestTag.AppCommend:
 				return appCommend();
-				
+
 			case TransferRequestTag.ReferenceMsg:
 				return referenceMsg();
-				
+
 			case TransferRequestTag.ShareTransfer:
 				return shareTransfer();
-				
+
 			case TransferRequestTag.ExaminePhone:
 				return examinePhone();
-				
+
 			case TransferRequestTag.SmsSend:
 				return smsSend();
-				
+
 			case TransferRequestTag.SmsCheck:
 				return smsCheck();
-				
+
 			case TransferRequestTag.MerchantQuery:
 				return merchantQuery();
 			}
-			
+
 		} catch (XmlPullParserException e) {
 			e.printStackTrace();
 
@@ -363,42 +363,64 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
-				} else if("TRANDETAIL".equalsIgnoreCase(parser.getName())){
-					
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
 					model = new TradeModel();
-				} else if("SYSDAT".equalsIgnoreCase(parser.getName())){
+				} else if ("SYSDAT".equalsIgnoreCase(parser.getName())) {
 					model.setSysDate(parser.nextText());
-				} else if("MERNAM".equalsIgnoreCase(parser.getName())){
+				} else if ("MERNAM".equalsIgnoreCase(parser.getName())) {
 					model.setMerName(parser.nextText());
-				} else if("LOGDAT".equalsIgnoreCase(parser.getName())){
+				} else if ("LOGDAT".equalsIgnoreCase(parser.getName())) {
 					model.setLogDate(parser.nextText());
-				} else if("LOGNO".equalsIgnoreCase(parser.getName())){
+				} else if ("LOGNO".equalsIgnoreCase(parser.getName())) {
 					model.setLogNo(parser.nextText());
-				} else if("TXNCD".equalsIgnoreCase(parser.getName())){
+				} else if ("TXNCD".equalsIgnoreCase(parser.getName())) {
 					model.setTxncd(parser.nextText());
-				} else if("TXNSTS".equalsIgnoreCase(parser.getName())){
+				} else if ("TXNSTS".equalsIgnoreCase(parser.getName())) {
 					model.setTxnsts(parser.nextText());
-				} else if("TXNAMT".equalsIgnoreCase(parser.getName())){
+				} else if ("TXNAMT".equalsIgnoreCase(parser.getName())) {
 					model.setTxnamt(parser.nextText());
-				} else if("CRDNO".equalsIgnoreCase(parser.getName())){
-					model.setCrdNo(parser.nextText());
+				} else if ("CRDNO".equalsIgnoreCase(parser.getName())) {
+					model.setCardNo(parser.nextText());
 				}
 				break;
 			case XmlPullParser.END_TAG:
-				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
-					list.add(model);
+				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
+					list.add(0, model); // 服务器返回顺序不对，这里进行倒序
 				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
 					respMap.put("list", list);
 				}
 				break;
 			}
-			
+
 			eventType = parser.next();
 		}
 		return respMap;
 	}
 
 	private static Object creditCardApply() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				}
+				// TODO
+				break;
+
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+
+	private static Object appCommend() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -434,69 +456,6 @@ public class ParseResponseXML {
 					respMap = new HashMap<String, String>();
 				}
 				// TODO
-				break;
-
-			}
-
-			eventType = parser.next();
-		}
-
-		return respMap;
-	}
-
-	private static Object appCommend() throws XmlPullParserException, IOException {
-		HashMap<String, Object> respMap = null;
-		ArrayList<TradeModel> tradeList = null;
-		TradeModel trade = null;
-
-		XmlPullParser parser = Xml.newPullParser();
-		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();
-		while (eventType != XmlPullParser.END_DOCUMENT) {
-			switch (eventType) {
-			case XmlPullParser.START_TAG:
-				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
-					respMap = new HashMap<String, Object>();
-				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
-					respMap.put("RSPCOD", parser.nextText());
-				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
-					respMap.put("PHONENUMBER", parser.nextText());
-				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
-					respMap.put("RSPMSG", parser.nextText());
-				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
-					respMap.put("PACKAGEMAC", parser.nextText());
-				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
-					tradeList = new ArrayList<TradeModel>();
-				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
-					trade = new TradeModel();
-				} else if ("SYSDAT".equalsIgnoreCase(parser.getName())) {
-					trade.setSysDate(parser.nextText());
-				} else if ("MERNAM".equalsIgnoreCase(parser.getName())) {
-					trade.setMerName(parser.nextText());
-				} else if ("SYSDAT".equalsIgnoreCase(parser.getName())) {
-					trade.setSysDate(parser.nextText());
-				} else if ("LOGDAT".equalsIgnoreCase(parser.getName())) {
-					trade.setLogDate(parser.nextText());
-				} else if ("LOGNO".equalsIgnoreCase(parser.getName())) {
-					trade.setLogNo(parser.nextText());
-				} else if ("TXNCD".equalsIgnoreCase(parser.getName())) {
-					trade.setTxncd(parser.nextText());
-				} else if ("TXNSTS".equalsIgnoreCase(parser.getName())) {
-					trade.setTxnsts(parser.nextText());
-				} else if ("TXNAMT".equalsIgnoreCase(parser.getName())) {
-					trade.setAmount(parser.nextText());
-				} else if ("CRDNO".equalsIgnoreCase(parser.getName())) {
-					trade.setCardNo(parser.nextText());
-				}
-
-				break;
-
-			case XmlPullParser.END_TAG:
-				if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
-					respMap.put("TRANDETAILS", tradeList);
-				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
-					tradeList.add(trade);
-				}
 				break;
 
 			}
@@ -658,7 +617,7 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
+
 	private static Object merchantQuery() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
@@ -672,7 +631,7 @@ public class ParseResponseXML {
 					respMap = new HashMap<String, String>();
 				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPCOD", parser.nextText());
-				}else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
@@ -688,7 +647,7 @@ public class ParseResponseXML {
 					respMap.put("ACTNAM", parser.nextText());
 				} else if ("OPNBNK".equalsIgnoreCase(parser.getName())) {
 					respMap.put("OPNBNK", parser.nextText());
-				}  
+				}
 				break;
 
 			}
