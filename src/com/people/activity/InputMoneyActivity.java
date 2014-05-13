@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.people.R;
 import com.people.client.AppDataCenter;
@@ -100,21 +102,27 @@ public class InputMoneyActivity extends BaseActivity {
 		@Override
 		public void onClick(View arg0) {
 			if (arg0.getId() == R.id.layout_swip) {
-				Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
-				
-				intent.putExtra("TYPE", TransferRequestTag.Consume);
-				intent.putExtra("TRANCODE", "199005");
-				intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
-				intent.putExtra("PCSIM", "获取不到");
-				intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
-				intent.putExtra("CTXNAT", StringUtil.amount2String(tv_show_money.getText().toString()));
-				intent.putExtra("CRDNO", "");
-				intent.putExtra("CHECKX", "0.0");
-				intent.putExtra("APPTOKEN", "APPTOKEN");
-				intent.putExtra("TTXNTM", DateUtil.getSystemTime());
-				intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
-				
-				startActivityForResult(intent, 0);
+				if(tv_show_money.getText().toString().equals("0") || tv_show_money.getText().toString().equals("0.0") || tv_show_money.getText().toString().equals("0.0")){
+					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额不能为空", 2);
+					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
+					toast.show();
+				}else{
+					Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
+					
+					intent.putExtra("TYPE", TransferRequestTag.Consume);
+					intent.putExtra("TRANCODE", "199005");
+					intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
+					intent.putExtra("PCSIM", "获取不到");
+					intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
+					intent.putExtra("CTXNAT", StringUtil.amount2String(tv_show_money.getText().toString()));
+					intent.putExtra("CRDNO", "");
+					intent.putExtra("CHECKX", "0.0");
+					intent.putExtra("APPTOKEN", "APPTOKEN");
+					intent.putExtra("TTXNTM", DateUtil.getSystemTime());
+					intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
+					
+					startActivityForResult(intent, 0);					
+				}
 				
 			} else {
 				String tmp = "";
