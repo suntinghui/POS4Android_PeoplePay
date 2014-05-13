@@ -19,44 +19,46 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 
-public class SettingActivity extends BaseActivity implements OnClickListener{
+public class SettingActivity extends BaseActivity implements OnClickListener {
 
 	private ListView listView = null;
 	private Adapter adapter = null;
 
 	private Integer[] imageIds = { R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
 
-	private String[] titles = {"关于系统", "意见反馈", "检查更新", "帮助" };
+	private String[] titles = { "关于系统", "意见反馈", "检查更新", "帮助" };
 	private ImageButton ibtn_gesture;
 	private Boolean isOpen = false;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_setting);
-		
+
 		isOpen = ApplicationEnvironment.getInstance().getPreferences(this).getBoolean(Constants.kGESTRUECLOSE, false);
 
 		ibtn_gesture = (ImageButton) findViewById(R.id.ibtn_gesture);
 		ibtn_gesture.setOnClickListener(this);
-		if(isOpen){
+		if (isOpen) {
 			ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
-		}else{
+		} else {
 			ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
 		}
-		
+
 		LinearLayout layout_gesture = (LinearLayout) findViewById(R.id.layout_gesture);
 		layout_gesture.setOnClickListener(this);
-		
+
 		listView = (ListView) this.findViewById(R.id.listview);
 		Button btn_back = (Button) findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
-		
+
 		adapter = new Adapter(this);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
@@ -69,12 +71,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 					SettingActivity.this.startActivity(intent1);
 					break;
 				case 1:
-//					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
-//					SettingActivity.this.startActivity(intent1);
+					// Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
+					// SettingActivity.this.startActivity(intent1);
 					break;
 				case 2:
-//					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
-//					SettingActivity.this.startActivity(intent1);
+					// Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
+					// SettingActivity.this.startActivity(intent1);
 					break;
 				default:
 					break;
@@ -83,9 +85,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 
 		});
 
-
 	}
-
 
 	public final class ViewHolder {
 		public RelativeLayout contentLayout;
@@ -143,29 +143,35 @@ public class SettingActivity extends BaseActivity implements OnClickListener{
 		case R.id.btn_back:
 			this.finish();
 			break;
+			
 		case R.id.ibtn_gesture:
 			isOpen = !isOpen;
-			SharedPreferences pre = ApplicationEnvironment
-					.getInstance().getPreferences();
+			SharedPreferences pre = ApplicationEnvironment.getInstance().getPreferences();
 			Editor editor = pre.edit();
-			if(!isOpen){
+			if (!isOpen) {
 				editor.putString(Constants.kLOCKKEY, "");
 			}
 			editor.putBoolean(Constants.kGESTRUECLOSE, isOpen);
 			editor.commit();
-			if(isOpen){
+			
+			if (isOpen) {
 				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
-			}else{
+			} else {
 				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
 			}
 			break;
+			
 		case R.id.layout_gesture:
-			if(isOpen){
+			if (isOpen) {
 				Intent intent = new Intent(SettingActivity.this, LockScreenSettingActivity.class);
 				startActivity(intent);
+			} else {
+				Toast.makeText(SettingActivity.this, "请先开启锁屏手势功能", Toast.LENGTH_SHORT).show();
 			}
 			
+
 			break;
+			
 		default:
 			break;
 		}
