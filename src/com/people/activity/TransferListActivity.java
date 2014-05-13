@@ -6,6 +6,7 @@ import java.util.HashMap;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +29,7 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.qpos.QPOS;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
@@ -41,6 +43,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 	private TextView tv_totalnum;
 	private TextView tv_totalmoney;
+	
+	private long exitTimeMillis = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +125,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			
+
 			TradeModel model = array.get(position);
 			String cardNum = model.getCardNo();
 			if (cardNum != null) {
@@ -131,10 +135,10 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			if (amount != null) {
 				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
 			}
-			
+
 			holder.tv_date.setText(DateUtil.getDayWeekTime(model.getSysDate()));
 			holder.tv_revoke.setText(model.getStatus());
-			
+
 			return convertView;
 		}
 	}
@@ -148,7 +152,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		case R.id.btn_refresh:
 			array.clear();
 			queryHistory();
-			
+
 			break;
 		default:
 			break;
@@ -187,12 +191,12 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 						for (int i = 0; i < array.size(); i++) {
 							TradeModel model = array.get(i);
 							String amount = StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1);
-							if(model.getTxncd().equalsIgnoreCase("0200200000")){
-								
-							}else{
-								totalAmount += Float.valueOf(amount);	
+							if (model.getTxncd().equalsIgnoreCase("0200200000")) {
+
+							} else {
+								totalAmount += Float.valueOf(amount);
 							}
-							
+
 						}
 						tv_totalmoney.setText("￥" + totalAmount);
 						tv_totalnum.setText(array.size() + "");
@@ -206,5 +210,26 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			}
 
 		};
+	}
+
+	// 程序退出
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTimeMillis) > 2000) {
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+				exitTimeMillis = System.currentTimeMillis();
+			} else {
+				ArrayList<BaseActivity> list = BaseActivity.getAllActiveActivity();
+				for (BaseActivity activity : list) {
+					activity.finish();
+				}
+
+				android.os.Process.killProcess(android.os.Process.myPid());
+				System.exit(0);
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

@@ -11,6 +11,7 @@ import com.people.R;
 
 // 关于系统
 public class AboutSystemActivity extends BaseActivity implements OnClickListener {
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -18,7 +19,7 @@ public class AboutSystemActivity extends BaseActivity implements OnClickListener
 
 		Button btn_back = (Button) this.findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
-		
+
 		Button btn_access = (Button) this.findViewById(R.id.btn_access);
 		btn_access.setOnClickListener(this);
 	}
@@ -26,13 +27,12 @@ public class AboutSystemActivity extends BaseActivity implements OnClickListener
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		
+
 		case R.id.btn_back:
 			this.finish();
 			break;
 		case R.id.btn_access:
-			Intent viewIntent = new 
-		    Intent("android.intent.action.VIEW",Uri.parse("http://www.people2000.net/"));
+			Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.people2000.net/"));
 			startActivity(viewIntent);
 			break;
 		default:
