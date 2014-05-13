@@ -112,7 +112,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					editor.putString(Constants.kPASSWORD, passwordEdit.getText().toString().trim());
 					editor.commit();
 
-					Intent intent = new Intent(LoginActivity.this, CatalogActivity.class);
+					Intent intent = new Intent(LoginActivity.this, ChooseQPOSModeActivity.class);
 					LoginActivity.this.startActivity(intent);
 				} else {
 					Toast.makeText(LoginActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();

@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +24,7 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.qpos.QPOS;
 import com.people.qpos.ThreadDeviceID;
 import com.people.qpos.ThreadSwip_SixPass;
 import com.people.util.StringUtil;
@@ -30,8 +33,9 @@ import com.people.view.BLDeviceDialog.OnSelectBLListener;
 
 import dspread.voicemodem.CardReader;
 
-public class SearchAndSwipeActivity extends BaseActivity {
+public class SearchAndSwipeActivity extends BaseActivity implements OnClickListener {
 
+	private Button bluetoothBtn = null;
 	private TextView titleView = null;
 	private ImageView animImageView = null;
 
@@ -46,6 +50,14 @@ public class SearchAndSwipeActivity extends BaseActivity {
 
 		this.registerReceiver(mQPOSUpdateReceiver, makeUpdateIntentFilter());
 
+		bluetoothBtn = (Button) this.findViewById(R.id.bluetooth_btn);
+		bluetoothBtn.setOnClickListener(this);
+		if (QPOS.getCardReader().getMode() == CardReader.BLUETOOTHMODE) {
+			bluetoothBtn.setVisibility(View.VISIBLE);
+		} else {
+			bluetoothBtn.setVisibility(View.GONE);
+		}
+
 		titleView = (TextView) this.findViewById(R.id.titleView);
 		titleView.setText("检测设备");
 		animImageView = (ImageView) this.findViewById(R.id.iv_swipe);
@@ -57,12 +69,18 @@ public class SearchAndSwipeActivity extends BaseActivity {
 		animaition.start();// 启动
 
 		intent = this.getIntent();
+
+		if (!Constants.HASSETBLUETOOTH) {
+			showBLDialog();
+
+			Constants.HASSETBLUETOOTH = true;
+
+		} else {
+			doAction();
+		}
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-
+	private void showBLDialog() {
 		BLDeviceDialog dialog = new BLDeviceDialog(this);
 		dialog.setOnSelectBLListener(selectBLListener);
 		dialog.create().show();
@@ -71,18 +89,28 @@ public class SearchAndSwipeActivity extends BaseActivity {
 	private OnSelectBLListener selectBLListener = new OnSelectBLListener() {
 		@Override
 		public void onSelect() {
-			int type = intent.getIntExtra("TYPE", 0);
-			if (type == TransferRequestTag.Consume) {
-				new ConsumeAction().doAction();
-			} else if (type == TransferRequestTag.ConsumeCancel) {
-				new ConsumeCancelAction().doAction();
-			}
-
+			doAction();
 		}
 	};
 
+	private void doAction() {
+		int type = intent.getIntExtra("TYPE", 0);
+		if (type == TransferRequestTag.Consume) {
+			new ConsumeAction().doAction();
+		} else if (type == TransferRequestTag.ConsumeCancel) {
+			new ConsumeCancelAction().doAction();
+		}
+	}
+
 	public void backAction(View view) {
 		this.finish();
+	}
+
+	@Override
+	public void onClick(View view) {
+		if (view.getId() == R.id.bluetooth_btn) {
+			showBLDialog();
+		}
 	}
 
 	public BroadcastReceiver mQPOSUpdateReceiver = new BroadcastReceiver() {
@@ -93,10 +121,10 @@ public class SearchAndSwipeActivity extends BaseActivity {
 			if (Constants.ACTION_QPOS_CANCEL.equals(action)) {
 
 			} else if (Constants.ACTION_QPOS_STARTSWIPE.equals(action)) {
-				
+
 				titleView.setText("请刷卡");
 				animImageView.setBackgroundResource(R.anim.swipcard);
-				
+
 				animaition.setOneShot(false);
 				animaition.start();// 启动
 

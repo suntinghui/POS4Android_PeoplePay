@@ -1,5 +1,6 @@
 package com.people.activity;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import android.content.Context;
@@ -8,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +26,7 @@ import com.people.client.AppDataCenter;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
+import com.people.qpos.QPOS;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
@@ -33,6 +36,8 @@ public class InputMoneyActivity extends BaseActivity {
 	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除", "0", "." };
 
 	private TextView tv_show_money;
+	
+	private long exitTimeMillis = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -102,13 +107,13 @@ public class InputMoneyActivity extends BaseActivity {
 		@Override
 		public void onClick(View arg0) {
 			if (arg0.getId() == R.id.layout_swip) {
-				if(tv_show_money.getText().toString().equals("0") || tv_show_money.getText().toString().equals("0.0") || tv_show_money.getText().toString().equals("0.0")){
+				if (tv_show_money.getText().toString().equals("0") || tv_show_money.getText().toString().equals("0.0") || tv_show_money.getText().toString().equals("0.0")) {
 					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额不能为空", 2);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
 					toast.show();
-				}else{
+				} else {
 					Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
-					
+
 					intent.putExtra("TYPE", TransferRequestTag.Consume);
 					intent.putExtra("TRANCODE", "199005");
 					intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
@@ -120,10 +125,10 @@ public class InputMoneyActivity extends BaseActivity {
 					intent.putExtra("APPTOKEN", "APPTOKEN");
 					intent.putExtra("TTXNTM", DateUtil.getSystemTime());
 					intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
-					
-					startActivityForResult(intent, 0);					
+
+					startActivityForResult(intent, 0);
 				}
-				
+
 			} else {
 				String tmp = "";
 				String tv_str = tv_show_money.getText().toString();
@@ -153,7 +158,7 @@ public class InputMoneyActivity extends BaseActivity {
 					}
 					tv_show_money.setText(tv_show_money.getText() + tmp);
 					break;
-					
+
 				case 1009: // 删除
 
 					if (tv_str.length() == 1) {
@@ -163,7 +168,7 @@ public class InputMoneyActivity extends BaseActivity {
 						tv_show_money.setText(tv_str.toString().substring(0, tv_str.length() - 1));
 					}
 					break;
-					
+
 				case 1010: // 0
 					if (tv_str.length() > 11 || tv_str.equals("0") || tv_str.equals("0.0") || tv_str.equals("0.00")) {
 						break;
@@ -189,7 +194,7 @@ public class InputMoneyActivity extends BaseActivity {
 						tv_show_money.setText(tv_str + ".");
 					}
 					break;
-					
+
 				default:
 					break;
 				}
@@ -202,5 +207,30 @@ public class InputMoneyActivity extends BaseActivity {
 	public static boolean isDouble(String str) {
 		Pattern pattern = Pattern.compile("^[0-9]+\\.{0,1}[0-9]{0,2}$/g");
 		return pattern.matcher(str).matches();
+	}
+
+	// 程序退出
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTimeMillis) > 2000) {
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+				exitTimeMillis = System.currentTimeMillis();
+			} else {
+				ArrayList<BaseActivity> list = BaseActivity.getAllActiveActivity();
+				for (BaseActivity activity : list) {
+					activity.finish();
+				}
+
+				if (QPOS.getCardReader() != null) {
+					QPOS.getCardReader().close();
+				}
+
+				android.os.Process.killProcess(android.os.Process.myPid());
+				System.exit(0);
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

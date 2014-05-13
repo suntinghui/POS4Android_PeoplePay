@@ -26,7 +26,8 @@ public class QPOS {
 	}
 
 	public static CardReader changeCardReader(int model) {
-		reader = CardReader.changeReader(BaseActivity.getTopActivity(), model);
+		//reader = CardReader.changeReader(BaseActivity.getTopActivity(), model);
+		reader = CardReader.getInstance(BaseActivity.getTopActivity(), model);
 		util.turnUpVolume(BaseActivity.getTopActivity().getBaseContext(), 8);
 		return reader;
 	}

@@ -1,9 +1,12 @@
 package com.people.activity;
 
+import java.util.ArrayList;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,8 +16,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.people.R;
+import com.people.qpos.QPOS;
 
 // 工具
 public class ToolsActivity extends BaseActivity implements OnClickListener {
@@ -23,6 +28,8 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
 
+	private long exitTimeMillis = 0;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -126,6 +133,31 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 
 			return convertView;
 		}
+	}
+
+	// 程序退出
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTimeMillis) > 2000) {
+				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+				exitTimeMillis = System.currentTimeMillis();
+			} else {
+				ArrayList<BaseActivity> list = BaseActivity.getAllActiveActivity();
+				for (BaseActivity activity : list) {
+					activity.finish();
+				}
+
+				if (QPOS.getCardReader() != null) {
+					QPOS.getCardReader().close();
+				}
+
+				android.os.Process.killProcess(android.os.Process.myPid());
+				System.exit(0);
+			}
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 }
