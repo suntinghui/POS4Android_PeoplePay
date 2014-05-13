@@ -133,7 +133,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			}
 			
 			holder.tv_date.setText(DateUtil.getDayWeekTime(model.getSysDate()));
-			holder.tv_revoke.setText(model.formatTxnsts());
+			holder.tv_revoke.setText(model.getStatus());
 			
 			return convertView;
 		}
@@ -187,7 +187,12 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 						for (int i = 0; i < array.size(); i++) {
 							TradeModel model = array.get(i);
 							String amount = StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1);
-							totalAmount += Float.valueOf(amount);
+							if(model.getTxncd().equalsIgnoreCase("0200200000")){
+								
+							}else{
+								totalAmount += Float.valueOf(amount);	
+							}
+							
 						}
 						tv_totalmoney.setText("￥" + totalAmount);
 						tv_totalnum.setText(array.size() + "");
