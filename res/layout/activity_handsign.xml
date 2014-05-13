@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="7"
                     android:layout_marginRight="10dip"
-                    android:layout_marginLeft="10"
+                    android:layout_marginLeft="10dip"
                     android:background="@drawable/bottom_y"
                     android:text="确认" />
             </LinearLayout>
