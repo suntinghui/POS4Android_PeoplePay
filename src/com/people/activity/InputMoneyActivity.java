@@ -107,7 +107,7 @@ public class InputMoneyActivity extends BaseActivity {
 		public void onClick(View arg0) {
 			if (arg0.getId() == R.id.layout_swip) {
 				if (tv_show_money.getText().toString().equals("0") || tv_show_money.getText().toString().equals("0.0") || tv_show_money.getText().toString().equals("0.0")) {
-					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额不能为空", Toast.LENGTH_SHORT);
+					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
 					toast.show();
 					
