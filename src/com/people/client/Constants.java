@@ -21,5 +21,8 @@ public class Constants {
 	public static final String ACTION_QPOS_CANCEL		= "ACTION_QPOS_CANCEL";
 	public static final String ACTION_QPOS_STARTSWIPE	= "ACTION_QPOS_STARTSWIPE";
 	public static final String ACTION_QPOS_SWIPEDONE	= "ACTION_QPOS_SWIPEDONE";
+	
+	public static final String APPFILEPATH 				    = "/data/data/" + ApplicationEnvironment.getInstance().getApplication().getPackageName();
+	public static final String SIGNIMAGESPATH				= APPFILEPATH + "/signImages/";
 
 }

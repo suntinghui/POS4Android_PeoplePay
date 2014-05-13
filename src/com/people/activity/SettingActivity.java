@@ -2,6 +2,8 @@ package com.people.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,22 +21,38 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.people.R;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
 
-public class SettingActivity extends BaseActivity implements OnClickListener {
+public class SettingActivity extends BaseActivity implements OnClickListener{
 
 	private ListView listView = null;
 	private Adapter adapter = null;
 
-	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
+	private Integer[] imageIds = { R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
 
-	private String[] titles = { "设置锁屏手势", "关于系统", "意见反馈", "检查更新", "帮助" };
-
+	private String[] titles = {"关于系统", "意见反馈", "检查更新", "帮助" };
+	private ImageButton ibtn_gesture;
+	private Boolean isOpen = false;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_setting);
+		
+		isOpen = ApplicationEnvironment.getInstance().getPreferences(this).getBoolean(Constants.kGESTRUECLOSE, false);
 
+		ibtn_gesture = (ImageButton) findViewById(R.id.ibtn_gesture);
+		ibtn_gesture.setOnClickListener(this);
+		if(isOpen){
+			ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
+		}else{
+			ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
+		}
+		
+		LinearLayout layout_gesture = (LinearLayout) findViewById(R.id.layout_gesture);
+		layout_gesture.setOnClickListener(this);
+		
 		listView = (ListView) this.findViewById(R.id.listview);
 		Button btn_back = (Button) findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
@@ -46,19 +65,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				switch (arg2) {
 				case 0:
-					Intent intent0 = new Intent(SettingActivity.this, LockScreenSettingActivity.class);
-					SettingActivity.this.startActivity(intent0);
-					break;
-
-				case 1:
 					Intent intent1 = new Intent(SettingActivity.this, AboutSystemActivity.class);
 					SettingActivity.this.startActivity(intent1);
 					break;
-				case 2:
+				case 1:
 //					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
 //					SettingActivity.this.startActivity(intent1);
 					break;
-				case 3:
+				case 2:
 //					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
 //					SettingActivity.this.startActivity(intent1);
 					break;
@@ -129,7 +143,29 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		case R.id.btn_back:
 			this.finish();
 			break;
-
+		case R.id.ibtn_gesture:
+			isOpen = !isOpen;
+			SharedPreferences pre = ApplicationEnvironment
+					.getInstance().getPreferences();
+			Editor editor = pre.edit();
+			if(!isOpen){
+				editor.putString(Constants.kLOCKKEY, "");
+			}
+			editor.putBoolean(Constants.kGESTRUECLOSE, isOpen);
+			editor.commit();
+			if(isOpen){
+				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
+			}else{
+				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
+			}
+			break;
+		case R.id.layout_gesture:
+			if(isOpen){
+				Intent intent = new Intent(SettingActivity.this, LockScreenSettingActivity.class);
+				startActivity(intent);
+			}
+			
+			break;
 		default:
 			break;
 		}
