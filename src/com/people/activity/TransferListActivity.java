@@ -28,6 +28,7 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
 // 流水
@@ -130,7 +131,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			if (amount != null) {
 				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
 			}
-			holder.tv_date.setText(model.getSysDate() == null ? "" : model.getSysDate());
+			holder.tv_date.setText(DateUtil.getDayWeekTime(model.getSysDate()));
 			holder.tv_revoke.setText(model.formatTxnsts());
 			return convertView;
 		}
