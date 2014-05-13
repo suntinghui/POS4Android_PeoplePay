@@ -70,7 +70,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 		intent = this.getIntent();
 
-		if (!Constants.HASSETBLUETOOTH) {
+		if (!Constants.HASSETBLUETOOTH && QPOS.getCardReader().getMode() == CardReader.BLUETOOTHMODE) {
 			showBLDialog();
 
 			Constants.HASSETBLUETOOTH = true;
