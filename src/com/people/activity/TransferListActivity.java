@@ -131,8 +131,10 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			if (amount != null) {
 				holder.tv_amount.setText(StringUtil.String2SymbolAmount(amount));
 			}
+			
 			holder.tv_date.setText(DateUtil.getDayWeekTime(model.getSysDate()));
 			holder.tv_revoke.setText(model.formatTxnsts());
+			
 			return convertView;
 		}
 	}

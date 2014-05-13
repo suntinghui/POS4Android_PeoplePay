@@ -32,7 +32,7 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		model = (TradeModel) this.getIntent().getSerializableExtra("model");
 
 		TextView tv_status = (TextView) findViewById(R.id.tv_status);
-		tv_status.setText(model.formatTxnsts());
+		tv_status.setText(model.getStatus());
 
 		TextView tv_money = (TextView) findViewById(R.id.tv_money);
 		tv_money.setText(StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1));

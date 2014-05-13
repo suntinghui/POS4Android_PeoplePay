@@ -57,7 +57,7 @@ public class TradeModel implements Serializable {
 			return "消费撤销";
 		}
 
-		return "未定义类型";
+		return "";
 	}
 
 	public void setTxncd(String txncd) {
@@ -105,6 +105,10 @@ public class TradeModel implements Serializable {
 
 	public void setTxnamt(String txnamt) {
 		this.txnamt = txnamt;
+	}
+	
+	public String getStatus(){
+		return this.formatTxncd()+this.formatTxnsts();
 	}
 
 }
