@@ -122,6 +122,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 			} else if (Constants.ACTION_QPOS_STARTSWIPE.equals(action)) {
 
+				bluetoothBtn.setVisibility(View.GONE);
 				titleView.setText("请刷卡");
 				animImageView.setBackgroundResource(R.anim.swipcard);
 
