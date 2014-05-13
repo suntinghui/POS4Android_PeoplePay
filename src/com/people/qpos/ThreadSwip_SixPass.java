@@ -2,6 +2,7 @@ package com.people.qpos;
 
 import java.util.HashMap;
 
+import com.people.client.Constants;
 import com.people.util.StringUtil;
 
 import android.content.Context;
@@ -35,6 +36,8 @@ public class ThreadSwip_SixPass extends Thread {
 		int resultCode = QPOS.getCardReader().doTradeEx(this.amountStr, 1, null, this.extraStr, 60); 
 		
 		if (resultCode == CardReader.SUCCESS) {
+			QPOS.broadcastUpdate(Constants.ACTION_QPOS_STARTSWIPE);
+			
 			resultCode = QPOS.getCardReader().waitUser(1, 120);
 			
 			if (resultCode == CardReader.SUCCESS) {

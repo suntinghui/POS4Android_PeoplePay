@@ -2,12 +2,12 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"   
 android:oneshot="true">   
 <item android:drawable="@drawable/swipe_gesture01" android:duration="200" />   
-<item android:drawable="@drawable/swipe_gesture02" android:duration="200" />   
+<!-- <item android:drawable="@drawable/swipe_gesture02" android:duration="200" /> -->   
 <item android:drawable="@drawable/swipe_gesture03" android:duration="200" />   
-<item android:drawable="@drawable/swipe_gesture04" android:duration="200" />   
+<!-- <item android:drawable="@drawable/swipe_gesture04" android:duration="200" />    -->
 <item android:drawable="@drawable/swipe_gesture05" android:duration="200" />   
-<item android:drawable="@drawable/swipe_gesture06" android:duration="200" />
+<!-- <item android:drawable="@drawable/swipe_gesture06" android:duration="200" /> -->
 <item android:drawable="@drawable/swipe_gesture07" android:duration="200" />   
-<item android:drawable="@drawable/swipe_gesture08" android:duration="200" />   
+<!-- <item android:drawable="@drawable/swipe_gesture08" android:duration="200" />    -->
 <item android:drawable="@drawable/swipe_gesture09" android:duration="200" />    
 </animation-list>  

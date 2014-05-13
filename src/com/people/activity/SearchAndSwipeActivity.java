@@ -2,7 +2,10 @@ package com.people.activity;
 
 import java.util.HashMap;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.people.R;
+import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
@@ -20,7 +24,6 @@ import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.qpos.ThreadDeviceID;
 import com.people.qpos.ThreadSwip_SixPass;
-import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 import com.people.view.BLDeviceDialog;
 import com.people.view.BLDeviceDialog.OnSelectBLListener;
@@ -34,32 +37,26 @@ public class SearchAndSwipeActivity extends BaseActivity {
 
 	private Intent intent = null;
 
+	private AnimationDrawable animaition = null;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search_swipe);
 
+		this.registerReceiver(mQPOSUpdateReceiver, makeUpdateIntentFilter());
+
 		titleView = (TextView) this.findViewById(R.id.titleView);
+		titleView.setText("检测设备");
 		animImageView = (ImageView) this.findViewById(R.id.iv_swipe);
-		
+
 		animImageView.setBackgroundResource(R.anim.finddevice);
-		AnimationDrawable animaition = (AnimationDrawable) animImageView.getBackground();
 
+		animaition = (AnimationDrawable) animImageView.getBackground();
 		animaition.setOneShot(false);
-
-		if (animaition.isRunning())// 是否正在运行？
-
-		{
-			animaition.stop();// 停止
-
-		}
 		animaition.start();// 启动
 
 		intent = this.getIntent();
-	}
-
-	public void backAction(View view) {
-		this.finish();
 	}
 
 	@Override
@@ -77,12 +74,47 @@ public class SearchAndSwipeActivity extends BaseActivity {
 			int type = intent.getIntExtra("TYPE", 0);
 			if (type == TransferRequestTag.Consume) {
 				new ConsumeAction().doAction();
-			} else if (type == TransferRequestTag.ConsumeCancel){
+			} else if (type == TransferRequestTag.ConsumeCancel) {
 				new ConsumeCancelAction().doAction();
 			}
 
 		}
 	};
+
+	public void backAction(View view) {
+		this.finish();
+	}
+
+	public BroadcastReceiver mQPOSUpdateReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			final String action = intent.getAction();
+
+			if (Constants.ACTION_QPOS_CANCEL.equals(action)) {
+
+			} else if (Constants.ACTION_QPOS_STARTSWIPE.equals(action)) {
+				
+				titleView.setText("请刷卡");
+				animImageView.setBackgroundResource(R.anim.swipcard);
+				
+				animaition.setOneShot(false);
+				animaition.start();// 启动
+
+			} else if (Constants.ACTION_QPOS_SWIPEDONE.equals(action)) {
+
+			}
+		}
+	};
+
+	public IntentFilter makeUpdateIntentFilter() {
+		final IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(Constants.ACTION_QPOS_CANCEL);
+		intentFilter.addAction(Constants.ACTION_QPOS_STARTSWIPE);
+		intentFilter.addAction(Constants.ACTION_QPOS_SWIPEDONE);
+		return intentFilter;
+	}
+
+	// ////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// 消费
 	class ConsumeAction {

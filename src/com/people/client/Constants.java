@@ -17,5 +17,9 @@ public class Constants {
 	public static final String kGESTRUECLOSE      		="GestureClose";
 	
 	public static final String kTRACEAUDITNUM 			= "kTRACEAUDITNUM";
+	
+	public static final String ACTION_QPOS_CANCEL		= "ACTION_QPOS_CANCEL";
+	public static final String ACTION_QPOS_STARTSWIPE	= "ACTION_QPOS_STARTSWIPE";
+	public static final String ACTION_QPOS_SWIPEDONE	= "ACTION_QPOS_SWIPEDONE";
 
 }

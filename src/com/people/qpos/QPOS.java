@@ -1,5 +1,6 @@
 package com.people.qpos;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 
@@ -35,6 +36,11 @@ public class QPOS {
 		message.obj = obj;
 		message.what = num;
 		mHandler.sendMessage(message);
+	}
+	
+	public static void broadcastUpdate(final String action) {
+		final Intent intent = new Intent(action);
+		BaseActivity.getTopActivity().sendBroadcast(intent);
 	}
 
 }
