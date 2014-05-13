@@ -225,10 +225,6 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 					activity.finish();
 				}
 
-				if (QPOS.getCardReader() != null) {
-					QPOS.getCardReader().close();
-				}
-
 				android.os.Process.killProcess(android.os.Process.myPid());
 				System.exit(0);
 			}

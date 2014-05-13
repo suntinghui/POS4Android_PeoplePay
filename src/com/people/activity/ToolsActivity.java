@@ -148,10 +148,6 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 					activity.finish();
 				}
 
-				if (QPOS.getCardReader() != null) {
-					QPOS.getCardReader().close();
-				}
-
 				android.os.Process.killProcess(android.os.Process.myPid());
 				System.exit(0);
 			}
