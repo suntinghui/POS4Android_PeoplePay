@@ -24,6 +24,8 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -51,7 +53,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_merchant);
 
 		layout_msg_blow = (LinearLayout) findViewById(R.id.layout_msg_blow);
-
+		layout_msg_blow.setOnClickListener(this);
 		LinearLayout layout_msg_top = (LinearLayout) findViewById(R.id.layout_msg_top);
 		layout_msg_top.setOnClickListener(this);
 		LinearLayout layout_1 = (LinearLayout) findViewById(R.id.layout_1);
@@ -80,12 +82,17 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		case R.id.layout_msg_top:
 			isClicked = !isClicked;
 			if (isClicked) {
+				Animation myAnimation= AnimationUtils.loadAnimation(this,R.anim.merchant_anim);
+				layout_msg_blow.startAnimation(myAnimation);
 				layout_msg_blow.setVisibility(View.VISIBLE);
 				iv_pull.setBackgroundResource(R.drawable.merchant_icon_push);
 			} else {
 				layout_msg_blow.setVisibility(View.GONE);
 				iv_pull.setBackgroundResource(R.drawable.merchant_icon_pull);
 			}
+			break;
+		case R.id.layout_msg_blow:
+			merchantQuery();
 			break;
 		case R.id.layout_1:
 			Intent intent1 = new Intent(MerchantActivity.this, ModifyLoginPwdActivity.class);
