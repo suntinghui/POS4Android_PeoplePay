@@ -24,7 +24,7 @@ public class QPOS {
 
 		return reader;
 	}
-
+	
 	public static CardReader changeCardReader(int model) {
 		//reader = CardReader.changeReader(BaseActivity.getTopActivity(), model);
 		reader = CardReader.getInstance(BaseActivity.getTopActivity(), model);
@@ -42,8 +42,12 @@ public class QPOS {
 	}
 	
 	public static void broadcastUpdate(final String action) {
-		final Intent intent = new Intent(action);
-		BaseActivity.getTopActivity().sendBroadcast(intent);
+		try{
+			final Intent intent = new Intent(action);
+			BaseActivity.getTopActivity().sendBroadcast(intent);
+		} catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -38,7 +38,7 @@ public class ThreadDeviceID extends Thread {
 			
 			QPOS.HandData(mHandler, map, CardReader.SUCCESS);
 		} else {
-			QPOS.HandData(mHandler, null, -1);
+			QPOS.HandData(mHandler, "获取终端号失败", -1);
 		}
 	}
 

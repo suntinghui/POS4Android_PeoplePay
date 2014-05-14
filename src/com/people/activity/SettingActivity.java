@@ -1,10 +1,23 @@
 package com.people.activity;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,6 +37,8 @@ import android.widget.Toast;
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
+import com.people.client.DownloadFileRequest;
+import com.people.view.LKAlertDialog;
 
 public class SettingActivity extends BaseActivity implements OnClickListener {
 
@@ -35,6 +50,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private String[] titles = { "关于系统", "意见反馈", "检查更新", "帮助" };
 	private ImageButton ibtn_gesture;
 	private Boolean isOpen = false;
+	
+	private String downloadAPKURL;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -75,8 +92,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					 SettingActivity.this.startActivity(intent1);
 					break;
 				case 2:
-					 Intent intent2 = new Intent(SettingActivity.this, TestActivity.class);
-					 SettingActivity.this.startActivity(intent2);
+					checkUpdate();
+					 //new CheckUpdateTask().execute();
 					break;
 				case 3:
 					 Intent intent3 = new Intent(SettingActivity.this, HelpActivity.class);
@@ -89,7 +106,117 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			}
 
 		});
+	}
+	
+	class CheckUpdateTask extends AsyncTask{
 
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			Looper.prepare();
+			checkUpdate();
+			return null;
+		}
+		
+	}
+	
+	private void checkUpdate() {
+		try {
+			 this.showDialog(BaseActivity.PROGRESS_HUD, "正在检查更新");
+			 
+			URL myURL = new URL("http://1.192.121.152:8088/mobileoa/file/apk/version.xml");
+			URLConnection ucon = myURL.openConnection();
+			ucon.setConnectTimeout(20000);
+			ucon.setReadTimeout(20000);
+			InputStream is = ucon.getInputStream();
+
+			XmlPullParser parser = Xml.newPullParser();
+			parser.setInput(is, "UTF-8");
+
+			int event = parser.getEventType();
+			while (event != XmlPullParser.END_DOCUMENT) {
+				switch (event) {
+				case XmlPullParser.START_TAG:
+					if ("version".equals(parser.getName())) {
+						this.hideDialog(BaseActivity.PROGRESS_HUD);
+
+						int serviceVersion = Integer.parseInt(parser.nextText());
+						if (serviceVersion > Constants.VERSION) {
+							showUpdateDialog();
+						} else {
+							showNoUpdateDialog();
+						}
+
+					} else if ("url".equals(parser.getName())) {
+						downloadAPKURL = parser.nextText();
+					}
+
+					break;
+				}
+
+				event = parser.next();
+			}
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
+			
+		} catch (XmlPullParserException e) {
+			e.printStackTrace();
+			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
+			
+		} catch(Exception e){ 
+			e.printStackTrace();
+			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "连接服务器超时，请稍候再试。");
+			
+		}finally {
+			this.hideDialog(BaseActivity.PROGRESS_HUD);
+		}
+	}
+	
+	private void showUpdateDialog() {
+		LKAlertDialog dialog = new LKAlertDialog(this);
+		dialog.setTitle("提示");
+		dialog.setMessage("有新版本，是否下载更新？");
+		dialog.setCancelable(false);
+		dialog.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				dialog.dismiss();
+				Update();
+			}
+		});
+		dialog.setNegativeButton("暂不更新", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+
+		dialog.create().show();
+	}
+
+	private void showNoUpdateDialog() {
+		LKAlertDialog dialog = new LKAlertDialog(this);
+		dialog.setTitle("提示");
+		dialog.setMessage("当前版本已是最新版本");
+		dialog.setCancelable(false);
+		dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				dialog.dismiss();
+			}
+		});
+		dialog.create().show();
+	}
+
+	private void Update() {
+		DownloadFileRequest.sharedInstance().downloadAndOpen(this, downloadAPKURL, "PeoplePay.apk");
 	}
 
 	public final class ViewHolder {

@@ -33,10 +33,10 @@ public class ThreadUpDataKey extends Thread {
 			QPOS.HandData(mHandler, "Update key success", CardReader.SUCCESS);
 			
 		} else if (r == CardReader.TIMEOUT) {
-			QPOS.HandData(mHandler, "Update key time out", CardReader.TIMEOUT);
+			QPOS.HandData(mHandler, "签到超时，请重试", CardReader.TIMEOUT);
 			
 		} else if (r == CardReader.FAILURE) {
-			QPOS.HandData(mHandler, "Update key fail", CardReader.FAILURE);
+			QPOS.HandData(mHandler, "签到失败，请重试", CardReader.FAILURE);
 			
 		}
 	}
