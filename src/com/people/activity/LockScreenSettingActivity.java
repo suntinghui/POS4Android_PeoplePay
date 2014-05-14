@@ -83,6 +83,7 @@ public class LockScreenSettingActivity extends Activity implements
 								.getResources().getColor(R.color.red));
 						Animation shakeAnim = AnimationUtils.loadAnimation(
 								LockScreenSettingActivity.this, R.anim.shake_x);
+						shakeAnim.setDuration(700);
 						tv_tips.startAnimation(shakeAnim);
 					}
 				}
