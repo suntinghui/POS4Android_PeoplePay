@@ -67,7 +67,7 @@ public class TimeoutService extends Service {
 		
 		Intent intent = new Intent("com.people.LockScreenActivity");
 		intent.putExtra("TIMEOUT", true);
-		BaseActivity.getTopActivity().startActivity(intent);
+		BaseActivity.getTopActivity().startActivityForResult(intent, 10);
 		
 	}
 	

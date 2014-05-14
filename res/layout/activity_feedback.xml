@@ -86,7 +86,7 @@
         android:layout_marginLeft="10dip"
         android:layout_marginRight="10dip"
         android:background="@drawable/btn"
-        android:text="str_feedback_commitstr_feedback_commit"
+        android:text="发	  送"
         android:textColor="@color/white"
         android:textSize="18sp" />
 
