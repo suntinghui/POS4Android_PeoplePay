@@ -10,7 +10,7 @@
     <string name="title_progressbar">正在下载文件</string>
     <string name="noNetTips">请您确认已开通手机上网功能，并在手机上设置正确的上网方式</string>
     <string name="bank_no">银行卡号:</string>
-    <string name="open_account_name">开户名:</string>
+    <string name="open_account_name">开   户   名:</string>
     <string name="open_account_bank">开户银行:</string>
     <string name="in_account_msg">入账信息</string>
     <string name="modify_pwd">修改密码</string>

@@ -97,7 +97,7 @@
                 android:id="@+id/layout_msg_blow"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dip"
+                android:layout_marginTop="10dip"
                 android:orientation="vertical"
                 android:visibility="gone" >
 
@@ -160,18 +160,12 @@
                         android:layout_height="30dip"
                         android:layout_marginLeft="20dip" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:layout_marginTop="1dip"
-                    android:background="@color/gray" />
             </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:layout_marginTop="15dip"
+                android:layout_marginTop="10dip"
                 android:background="@color/gray" />
 
             <LinearLayout
