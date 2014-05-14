@@ -13,7 +13,9 @@ public class Constants {
 	public static final int OVERTIME    				          	= 3;
 	
 	public static boolean HASSETBLUETOOTH				          	= false;
-	public static boolean HASSIGN									= false;
+
+	// 上次签到日期 MMdd。一天签到一次
+	public static String kPRESIGNDATE								= "kPRESIGNDATE";
 	
 	public static final String kLOCKKEY					          	="LockKey";
 	public static final String kFIRSTLOGIN      		         	="FirstLogin";

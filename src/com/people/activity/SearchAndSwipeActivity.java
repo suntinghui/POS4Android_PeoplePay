@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -31,6 +32,7 @@ import com.people.qpos.ThreadCancel;
 import com.people.qpos.ThreadDeviceID;
 import com.people.qpos.ThreadSwip_SixPass;
 import com.people.qpos.ThreadUpDataKey;
+import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 import com.people.view.BLDeviceDialog;
 import com.people.view.BLDeviceDialog.OnSelectBLListener;
@@ -98,7 +100,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	};
 
 	private void doAction() {
-		if (!Constants.HASSIGN) {
+		String preDate = ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPRESIGNDATE, "0101");
+		String nowDate = DateUtil.getSystemMonthDay();
+		if (!preDate.equals(nowDate)) { 
 			new Sign().doAction();
 
 		} else {
@@ -192,6 +196,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		};
 
 		private void signAction() {
+			Toast.makeText(SearchAndSwipeActivity.this, "正在签到请稍候...", Toast.LENGTH_LONG).show();
+			
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
 			tempMap.put("TRANCODE", "199020");
 			tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(SearchAndSwipeActivity.this).getString(Constants.kUSERNAME, "")); // 手机号
@@ -200,7 +206,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			tempMap.put("TERMINALSERIANO", AppDataCenter.getTraceAuditNum());
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.SignIn, tempMap, signHandler());
 
-			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在签到...", new LKHttpRequestQueueDone() {
+			new LKHttpRequestQueue().addHttpRequest(req).executeQueue(null, new LKHttpRequestQueueDone() {
 
 				@Override
 				public void onComplete() {
@@ -238,7 +244,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
 				case CardReader.SUCCESS:
-					Constants.HASSIGN = true;
+					Editor editor = ApplicationEnvironment.getInstance().getPreferences(SearchAndSwipeActivity.this).edit();
+					editor.putString(Constants.kPRESIGNDATE, DateUtil.getSystemMonthDay());
+					editor.commit();
 
 					SearchAndSwipeActivity.this.doAction();
 					break;
