@@ -78,6 +78,10 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					// Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
 					// SettingActivity.this.startActivity(intent1);
 					break;
+				case 3:
+					 Intent intent3 = new Intent(SettingActivity.this, HelpActivity.class);
+					 SettingActivity.this.startActivity(intent3);
+					break;
 				default:
 					break;
 				}
@@ -148,6 +152,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			isOpen = !isOpen;
 			SharedPreferences pre = ApplicationEnvironment.getInstance().getPreferences();
 			Editor editor = pre.edit();
+			
 			if (!isOpen) {
 				editor.putString(Constants.kLOCKKEY, "");
 			}
@@ -160,6 +165,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 				startActivityForResult(intent, 0);
 			} else {
 				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
+				this.getApplication().stopService(new Intent("com.dhc.timeoutService"));
 			}
 			break;
 			

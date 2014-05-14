@@ -1,7 +1,5 @@
 package com.people.activity;
 
-import java.util.ArrayList;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -16,18 +14,14 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.view.GestureLockView;
-import com.people.view.LKAlertDialog;
 import com.people.view.GestureLockView.OnGestureFinishListener;
+import com.people.view.LKAlertDialog;
 
 // 锁屏 设置
 @SuppressLint("ResourceAsColor")
