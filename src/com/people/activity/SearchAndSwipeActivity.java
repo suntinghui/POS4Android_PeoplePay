@@ -111,6 +111,13 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			}
 		}
 	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		
+		this.backAction(null);
+	}
 
 	public void backAction(View view) {
 		new ThreadCancel(null, this).start();
@@ -351,18 +358,20 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		private LKAsyncHttpResponseHandler transferHandler() {
 			return new LKAsyncHttpResponseHandler() {
 
-				@SuppressWarnings("rawtypes")
 				@Override
 				public void successAction(Object obj) {
-
-					if (obj instanceof HashMap) {
-						if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-							Intent intent = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-							startActivityForResult(intent, 0);
-						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-							Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-						}
-					} else {
+					@SuppressWarnings("unchecked")
+					HashMap<String, String> map = (HashMap<String, String>) obj;
+					
+					if (map.get("RSPCOD").equals("000000")) {
+						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
+						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
+						startActivityForResult(intent0, 0);
+						
+						Toast.makeText(BaseActivity.getTopActivity(), "交易成功", Toast.LENGTH_SHORT).show();
+						
+					} else if (map.get("RSPMSG").toString() != null) {
+						Toast.makeText(BaseActivity.getTopActivity(), map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
 					}
 
 				}
@@ -380,7 +389,6 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 		public void doAction() {
 			new ThreadDeviceID(getDeviceIDHandler, SearchAndSwipeActivity.this).start();
-			;
 		}
 
 		private Handler getDeviceIDHandler = new Handler() {
@@ -470,37 +478,23 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		private LKAsyncHttpResponseHandler transferHandler() {
 			return new LKAsyncHttpResponseHandler() {
 
-				@SuppressWarnings("rawtypes")
 				@Override
 				public void successAction(Object obj) {
-
-					if (obj instanceof HashMap) {
-						if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-
-							Intent intent = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-							startActivityForResult(intent, 0);
-						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-							Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-						}
-					} else {
+					@SuppressWarnings("unchecked")
+					HashMap<String, String> map = (HashMap<String, String>) obj;
+					if (map.get("RSPCOD").equals("000000")) {
+						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
+						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
+						startActivityForResult(intent0, 0);
+						
+					} else if (map.get("RSPMSG") != null ) {
+						Toast.makeText(BaseActivity.getTopActivity(), map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
 					}
-
 				}
 
 			};
 		}
 
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		
-		if(resultCode == RESULT_OK){
-			this.setResult(RESULT_OK);
-			this.finish();
-		}
 	}
 
 }

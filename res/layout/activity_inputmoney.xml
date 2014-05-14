@@ -21,9 +21,9 @@
 
     <RelativeLayout
         android:id="@+id/layout_swip"
-        android:layout_below="@id/topbarLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/topbarLayout"
         android:layout_marginTop="30dip"
         android:background="@drawable/inputmoney_blue_bg" >
 
@@ -60,26 +60,26 @@
 
     <Button
         android:id="@+id/btn_cash"
-        android:layout_below="@id/layout_swip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/layout_swip"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dip"
         android:background="@color/clear"
         android:text="@string/inputmoeny_cash"
         android:textColor="@drawable/text_blue_gray"
-        android:textSize="21sp" 
-        android:textStyle="bold"/>
+        android:textSize="18sp"
+         />
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="0.7dip"
-		android:layout_marginTop="20dip"
-        android:background="@color/gray"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="50dip"
-         >
+        android:layout_marginTop="20dip"
+        android:background="@color/gray"
+        android:orientation="vertical"
+        android:padding="0.7dip" >
 
         <GridView
             android:id="@+id/gridveiw"

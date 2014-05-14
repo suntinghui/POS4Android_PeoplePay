@@ -75,6 +75,7 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 	}
 
 	public void backAction(View view) {
+		this.setResult(RESULT_CANCELED);
 		this.finish();
 	}
 	

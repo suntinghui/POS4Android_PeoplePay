@@ -11,6 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.baidu.android.pushservice.PushConstants;
+import com.baidu.android.pushservice.PushManager;
+import com.baidu.android.pushservice.PushSettings;
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
@@ -19,6 +22,7 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.push.BPushUtil;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
@@ -43,8 +47,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		Button btn_forget_pwd = (Button) findViewById(R.id.btn_forget_pwd);
 		btn_forget_pwd.setOnClickListener(this);
+		
+		startPushService();
 	}
-	
+
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -122,6 +128,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			}
 
 		};
+	}
+
+	private void startPushService() {
+		try {
+			// 以apikey的方式登录，开启推送。
+			PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, BPushUtil.getMetaValue(this, "api_key"));
+			PushSettings.enableDebugMode(getApplicationContext(), false);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

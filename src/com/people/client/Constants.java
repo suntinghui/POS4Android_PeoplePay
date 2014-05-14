@@ -25,7 +25,12 @@ public class Constants {
 	
 	public static final String APPFILEPATH 				    		= "/data/data/" + ApplicationEnvironment.getInstance().getApplication().getPackageName();
 	public static final String SIGNIMAGESPATH						= APPFILEPATH + "/signImages/";
-	public static final String kTRACEAUDITNUM 			         	 = "kTRACEAUDITNUM";
+	public static final String kTRACEAUDITNUM 			         	= "kTRACEAUDITNUM";
+	
+	// BPUSH
+	public static final String kBPUSH_APPID							="appid";
+	public static final String kBPUSH_USERID						="userid";
+	public static final String kBPUSH_CHANNELID						="channelid";
 	
 
 }

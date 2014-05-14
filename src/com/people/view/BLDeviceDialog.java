@@ -88,7 +88,7 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 		listView.setAdapter(mDevice_List_Adapter);
 		listView.setOnItemClickListener(this);
 
-		this.setCancelable(true);
+		this.setCancelable(false);
 		this.setCanceledOnTouchOutside(false);
 		this.setOnDismissListener(this);
 

@@ -17,7 +17,6 @@ public class TradeSuccessActivity extends BaseActivity implements OnClickListene
 
 		Button btn_confirm = (Button) this.findViewById(R.id.btn_confirm);
 		btn_confirm.setOnClickListener(this);
-
 	}
 	
 	@Override
@@ -26,12 +25,20 @@ public class TradeSuccessActivity extends BaseActivity implements OnClickListene
 		case R.id.btn_confirm:
 			TradeSuccessActivity.this.setResult(RESULT_OK);
 			this.finish();
+			
 			break;
 
 		default:
 			break;
 		}
-
 	}
+
+	@Override
+	public void onBackPressed() {
+		TradeSuccessActivity.this.setResult(RESULT_OK);
+		this.finish();
+	}
+	
+	
 
 }

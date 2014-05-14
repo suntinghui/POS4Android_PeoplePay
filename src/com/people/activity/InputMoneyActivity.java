@@ -116,7 +116,7 @@ public class InputMoneyActivity extends BaseActivity {
 		@Override
 		public boolean onTouch(View arg0, MotionEvent arg1) {
 			Button btn = (Button) arg0;
-			Log.e("-------", arg1.getAction()+"");
+			
 			if (arg1.getAction() == MotionEvent.ACTION_DOWN || arg1.getAction() == MotionEvent.ACTION_MOVE) {
 				
 				btn.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.blue_1));
@@ -136,7 +136,7 @@ public class InputMoneyActivity extends BaseActivity {
 		@Override
 		public void onClick(View arg0) {
 			if (arg0.getId() == R.id.layout_swip) {
-				if (tv_show_money.getText().toString().equals("0") || tv_show_money.getText().toString().equals("0.0") || tv_show_money.getText().toString().equals("0.0")) {
+				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
 					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
 					toast.show();
@@ -156,11 +156,21 @@ public class InputMoneyActivity extends BaseActivity {
 					intent.putExtra("TTXNTM", DateUtil.getSystemTime());
 					intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
 
-					startActivityForResult(intent, 0);
+					startActivity(intent);
 				}
 
 			} else if(arg0.getId() == R.id.btn_cash) {
-				Toast.makeText(InputMoneyActivity.this, "记账成功", Toast.LENGTH_SHORT).show();
+				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
+					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
+					toast.show();
+					
+				} else {
+					Toast toast = Toast.makeText(InputMoneyActivity.this, "现金记账成功", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
+					toast.show();
+				}
+				
 			}else {
 				String tmp = "";
 				String tv_str = tv_show_money.getText().toString();
@@ -174,7 +184,8 @@ public class InputMoneyActivity extends BaseActivity {
 				case 1006:
 				case 1007:
 				case 1008:
-					if (tv_str.length() > 11) {
+					String temp = String.format("%1$.2f", Double.valueOf(tv_str));
+					if (temp.length() > 10) {
 						break;
 					}
 
@@ -262,10 +273,4 @@ public class InputMoneyActivity extends BaseActivity {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		
-	}
 }
