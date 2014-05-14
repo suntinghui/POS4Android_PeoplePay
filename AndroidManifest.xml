@@ -8,6 +8,9 @@
         android:minSdkVersion="8"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <!-- 防止手机休眠 -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     
@@ -212,13 +215,69 @@
         </activity>
         
          <activity android:name=".activity.FeedBackActivity"  android:exported="false" 
-            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan"
-            >
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
                 <action android:name="com.people.FeedBackActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        
+         
+         
+        
+          <!-- push service client -->
+        <receiver android:name="com.people.push.PushMessageReceiver">
+            <intent-filter>
+                <!-- 接收push消息 -->
+                <action android:name="com.baidu.android.pushservice.action.MESSAGE" />
+                <!-- 接收bind,unbind,fetch,delete等反馈消息 -->
+                <action android:name="com.baidu.android.pushservice.action.RECEIVE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.CLICK" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- push service -->
+        <receiver android:name="com.baidu.android.pushservice.PushServiceReceiver"
+            android:process=":bdservice_v1">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="com.baidu.android.pushservice.action.notification.SHOW" />
+                <action android:name="com.baidu.android.pushservice.action.media.CLICK" />
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="com.baidu.android.pushservice.RegistrationReceiver"
+            android:process=":bdservice_v1">
+            <intent-filter>
+                <action android:name="com.baidu.android.pushservice.action.METHOD" />
+                <action android:name="com.baidu.android.pushservice.action.BIND_SYNC" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package" />
+            </intent-filter>                   
+        </receiver>
+        
+        <service
+            android:name="com.baidu.android.pushservice.PushService"
+            android:exported="true"
+            android:process=":bdservice_v1" />
+        
+        <meta-data android:name="api_key" android:value="s6EgUUOc9KXmqwj19zRGNRDc" />
+        <meta-data android:name="BaiduPush_CHANNEL" android:value="ZFB" />
+        <!-- push service end -->
+        
+		<meta-data android:name="BaiduMobAd_STAT_ID" android:value="154f6dcb08" />
+		<meta-data android:name="BaiduMobAd_CHANNEL" android:value="ZFB" />
+		<meta-data android:name="BaiduMobAd_EXCEPTION_LOG" android:value="true" />
+		<meta-data android:name="BaiduMobAd_SEND_STRATEGY" android:value="APP_START" />
+		<meta-data android:name="BaiduMobAd_ONLY_WIFI" android:value="false" />
+		<meta-data android:name="BaiduMobAd_CELL_LOCATION" android:value="true" />
+		<meta-data android:name="BaiduMobAd_GPS_LOCATION" android:value="true" />
+		<meta-data android:name="BaiduMobAd_WIFI_LOCATION" android:value="true" />
+		
+		
     </application>
 
 </manifest>
