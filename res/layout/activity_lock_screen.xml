@@ -1,10 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gesture_bg"
-    tools:context=".MainActivity" >
+    tools:context=".MainActivity"
+    android:orientation="vertical" >
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <LinearLayout
+            android:id="@+id/layout_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/ibtn_head"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/head_image" />
+
+        </LinearLayout>
+    </RelativeLayout>
     <com.people.view.GestureLockView
         android:id="@+id/gv"
         android:layout_width="wrap_content"
@@ -22,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/layout_swip"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dip"
         android:background="@color/clear"
         android:text="@string/gesture_forget"
         android:layout_alignParentRight="true"
@@ -32,4 +53,4 @@
          />
     </RelativeLayout>
 
-</RelativeLayout>
+</LinearLayout>

@@ -18,7 +18,7 @@ import com.people.view.GestureLockView.OnGestureFinishListener;
 
 
 // 锁屏
-public class LockScreenActivity  extends Activity implements OnClickListener {
+public class LockScreenActivity  extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +55,12 @@ public class LockScreenActivity  extends Activity implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
-		this.setResult(RESULT_OK);
-		this.finish();
+		this.goLoginActivity();
 		
+	}
+	public void goLoginActivity() {
+		while (!(BaseActivity.getTopActivity() instanceof LoginActivity)){
+			BaseActivity.getTopActivity().finish();
+		}
 	}
 }
