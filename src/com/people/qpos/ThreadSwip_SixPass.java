@@ -68,7 +68,7 @@ public class ThreadSwip_SixPass extends Thread {
 				QPOS.HandData(mHandler, map, CardReader.SUCCESS);
 				
 			} else if (resultCode == CardReader.TIMEOUT) {
-				QPOS.HandData(mHandler, "time out", CardReader.TIMEOUT);
+				QPOS.HandData(mHandler, "操作超时，请重试", CardReader.TIMEOUT);
 				
 			}  else if (resultCode == CardReader.SUCCESSJS2) {
 				String ci = QPOS.getCardReader().getTradeResultCardInfo();
@@ -80,30 +80,30 @@ public class ThreadSwip_SixPass extends Thread {
 				QPOS.HandData(mHandler, "JS2 card\ntrackBlock encrypted:\n" + ci + "\nPINBlock encrypted:" + pin + "\nMAC:" + ms, CardReader.SUCCESSJS2);
 				
 			} else if (resultCode == CardReader.MACERROR) {
-				QPOS.HandData(mHandler, "communication MAC ERROR", CardReader.MACERROR);
+				QPOS.HandData(mHandler, "计算MAC失败，请重试", CardReader.MACERROR);
 				
 			} else if (resultCode == CardReader.USERCANCEL) {
-				QPOS.HandData(mHandler, "Users to cancel the transaction", CardReader.USERCANCEL);
+				QPOS.HandData(mHandler, "用户取消操作", CardReader.USERCANCEL);
 				
 			} else if (resultCode == CardReader.NOTSUPPORTED) {
-				QPOS.HandData(mHandler, "Transaction mode does not support", CardReader.NOTSUPPORTED);
+				QPOS.HandData(mHandler, "不支持的通讯模式化", CardReader.NOTSUPPORTED);
 				
 			} else if (resultCode == CardReader.CMDTIMEOUT) {
-				QPOS.HandData(mHandler, "Command time out", CardReader.CMDTIMEOUT);
+				QPOS.HandData(mHandler, "执行命令超时", CardReader.CMDTIMEOUT);
 				
 			} else if (resultCode == CardReader.UNKNOWNERROR) {
-				QPOS.HandData(mHandler, "unknow error", CardReader.UNKNOWNERROR);
+				QPOS.HandData(mHandler, "未知错误，请重试", CardReader.UNKNOWNERROR);
 				
 			} else {
-				QPOS.HandData(mHandler, "waitUser奇怪的返回：" + resultCode, -1);
+				QPOS.HandData(mHandler, "未知错误：" + resultCode, -1);
 				
 			}
 
 		} else if (resultCode == CardReader.TIMEOUT) {
-			QPOS.HandData(mHandler, "time out", CardReader.TIMEOUT);
+			QPOS.HandData(mHandler, "操作超时，请重试", CardReader.TIMEOUT);
 			
 		} else {
-			QPOS.HandData(mHandler, "doTradeEx奇怪的返回：" + resultCode, -1);
+			QPOS.HandData(mHandler, "未知错误：" + resultCode, -1);
 		}
 
 	}

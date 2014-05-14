@@ -193,6 +193,11 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					signAction();
 
 					break;
+					
+				default:
+					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
+					break;
 				}
 			}
 		};
@@ -251,20 +256,12 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					editor.commit();
 
 					SearchAndSwipeActivity.this.doAction();
-					break;
 					
-				case CardReader.TIMEOUT:
-					Toast.makeText(SearchAndSwipeActivity.this, "签到超时，请重试", Toast.LENGTH_SHORT).show();
-					SearchAndSwipeActivity.this.finish();
-					break;
-					
-				case CardReader.FAILURE:
-					Toast.makeText(SearchAndSwipeActivity.this, "签到失败，请重试", Toast.LENGTH_SHORT).show();
-					SearchAndSwipeActivity.this.finish();
 					break;
 
 				default:
-
+					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
 					break;
 				}
 			}
@@ -311,12 +308,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 					break;
 					
-				case CardReader.USERCANCEL:
-					Toast.makeText(SearchAndSwipeActivity.this, "用户取消操作", Toast.LENGTH_SHORT).show();
-					SearchAndSwipeActivity.this.finish();
-					break;
-
 				default:
+					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
 					break;
 				}
 			}
@@ -430,12 +424,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 					break;
 					
-				case CardReader.USERCANCEL:
-					Toast.makeText(SearchAndSwipeActivity.this, "用户取消操作", Toast.LENGTH_SHORT).show();
-					SearchAndSwipeActivity.this.finish();
-					break;
-
 				default:
+					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
 					break;
 				}
 			}

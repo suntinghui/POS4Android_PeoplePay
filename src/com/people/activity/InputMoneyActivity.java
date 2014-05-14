@@ -29,6 +29,7 @@ import com.people.client.AppDataCenter;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
+import com.people.qpos.QPOS;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
@@ -264,7 +265,7 @@ public class InputMoneyActivity extends BaseActivity {
 				for (BaseActivity activity : list) {
 					activity.finish();
 				}
-
+				
 				android.os.Process.killProcess(android.os.Process.myPid());
 				System.exit(0);
 			}
