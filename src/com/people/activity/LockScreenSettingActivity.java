@@ -2,6 +2,7 @@ package com.people.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -21,6 +22,7 @@ import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.view.GestureLockView;
+import com.people.view.LKAlertDialog;
 import com.people.view.GestureLockView.OnGestureFinishListener;
 
 // 锁屏 设置
@@ -75,7 +77,20 @@ public class LockScreenSettingActivity extends Activity implements
 								.getTopActivity(), TimeoutService.class);
 						BaseActivity.getTopActivity().startService(intent);
 
-						LockScreenSettingActivity.this.finish();
+						LKAlertDialog dialog1 = new LKAlertDialog(LockScreenSettingActivity.this);
+						dialog1.setTitle("提示");
+						dialog1.setMessage("手势设置成功");
+						dialog1.setCancelable(false);
+						dialog1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog, int arg1) {
+								dialog.dismiss();
+								LockScreenSettingActivity.this.finish();
+							}
+						});
+						dialog1.create().show();
+						
 					} else {
 						// 手势设置失败
 						tv_tips.setText("与上一次绘制不一致，请重新绘制");
