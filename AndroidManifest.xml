@@ -222,10 +222,17 @@
             </intent-filter>
         </activity>
         
+<<<<<<< HEAD
          <activity android:name=".activity.HelpActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
                 <action android:name="com.people.HelpActivity" />
+=======
+         <activity android:name=".activity.ShareSettingActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.ShareSettingActivity" />
+>>>>>>> 086007adc28df78fdf1b487c6465b79ddf57dccb
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

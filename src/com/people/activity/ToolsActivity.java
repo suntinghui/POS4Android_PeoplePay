@@ -3,6 +3,7 @@ package com.people.activity;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -74,6 +75,9 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 				break;
 
 			case 5: // 推荐我们
+				Intent intent5 = new Intent(ToolsActivity.this, ShareSettingActivity.class);
+				ToolsActivity.this.startActivity(intent5);
+				
 				break;
 			case 6: // 信用卡还款
 				break;

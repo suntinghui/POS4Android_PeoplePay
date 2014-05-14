@@ -28,7 +28,7 @@ public class ChooseQPOSModeActivity extends BaseActivity {
 		} else if (view.getId() == R.id.choose_line_btn) {
 			Log.e("MODE", "选择数据线连接方式...");
 			
-			QPOS.changeCardReader(CardReader.USBMODE);
+			QPOS.changeCardReader(CardReader.PSKMODE);
 		}
 		
 		Intent intent = new Intent(this, CatalogActivity.class);

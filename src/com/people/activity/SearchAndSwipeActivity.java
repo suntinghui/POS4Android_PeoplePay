@@ -110,8 +110,10 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 			if (type == TransferRequestTag.Consume) {
 				new ConsumeAction().doAction();
+				
 			} else if (type == TransferRequestTag.ConsumeCancel) {
 				new ConsumeCancelAction().doAction();
+				
 			}
 		}
 	}
