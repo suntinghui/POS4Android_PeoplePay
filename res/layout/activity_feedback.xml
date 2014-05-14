@@ -69,7 +69,7 @@
                 android:textColor="@color/gray" />
         </LinearLayout>
 
-        <com.seed.view.TextWithLabelView
+        <com.people.view.TextWithLabelView
             android:id="@+id/mailText"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
