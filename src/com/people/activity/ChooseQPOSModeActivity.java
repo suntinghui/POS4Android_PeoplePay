@@ -37,4 +37,8 @@ public class ChooseQPOSModeActivity extends BaseActivity {
 		this.finish();
 	}
 
+	@Override
+	public void onBackPressed() {
+	}
+	
 }
