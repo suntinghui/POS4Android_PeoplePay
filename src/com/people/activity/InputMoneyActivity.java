@@ -8,11 +8,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -32,7 +35,7 @@ import com.people.util.StringUtil;
 public class InputMoneyActivity extends BaseActivity {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
-	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "删除", "0", "." };
+	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "." };
 
 	private TextView tv_show_money;
 	
@@ -52,6 +55,9 @@ public class InputMoneyActivity extends BaseActivity {
 
 		RelativeLayout layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
 		layout_swip.setOnClickListener(listener);
+		
+		Button btn_cash = (Button) findViewById(R.id.btn_cash);
+		btn_cash.setOnClickListener(listener);
 
 	}
 
@@ -89,6 +95,7 @@ public class InputMoneyActivity extends BaseActivity {
 				holder.btn_num = (Button) convertView.findViewById(R.id.btn_num);
 				holder.btn_num.setTag(1000 + position);
 				holder.btn_num.setOnClickListener(listener);
+				holder.btn_num.setOnTouchListener(touchLister);
 				convertView.setTag(holder);
 
 			} else {
@@ -96,11 +103,34 @@ public class InputMoneyActivity extends BaseActivity {
 			}
 
 			holder.btn_num.setText(num[position]);
+			if(position == 9){
+				holder.btn_num.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.orange));
+			}
 
 			return convertView;
 		}
 	}
 
+	private OnTouchListener touchLister = new OnTouchListener() {
+		
+		@Override
+		public boolean onTouch(View arg0, MotionEvent arg1) {
+			Button btn = (Button) arg0;
+			Log.e("-------", arg1.getAction()+"");
+			if (arg1.getAction() == MotionEvent.ACTION_DOWN || arg1.getAction() == MotionEvent.ACTION_MOVE) {
+				
+				btn.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.blue_1));
+            }else{
+            	if((Integer) arg0.getTag() == 1009){
+					btn.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.orange));
+				}else{
+					btn.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.gray_1));	
+				}
+            	
+            }
+			return false;
+		}
+	};
 	private OnClickListener listener = new OnClickListener() {
 
 		@Override
@@ -129,7 +159,9 @@ public class InputMoneyActivity extends BaseActivity {
 					startActivityForResult(intent, 0);
 				}
 
-			} else {
+			} else if(arg0.getId() == R.id.btn_cash) {
+				Toast.makeText(InputMoneyActivity.this, "记账成功", Toast.LENGTH_SHORT).show();
+			}else {
 				String tmp = "";
 				String tv_str = tv_show_money.getText().toString();
 				switch ((Integer) arg0.getTag()) {
@@ -228,5 +260,12 @@ public class InputMoneyActivity extends BaseActivity {
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
 	}
 }

@@ -163,7 +163,7 @@
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
         android:layout_marginTop="35dip"
-        android:background="@drawable/btn_next"
+        android:background="@drawable/btn"
         android:text="确 定" />
 
 </LinearLayout>

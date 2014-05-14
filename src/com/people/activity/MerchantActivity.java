@@ -43,28 +43,29 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	private TextView tv_open_account_bank;
 	
 	private long exitTimeMillis = 0;
+	private TextView tv_head;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_merchant);
 
-		RelativeLayout layout_msg_top = (RelativeLayout) findViewById(R.id.layout_msg_top);
-		layout_msg_top.setOnClickListener(this);
 		layout_msg_blow = (LinearLayout) findViewById(R.id.layout_msg_blow);
 
-		RelativeLayout layout_modify_pwd = (RelativeLayout) findViewById(R.id.layout_modify_pwd);
-		layout_modify_pwd.setOnClickListener(this);
-
-		RelativeLayout layout_more_setting = (RelativeLayout) findViewById(R.id.layout_more_setting);
-		layout_more_setting.setOnClickListener(this);
-
-		RelativeLayout layout_connect = (RelativeLayout) findViewById(R.id.layout_connect);
-		layout_connect.setOnClickListener(this);
-
+		LinearLayout layout_msg_top = (LinearLayout) findViewById(R.id.layout_msg_top);
+		layout_msg_top.setOnClickListener(this);
+		LinearLayout layout_1 = (LinearLayout) findViewById(R.id.layout_1);
+		layout_1.setOnClickListener(this);
+		LinearLayout layout_2 = (LinearLayout) findViewById(R.id.layout_2);
+		layout_2.setOnClickListener(this);
+		LinearLayout layout_3 = (LinearLayout) findViewById(R.id.layout_3);
+		layout_3.setOnClickListener(this);
+		
+		
 		Button btn_exit = (Button) findViewById(R.id.btn_exit);
 		btn_exit.setOnClickListener(this);
 
+		tv_head = (TextView) findViewById(R.id.tv_head);
 		iv_pull = (ImageView) findViewById(R.id.iv_pull);
 
 		tv_bank_no = (TextView) findViewById(R.id.tv_bank_no);
@@ -86,15 +87,15 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				iv_pull.setBackgroundResource(R.drawable.merchant_icon_pull);
 			}
 			break;
-		case R.id.layout_modify_pwd:
+		case R.id.layout_1:
 			Intent intent1 = new Intent(MerchantActivity.this, ModifyLoginPwdActivity.class);
 			startActivity(intent1);
 			break;
-		case R.id.layout_more_setting:
+		case R.id.layout_2:
 			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
 			startActivity(intent2);
 			break;
-		case R.id.layout_connect:
+		case R.id.layout_3:
 			LKAlertDialog dialog = new LKAlertDialog(this);
 			dialog.setTitle("提示");
 			dialog.setMessage("客服热线：4006269987");
@@ -172,11 +173,13 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				String ACTNO = (String) map.get("ACTNO");
 				String ACTNAM = (String) map.get("ACTNAM");
 				String OPNBNK = (String) map.get("OPNBNK");
+				String MERNAM = (String) map.get("MERNAM");
 
 				if (RSPCOD.equals("000000")) {
 					tv_bank_no.setText(ACTNO == null ? "" : StringUtil.formatAccountNo(ACTNO));
 					tv_open_account_name.setText(ACTNAM == null ? "" : ACTNAM);
 					tv_open_account_bank.setText(OPNBNK == null ? "" : OPNBNK);
+					tv_head.setText(MERNAM == null ? "" : MERNAM);
 				} else {
 					Toast.makeText(MerchantActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
 				}
