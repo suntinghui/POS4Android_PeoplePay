@@ -24,7 +24,7 @@ import com.people.qpos.QPOS;
 
 // 工具
 public class ToolsActivity extends BaseActivity implements OnClickListener {
-	private Integer[] imageIds = { R.drawable.swip_icon_n_0_no, R.drawable.swip_icon_n_1_no, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3_no, R.drawable.swip_icon_n_4_no, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6_no, R.drawable.swip_icon_n_7_no, R.drawable.swip_icon_n_8_no };
+	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 };
 
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;

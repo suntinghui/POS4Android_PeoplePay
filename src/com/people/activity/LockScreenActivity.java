@@ -10,6 +10,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.baidu.android.common.logging.Log;
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
@@ -30,6 +31,7 @@ public class LockScreenActivity  extends BaseActivity implements OnClickListener
 		btn_forget.setOnClickListener(this);
 		
 		GestureLockView gv = (GestureLockView) findViewById(R.id.gv);
+		Log.i("lockkey---:", ApplicationEnvironment.getInstance().getPreferences().getString(Constants.kLOCKKEY, ""));
 		gv.setKey(ApplicationEnvironment.getInstance().getPreferences().getString(Constants.kLOCKKEY, "")); // Z 字型
 		gv.setOnGestureFinishListener(new OnGestureFinishListener() {
 			@Override

@@ -13,27 +13,30 @@ import android.widget.TextView;
 import com.people.R;
 
 public class TestActivity extends BaseActivity implements OnClickListener {
-	private ImageView iv_test;
+	private ImageView iv_blue;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_test);
 
-		Button btn_confirm = (Button) this.findViewById(R.id.btn_confirm);
-		btn_confirm.setOnClickListener(this);
-		
-		iv_test = (ImageView) findViewById(R.id.iv_test);
+		iv_blue = (ImageView) findViewById(R.id.iv_blue);
 		Animation myAnimation= AnimationUtils.loadAnimation(this,R.anim.check_device_anim);
 		LinearInterpolator lir = new LinearInterpolator();  
 		myAnimation.setInterpolator(lir); 
-		iv_test.startAnimation(myAnimation);
+		iv_blue.startAnimation(myAnimation);
 		
-		TextView tv_test = (TextView) findViewById(R.id.tv_test);
-		Animation myAnimation0= AnimationUtils.loadAnimation(this,R.anim.swip_card_anim);
-		LinearInterpolator lir0 = new LinearInterpolator();  
-		myAnimation0.setInterpolator(lir0); 
-		tv_test.startAnimation(myAnimation0);
+//		ImageView iv_blue = (ImageView) findViewById(R.id.iv_card);
+//		Animation myAnimation0= AnimationUtils.loadAnimation(this,R.anim.swip_card_anim);
+//		LinearInterpolator lir0 = new LinearInterpolator();  
+//		myAnimation0.setInterpolator(lir0); 
+//		iv_blue.startAnimation(myAnimation0);
+		
+//		TextView tv_test = (TextView) findViewById(R.id.tv_test);
+//		Animation myAnimation0= AnimationUtils.loadAnimation(this,R.anim.swip_card_anim);
+//		LinearInterpolator lir0 = new LinearInterpolator();  
+//		myAnimation0.setInterpolator(lir0); 
+//		tv_test.startAnimation(myAnimation0);
 	}
 	
 	@Override

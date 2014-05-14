@@ -13,8 +13,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +47,13 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 	private Button bluetoothBtn = null;
 	private TextView titleView = null;
-	private ImageView animImageView = null;
 
 	private Intent intent = null;
 
 	private AnimationDrawable animaition = null;
+	
+	private RelativeLayout layout_search;
+	private RelativeLayout layout_swip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +72,22 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 		titleView = (TextView) this.findViewById(R.id.titleView);
 		titleView.setText("检测设备");
-		animImageView = (ImageView) this.findViewById(R.id.iv_swipe);
-
-		animImageView.setBackgroundResource(R.anim.find_device);
-
-		animaition = (AnimationDrawable) animImageView.getBackground();
-		animaition.setOneShot(false);
-		animaition.start();// 启动
+		
+		layout_search = (RelativeLayout) findViewById(R.id.layout_search);
+		layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
+		
+		ImageView iv_blue = (ImageView) findViewById(R.id.iv_blue);
+		Animation myAnimation= AnimationUtils.loadAnimation(this,R.anim.check_device_anim);
+		LinearInterpolator lir = new LinearInterpolator();  
+		myAnimation.setInterpolator(lir); 
+		iv_blue.startAnimation(myAnimation);
+		
+		ImageView iv_device = (ImageView) findViewById(R.id.iv_device);
+		Animation myAnimation1= AnimationUtils.loadAnimation(this,R.anim.swip_scale_anim);
+//		LinearInterpolator lir1 = new LinearInterpolator();  
+//		myAnimation1.setInterpolator(lir1); 
+		iv_device.startAnimation(myAnimation1);
+		
 
 		intent = this.getIntent();
 
@@ -149,11 +164,13 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 				bluetoothBtn.setVisibility(View.GONE);
 				titleView.setText("请刷卡");
-				animImageView.setBackgroundResource(R.anim.swipcard);
-
-				animaition = (AnimationDrawable) animImageView.getBackground();
-				animaition.setOneShot(false);
-				animaition.start();// 启动
+				layout_search.setVisibility(View.GONE);
+				layout_swip.setVisibility(View.VISIBLE);
+				ImageView iv_card = (ImageView) findViewById(R.id.iv_card);
+				Animation myAnimation0= AnimationUtils.loadAnimation(SearchAndSwipeActivity.this,R.anim.swip_card_anim);
+				LinearInterpolator lir0 = new LinearInterpolator();  
+				myAnimation0.setInterpolator(lir0); 
+				iv_card.startAnimation(myAnimation0);
 
 			} else if (Constants.ACTION_QPOS_SWIPEDONE.equals(action)) {
 
