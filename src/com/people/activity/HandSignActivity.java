@@ -98,7 +98,8 @@ public class HandSignActivity  extends BaseActivity implements OnClickListener {
 		switch(view.getId()){
 		case R.id.okButton:
 			if (hasSign){
-				this.finish();
+				Intent intent0 = new Intent(HandSignActivity.this, TradeSuccessActivity.class);
+				startActivityForResult(intent0, 0);
 			} else {
 				AlertDialog.Builder builder = new Builder(HandSignActivity.this);
 				builder.setMessage("您还没有签名，请先完成签名");
@@ -318,5 +319,16 @@ public class HandSignActivity  extends BaseActivity implements OnClickListener {
 	  }
 	  return super.onKeyDown(keyCode, event);
 	 }
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(resultCode == RESULT_OK){
+			HandSignActivity.this.setResult(RESULT_OK);
+			HandSignActivity.this.finish();
+		}
+	}
 
 }

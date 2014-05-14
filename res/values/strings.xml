@@ -60,4 +60,5 @@
     <string name="modifypwd_newpwd_hint">请输入新密码</string>
     <string name="modifypwd_confirmpwd_hint">请输入确认密码</string>
     <string name="hand_sign_title">请签名</string>
+    <string name="trade_success">结果</string>
 </resources>

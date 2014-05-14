@@ -243,7 +243,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					if (obj instanceof HashMap) {
 						if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
 							Intent intent = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-							startActivity(intent);
+							startActivityForResult(intent, 0);
 						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 							Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 						}
@@ -358,7 +358,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 						if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
 							
 							Intent intent = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-							startActivity(intent);
+							startActivityForResult(intent, 0);
 						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 							Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 						}
@@ -370,6 +370,17 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			};
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(resultCode == RESULT_OK){
+			this.setResult(RESULT_OK);
+			this.finish();
+		}
 	}
 
 }
