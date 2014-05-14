@@ -67,12 +67,12 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				switch (arg2) {
 				case 0:
-					Intent intent1 = new Intent(SettingActivity.this, AboutSystemActivity.class);
-					SettingActivity.this.startActivity(intent1);
+					Intent intent0 = new Intent(SettingActivity.this, AboutSystemActivity.class);
+					SettingActivity.this.startActivity(intent0);
 					break;
 				case 1:
-					// Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
-					// SettingActivity.this.startActivity(intent1);
+					 Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
+					 SettingActivity.this.startActivity(intent1);
 					break;
 				case 2:
 					// Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
@@ -156,6 +156,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			
 			if (isOpen) {
 				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
+				Intent intent = new Intent(SettingActivity.this, LockScreenSettingActivity.class);
+				startActivityForResult(intent, 0);
 			} else {
 				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
 			}
@@ -164,7 +166,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		case R.id.layout_gesture:
 			if (isOpen) {
 				Intent intent = new Intent(SettingActivity.this, LockScreenSettingActivity.class);
-				startActivity(intent);
+				startActivityForResult(intent, 0);
 			} else {
 				Toast.makeText(SettingActivity.this, "请先开启锁屏手势功能", Toast.LENGTH_SHORT).show();
 			}
@@ -176,6 +178,20 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			break;
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if(resultCode == RESULT_OK){
+			isOpen = data.getBooleanExtra("isOpen", false);
+			if(isOpen){
+				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
+			}else{
+				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);	
+			}
+			
+		}
 	}
 
 }

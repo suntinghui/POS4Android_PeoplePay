@@ -11,5 +11,25 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:background="#0000" />
+    
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gv">
+        
+        <Button
+        android:id="@+id/btn_forget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_swip"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dip"
+        android:background="@color/clear"
+        android:text="@string/gesture_forget"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="15dip"
+        android:textColor="@drawable/text_white_blue"
+        android:textSize="17sp"
+         />
+    </RelativeLayout>
 
 </RelativeLayout>
