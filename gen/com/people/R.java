@@ -362,7 +362,6 @@ public final class R {
         public static final int activity_feedback=0x7f030003;
         public static final int activity_forget_pwd=0x7f030004;
         public static final int activity_handsign=0x7f030005;
-<<<<<<< HEAD
         public static final int activity_help=0x7f030006;
         public static final int activity_inputmoney=0x7f030007;
         public static final int activity_lock_screen=0x7f030008;
@@ -372,18 +371,6 @@ public final class R {
         public static final int activity_modify_login_pwd=0x7f03000c;
         public static final int activity_search_swipe=0x7f03000d;
         public static final int activity_setting=0x7f03000e;
-=======
-        public static final int activity_inputmoney=0x7f030006;
-        public static final int activity_lock_screen=0x7f030007;
-        public static final int activity_lock_screen_setting=0x7f030008;
-        public static final int activity_login=0x7f030009;
-        public static final int activity_merchant=0x7f03000a;
-        public static final int activity_modify_login_pwd=0x7f03000b;
-        public static final int activity_search_swipe=0x7f03000c;
-        public static final int activity_setting=0x7f03000d;
-<<<<<<< HEAD
-        public static final int activity_share_setting=0x7f03000e;
->>>>>>> 086007adc28df78fdf1b487c6465b79ddf57dccb
         public static final int activity_splash=0x7f03000f;
         public static final int activity_success=0x7f030010;
         public static final int activity_tools=0x7f030011;
@@ -404,36 +391,7 @@ public final class R {
         public static final int refresh_list_header=0x7f030020;
         public static final int schedule_dialog_layout=0x7f030021;
         public static final int switch_view=0x7f030022;
-<<<<<<< HEAD
         public static final int text_with_label=0x7f030023;
-=======
-=======
-        public static final int activity_splash=0x7f03000e;
-        public static final int activity_success=0x7f03000f;
-        public static final int activity_tools=0x7f030010;
-        public static final int activity_transfer_detail=0x7f030011;
-        public static final int activity_transfer_list=0x7f030012;
-        public static final int alert_dialog_layout=0x7f030013;
-        public static final int choose_device=0x7f030014;
-        public static final int device_item=0x7f030015;
-        public static final int item_catalog=0x7f030016;
-        public static final int item_inputmoney=0x7f030017;
-        public static final int item_setting=0x7f030018;
-        public static final int layout_bluetooth_dialog=0x7f030019;
-        public static final int layout_tab=0x7f03001a;
-        public static final int list_item_transfer=0x7f03001b;
-        public static final int progress_dialog_layout=0x7f03001c;
-        public static final int progress_hud=0x7f03001d;
-        public static final int refresh_list_footer=0x7f03001e;
-        public static final int refresh_list_header=0x7f03001f;
-        public static final int schedule_dialog_layout=0x7f030020;
-        public static final int switch_view=0x7f030021;
-<<<<<<< HEAD
-        public static final int text_with_label=0x7f030022;
-=======
->>>>>>> fa62affff67a94e5ce89635935255c914ba4a55e
->>>>>>> b653d08fb082228f9ded7ccef524fa7dc25f0ab4
->>>>>>> 086007adc28df78fdf1b487c6465b79ddf57dccb
     }
     public static final class string {
         public static final int about_title=0x7f070018;
