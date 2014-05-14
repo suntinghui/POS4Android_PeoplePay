@@ -28,13 +28,13 @@ public class ThreadDeviceID extends Thread {
 	public void run() {
 		int r = QPOS.getCardReader().doGetTerminalID();
 		if (r == CardReader.SUCCESS) {
-			String tid = QPOS.getCardReader().getTerminalIDTid();
+			String tid = QPOS.getCardReader().getTerminalIDTid(); 
+			// TODO  554E201410000046  -> UN201410000046   ????
 			String pid = QPOS.getCardReader().getTerminalIDPid();
 			
 			HashMap<String, String> map = new HashMap<String, String>();
 			map.put("TID", tid); // TerminalID
-			// TODO
-			map.put("PID", "UN201410000046"); // PSAMID
+			map.put("PID", pid.replace("554E", "UN")); // PSAMID
 			
 			QPOS.HandData(mHandler, map, CardReader.SUCCESS);
 		} else {

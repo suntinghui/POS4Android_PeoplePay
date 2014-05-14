@@ -1,13 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?>   
-<animation-list xmlns:android="http://schemas.android.com/apk/res/android"   
-android:oneshot="true">   
-<item android:drawable="@drawable/swipe_gesture01" android:duration="200" />   
-<!-- <item android:drawable="@drawable/swipe_gesture02" android:duration="200" /> -->   
-<item android:drawable="@drawable/swipe_gesture03" android:duration="200" />   
-<!-- <item android:drawable="@drawable/swipe_gesture04" android:duration="200" />    -->
-<item android:drawable="@drawable/swipe_gesture05" android:duration="200" />   
-<!-- <item android:drawable="@drawable/swipe_gesture06" android:duration="200" /> -->
-<item android:drawable="@drawable/swipe_gesture07" android:duration="200" />   
-<!-- <item android:drawable="@drawable/swipe_gesture08" android:duration="200" />    -->
-<item android:drawable="@drawable/swipe_gesture09" android:duration="200" />    
-</animation-list>  
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true" >
+
+    <!-- <item
+        android:drawable="@drawable/swipe_ainim_001"
+        android:duration="200"/> -->
+    <item
+        android:drawable="@drawable/swipe_ainim_002"
+        android:duration="200"/>
+   <!--  <item
+        android:drawable="@drawable/swipe_ainim_003"
+        android:duration="200"/> -->
+    <item
+        android:drawable="@drawable/swipe_ainim_004"
+        android:duration="200"/>
+    <!-- <item
+        android:drawable="@drawable/swipe_ainim_005"
+        android:duration="200"/> -->
+    <item
+        android:drawable="@drawable/swipe_ainim_006"
+        android:duration="200"/>
+    <!-- <item
+        android:drawable="@drawable/swipe_ainim_007"
+        android:duration="200"/> -->
+    <item
+        android:drawable="@drawable/swipe_ainim_008"
+        android:duration="200"/>
+
+</animation-list>
