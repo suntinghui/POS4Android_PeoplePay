@@ -101,6 +101,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					break;
 				default:
 					break;
+					
 				}
 			}
 
