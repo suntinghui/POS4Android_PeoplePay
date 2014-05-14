@@ -33,10 +33,12 @@ public class QPOS {
 	}
 	
 	public static void HandData(Handler mHandler, Object obj, int num) {
-		Message message = mHandler.obtainMessage();
-		message.obj = obj;
-		message.what = num;
-		mHandler.sendMessage(message);
+		if (mHandler != null){
+			Message message = mHandler.obtainMessage();
+			message.obj = obj;
+			message.what = num;
+			mHandler.sendMessage(message);
+		}
 	}
 	
 	public static void broadcastUpdate(final String action) {

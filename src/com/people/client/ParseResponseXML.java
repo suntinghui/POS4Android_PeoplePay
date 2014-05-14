@@ -35,6 +35,7 @@ public class ParseResponseXML {
 
 			case TransferRequestTag.Register:
 				return register();
+				
 			case TransferRequestTag.ModifyLoginPwd:
 				return modifyLoginPwd();
 

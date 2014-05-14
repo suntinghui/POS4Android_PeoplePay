@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.people.R;
+import com.people.client.AppDataCenter;
+import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
@@ -25,8 +27,10 @@ import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.qpos.QPOS;
+import com.people.qpos.ThreadCancel;
 import com.people.qpos.ThreadDeviceID;
 import com.people.qpos.ThreadSwip_SixPass;
+import com.people.qpos.ThreadUpDataKey;
 import com.people.util.StringUtil;
 import com.people.view.BLDeviceDialog;
 import com.people.view.BLDeviceDialog.OnSelectBLListener;
@@ -62,7 +66,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		titleView.setText("检测设备");
 		animImageView = (ImageView) this.findViewById(R.id.iv_swipe);
 
-		animImageView.setBackgroundResource(R.anim.finddevice);
+		animImageView.setBackgroundResource(R.anim.find_device);
 
 		animaition = (AnimationDrawable) animImageView.getBackground();
 		animaition.setOneShot(false);
@@ -94,15 +98,23 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	};
 
 	private void doAction() {
-		int type = intent.getIntExtra("TYPE", 0);
-		if (type == TransferRequestTag.Consume) {
-			new ConsumeAction().doAction();
-		} else if (type == TransferRequestTag.ConsumeCancel) {
-			new ConsumeCancelAction().doAction();
+		if (!Constants.HASSIGN) {
+			new Sign().doAction();
+
+		} else {
+			int type = intent.getIntExtra("TYPE", 0);
+
+			if (type == TransferRequestTag.Consume) {
+				new ConsumeAction().doAction();
+			} else if (type == TransferRequestTag.ConsumeCancel) {
+				new ConsumeCancelAction().doAction();
+			}
 		}
 	}
 
 	public void backAction(View view) {
+		new ThreadCancel(null, this).start();
+		
 		this.finish();
 	}
 
@@ -126,6 +138,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 				titleView.setText("请刷卡");
 				animImageView.setBackgroundResource(R.anim.swipcard);
 
+				animaition = (AnimationDrawable) animImageView.getBackground();
 				animaition.setOneShot(false);
 				animaition.start();// 启动
 
@@ -144,6 +157,103 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////////////////
+
+	// 签到
+	class Sign {
+
+		private String tid = "";
+		private String pid = "";
+
+		public void doAction() {
+			new ThreadDeviceID(getDeviceIDHandler, SearchAndSwipeActivity.this).start();
+		}
+
+		private Handler getDeviceIDHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case CardReader.SUCCESS:
+					HashMap<String, String> map = (HashMap<String, String>) msg.obj;
+					tid = map.get("TID");
+					pid = map.get("PID");
+
+					signAction();
+
+					break;
+				}
+			}
+		};
+
+		private void signAction() {
+			HashMap<String, Object> tempMap = new HashMap<String, Object>();
+			tempMap.put("TRANCODE", "199020");
+			tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(SearchAndSwipeActivity.this).getString(Constants.kUSERNAME, "")); // 手机号
+			tempMap.put("TERMINALNUMBER", tid);
+			tempMap.put("PSAMCARDNO", pid);
+			tempMap.put("TERMINALSERIANO", AppDataCenter.getTraceAuditNum());
+			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.SignIn, tempMap, signHandler());
+
+			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在签到...", new LKHttpRequestQueueDone() {
+
+				@Override
+				public void onComplete() {
+					super.onComplete();
+				}
+			});
+
+		}
+
+		private LKAsyncHttpResponseHandler signHandler() {
+			return new LKAsyncHttpResponseHandler() {
+
+				@Override
+				public void successAction(Object obj) {
+					@SuppressWarnings("unchecked")
+					HashMap<String, String> map = (HashMap<String, String>) obj;
+					if (map.get("RSPCOD").equals("00")) { // 签到成功
+						String desKey = map.get("ENCRYPTKEY");
+						String pinKey = map.get("PINKEY");
+						String macKey = map.get("MACKEY");
+
+						new ThreadUpDataKey(mHandler, SearchAndSwipeActivity.this, desKey + pinKey + macKey).start();
+						
+					} else { // 签到失败
+						Toast.makeText(SearchAndSwipeActivity.this, map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
+						SearchAndSwipeActivity.this.finish();
+					}
+					
+				}
+			};
+		}
+
+		private Handler mHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case CardReader.SUCCESS:
+					Constants.HASSIGN = true;
+
+					SearchAndSwipeActivity.this.doAction();
+					break;
+					
+				case CardReader.TIMEOUT:
+					Toast.makeText(SearchAndSwipeActivity.this, "签到超时，请重试", Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
+					break;
+					
+				case CardReader.FAILURE:
+					Toast.makeText(SearchAndSwipeActivity.this, "签到失败，请重试", Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
+					break;
+
+				default:
+
+					break;
+				}
+			}
+		};
+
+	}
 
 	// 消费
 	class ConsumeAction {
@@ -182,6 +292,11 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 					transfer(map);
 
+					break;
+					
+				case CardReader.USERCANCEL:
+					Toast.makeText(SearchAndSwipeActivity.this, "用户取消操作", Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
 					break;
 
 				default:
@@ -296,6 +411,11 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					transfer(map);
 
 					break;
+					
+				case CardReader.USERCANCEL:
+					Toast.makeText(SearchAndSwipeActivity.this, "用户取消操作", Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
+					break;
 
 				default:
 					break;
@@ -356,7 +476,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 					if (obj instanceof HashMap) {
 						if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-							
+
 							Intent intent = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
 							startActivityForResult(intent, 0);
 						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
