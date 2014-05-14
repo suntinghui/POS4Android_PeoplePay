@@ -3,6 +3,7 @@ package com.people.activity;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,7 +30,6 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
-import com.people.qpos.QPOS;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
@@ -43,7 +43,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 	private TextView tv_totalnum;
 	private TextView tv_totalmoney;
-	
+
 	private long exitTimeMillis = 0;
 
 	@Override
@@ -66,14 +66,13 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Intent intent = new Intent(TransferListActivity.this, TransferDetailActivity.class);
-				TradeModel model = array.get(arg2);
-				intent.putExtra("model", model);
-				startActivity(intent);
+				intent.putExtra("model", array.get(arg2));
+				startActivityForResult(intent, 0);
 			}
 
 		});
-		queryHistory();
 
+		queryHistory();
 	}
 
 	public final class ViewHolder {
@@ -149,8 +148,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		case R.id.btn_back:
 			this.finish();
 			break;
+			
 		case R.id.btn_refresh:
-			array.clear();
 			queryHistory();
 
 			break;
@@ -172,7 +171,6 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onComplete() {
 				super.onComplete();
-
 			}
 
 		});
@@ -184,32 +182,39 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			@SuppressWarnings("rawtypes")
 			@Override
 			public void successAction(Object obj) {
-				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-						float totalAmount = 0;
-						array.addAll((ArrayList<TradeModel>) ((HashMap) obj).get("list"));
-						for (int i = 0; i < array.size(); i++) {
-							TradeModel model = array.get(i);
-							String amount = StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1);
-							if (model.getTxncd().equalsIgnoreCase("0200200000")) {
+				array.clear();
+				
+				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
+					float totalAmount = 0;
+					array.addAll((ArrayList<TradeModel>) ((HashMap) obj).get("list"));
+					for (int i = 0; i < array.size(); i++) {
+						TradeModel model = array.get(i);
+						String amount = StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1);
+						if (model.getTxncd().equalsIgnoreCase("0200200000")) {
 
-							} else {
-								totalAmount += Float.valueOf(amount);
-							}
-
+						} else {
+							totalAmount += Float.valueOf(amount);
 						}
-						tv_totalmoney.setText("￥" + totalAmount);
-						tv_totalnum.setText(array.size() + "");
-						adapter.notifyDataSetChanged();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+
 					}
-				} else {
+					tv_totalmoney.setText("￥" + totalAmount);
+					tv_totalnum.setText(array.size() + "");
+					adapter.notifyDataSetChanged();
+					
+				} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 				}
 
 			}
 
 		};
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (resultCode == Activity.RESULT_OK) {
+			queryHistory();
+		}
 	}
 
 	// 程序退出

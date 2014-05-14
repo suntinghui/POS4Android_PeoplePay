@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.Window;
 import android.widget.Toast;
 
+import com.baidu.mobstat.StatService;
 import com.people.client.ApplicationEnvironment;
 import com.people.network.LKHttpRequestQueue;
 import com.people.view.LKAlertDialog;
@@ -52,12 +53,16 @@ public class BaseActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		StatService.onResume(this);
 
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		
+		StatService.onPause(this);
 
 	}
 
