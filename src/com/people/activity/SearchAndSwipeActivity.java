@@ -365,7 +365,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.Consume, tempMap, transferHandler());
 
-			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
+			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在交易请稍候...", new LKHttpRequestQueueDone() {
 
 				@Override
 				public void onComplete() {

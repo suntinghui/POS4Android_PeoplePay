@@ -7,8 +7,11 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.baidu.android.pushservice.PushConstants;
@@ -26,6 +29,7 @@ import com.people.push.BPushUtil;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
+	private ImageView logoImageView = null;
 	private EditText usernameEdit = null;
 	private EditText passwordEdit = null;
 
@@ -34,6 +38,10 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
+		
+		logoImageView = (ImageView) this.findViewById(R.id.logoImageView);
+		Animation myAnimation= AnimationUtils.loadAnimation(this,R.anim.login_logo_anim);
+		logoImageView.startAnimation(myAnimation);
 
 		usernameEdit = (EditText) this.findViewById(R.id.et_user);
 		usernameEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
