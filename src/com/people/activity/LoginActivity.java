@@ -110,12 +110,11 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				@SuppressWarnings("unchecked")
 				
 				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
-				if(isOpen){
-					// 启动超时退出服务
-					Intent intent = new Intent(BaseActivity
-							.getTopActivity(), TimeoutService.class);
-					BaseActivity.getTopActivity().startService(intent);
-				}
+				// 启动超时退出服务
+				Intent intent = new Intent(BaseActivity
+						.getTopActivity(), TimeoutService.class);
+				BaseActivity.getTopActivity().startService(intent);
+				
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
 				String RSPCOD = (String) map.get("RSPCOD");
 				String RSPMSG = (String) map.get("RSPMSG");
@@ -127,8 +126,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 					editor.putString(Constants.kPASSWORD, passwordEdit.getText().toString().trim());
 					editor.commit();
 
-					Intent intent = new Intent(LoginActivity.this, ChooseQPOSModeActivity.class);
-					LoginActivity.this.startActivity(intent);
+					Intent intent0 = new Intent(LoginActivity.this, ChooseQPOSModeActivity.class);
+					LoginActivity.this.startActivity(intent0);
 				} else {
 					Toast.makeText(LoginActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
 				}

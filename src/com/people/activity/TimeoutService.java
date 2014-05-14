@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
+import com.people.view.LKAlertDialog;
 
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -65,9 +69,33 @@ public class TimeoutService extends Service {
 		
 		this.stopSelf();
 		
-		Intent intent = new Intent("com.people.LockScreenActivity");
-		intent.putExtra("TIMEOUT", true);
-		BaseActivity.getTopActivity().startActivityForResult(intent, 10);
+		
+		Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(this).getBoolean(Constants.kGESTRUECLOSE, false);
+		if(isOpen){
+			Intent intent = new Intent("com.people.LockScreenActivity");
+			intent.putExtra("TIMEOUT", true);
+			BaseActivity.getTopActivity().startActivityForResult(intent, 10);
+		}else{
+			
+			LKAlertDialog dialog = new LKAlertDialog(BaseActivity.getTopActivity());
+			dialog.setTitle("提示");
+			dialog.setMessage("系统超时，请重新登录");
+			dialog.setCancelable(false);
+			dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					dialog.dismiss();
+					while (!(BaseActivity.getTopActivity() instanceof LoginActivity)){
+						BaseActivity.getTopActivity().finish();
+					}
+				}
+			});
+			
+			dialog.create().show();
+		}
+		
+		
 		
 	}
 	
