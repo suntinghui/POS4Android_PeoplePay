@@ -61,4 +61,6 @@
     <string name="modifypwd_confirmpwd_hint">请输入确认密码</string>
     <string name="hand_sign_title">请签名</string>
     <string name="trade_success">结果</string>
+    <string name="gesture_forget">忘记手势？</string>
+    <string name="feedback_title">意见反馈</string>
 </resources>

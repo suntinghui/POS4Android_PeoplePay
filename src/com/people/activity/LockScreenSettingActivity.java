@@ -1,5 +1,7 @@
 package com.people.activity;
 
+import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -7,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -15,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 
@@ -65,7 +69,7 @@ public class LockScreenSettingActivity extends Activity implements
 								.getInstance().getPreferences();
 						Editor editor = pre.edit();
 						editor.putString(Constants.kLOCKKEY, secondKey);
-						editor.putBoolean(Constants.kGESTRUECLOSE, false);
+						editor.putBoolean(Constants.kGESTRUECLOSE, true);
 						editor.commit();
 						gv.setKey(secondKey);
 						tv_tips.setText("修改成功");
@@ -86,6 +90,9 @@ public class LockScreenSettingActivity extends Activity implements
 							@Override
 							public void onClick(DialogInterface dialog, int arg1) {
 								dialog.dismiss();
+								Intent it = new Intent();  
+				                it.putExtra("isOpen", true);  
+				                setResult(Activity.RESULT_OK, it); 
 								LockScreenSettingActivity.this.finish();
 							}
 						});
@@ -110,5 +117,17 @@ public class LockScreenSettingActivity extends Activity implements
 	@Override
 	public void onClick(View arg0) {
 
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+			Intent it = new Intent();  
+            it.putExtra("isOpen", ApplicationEnvironment.getInstance().getPreferences(this).getBoolean(Constants.kGESTRUECLOSE, false));  
+            setResult(Activity.RESULT_OK, it); 
+			LockScreenSettingActivity.this.finish();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

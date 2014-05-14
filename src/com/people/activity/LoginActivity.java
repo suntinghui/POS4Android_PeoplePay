@@ -108,6 +108,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
+				
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
+				if(isOpen){
+					// 启动超时退出服务
+					Intent intent = new Intent(BaseActivity
+							.getTopActivity(), TimeoutService.class);
+					BaseActivity.getTopActivity().startService(intent);
+				}
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
 				String RSPCOD = (String) map.get("RSPCOD");
 				String RSPMSG = (String) map.get("RSPMSG");

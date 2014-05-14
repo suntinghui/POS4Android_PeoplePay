@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.people.R;
@@ -15,19 +18,22 @@ import com.people.view.GestureLockView.OnGestureFinishListener;
 
 
 // 锁屏
-public class LockScreenActivity  extends Activity {
+public class LockScreenActivity  extends Activity implements OnClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lock_screen);
+		
+		Button btn_forget = (Button) findViewById(R.id.btn_forget);
+		btn_forget.setOnClickListener(this);
+		
 		GestureLockView gv = (GestureLockView) findViewById(R.id.gv);
 		gv.setKey(ApplicationEnvironment.getInstance().getPreferences().getString(Constants.kLOCKKEY, "")); // Z 字型
 		gv.setOnGestureFinishListener(new OnGestureFinishListener() {
 			@Override
 			public void OnGestureFinish(boolean success) {
-				Toast.makeText(LockScreenActivity.this, String.valueOf(success), Toast.LENGTH_SHORT).show();
 				if(success){
 					LockScreenActivity.this.finish();
 					// 启动超时退出服务
@@ -46,4 +52,11 @@ public class LockScreenActivity  extends Activity {
 	  }
 	  return super.onKeyDown(keyCode, event);
 	 }
+
+	@Override
+	public void onClick(View arg0) {
+		this.setResult(RESULT_OK);
+		this.finish();
+		
+	}
 }
