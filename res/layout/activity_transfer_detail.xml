@@ -202,7 +202,7 @@
         android:layout_marginRight="25dip"
         android:layout_marginTop="50dip"
         android:background="@drawable/btn"
-        android:text="@string/tranfer_detail_btn_revoke"
+        android:text="撤  销"
         android:visibility="gone" />
 
 </LinearLayout>

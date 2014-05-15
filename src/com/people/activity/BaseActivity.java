@@ -8,15 +8,15 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.view.Gravity;
 import android.view.Window;
 import android.widget.Toast;
 
 import com.baidu.mobstat.StatService;
+import com.people.client.ApplicationEnvironment;
 import com.people.network.LKHttpRequestQueue;
 import com.people.view.LKAlertDialog;
 import com.people.view.LKProgressDialog;
-import com.people.view.ProgressHUD;
 
 public class BaseActivity extends Activity {
 
@@ -26,12 +26,9 @@ public class BaseActivity extends Activity {
 	public static final int MODAL_DIALOG = 1; // 带确定按纽的提示框，需要用户干预才能消失
 	public static final int ALL_DIALOG = 3;
 
-	public static final int PROGRESS_HUD = 2;
-
 	// 要命的static
 	private static LKProgressDialog progressDialog = null;
 	private LKAlertDialog alertDialog = null;
-	private static ProgressHUD progressHUD = null;
 
 	private String message = null;
 
@@ -41,6 +38,8 @@ public class BaseActivity extends Activity {
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
+		// 更新超时时间
+		TimeoutService.LastSystemTimeMillis = System.currentTimeMillis();
 		stack.push(this);
 	}
 
@@ -56,6 +55,7 @@ public class BaseActivity extends Activity {
 		super.onResume();
 		
 		StatService.onResume(this);
+
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class BaseActivity extends Activity {
 		
 		StatService.onPause(this);
 	}
-
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == Activity.RESULT_OK) {
@@ -77,17 +77,11 @@ public class BaseActivity extends Activity {
 	public void startActivity(Intent intent) {
 		super.startActivity(intent);
 		// 然后会调用 startActivityForResult();
-		//overridePendingTransition(R.anim.in_from_right, R.anim.trans_none);
 	}
 
 	@Override
 	public void startActivityForResult(Intent intent, int requestCode) {
 		super.startActivityForResult(intent, requestCode);
-	}
-
-	@Override
-	public void onBackPressed() {
-		super.onBackPressed();
 	}
 
 	@Override
@@ -104,6 +98,9 @@ public class BaseActivity extends Activity {
 			return stack.peek();
 
 		} catch (Exception e) {
+			// 重启系统
+			ApplicationEnvironment.getInstance().restartApp();
+
 			return null;
 		}
 
@@ -120,15 +117,6 @@ public class BaseActivity extends Activity {
 		}
 
 		return list;
-	}
-
-	public static void pushActivity(BaseActivity act) {
-		try {
-			stack.push(act);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	public static void popActivity() {
@@ -161,10 +149,6 @@ public class BaseActivity extends Activity {
 		case MODAL_DIALOG:
 			this.showAlertDialog();
 			break;
-
-		case PROGRESS_HUD:
-			this.showProgressHUD();
-			break;
 		}
 
 		return super.onCreateDialog(id);
@@ -179,7 +163,13 @@ public class BaseActivity extends Activity {
 
 			progressDialog.setMessage(null == message ? "" : message);
 			/***
-			 * Activity activity = (Activity) ((ContextThemeWrapper)progressDialog.getContext()).getBaseContext(); //android.view.WindowManager$BadTokenException: Unable to add window -- token android.os.BinderProxy@438e7108 is not valid; is your activity running? if (!activity.isFinishing()){ progressDialog.create().show(); }
+			 * Activity activity = (Activity)
+			 * ((ContextThemeWrapper)progressDialog
+			 * .getContext()).getBaseContext();
+			 * //android.view.WindowManager$BadTokenException: Unable to add
+			 * window -- token android.os.BinderProxy@438e7108 is not valid; is
+			 * your activity running? if (!activity.isFinishing()){
+			 * progressDialog.create().show(); }
 			 ***/
 			progressDialog.create().show();
 
@@ -197,18 +187,17 @@ public class BaseActivity extends Activity {
 
 			alertDialog.setMessage(null == message ? "" : message);
 			/*
-			 * Activity act = (Activity) ((ContextThemeWrapper)alertDialog.getContext()).getBaseContext(); // android.view.WindowManager$BadTokenException: Unable to add window -- token android.os.BinderProxy@438e7108 is not valid; is your activity running? if (!act.isFinishing()){ alertDialog.create().show(); }
+			 * Activity act = (Activity)
+			 * ((ContextThemeWrapper)alertDialog.getContext()).getBaseContext();
+			 * // android.view.WindowManager$BadTokenException: Unable to add
+			 * window -- token android.os.BinderProxy@438e7108 is not valid; is
+			 * your activity running? if (!act.isFinishing()){
+			 * alertDialog.create().show(); }
 			 */
 			alertDialog.create().show();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void showProgressHUD() {
-		this.hideDialog(ALL_DIALOG);
-
-		progressHUD = ProgressHUD.show(getTopActivity(), (null == message ? "" : message), true, false, null);
 	}
 
 	public void hideDialog(int type) {
@@ -225,12 +214,6 @@ public class BaseActivity extends Activity {
 			}
 			break;
 
-		case PROGRESS_HUD:
-			if (null != progressHUD) {
-				progressHUD.dismiss();
-			}
-			break;
-
 		default:
 			if (null != progressDialog && progressDialog.isShowing()) {
 				progressDialog.dismiss();
@@ -238,10 +221,6 @@ public class BaseActivity extends Activity {
 			if (null != alertDialog && alertDialog.isShowing()) {
 				alertDialog.dismiss();
 			}
-			if (null != progressHUD) {
-				progressHUD.dismiss();
-			}
-
 			break;
 		}
 
@@ -249,35 +228,42 @@ public class BaseActivity extends Activity {
 
 	private void createProgressDialog() {
 		progressDialog = new LKProgressDialog(this);
+
 		progressDialog.setCancelable(false);
 		progressDialog.setTitle("请稍候");
 
-		progressDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
+		progressDialog.setNegativeButton("取消",
+				new android.content.DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
 
-				if (!LKHttpRequestQueue.queueList.isEmpty()) {
-					LKHttpRequestQueue.queueList.get(LKHttpRequestQueue.queueList.size() - 1).cancel();
-				}
+						if (!LKHttpRequestQueue.queueList.isEmpty()) {
+							LKHttpRequestQueue.queueList.get(
+									LKHttpRequestQueue.queueList.size() - 1)
+									.cancel();
+						}
 
-			}
-		});
+					}
+				});
 	}
 
 	private void createAlertDialog() {
 		alertDialog = new LKAlertDialog(this);
+
 		alertDialog.setTitle("提示");
 		alertDialog.setCancelable(false);
-		alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-				dialog.dismiss();
-			}
-		});
+		alertDialog.setPositiveButton("确定",
+				new android.content.DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
 	}
 
 	public void showToast(String message) {
-		Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
-		// toast.setGravity(Gravity.CENTER, 0, 0);
+		Toast toast = Toast.makeText(getApplicationContext(), message,
+				Toast.LENGTH_SHORT);
+		toast.setGravity(Gravity.CENTER, 0, 0);
 		toast.show();
 	}
 

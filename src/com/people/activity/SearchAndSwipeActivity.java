@@ -84,8 +84,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		
 		ImageView iv_device = (ImageView) findViewById(R.id.iv_device);
 		Animation myAnimation1= AnimationUtils.loadAnimation(this,R.anim.swip_scale_anim);
-//		LinearInterpolator lir1 = new LinearInterpolator();  
-//		myAnimation1.setInterpolator(lir1); 
+		LinearInterpolator lir1 = new LinearInterpolator();  
+		myAnimation1.setInterpolator(lir1); 
 		iv_device.startAnimation(myAnimation1);
 		
 
@@ -391,8 +391,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 						
 						Toast.makeText(BaseActivity.getTopActivity(), "交易成功", Toast.LENGTH_SHORT).show();
 						
-					} else if (map.get("RSPMSG").toString() != null) {
-						Toast.makeText(BaseActivity.getTopActivity(), map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
+					} else {
+						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}
 
 				}
@@ -482,7 +482,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.ConsumeCancel, tempMap, transferHandler());
 
-			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在提交...", new LKHttpRequestQueueDone() {
+			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在交易，请稍候...", new LKHttpRequestQueueDone() {
 
 				@Override
 				public void onComplete() {
@@ -505,14 +505,24 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
 						startActivityForResult(intent0, 0);
 						
-					} else if (map.get("RSPMSG") != null ) {
-						Toast.makeText(BaseActivity.getTopActivity(), map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
+					} else {
+						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}
 				}
 
 			};
 		}
 
+	}
+	
+	private void gotoTradeFailureActivity(String msg){
+		if (msg == null || msg.trim().equals("")){
+			msg = "交易失败";
+		}
+		
+		Intent intent = new Intent(this, TradeFaiureActivity.class);
+		intent.putExtra("MESSAGE", msg);
+		startActivityForResult(intent, 0);
 	}
 
 }

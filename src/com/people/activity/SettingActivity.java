@@ -50,7 +50,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private String[] titles = { "关于系统", "意见反馈", "检查更新", "帮助" };
 	private ImageButton ibtn_gesture;
 	private Boolean isOpen = false;
-	
+
 	private String downloadAPKURL;
 
 	@Override
@@ -69,9 +69,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
 		}
 
+		// 手势
 		LinearLayout layout_gesture = (LinearLayout) findViewById(R.id.layout_gesture);
 		layout_gesture.setOnClickListener(this);
 
+		// POS链接方式
+		LinearLayout layout_pos = (LinearLayout) findViewById(R.id.layout_pos);
+		layout_pos.setOnClickListener(this);
+
+		// 其他
 		listView = (ListView) this.findViewById(R.id.listview);
 		Button btn_back = (Button) findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
@@ -88,41 +94,29 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					SettingActivity.this.startActivity(intent0);
 					break;
 				case 1:
-					 Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
-					 SettingActivity.this.startActivity(intent1);
+					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
+					SettingActivity.this.startActivity(intent1);
 					break;
 				case 2:
-					checkUpdate();
-					 //new CheckUpdateTask().execute();
+					showNoUpdateDialog();
 					break;
 				case 3:
-					 Intent intent3 = new Intent(SettingActivity.this, HelpActivity.class);
-					 SettingActivity.this.startActivity(intent3);
+					Intent intent3 = new Intent(SettingActivity.this, HelpActivity.class);
+					SettingActivity.this.startActivity(intent3);
 					break;
 				default:
 					break;
-					
+
 				}
 			}
 
 		});
 	}
-	
-	class CheckUpdateTask extends AsyncTask{
 
-		@Override
-		protected Object doInBackground(Object... arg0) {
-			Looper.prepare();
-			checkUpdate();
-			return null;
-		}
-		
-	}
-	
 	private void checkUpdate() {
 		try {
-			 this.showDialog(BaseActivity.PROGRESS_HUD, "正在检查更新");
-			 
+			this.showDialog(BaseActivity.PROGRESS_DIALOG, "正在检查更新");
+
 			URL myURL = new URL("http://1.192.121.152:8088/mobileoa/file/apk/version.xml");
 			URLConnection ucon = myURL.openConnection();
 			ucon.setConnectTimeout(20000);
@@ -137,7 +131,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 				switch (event) {
 				case XmlPullParser.START_TAG:
 					if ("version".equals(parser.getName())) {
-						this.hideDialog(BaseActivity.PROGRESS_HUD);
+						this.hideDialog(BaseActivity.PROGRESS_DIALOG);
 
 						int serviceVersion = Integer.parseInt(parser.nextText());
 						if (serviceVersion > Constants.VERSION) {
@@ -159,24 +153,24 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
-			
+
 		} catch (XmlPullParserException e) {
 			e.printStackTrace();
 			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
-			
-		} catch(Exception e){ 
+
+		} catch (Exception e) {
 			e.printStackTrace();
 			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "连接服务器超时，请稍候再试。");
-			
-		}finally {
-			this.hideDialog(BaseActivity.PROGRESS_HUD);
+
+		} finally {
+			this.hideDialog(BaseActivity.PROGRESS_DIALOG);
 		}
 	}
-	
+
 	private void showUpdateDialog() {
 		LKAlertDialog dialog = new LKAlertDialog(this);
 		dialog.setTitle("提示");
@@ -275,18 +269,18 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		case R.id.btn_back:
 			this.finish();
 			break;
-			
+
 		case R.id.ibtn_gesture:
 			isOpen = !isOpen;
 			SharedPreferences pre = ApplicationEnvironment.getInstance().getPreferences();
 			Editor editor = pre.edit();
-			
+
 			if (!isOpen) {
 				editor.putString(Constants.kLOCKKEY, "");
 			}
 			editor.putBoolean(Constants.kGESTRUECLOSE, isOpen);
 			editor.commit();
-			
+
 			if (isOpen) {
 				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
 				Intent intent = new Intent(SettingActivity.this, LockScreenSettingActivity.class);
@@ -296,7 +290,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 				this.getApplication().stopService(new Intent("com.dhc.timeoutService"));
 			}
 			break;
-			
+
 		case R.id.layout_gesture:
 			if (isOpen) {
 				Intent intent = new Intent(SettingActivity.this, LockScreenSettingActivity.class);
@@ -304,10 +298,14 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			} else {
 				Toast.makeText(SettingActivity.this, "请先开启锁屏手势功能", Toast.LENGTH_SHORT).show();
 			}
-			
+
+		case R.id.layout_pos:
+			Intent intent = new Intent(SettingActivity.this, ChooseQPOSModeActivity.class);
+			intent.putExtra("FROM", ChooseQPOSModeActivity.FROM_SETTINGACTIVITY);
+			startActivity(intent);
 
 			break;
-			
+
 		default:
 			break;
 		}
@@ -316,15 +314,15 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-		if(resultCode == RESULT_OK){
+
+		if (resultCode == RESULT_OK) {
 			isOpen = data.getBooleanExtra("isOpen", false);
-			if(isOpen){
+			if (isOpen) {
 				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_on);
-			}else{
-				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);	
+			} else {
+				ibtn_gesture.setBackgroundResource(R.drawable.btn_toggle_off);
 			}
-			
+
 		}
 	}
 

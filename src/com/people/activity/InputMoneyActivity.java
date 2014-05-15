@@ -17,6 +17,8 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -39,8 +41,10 @@ public class InputMoneyActivity extends BaseActivity {
 	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "." };
 
 	private TextView tv_show_money;
+	private RelativeLayout layout_swip;
 	
 	private long exitTimeMillis = 0;
+	private long common_btnn = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,7 @@ public class InputMoneyActivity extends BaseActivity {
 		adapter = new CatalogAdapter(this);
 		gridView.setAdapter(adapter);
 
-		RelativeLayout layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
+		layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
 		layout_swip.setOnClickListener(listener);
 		
 		Button btn_cash = (Button) findViewById(R.id.btn_cash);
@@ -136,7 +140,14 @@ public class InputMoneyActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View arg0) {
-			if (arg0.getId() == R.id.layout_swip) {
+			if (arg0.getId() == R.id.layout_swip) { // 点击刷卡
+				if ((System.nanoTime() - common_btnn) / 1000000 < 1000) {
+					return;
+				}
+				common_btnn = System.nanoTime();
+				
+				layout_swip.startAnimation(AnimationUtils.loadAnimation(InputMoneyActivity.this, R.anim.inputmoney_anim));
+				
 				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
 					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
@@ -160,7 +171,7 @@ public class InputMoneyActivity extends BaseActivity {
 					startActivity(intent);
 				}
 
-			} else if(arg0.getId() == R.id.btn_cash) {
+			} else if(arg0.getId() == R.id.btn_cash) { // 现金记账
 				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
 					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
