@@ -12,7 +12,7 @@
           android:pivotX="95%"
           android:pivotY="95%"
           
-          android:fillAfter="false"
+          android:fillAfter="true"
           android:duration="200" />
 </set>
 

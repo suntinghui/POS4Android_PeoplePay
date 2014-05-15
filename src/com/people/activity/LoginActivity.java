@@ -66,6 +66,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			if (checkValue()) {
 				login();
 			}
+			
 			break;
 
 		case R.id.btn_forget_pwd:
