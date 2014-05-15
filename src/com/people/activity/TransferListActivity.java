@@ -128,7 +128,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			TradeModel model = array.get(position);
 			String cardNum = model.getCardNo();
 			if (cardNum != null) {
-				holder.tv_cardnum.setText(StringUtil.formatAccountNo(cardNum));
+				holder.tv_cardnum.setText(StringUtil.formatCardId(StringUtil.formatAccountNo(cardNum)));
 			}
 			String amount = model.getTxnamt();
 			if (amount != null) {

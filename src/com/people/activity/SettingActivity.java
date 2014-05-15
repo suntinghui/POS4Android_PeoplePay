@@ -52,6 +52,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private Boolean isOpen = false;
 
 	private String downloadAPKURL;
+	private int serviceVersion;
+	private String descrition;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -98,7 +100,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					SettingActivity.this.startActivity(intent1);
 					break;
 				case 2:
-					showNoUpdateDialog();
+					checkUpdate();
 					break;
 				case 3:
 					Intent intent3 = new Intent(SettingActivity.this, HelpActivity.class);
@@ -117,7 +119,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		try {
 			this.showDialog(BaseActivity.PROGRESS_DIALOG, "正在检查更新");
 
-			URL myURL = new URL("http://1.192.121.152:8088/mobileoa/file/apk/version.xml");
+			URL myURL = new URL("http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getVersion");
 			URLConnection ucon = myURL.openConnection();
 			ucon.setConnectTimeout(20000);
 			ucon.setReadTimeout(20000);
@@ -133,17 +135,27 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					if ("version".equals(parser.getName())) {
 						this.hideDialog(BaseActivity.PROGRESS_DIALOG);
 
-						int serviceVersion = Integer.parseInt(parser.nextText());
+						serviceVersion = Integer.parseInt(parser.nextText());
+
+					} else if ("url".equals(parser.getName())) {
+						downloadAPKURL = parser.nextText();
+					} else if ("des".equals(parser.getName())) {
+						descrition = parser.nextText();
+						if (descrition == null || descrition.trim().equals("")) {
+							descrition = "发现新版本，是否立即更新？";
+						}
+					}
+
+					break;
+
+				case XmlPullParser.END_TAG:
+					if ("root".equals(parser.getName())) {
 						if (serviceVersion > Constants.VERSION) {
 							showUpdateDialog();
 						} else {
 							showNoUpdateDialog();
 						}
-
-					} else if ("url".equals(parser.getName())) {
-						downloadAPKURL = parser.nextText();
 					}
-
 					break;
 				}
 
@@ -173,8 +185,8 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 	private void showUpdateDialog() {
 		LKAlertDialog dialog = new LKAlertDialog(this);
-		dialog.setTitle("提示");
-		dialog.setMessage("有新版本，是否下载更新？");
+		dialog.setTitle("有新版本");
+		dialog.setMessage(descrition);
 		dialog.setCancelable(false);
 		dialog.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
 
@@ -210,7 +222,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void Update() {
-		DownloadFileRequest.sharedInstance().downloadAndOpen(this, downloadAPKURL, "PeoplePay.apk");
+		DownloadFileRequest.sharedInstance().downloadAndOpen(this, downloadAPKURL, "PeoplePayV" + this.serviceVersion + ".apk");
 	}
 
 	public final class ViewHolder {

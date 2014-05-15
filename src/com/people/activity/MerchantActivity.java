@@ -184,7 +184,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				String MERNAM = (String) map.get("MERNAM");
 
 				if (RSPCOD.equals("000000")) {
-					tv_bank_no.setText(ACTNO == null ? "" : StringUtil.formatAccountNo(ACTNO));
+					tv_bank_no.setText(ACTNO == null ? "" : StringUtil.formatCardId(StringUtil.formatAccountNo(ACTNO)));
 					tv_open_account_name.setText(ACTNAM == null ? "" : ACTNAM);
 					tv_open_account_bank.setText(OPNBNK == null ? "" : OPNBNK);
 					tv_head.setText(MERNAM == null ? "" : MERNAM);

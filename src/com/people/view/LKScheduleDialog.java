@@ -43,7 +43,7 @@ public class LKScheduleDialog extends Dialog {
 	
 	public void setProgress(int progress){
 		this.progressBar.setProgress(progress);
-		this.progressView.setText("已�?????:"+progress+"%");
+		this.progressView.setText("已完成:"+progress+"%");
 	}
 	
 	public void setDetail(String detail){
