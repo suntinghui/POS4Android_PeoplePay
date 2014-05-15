@@ -121,6 +121,22 @@ public class StringUtil {
 		}
 	}
 
+	// 银行卡号，每四位一个空格
+	public static String formatCardId(String cardId) {
+		StringBuffer sb = new StringBuffer();
+
+		if (cardId != null && cardId.length() > 0) {
+			for (int i = 0; i < cardId.length(); i++) {
+				sb.append(cardId.substring(i, i + 1));
+				if (i >= 3 && (i - 3) % 4 == 0 && i != cardId.length() - 1) {
+					sb.append(" ");
+				}
+			}
+		}
+
+		return sb.toString();
+	}
+
 	public static boolean getBool(String str, boolean b) {
 		return null != str && str.equalsIgnoreCase("true") ? true : false;
 	}
@@ -245,7 +261,7 @@ public class StringUtil {
 			return 0.00;
 		}
 	}
-	
+
 	public static long String2AmountFloat4QPOS(String str) {
 		try {
 			String tempStr = NumberFormat.getNumberInstance().format(Long.parseLong(str, 10)).replace(",", "");

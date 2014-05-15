@@ -44,7 +44,7 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		tv_date.setText(StringUtil.dateStringFormate(model.getSysDate()));
 
 		TextView tv_account = (TextView) findViewById(R.id.tv_account);
-		tv_account.setText(StringUtil.formatAccountNo(model.getCardNo()));
+		tv_account.setText(StringUtil.formatCardId(StringUtil.formatAccountNo(model.getCardNo())));
 
 		TextView tv_merchant_name = (TextView) findViewById(R.id.tv_merchant_name);
 		tv_merchant_name.setText(model.getMerName());

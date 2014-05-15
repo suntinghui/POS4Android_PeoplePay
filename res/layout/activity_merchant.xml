@@ -10,7 +10,7 @@
         android:background="@drawable/top" >
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical" >
@@ -27,8 +27,14 @@
                 style="@style/white_18"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="50dip"
+                android:layout_marginRight="50dip"
                 android:layout_marginTop="15dip"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:gravity="center_horizontal"
+                android:singleLine="true"
                 android:text="欢迎登录" />
         </LinearLayout>
     </RelativeLayout>
@@ -302,11 +308,11 @@
                 style="@style/white_20"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
                 android:layout_marginLeft="30dip"
                 android:layout_marginRight="30dip"
                 android:layout_marginTop="20dip"
                 android:background="@drawable/btn"
-                android:layout_marginBottom="10dip"
                 android:text="@string/exit_safity" />
         </LinearLayout>
     </ScrollView>

@@ -67,7 +67,7 @@ public class FileUtil {
 
 	// Open File
 	public static void openFile(String fileName) {
-		Toast.makeText(BaseActivity.getTopActivity(), "正在调用第三方程序", Toast.LENGTH_LONG).show();
+		// Toast.makeText(BaseActivity.getTopActivity(), "正在调用第三方程序", Toast.LENGTH_LONG).show();
 		// new ShowProgressHudTask().execute("2000", "正在调用第三方程序");
 
 		try {
