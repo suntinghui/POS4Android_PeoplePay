@@ -119,7 +119,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		try {
 			this.showDialog(BaseActivity.PROGRESS_DIALOG, "正在检查更新");
 
-			URL myURL = new URL("http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getVersion");
+			URL myURL = new URL(Constants.DOWNLOADURL);
 			URLConnection ucon = myURL.openConnection();
 			ucon.setConnectTimeout(20000);
 			ucon.setReadTimeout(20000);
