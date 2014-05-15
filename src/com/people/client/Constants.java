@@ -10,7 +10,7 @@ public class Constants {
 	public static final String kUSERNAME				          	= "kUSERNAME";
 	public static final String kPASSWORD				          	= "kPASSWORD";
 	
-	public static final int OVERTIME    				          	= 1;// 超时时间
+	public static final int OVERTIME    				          	= 20;// 超时时间
 	
 	public static boolean HASSETBLUETOOTH				          	= false;
 

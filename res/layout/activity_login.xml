@@ -6,6 +6,7 @@
     android:orientation="vertical" >
 
     <ImageView
+        android:id="@+id/logoImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -17,7 +18,7 @@
         android:layout_height="44dip"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
-        android:layout_marginTop="40dip" >
+        android:layout_marginTop="50dip" >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -33,6 +34,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="18dip"
             android:background="@null"
+            android:inputType="phone"
             android:hint="@string/str_user_hint"
             android:singleLine="true"
             android:textColor="@color/white"

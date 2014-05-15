@@ -73,6 +73,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		tv_bank_no = (TextView) findViewById(R.id.tv_bank_no);
 		tv_open_account_name = (TextView) findViewById(R.id.tv_open_account_name);
 		tv_open_account_bank = (TextView) findViewById(R.id.tv_open_account_bank);
+		
 		merchantQuery();
 	}
 

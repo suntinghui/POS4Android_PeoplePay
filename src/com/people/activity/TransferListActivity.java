@@ -189,11 +189,10 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 					array.addAll((ArrayList<TradeModel>) ((HashMap) obj).get("list"));
 					for (int i = 0; i < array.size(); i++) {
 						TradeModel model = array.get(i);
-						String amount = StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1);
 						if (model.getTxncd().equalsIgnoreCase("0200200000")) {
 
 						} else {
-							totalAmount += Float.valueOf(amount);
+							totalAmount += StringUtil.String2AmountFloat(model.getTxnamt());
 						}
 
 					}

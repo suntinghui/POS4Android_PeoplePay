@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="交易成功" />
+            android:text="交易失败" />
     </RelativeLayout>
 
     <LinearLayout
@@ -31,17 +31,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/transaction_success" />
+            android:src="@drawable/transaction_fail" />
 
         <TextView
             style="@style/black_18"
+            android:id="@+id/tv_msg"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dip"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="20dip"
             android:gravity="center"
-            android:text="交易成功" />
+            android:text="交易失败" />
     </LinearLayout>
 
     <Button

@@ -34,48 +34,95 @@
         android:layout_marginTop="30dip"
         android:background="@color/gray" />
 
-    <LinearLayout android:id="@+id/layout_gesture"
+    <!-- 设置锁屏手势 -->
+
+    <LinearLayout
+        android:id="@+id/layout_gesture"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@drawable/inputmoney_btn_selector">
-        
+        android:background="@drawable/inputmoney_btn_selector"
+        android:orientation="vertical" >
+
         <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="20dip" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/set_icon_0" />
+
+                <TextView
+                    style="@style/black_17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:text="设置锁屏手势" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ibtn_gesture"
+                android:layout_width="60dip"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/btn_toggle_off" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@color/gray" />
+
+    <!-- 重设POS连接模式 -->
+
+    <LinearLayout
+        android:id="@+id/layout_pos"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dip"
-        android:layout_marginTop="20dip" 
-        android:layout_marginBottom="20dip">
+        android:background="@drawable/inputmoney_btn_selector"
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="20dip"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="20dip" >
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/set_icon_0" />
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
 
-            <TextView
-                style="@style/black_17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dip"
-                android:text="设置锁屏手势" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dip"
+                    android:background="@drawable/set_icon_10" />
 
-        <ImageButton
-            android:id="@+id/ibtn_gesture"
-            android:layout_width="60dip"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dip" 
-            android:background="@drawable/btn_toggle_off"/>
-    </RelativeLayout>
+                <TextView
+                    style="@style/black_17"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:text="选择POS连接方式" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <View

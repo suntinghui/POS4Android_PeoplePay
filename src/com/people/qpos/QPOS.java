@@ -18,7 +18,7 @@ public class QPOS {
 	public static CardReader getCardReader() {
 		if (null == reader) {
 			// 默认蓝牙
-			reader = CardReader.getInstance(BaseActivity.getTopActivity(), CardReader.BLUETOOTHMODE);
+			reader = CardReader.getInstance(BaseActivity.getTopActivity().getBaseContext(), CardReader.BLUETOOTHMODE);
 			util.turnUpVolume(BaseActivity.getTopActivity().getBaseContext(), 8);
 		}
 
@@ -26,8 +26,8 @@ public class QPOS {
 	}
 	
 	public static CardReader changeCardReader(int model) {
-		//reader = CardReader.changeReader(BaseActivity.getTopActivity(), model);
-		reader = CardReader.getInstance(BaseActivity.getTopActivity(), model);
+		reader = CardReader.changeReader(BaseActivity.getTopActivity().getBaseContext(), model);
+//		reader = CardReader.getInstance(BaseActivity.getTopActivity().getBaseContext(), model);
 		util.turnUpVolume(BaseActivity.getTopActivity().getBaseContext(), 8);
 		return reader;
 	}
