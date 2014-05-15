@@ -2,12 +2,14 @@ package com.people.activity;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
 import com.people.R;
+import com.people.util.FileUtil;
 import com.people.view.TabView;
 
 // 主界面
@@ -67,6 +69,22 @@ public class CatalogActivity extends TabActivity {
 
 		tabHost.setCurrentTab(0);
 
+		new DeleteFileTask().execute();
+	}
+
+	// 删除缓存的附件
+	class DeleteFileTask extends AsyncTask<Object, Object, Object> {
+
+		@Override
+		protected Object doInBackground(Object... params) {
+			try {
+				FileUtil.deleteFiles();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
 	}
 
 }
