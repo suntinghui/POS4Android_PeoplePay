@@ -48,7 +48,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		usernameEdit.setSelection(usernameEdit.getText().toString().length());
 
 		passwordEdit = (EditText) this.findViewById(R.id.et_pwd);
-		//passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
+		passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
 
 		Button btn_login = (Button) this.findViewById(R.id.btn_login);
 		btn_login.setOnClickListener(this);
