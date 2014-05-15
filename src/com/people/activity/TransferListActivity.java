@@ -30,6 +30,7 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.util.ActivityUtil;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
@@ -61,6 +62,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 		adapter = new Adapter(this);
 		listView.setAdapter(adapter);
+		ActivityUtil.setEmptyView(listView);
 		listView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
