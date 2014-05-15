@@ -310,14 +310,13 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			} else {
 				Toast.makeText(SettingActivity.this, "请先开启锁屏手势功能", Toast.LENGTH_SHORT).show();
 			}
-
+			break;
 		case R.id.layout_pos:
 			Intent intent = new Intent(SettingActivity.this, ChooseQPOSModeActivity.class);
 			intent.putExtra("FROM", ChooseQPOSModeActivity.FROM_SETTINGACTIVITY);
 			startActivity(intent);
 
 			break;
-
 		default:
 			break;
 		}
