@@ -1,5 +1,7 @@
 package com.people.activity;
 
+import java.util.HashMap;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -15,10 +17,18 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
+import com.people.client.TransferRequestTag;
+import com.people.network.LKAsyncHttpResponseHandler;
+import com.people.network.LKHttpRequest;
+import com.people.network.LKHttpRequestQueue;
+import com.people.network.LKHttpRequestQueueDone;
+import com.people.util.BitmapUtil;
+import com.people.view.CircularImage;
 import com.people.view.GestureLockView;
 import com.people.view.GestureLockView.OnGestureFinishListener;
 import com.people.view.LKAlertDialog;
@@ -33,6 +43,8 @@ public class LockScreenSettingActivity extends Activity implements
 	private String firstKey = "";
 	private String secondKey = "";
 	private LinearLayout layout_lock;
+	
+	private CircularImage ibtn_head;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,12 +52,15 @@ public class LockScreenSettingActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lock_screen_setting);
 
+		
+		ibtn_head = (CircularImage) findViewById(R.id.ibtn_head);
+		ibtn_head.setOnClickListener(this);
+		
 		layout_lock = (LinearLayout) findViewById(R.id.layout_lock);
 
 		tv_tips = (TextView) findViewById(R.id.tv_tips);
 		tv_tips.setText("请绘制新手势");
 		
-
 		tv_tips = (TextView) findViewById(R.id.tv_tips);
 		gv = (GestureLockView) findViewById(R.id.gv);
 		gv.isSetting = true;
@@ -106,6 +121,9 @@ public class LockScreenSettingActivity extends Activity implements
 
 			}
 		});
+		
+		
+		getDownLoadHead();
 	}
 
 	@Override
@@ -123,5 +141,52 @@ public class LockScreenSettingActivity extends Activity implements
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
+	}
+	
+	// 下载图像
+	private void getDownLoadHead() {
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
+				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+
+		LKHttpRequest req1 = new LKHttpRequest(
+				TransferRequestTag.GetDownLoadHead, tempMap,
+				getDownLoadHeadHandler());
+
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(null,
+				new LKHttpRequestQueueDone() {
+
+					@Override
+					public void onComplete() {
+						super.onComplete();
+					}
+				});
+	}
+
+	private LKAsyncHttpResponseHandler getDownLoadHeadHandler() {
+		return new LKAsyncHttpResponseHandler() {
+
+			@Override
+			public void successAction(Object obj) {
+				@SuppressWarnings("unchecked")
+				HashMap<String, Object> map = (HashMap<String, Object>) obj;
+				String RSPCOD = (String) map.get("RSPCOD");
+				String RSPMSG = (String) map.get("RSPMSG");
+
+				if (RSPCOD.equals("000000")) {
+
+					if ((String) map.get("HEADIMG") != null) {
+						ibtn_head.setImageBitmap(BitmapUtil
+								.convertStringToBitmap((String) map
+										.get("HEADIMG")));
+					}
+				} else {
+					Toast.makeText(LockScreenSettingActivity.this, RSPMSG,
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+
+		};
 	}
 }

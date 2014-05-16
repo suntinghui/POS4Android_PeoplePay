@@ -49,7 +49,6 @@ public abstract class LKAsyncHttpResponseHandler extends AsyncHttpResponseHandle
 			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "对不起，系统异常，请您重新操作。");
 			return;
 		}
-		
 		Object obj = ParseResponseXML.parseXML(request.getMethodTag(), aesContent);
 		Log.e("success", "try to do success action..." + TransferRequestTag.getRequestTagMap().get(request.getMethodTag()));
 		

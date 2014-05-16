@@ -45,7 +45,10 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_next:
-			nextAction();
+			if(checkValue()){
+				nextAction();	
+			}
+			
 			break;
 		case R.id.btn_securitycode:
 			if(et_phone.getText().toString().length() == 0){
@@ -171,5 +174,19 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 				}
 
 			};
+		}
+		
+		public Boolean checkValue(){
+			
+			if(et_phone.getText().length() == 0){
+				Toast.makeText(this, "请输入手机号!", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+			
+			if(et_security_code.getText().length() == 0){
+				Toast.makeText(this, "请输入验证码!", Toast.LENGTH_SHORT).show();
+				return false;
+			}
+			return true;
 		}
 }

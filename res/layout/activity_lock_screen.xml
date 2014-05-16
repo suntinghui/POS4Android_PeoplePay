@@ -12,21 +12,25 @@
         android:layout_marginTop="15dip"
         >
 
-        <LinearLayout
-            android:id="@+id/layout_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
             android:layout_centerInParent="true"
-            android:orientation="vertical" >
-
-            <ImageButton
-                android:id="@+id/ibtn_head"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/head_image" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="140.0dip"
+                    android:layout_height="140.0dip"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@null"
+                    android:src="@drawable/head_image" />
+
+                <com.people.view.CircularImage
+                    android:id="@+id/ibtn_head"
+                    android:layout_width="105.0dip"
+                    android:layout_height="105.0dip"
+                    android:layout_centerInParent="true" />
+            </RelativeLayout>
     </RelativeLayout>
     <com.people.view.GestureLockView
         android:id="@+id/gv"

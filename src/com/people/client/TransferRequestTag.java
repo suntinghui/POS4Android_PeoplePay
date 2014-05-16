@@ -27,11 +27,14 @@ public class TransferRequestTag {
 	public static final int SmsSend = 17;// 短信发送
 	public static final int SmsCheck = 18;// 短信码验证
 	public static final int MerchantQuery = 19;// 商户信息查询
+	public static final int LoadUpHead = 20;// 上传头像
+	public static final int GetDownLoadHead = 21;// 下载头像
+	
 
 	private static HashMap<Integer, String> requestTagMap = null;
 
 	public static HashMap<Integer, String> getRequestTagMap() {
-		if (null == requestTagMap) {
+		if (null == requestTagMap) {	
 			requestTagMap = new HashMap<Integer, String>();
 
 			requestTagMap.put(Login, "http://211.147.87.24:8092/posm/199002.tran5");
@@ -53,7 +56,11 @@ public class TransferRequestTag {
 			requestTagMap.put(SmsSend, "http://211.147.87.24:8092/posm/199018.tran5");
 			requestTagMap.put(SmsCheck, "http://211.147.87.24:8092/posm/199019.tran5");
 			requestTagMap.put(MerchantQuery, "http://211.147.87.23:8088/posp/199011.tran");
+			requestTagMap.put(LoadUpHead, "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");
+			requestTagMap.put(GetDownLoadHead, "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
+//			requestTagMap.put(LoadUpHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=setHeadImg"); //外网
 
+			
 		}
 
 		return requestTagMap;
