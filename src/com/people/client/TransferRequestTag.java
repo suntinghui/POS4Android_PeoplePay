@@ -56,9 +56,10 @@ public class TransferRequestTag {
 			requestTagMap.put(SmsSend, "http://211.147.87.24:8092/posm/199018.tran5");
 			requestTagMap.put(SmsCheck, "http://211.147.87.24:8092/posm/199019.tran5");
 			requestTagMap.put(MerchantQuery, "http://211.147.87.23:8088/posp/199011.tran");
-			requestTagMap.put(LoadUpHead, "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");
-			requestTagMap.put(GetDownLoadHead, "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
-//			requestTagMap.put(LoadUpHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=setHeadImg"); //外网
+//			requestTagMap.put(LoadUpHead, "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");//内网
+//			requestTagMap.put(GetDownLoadHead, "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
+			requestTagMap.put(LoadUpHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=setHeadImg"); //外网
+			requestTagMap.put(GetDownLoadHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getHeadImg"); //外网
 
 			
 		}
