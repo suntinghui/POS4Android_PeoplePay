@@ -11,6 +11,9 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -46,6 +49,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	private TextView tv_totalmoney;
 
 	private long exitTimeMillis = 0;
+	private Button btn_refresh;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +57,9 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 		this.setContentView(R.layout.activity_transfer_list);
 
-		Button btn_refresh = (Button) findViewById(R.id.btn_refresh);
+		btn_refresh = (Button) findViewById(R.id.btn_refresh);
 		btn_refresh.setOnClickListener(this);
+		
 
 		tv_totalnum = (TextView) findViewById(R.id.tv_totalnum);
 		tv_totalmoney = (TextView) findViewById(R.id.tv_totalmoney);
@@ -152,6 +157,10 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			break;
 			
 		case R.id.btn_refresh:
+			Animation myAnimation= AnimationUtils.loadAnimation(this,R.anim.refresh_anim);
+			LinearInterpolator lir = new LinearInterpolator();  
+			myAnimation.setInterpolator(lir); 
+			btn_refresh.startAnimation(myAnimation);
 			queryHistory();
 
 			break;
@@ -185,7 +194,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void successAction(Object obj) {
 				array.clear();
-				
+				btn_refresh.clearAnimation();
 				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
 					float totalAmount = 0;
 					array.addAll((ArrayList<TradeModel>) ((HashMap) obj).get("list"));
@@ -209,6 +218,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			}
 
 		};
+		
+		
 	}
 	
 	@Override
