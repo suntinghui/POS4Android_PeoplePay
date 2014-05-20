@@ -40,6 +40,7 @@ public class BaseActivity extends Activity {
 
 		// 更新超时时间
 		TimeoutService.LastSystemTimeMillis = System.currentTimeMillis();
+		
 		stack.push(this);
 	}
 
