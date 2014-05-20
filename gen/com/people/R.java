@@ -22,6 +22,7 @@ public final class R {
         public static final int push_left_out=0x7f04000a;
         public static final int push_up_in=0x7f04000b;
         public static final int push_up_out=0x7f04000c;
+<<<<<<< HEAD
         public static final int scale_anim=0x7f04000d;
         public static final int shake_x=0x7f04000e;
         public static final int shake_y=0x7f04000f;
@@ -30,6 +31,17 @@ public final class R {
         public static final int swip_scale_anim=0x7f040012;
         public static final int zoom_enter=0x7f040013;
         public static final int zoom_exit=0x7f040014;
+=======
+        public static final int refresh_anim=0x7f04000d;
+        public static final int scale_anim=0x7f04000e;
+        public static final int shake_x=0x7f04000f;
+        public static final int shake_y=0x7f040010;
+        public static final int spinner=0x7f040011;
+        public static final int swip_card_anim=0x7f040012;
+        public static final int swip_scale_anim=0x7f040013;
+        public static final int zoom_enter=0x7f040014;
+        public static final int zoom_exit=0x7f040015;
+>>>>>>> abfac3a6d8acd91523036d8d0501d88f1ed0e065
     }
     public static final class array {
         public static final int fileEndingAudio=0x7f070001;
@@ -157,6 +169,7 @@ public final class R {
         public static final int login_icon_user=0x7f020053;
         public static final int login_line=0x7f020054;
         public static final int login_logo=0x7f020055;
+<<<<<<< HEAD
         public static final int merchant_icon_0=0x7f020056;
         public static final int merchant_icon_1=0x7f020057;
         public static final int merchant_icon_2=0x7f020058;
@@ -221,6 +234,73 @@ public final class R {
         public static final int transfer_item_selector=0x7f020093;
         public static final int usage_list_dark=0x7f020094;
         public static final int usage_list_green=0x7f020095;
+=======
+        public static final int me_head_bg=0x7f020056;
+        public static final int merchant_icon_0=0x7f020057;
+        public static final int merchant_icon_1=0x7f020058;
+        public static final int merchant_icon_2=0x7f020059;
+        public static final int merchant_icon_3=0x7f02005a;
+        public static final int merchant_icon_pull=0x7f02005b;
+        public static final int merchant_icon_push=0x7f02005c;
+        public static final int nav_bar_bg=0x7f02005d;
+        public static final int nodata=0x7f02005e;
+        public static final int progress_hud_bg=0x7f02005f;
+        public static final int progressbar_circle=0x7f020060;
+        public static final int progressbar_horizontal=0x7f020061;
+        public static final int refresh_list_pull_down=0x7f020062;
+        public static final int refresh_list_release_up=0x7f020063;
+        public static final int set_icon_0=0x7f020064;
+        public static final int set_icon_1=0x7f020065;
+        public static final int set_icon_10=0x7f020066;
+        public static final int set_icon_2=0x7f020067;
+        public static final int set_icon_3=0x7f020068;
+        public static final int set_icon_4=0x7f020069;
+        public static final int set_icon_arrow=0x7f02006a;
+        public static final int setting_list_corner_round=0x7f02006b;
+        public static final int share_sina_weibo=0x7f02006c;
+        public static final int share_weixin=0x7f02006d;
+        public static final int share_weixin_friend=0x7f02006e;
+        public static final int spinner_0=0x7f02006f;
+        public static final int spinner_1=0x7f020070;
+        public static final int spinner_10=0x7f020071;
+        public static final int spinner_11=0x7f020072;
+        public static final int spinner_2=0x7f020073;
+        public static final int spinner_3=0x7f020074;
+        public static final int spinner_4=0x7f020075;
+        public static final int spinner_5=0x7f020076;
+        public static final int spinner_6=0x7f020077;
+        public static final int spinner_7=0x7f020078;
+        public static final int spinner_8=0x7f020079;
+        public static final int spinner_9=0x7f02007a;
+        public static final int splash=0x7f02007b;
+        public static final int start_background=0x7f02007c;
+        public static final int swip_icon_n_=0x7f02007d;
+        public static final int swip_icon_n_0=0x7f02007e;
+        public static final int swip_icon_n_1=0x7f02007f;
+        public static final int swip_icon_n_2=0x7f020080;
+        public static final int swip_icon_n_3=0x7f020081;
+        public static final int swip_icon_n_4=0x7f020082;
+        public static final int swip_icon_n_5=0x7f020083;
+        public static final int swip_icon_n_6=0x7f020084;
+        public static final int swip_icon_n_7=0x7f020085;
+        public static final int swip_icon_n_8=0x7f020086;
+        public static final int switch_thumb=0x7f020087;
+        public static final int text=0x7f020088;
+        public static final int text_blue_gray=0x7f020089;
+        public static final int text_white_blue=0x7f02008a;
+        public static final int tool_top=0x7f02008b;
+        public static final int top=0x7f02008c;
+        public static final int touming_bg=0x7f02008d;
+        public static final int transaction_fail=0x7f02008e;
+        public static final int transaction_success=0x7f02008f;
+        public static final int transfer_detail_btn_revoke=0x7f020090;
+        public static final int transfer_detail_gou=0x7f020091;
+        public static final int transfer_item_normal=0x7f020092;
+        public static final int transfer_item_pressed=0x7f020093;
+        public static final int transfer_item_selector=0x7f020094;
+        public static final int usage_list_dark=0x7f020095;
+        public static final int usage_list_green=0x7f020096;
+>>>>>>> abfac3a6d8acd91523036d8d0501d88f1ed0e065
     }
     public static final class id {
         public static final int amount=0x7f0a0010;
