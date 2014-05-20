@@ -58,6 +58,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		setContentView(R.layout.activity_search_swipe);
 
 		this.registerReceiver(mQPOSUpdateReceiver, makeUpdateIntentFilter());
@@ -135,7 +136,6 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	
 	@Override
 	public void onBackPressed() {
-		super.onBackPressed();
 		
 		this.backAction(null);
 	}
