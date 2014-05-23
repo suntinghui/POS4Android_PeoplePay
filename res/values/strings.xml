@@ -63,4 +63,30 @@
     <string name="trade_success">结果</string>
     <string name="gesture_forget">忘记手势？</string>
     <string name="feedback_title">意见反馈</string>
+    <string name="calculator_title">计算器</string>
+    
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="fore">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="zero">0</string>
+    <string name="jia">+</string>
+    <string name="jian">-</string>
+    <string name="cheng">*</string>
+    <string name="chu">/</string>
+    <string name="dengyu">=</string>
+    <string name="zhengfu">+/-</string>
+    <string name="dihao">.</string>
+    <string name="ping">x²</string>
+    <string name="kai">√x</string>
+    <string name="shanchu">DEL</string>
+    <string name="shan">C</string>
+    
+    <string name="transferFlow">交易流水</string>
+    <string name="cashFlow">现金流水</string>
 </resources>

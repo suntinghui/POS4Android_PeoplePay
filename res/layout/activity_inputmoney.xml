@@ -17,6 +17,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/inputmoeny_title" />
+        
     </RelativeLayout>
 
     <RelativeLayout
@@ -58,18 +59,32 @@
             android:background="@drawable/inputmoney_right_arrow" />
     </RelativeLayout>
 
-    <Button
+    <RelativeLayout android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_swip"
+        >
+        <Button
         android:id="@+id/btn_cash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/layout_swip"
+        
         android:layout_centerHorizontal="true"
         android:layout_marginTop="25dip"
         android:background="@color/clear"
         android:text="@string/inputmoeny_cash"
         android:textColor="@drawable/text_blue_gray"
         android:textSize="18sp"
+        android:layout_centerInParent="true"
          />
+        
+        <Button android:id="@+id/btn_calculator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/icon_calculator"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="30dip"
+            android:layout_marginTop="15dip"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"

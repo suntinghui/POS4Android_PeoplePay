@@ -13,6 +13,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.util.Log;
 import android.util.Xml;
 
+import com.people.model.CashModel;
 import com.people.model.TradeModel;
 
 public class ParseResponseXML {
@@ -88,6 +89,11 @@ public class ParseResponseXML {
 				
 			case TransferRequestTag.GetDownLoadHead:
 				return downLoadHead();
+			
+			case TransferRequestTag.CashCharge:
+				return cashCharge();
+			case TransferRequestTag.GetCashCharge:
+				return getCashChargeList();
 			}
 
 		} catch (XmlPullParserException e) {
@@ -402,7 +408,57 @@ public class ParseResponseXML {
 		}
 		return respMap;
 	}
+	
+	private static Object getCashChargeList() throws XmlPullParserException, IOException {
+		HashMap<String, Object> respMap = null;
 
+		ArrayList<CashModel> list = new ArrayList<CashModel>();
+		CashModel model = null;
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, Object>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PHONENUMBER", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("TOTALPAGE".equalsIgnoreCase(parser.getName())) {
+					respMap.put("TOTALPAGE", parser.nextText());
+				} else if ("CURRENTROWNUMS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("CURRENTROWNUMS", parser.nextText());
+				} else if ("TOTALTOWNUMS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("TOTALTOWNUMS", parser.nextText());
+				} else if ("ROW".equalsIgnoreCase(parser.getName())) {
+					model = new CashModel();
+				} else if ("TRANSDATE".equalsIgnoreCase(parser.getName())) {
+					model.setDate(parser.nextText());
+				} else if ("TRANSTIME".equalsIgnoreCase(parser.getName())) {
+					model.setTime(parser.nextText());
+				} else if ("TRANSTYPE".equalsIgnoreCase(parser.getName())) {
+					model.setType(parser.nextText());
+				} else if ("TRANSAMT".equalsIgnoreCase(parser.getName())) {
+					model.setAmount(parser.nextText());
+				} 
+				break;
+			case XmlPullParser.END_TAG:
+				if ("ROW".equalsIgnoreCase(parser.getName())) {
+					list.add(model); // 服务器返回顺序不对，这里进行倒序
+				} else if ("LIST".equalsIgnoreCase(parser.getName())) {
+					respMap.put("list", list);
+				}
+				break;
+			}
+
+			eventType = parser.next();
+		}
+		return respMap;
+	}
 	private static Object creditCardApply() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
@@ -656,6 +712,31 @@ public class ParseResponseXML {
 		return respMap;
 	}
 	
+	private static Object cashCharge() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				}
+				break;
+
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
 	private static Object smsCheck() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
