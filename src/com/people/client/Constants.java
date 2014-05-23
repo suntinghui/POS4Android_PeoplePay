@@ -13,7 +13,7 @@ public class Constants {
 	public static final String DOWNLOADURL							= "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getVersion";
 //	public static final String DOWNLOADURL							= "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getVersion";
 
-	public static final int OVERTIME    				          	= 20;// 超时时间
+	public static final int OVERTIME    				          	= 1;// 超时时间
 	
 	public static boolean HASSETBLUETOOTH				          	= false;
 
