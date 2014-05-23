@@ -78,8 +78,8 @@ public class TransferListActivity extends BaseActivity implements
 	private Boolean isCurrentList = true; // true: 交易流水 false:现金流水
 	
 	private String totalAmountTransfer ;
-	private String totalAmountCash;
-	private String totalNumCash;
+	private String totalAmountCash = "￥0.0";
+	private String totalNumCash = "0";
 	private String totalNumTransfer ;
 	
 	private View moreView; //加载更多页面
@@ -297,6 +297,11 @@ public class TransferListActivity extends BaseActivity implements
 					Toast.makeText(getApplicationContext(),
 							((HashMap) obj).get("RSPMSG").toString(),
 							Toast.LENGTH_SHORT).show();
+					if (arrayTransfer.size() == 0) {
+						iv_nodata.setVisibility(View.VISIBLE);
+					} else {
+						iv_nodata.setVisibility(View.GONE);
+					}
 				}
 
 			}
@@ -368,6 +373,11 @@ public class TransferListActivity extends BaseActivity implements
 					Toast.makeText(getApplicationContext(),
 							((HashMap) obj).get("RSPMSG").toString(),
 							Toast.LENGTH_SHORT).show();
+					if (arrayCash.size() == 0) {
+						iv_nodata.setVisibility(View.VISIBLE);
+					} else {
+						iv_nodata.setVisibility(View.GONE);
+					}
 				}
 
 			}
