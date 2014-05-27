@@ -23,7 +23,7 @@ public class ThreadCancel extends Thread {
 	public void run() {
 		try {
 			Thread.sleep(1000);
-			int resultCode = QPOS.getCardReader().doTradeEx("100", 255, null, "", 20); 
+			int resultCode = QPOS.getCardReader().doTradeEx("100", 255, null, "", 20);
 			
 			if (resultCode == CardReader.SUCCESS) {
 				QPOS.HandData(mHandler, "取消成功！", CardReader.SUCCESS);

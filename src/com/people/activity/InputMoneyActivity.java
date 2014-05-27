@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,6 +20,7 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -37,7 +37,6 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
-import com.people.qpos.QPOS;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 import com.people.view.LKAlertDialog;
@@ -53,6 +52,8 @@ public class InputMoneyActivity extends BaseActivity {
 
 	private long exitTimeMillis = 0;
 	private long common_btnn = 0;
+	
+	Button btn_calculator;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,9 +73,9 @@ public class InputMoneyActivity extends BaseActivity {
 		Button btn_cash = (Button) findViewById(R.id.btn_cash);
 		btn_cash.setOnClickListener(listener);
 
-		Button btn_calculator = (Button) findViewById(R.id.btn_calculator);
+		btn_calculator = (Button) findViewById(R.id.btn_calculator);
 		btn_calculator.setOnClickListener(listener);
-
+		
 	}
 
 	public final class CatalogHolder {
@@ -214,6 +215,8 @@ public class InputMoneyActivity extends BaseActivity {
 				}
 
 			} else if (arg0.getId() == R.id.btn_calculator) {
+				Animation myAnimation= AnimationUtils.loadAnimation(InputMoneyActivity.this,R.anim.calculator_scale_anim);
+				btn_calculator.startAnimation(myAnimation);
 				Intent intentc = new Intent(InputMoneyActivity.this,
 						CalculatorActivity.class);
 				startActivityForResult(intentc, 0);

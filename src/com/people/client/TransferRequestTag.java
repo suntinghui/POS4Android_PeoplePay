@@ -31,8 +31,9 @@ public class TransferRequestTag {
 	public static final int GetDownLoadHead = 21;// 下载头像
 	public static final int CashCharge = 22;// 现金记账
 	public static final int GetCashCharge = 23;// 获取现金记账列表
+	public static final int CashDelete = 24;// 删除现金记账
 	
-
+	
 	private static HashMap<Integer, String> requestTagMap = null;
 
 	public static HashMap<Integer, String> getRequestTagMap() {
@@ -62,6 +63,8 @@ public class TransferRequestTag {
 			requestTagMap.put(GetCashCharge, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getTransaction");
 			requestTagMap.put(LoadUpHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=setHeadImg");
 			requestTagMap.put(GetDownLoadHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getHeadImg");
+			requestTagMap.put(CashDelete, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=delTransaInfo");
+			
 			// 192\.168\.1\.46:8080  测试服务器地址
 			
 		}

@@ -94,6 +94,8 @@ public class ParseResponseXML {
 				return cashCharge();
 			case TransferRequestTag.GetCashCharge:
 				return getCashChargeList();
+			case TransferRequestTag.CashDelete:
+				return cashDelete();
 			}
 
 		} catch (XmlPullParserException e) {
@@ -432,8 +434,8 @@ public class ParseResponseXML {
 					respMap.put("TOTALPAGE", parser.nextText());
 				} else if ("CURRENTROWNUMS".equalsIgnoreCase(parser.getName())) {
 					respMap.put("CURRENTROWNUMS", parser.nextText());
-				} else if ("TOTALTOWNUMS".equalsIgnoreCase(parser.getName())) {
-					respMap.put("TOTALTOWNUMS", parser.nextText());
+				} else if ("TOTALROWNUMS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("TOTALROWNUMS", parser.nextText());
 				} else if ("ROW".equalsIgnoreCase(parser.getName())) {
 					model = new CashModel();
 				} else if ("TRANSDATE".equalsIgnoreCase(parser.getName())) {
@@ -444,6 +446,8 @@ public class ParseResponseXML {
 					model.setType(parser.nextText());
 				} else if ("TRANSAMT".equalsIgnoreCase(parser.getName())) {
 					model.setAmount(parser.nextText());
+				} else if ("TRANSID".equalsIgnoreCase(parser.getName())) {
+					model.setTransId(parser.nextText());
 				} 
 				break;
 			case XmlPullParser.END_TAG:
@@ -737,6 +741,33 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
+	
+	private static Object cashDelete() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				}
+				break;
+
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+	
 	private static Object smsCheck() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 

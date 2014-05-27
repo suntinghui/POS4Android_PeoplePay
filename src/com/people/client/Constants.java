@@ -34,7 +34,7 @@ public class Constants {
 	
 	
 	public static final String kPAGESIZE						="5";
-	
+	public static final String NEWAPP								= "newApp";
 	
 	// BPUSH
 	public static final String kBPUSH_APPID							="appid";

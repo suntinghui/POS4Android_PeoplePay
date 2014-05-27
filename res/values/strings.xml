@@ -64,6 +64,7 @@
     <string name="gesture_forget">忘记手势？</string>
     <string name="feedback_title">意见反馈</string>
     <string name="calculator_title">计算器</string>
+    <string name="cash_delete"><u>删除</u></string>
     
     <string name="one">1</string>
     <string name="two">2</string>

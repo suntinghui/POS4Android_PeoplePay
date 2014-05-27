@@ -289,8 +289,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 			if (!isOpen) {
 				editor.putString(Constants.kLOCKKEY, "");
+				editor.putBoolean(Constants.kGESTRUECLOSE, false);
 			}
-			editor.putBoolean(Constants.kGESTRUECLOSE, isOpen);
+			
 			editor.commit();
 
 			if (isOpen) {
