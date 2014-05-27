@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.baidu.android.common.logging.Log;
 import com.people.R;
 import com.people.qpos.QPOS;
 
@@ -117,7 +118,9 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 			stateView.setText("正在搜索，一般情况大约12秒结束！");
 
 			boolean flag = QPOS.getCardReader().startDiscovery();
+			
 			if (flag) {
+				Log.i("flag:", "yes");
 				this.searchButton.setVisibility(View.GONE);
 				this.cancelButton.setVisibility(View.VISIBLE);
 				this.openButton.setVisibility(View.GONE);
@@ -126,9 +129,12 @@ public class BLDeviceDialog extends Dialog implements OnClickListener, OnItemCli
 				mBondedDevices.clear();
 
 				mBondedDevices.addAll(QPOS.getCardReader().getBondedDevices());
+				Log.i("mBondedDevices:", mBondedDevices.size()+"");
 				mDevices.addAll(mBondedDevices);
 
+
 			} else {
+				Log.i("flag:", "no");
 				stateView.setText("开启扫描设备失败,请检测蓝牙是否打开！");
 
 				this.searchButton.setVisibility(View.VISIBLE);

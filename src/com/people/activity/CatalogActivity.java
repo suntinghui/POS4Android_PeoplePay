@@ -28,7 +28,8 @@ public class CatalogActivity extends TabActivity {
 
 		// 刷卡
 		view = new TabView(this, R.drawable.icon_n_0, R.drawable.icon_s_0);
-		view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_0));
+		view.setBackgroundDrawable(this.getResources().getDrawable(
+				R.drawable.icon_s_0));
 
 		TabSpec recentContactSpec = tabHost.newTabSpec("RecentContact");
 		recentContactSpec.setIndicator(view);
@@ -37,7 +38,8 @@ public class CatalogActivity extends TabActivity {
 
 		// 流水
 		view = new TabView(this, R.drawable.icon_n_1, R.drawable.icon_s_1);
-		view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_1));
+		view.setBackgroundDrawable(this.getResources().getDrawable(
+				R.drawable.icon_s_1));
 
 		TabSpec contactBookSpec = tabHost.newTabSpec("ContactBook");
 		contactBookSpec.setIndicator(view);
@@ -46,7 +48,8 @@ public class CatalogActivity extends TabActivity {
 
 		// 商户
 		view = new TabView(this, R.drawable.icon_n_2, R.drawable.icon_s_2);
-		view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_2));
+		view.setBackgroundDrawable(this.getResources().getDrawable(
+				R.drawable.icon_s_2));
 
 		TabSpec smsMessageSpec = tabHost.newTabSpec("SmsMessage");
 		smsMessageSpec.setIndicator(view);
@@ -55,7 +58,8 @@ public class CatalogActivity extends TabActivity {
 
 		// 工具
 		view = new TabView(this, R.drawable.icon_n_3, R.drawable.icon_s_3);
-		view.setBackgroundDrawable(this.getResources().getDrawable(R.drawable.icon_s_3));
+		view.setBackgroundDrawable(this.getResources().getDrawable(
+				R.drawable.icon_s_3));
 
 		TabSpec settingSpec = tabHost.newTabSpec("Setting");
 		settingSpec.setIndicator(view);
@@ -87,4 +91,5 @@ public class CatalogActivity extends TabActivity {
 		}
 	}
 
+	
 }

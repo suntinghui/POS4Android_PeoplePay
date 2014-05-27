@@ -11,7 +11,8 @@ public class Constants {
 	public static final String kPASSWORD				          	= "kPASSWORD";
 	
 	public static final String DOWNLOADURL							= "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getVersion";
-	
+//	public static final String DOWNLOADURL							= "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getVersion";
+
 	public static final int OVERTIME    				          	= 20;// 超时时间
 	
 	public static boolean HASSETBLUETOOTH				          	= false;
@@ -30,6 +31,10 @@ public class Constants {
 	public static final String APPFILEPATH 				    		= "/data/data/" + ApplicationEnvironment.getInstance().getApplication().getPackageName();
 	public static final String SIGNIMAGESPATH						= APPFILEPATH + "/signImages/";
 	public static final String kTRACEAUDITNUM 			         	= "kTRACEAUDITNUM";
+	
+	
+	public static final String kPAGESIZE						="5";
+	public static final String NEWAPP								= "newApp";
 	
 	// BPUSH
 	public static final String kBPUSH_APPID							="appid";
