@@ -66,7 +66,7 @@ public class TransferRequestTag {
 			requestTagMap.put(CashDelete, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=delTransaInfo");
 			
 			// 192.168.4.115:8080  测试服务器地址
-			//59.49.20.154:8586 外网
+			// 59.49.20.154:8586 外网
 			
 		}
 
