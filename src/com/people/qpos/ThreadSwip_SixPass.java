@@ -86,7 +86,7 @@ public class ThreadSwip_SixPass extends Thread {
 				QPOS.HandData(mHandler, "用户取消操作", CardReader.USERCANCEL);
 				
 			} else if (resultCode == CardReader.NOTSUPPORTED) {
-				QPOS.HandData(mHandler, "不支持的通讯模式化", CardReader.NOTSUPPORTED);
+//				QPOS.HandData(mHandler, "不支持的通讯模式化", CardReader.NOTSUPPORTED);
 				
 			} else if (resultCode == CardReader.CMDTIMEOUT) {
 				QPOS.HandData(mHandler, "执行命令超时", CardReader.CMDTIMEOUT);
