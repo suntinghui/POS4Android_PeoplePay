@@ -27,6 +27,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.mm.sdk.openapi.WXImageObject;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXTextObject;
+import com.tencent.mm.sdk.openapi.WXWebpageObject;
 
 public class ShareSettingActivity extends BaseActivity implements OnClickListener {
 
@@ -65,11 +66,13 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
 					break;
 					
 				case 1: // 微信好友
-					sendToWXFriend();
+//					sendToWXFriend();
+					Toast.makeText(ShareSettingActivity.this, "暂未实现", Toast.LENGTH_SHORT).show();
 					break;
 					
 				case 2: // 朋友圈
-					sharedToCirle();
+//					sharedToCirle();
+					Toast.makeText(ShareSettingActivity.this, "暂未实现", Toast.LENGTH_SHORT).show();
 					break;
 				default:
 					break;
@@ -87,14 +90,16 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
 		}
 		
 		// 初始化一个WXTextObject对象  
-        String text = "我在用众付宝进行收款，移动互联网时代的刷卡利器，速来围观！！！";  
+        String text = "我在用众付宝进行收款，移动互联网时代的刷卡利器，速来围观！！！"; 
         
-        WXTextObject textObj = new WXTextObject();  
-        textObj.text = text;  
+        WXWebpageObject webObj = new WXWebpageObject();
+        webObj.webpageUrl = "http://www.baidu.com";
 
-        WXMediaMessage msg = new WXMediaMessage(textObj);  
-        msg.mediaObject = textObj;  
-        msg.description = text;  
+        WXMediaMessage msg = new WXMediaMessage(webObj);
+        msg.title = "众付宝";
+        msg.description = text;
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
+        msg.thumbData = WXUtil.bmpToByteArray(thumb, true);
           
         SendMessageToWX.Req req = new SendMessageToWX.Req();  
         req.transaction = String.valueOf(System.currentTimeMillis());  

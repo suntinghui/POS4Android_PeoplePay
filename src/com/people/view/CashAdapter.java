@@ -24,11 +24,12 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 
 	private LayoutInflater mLayoutInflater;
 	private ArrayList<CashModel> array = new ArrayList<CashModel>();
-	
+	private Context mContext ;
 	public CashAdapter(Context context, int resource, ArrayList<CashModel> objects) {
 
 		mLayoutInflater = LayoutInflater.from(context);
 		array = objects;
+		mContext = context;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -95,7 +96,7 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
-		TransferListActivity activity = (TransferListActivity) BaseActivity.getTopActivity();
+		TransferListActivity activity = (TransferListActivity) mContext;
 		Integer tag = (Integer) arg0.getTag()-1000;
 		activity.deleteCashItem(tag+"");
 		

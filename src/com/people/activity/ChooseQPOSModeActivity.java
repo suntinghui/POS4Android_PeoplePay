@@ -72,8 +72,8 @@ OnDrawerOpenListener, OnDrawerCloseListener  {
 			Log.e("MODE", "选择数据线连接方式...");
 
 			QPOS.changeCardReader(CardReader.PSKMODE);
-			new ThreadPowerOff(null, this).start();
-			Toast.makeText(this, "设备已关机，请重新启动", Toast.LENGTH_SHORT).show();
+//			new ThreadPowerOff(null, this).start();
+//			Toast.makeText(this, "设备已关机，请重新启动", Toast.LENGTH_SHORT).show();
 		}
 
 		if (from == FROM_LOGINACTIVITY) {

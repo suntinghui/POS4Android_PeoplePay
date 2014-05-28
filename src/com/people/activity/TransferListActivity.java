@@ -167,7 +167,7 @@ public class TransferListActivity extends BaseActivity implements
 
 		if (activeIdx == INDEX_CONTENT) {
 			isCurrentList = true;
-
+			iv_nodata.setVisibility(View.GONE);
 			tv_totalnum.setText(totalNumTransfer);
 			tv_totalmoney.setText(totalAmountTransfer);
 			mTvContent.setTextColor(mTextColorSelected);
@@ -183,6 +183,7 @@ public class TransferListActivity extends BaseActivity implements
 
 		} else if (activeIdx == INDEX_PATH) {
 			isCurrentList = false;
+			iv_nodata.setVisibility(View.GONE);
 			tv_totalnum.setText(totalNumCash);
 			tv_totalmoney.setText(totalAmountCash);
 			mTvPath.setTextColor(mTextColorSelected);
@@ -269,7 +270,7 @@ public class TransferListActivity extends BaseActivity implements
 				arrayTransfer.clear();
 				btn_refresh.clearAnimation();
 				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-					float totalAmount = 0;
+					double totalAmount = 0;
 					arrayTransfer
 							.addAll((ArrayList<TradeModel>) ((HashMap) obj)
 									.get("list"));

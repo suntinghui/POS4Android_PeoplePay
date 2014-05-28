@@ -315,9 +315,12 @@ public class InputMoneyActivity extends BaseActivity {
 			} else {
 				ArrayList<BaseActivity> list = BaseActivity
 						.getAllActiveActivity();
-				for (BaseActivity activity : list) {
-					activity.finish();
+				if(list != null){
+					for (BaseActivity activity : list) {
+						activity.finish();
+					}
 				}
+				
 
 				android.os.Process.killProcess(android.os.Process.myPid());
 				System.exit(0);

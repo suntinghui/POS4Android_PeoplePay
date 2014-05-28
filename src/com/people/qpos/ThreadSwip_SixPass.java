@@ -92,10 +92,10 @@ public class ThreadSwip_SixPass extends Thread {
 				QPOS.HandData(mHandler, "执行命令超时", CardReader.CMDTIMEOUT);
 				
 			} else if (resultCode == CardReader.UNKNOWNERROR) {
-				QPOS.HandData(mHandler, "未知错误，请重试", CardReader.UNKNOWNERROR);
+//				QPOS.HandData(mHandler, "未知错误，请重试", CardReader.UNKNOWNERROR);
 				
 			} else {
-				QPOS.HandData(mHandler, "未知错误：" + resultCode, -1);
+//				QPOS.HandData(mHandler, "未知错误：" + resultCode, -1);
 				
 			}
 
@@ -103,7 +103,7 @@ public class ThreadSwip_SixPass extends Thread {
 			QPOS.HandData(mHandler, "操作超时，请重试", CardReader.TIMEOUT);
 			
 		} else {
-			QPOS.HandData(mHandler, "未知错误：" + resultCode, -1);
+//			QPOS.HandData(mHandler, "未知错误：" + resultCode, -1);
 		}
 
 	}

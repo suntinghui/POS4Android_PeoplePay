@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.people.activity.BaseActivity;
+import com.people.client.AppInit;
 
 import dspread.voicemodem.CardReader;
 import dspread.voicemodem.util;
@@ -18,17 +19,17 @@ public class QPOS {
 	public static CardReader getCardReader() {
 		if (null == reader) {
 			// 默认蓝牙
-			reader = CardReader.getInstance(BaseActivity.getTopActivity().getBaseContext(), CardReader.BLUETOOTHMODE);
-			util.turnUpVolume(BaseActivity.getTopActivity().getBaseContext(), 8);
+			reader = CardReader.getInstance(AppInit.context, CardReader.BLUETOOTHMODE);
+			util.turnUpVolume(AppInit.context, 8);
 		}
 
 		return reader;
 	}
 	
 	public static CardReader changeCardReader(int model) {
-		reader = CardReader.changeReader(BaseActivity.getTopActivity().getBaseContext(), model);
+		reader = CardReader.changeReader(AppInit.context, model);
 //		reader = CardReader.getInstance(BaseActivity.getTopActivity().getBaseContext(), model);
-		util.turnUpVolume(BaseActivity.getTopActivity().getBaseContext(), 8);
+		util.turnUpVolume(AppInit.context, 8);
 		return reader;
 	}
 	
@@ -44,7 +45,7 @@ public class QPOS {
 	public static void broadcastUpdate(final String action) {
 		try{
 			final Intent intent = new Intent(action);
-			BaseActivity.getTopActivity().sendBroadcast(intent);
+			AppInit.context.sendBroadcast(intent);
 		} catch(Exception e){
 			e.printStackTrace();
 		}

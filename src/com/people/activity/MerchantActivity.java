@@ -1,9 +1,24 @@
 package com.people.activity;
 
-import java.io.ByteArrayOutputStream;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
@@ -13,40 +28,10 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
-import com.people.qpos.QPOS;
 import com.people.util.BitmapUtil;
 import com.people.util.StringUtil;
 import com.people.view.CircularImage;
 import com.people.view.LKAlertDialog;
-
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences.Editor;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 // 商户
 public class MerchantActivity extends BaseActivity implements OnClickListener {
@@ -193,14 +178,23 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.MerchantQuery, tempMap1, getLoginHandler());
+				TransferRequestTag.MerchantQuery, tempMap1, getMerchantHandler());
+		new LKHttpRequestQueue().addHttpRequest(req1)
+		.executeQueue(null, new LKHttpRequestQueueDone() {
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
+
+		});
+		
 		HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 		tempMap2.put("PHONENUMBER", ApplicationEnvironment.getInstance()
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.GetDownLoadHead,
 				tempMap2, getDownLoadHeadHandler());
-		new LKHttpRequestQueue().addHttpRequest(req1, req2)
+		new LKHttpRequestQueue().addHttpRequest(req2)
 		.executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 			@Override
 			public void onComplete() {
@@ -217,7 +211,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.MerchantQuery, tempMap, getLoginHandler());
+				TransferRequestTag.MerchantQuery, tempMap, getMerchantHandler());
 
 		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
 				new LKHttpRequestQueueDone() {
@@ -229,7 +223,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				});
 	}
 
-	private LKAsyncHttpResponseHandler getLoginHandler() {
+	private LKAsyncHttpResponseHandler getMerchantHandler() {
 		return new LKAsyncHttpResponseHandler() {
 
 			@Override

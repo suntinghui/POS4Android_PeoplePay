@@ -255,8 +255,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 						new ThreadUpDataKey(mHandler, SearchAndSwipeActivity.this, desKey + pinKey + macKey).start();
 						
 					} else { // 签到失败
-						Toast.makeText(SearchAndSwipeActivity.this, map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
-						SearchAndSwipeActivity.this.finish();
+						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}
 					
 				}
@@ -277,8 +276,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					break;
 
 				default:
-					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
-					SearchAndSwipeActivity.this.finish();
+					gotoTradeFailureActivity( (String)msg.obj);
 					break;
 				}
 			}

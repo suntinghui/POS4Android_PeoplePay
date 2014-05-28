@@ -38,6 +38,7 @@ public class ThreadUpDataKey extends Thread {
 		} else if (r == CardReader.FAILURE) {
 			QPOS.HandData(mHandler, "签到失败，请重试", CardReader.FAILURE);
 			
+			
 		}
 	}
 
