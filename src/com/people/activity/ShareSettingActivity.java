@@ -66,13 +66,13 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
 					break;
 					
 				case 1: // 微信好友
-//					sendToWXFriend();
-					Toast.makeText(ShareSettingActivity.this, "暂未实现", Toast.LENGTH_SHORT).show();
+					sendToWXFriend();
+//					Toast.makeText(ShareSettingActivity.this, "暂未实现", Toast.LENGTH_SHORT).show();
 					break;
 					
 				case 2: // 朋友圈
-//					sharedToCirle();
-					Toast.makeText(ShareSettingActivity.this, "暂未实现", Toast.LENGTH_SHORT).show();
+					sharedToCirle();
+//					Toast.makeText(ShareSettingActivity.this, "暂未实现", Toast.LENGTH_SHORT).show();
 					break;
 				default:
 					break;
@@ -93,7 +93,7 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
         String text = "我在用众付宝进行收款，移动互联网时代的刷卡利器，速来围观！！！"; 
         
         WXWebpageObject webObj = new WXWebpageObject();
-        webObj.webpageUrl = "http://www.baidu.com";
+        webObj.webpageUrl = "http://www.people2000.net";
 
         WXMediaMessage msg = new WXMediaMessage(webObj);
         msg.title = "众付宝";
@@ -110,22 +110,23 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
 	}
 	
 	private void sharedToCirle(){
-		if (!api.isWXAppInstalled()){
+        if (!api.isWXAppInstalled()){
 			Toast.makeText(this, "您还没有安装微信", Toast.LENGTH_SHORT).show();
 			return;
 		}
 		
 		// 初始化一个WXTextObject对象  
-        String text = "众付宝，惊呆了我和我的小伙伴，借记卡和信用卡都能刷，到账周期短，扣率低，真的是太好用了。";  
+        String text = "众付宝，惊呆了我和我的小伙伴，借记卡和信用卡都能刷，到账周期短，扣率低，真的是太好用了。"; 
         
-        WXImageObject obj = new WXImageObject();
+        WXWebpageObject webObj = new WXWebpageObject();
+        webObj.webpageUrl = "http://www.people2000.net";
+
+        WXMediaMessage msg = new WXMediaMessage(webObj);
+        msg.title = "众付宝，刷新梦想 刷出未来";
+        msg.description = text;
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        obj.imageData = WXUtil.bmpToByteArray(thumb, true);
-        
-        WXMediaMessage msg = new WXMediaMessage(obj);
-        msg.title = "众付宝";
-        msg.description = text;  
-        
+        msg.thumbData = WXUtil.bmpToByteArray(thumb, true);
+          
         SendMessageToWX.Req req = new SendMessageToWX.Req();  
         req.transaction = String.valueOf(System.currentTimeMillis());  
         req.message = msg;  
