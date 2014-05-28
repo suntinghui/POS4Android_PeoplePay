@@ -46,6 +46,7 @@ import dspread.voicemodem.CardReader;
 public class SearchAndSwipeActivity extends BaseActivity implements OnClickListener {
 
 	private Button bluetoothBtn = null;
+	private Button backBtn = null;
 	private TextView titleView = null;
 
 	private Intent intent = null;
@@ -63,6 +64,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 		this.registerReceiver(mQPOSUpdateReceiver, makeUpdateIntentFilter());
 
+		backBtn = (Button) this.findViewById(R.id.btn_back);
+		backBtn.setOnClickListener(this);
+		
 		bluetoothBtn = (Button) this.findViewById(R.id.bluetooth_btn);
 		bluetoothBtn.setOnClickListener(this);
 		if (QPOS.getCardReader().getMode() == CardReader.BLUETOOTHMODE) {
@@ -150,6 +154,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	public void onClick(View view) {
 		if (view.getId() == R.id.bluetooth_btn) {
 			showBLDialog();
+		} else if (view.getId() == R.id.btn_back) {
+			this.backAction(null);
 		}
 	}
 

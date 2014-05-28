@@ -3,7 +3,7 @@ package com.people.client;
 public class Constants {
 
 	// 当前系统的版本号
-	public static final int VERSION 					          	= 2;
+	public static final int VERSION 					          	= 3;
 
 	public static final String AESKEY 					          	= "dynamicode";
 	
@@ -33,7 +33,7 @@ public class Constants {
 	public static final String kTRACEAUDITNUM 			         	= "kTRACEAUDITNUM";
 	
 	
-	public static final String kPAGESIZE						="5";
+	public static final String kPAGESIZE							="5";
 	public static final String NEWAPP								= "newApp";
 	
 	// BPUSH
