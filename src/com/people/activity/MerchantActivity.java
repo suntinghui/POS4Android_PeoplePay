@@ -354,9 +354,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 					if((String) map.get("HEADIMG") != null){
 						ibtn_head.setImageBitmap(BitmapUtil.convertStringToBitmap((String) map.get("HEADIMG")));
 					}
-				} else {
-					Toast.makeText(MerchantActivity.this, RSPMSG,
-							Toast.LENGTH_SHORT).show();
 				}
 
 			}
