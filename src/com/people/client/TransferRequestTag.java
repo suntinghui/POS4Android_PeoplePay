@@ -59,14 +59,14 @@ public class TransferRequestTag {
 			requestTagMap.put(SmsSend, "http://211.147.87.24:8092/posm/199018.tran5");
 			requestTagMap.put(SmsCheck, "http://211.147.87.24:8092/posm/199019.tran5");
 			requestTagMap.put(MerchantQuery, "http://211.147.87.23:8088/posp/199011.tran");
-			requestTagMap.put(CashCharge, "http://192.168.4.115:8080/zfb/mpos/transProcess.do?operationId=addTransaction");
-			requestTagMap.put(GetCashCharge, "http://192.168.4.115:8080/zfb/mpos/transProcess.do?operationId=getTransaction");
+			requestTagMap.put(CashCharge, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=addTransaction");
+			requestTagMap.put(GetCashCharge, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getTransaction");
 			requestTagMap.put(LoadUpHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=setHeadImg");
 			requestTagMap.put(GetDownLoadHead, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getHeadImg");
 			requestTagMap.put(CashDelete, "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=delTransaInfo");
 			
 			// 192.168.4.115:8080  测试服务器地址
-			//59.49.20.154:8586 外网
+			// 59.49.20.154:8586 外网
 			
 		}
 

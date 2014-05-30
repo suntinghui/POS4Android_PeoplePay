@@ -1,5 +1,6 @@
 package com.people.activity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -270,7 +271,7 @@ public class TransferListActivity extends BaseActivity implements
 				arrayTransfer.clear();
 				btn_refresh.clearAnimation();
 				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-					double totalAmount = 0;
+					long totalAmount = 0L;
 					arrayTransfer
 							.addAll((ArrayList<TradeModel>) ((HashMap) obj)
 									.get("list"));
@@ -279,12 +280,12 @@ public class TransferListActivity extends BaseActivity implements
 						if (model.getTxncd().equalsIgnoreCase("0200200000")) {
 
 						} else {
-							totalAmount += StringUtil.String2AmountFloat(model
+							totalAmount += Long.parseLong(model
 									.getTxnamt());
 						}
 
 					}
-					totalAmountTransfer = "￥" + totalAmount;
+					totalAmountTransfer = "￥" + totalAmount/100.00f;
 					totalNumTransfer = arrayTransfer.size() + "";
 					tv_totalmoney.setText(totalAmountTransfer);
 					tv_totalnum.setText(totalNumTransfer);
