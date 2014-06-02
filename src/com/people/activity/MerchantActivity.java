@@ -1,13 +1,18 @@
 package com.people.activity;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,6 +22,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,11 +55,22 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	private CircularImage ibtn_head;
 	private String bitmap_str = null;
 
+	private ImageView iv_top;
+	private Boolean isHead = false;
+	
+	private AlertDialog dialog;
+	private File sdcardTempFile;
+	private int crop = 180;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_merchant);
 
+		iv_top = (ImageView) findViewById(R.id.iv_top);
+		iv_top.setOnClickListener(this);
+
+		sdcardTempFile = new File("/mnt/sdcard/", "tmp_pic_" + SystemClock.currentThreadTimeMillis() + ".jpg");
 		layout_msg_blow = (LinearLayout) findViewById(R.id.layout_msg_blow);
 		layout_msg_blow.setOnClickListener(this);
 		LinearLayout layout_msg_top = (LinearLayout) findViewById(R.id.layout_msg_top);
@@ -86,7 +103,14 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		switch (arg0.getId()) {
 		case R.id.ibtn_head:
 			// loadUpHead();
+			isHead = true;
 			actionCamera();
+			break;
+		case R.id.iv_top:
+			isHead = false;
+//			actionCamera();
+			
+			showDialog();      
 			break;
 		case R.id.layout_msg_top:
 			isClicked = !isClicked;
@@ -167,42 +191,76 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		}
 
 	}
-
 	
-	public void getData(){
-		
-		
+	private void showDialog(){
+		if (dialog == null) {
+             dialog = new AlertDialog.Builder(this).setItems(new String[] { "相机", "相册" }, new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     if (which == 0) {
+                         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                         intent.putExtra("output", Uri.fromFile(sdcardTempFile));
+                         intent.putExtra("crop", "true");
+                         intent.putExtra("aspectX", 1);// 裁剪框比例
+                         intent.putExtra("aspectY", 1);
+                         intent.putExtra("outputX", 80);// 输出图片大小
+                         intent.putExtra("outputY", 80);
+                         startActivityForResult(intent, 100);
+                     } else {
+                         Intent intent = new Intent("android.intent.action.PICK");
+                         intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+                         intent.putExtra("output", Uri.fromFile(sdcardTempFile));
+                         intent.putExtra("crop", "true");
+                         intent.putExtra("aspectX", 2);// 裁剪框比例
+                         intent.putExtra("aspectY", 1.5);
+                         intent.putExtra("outputX", 320);// 输出图片大小
+                         intent.putExtra("outputY", 150);
+                         startActivityForResult(intent, 101);
+                     }
+                 }
+             }).create();
+         }
+         if (!dialog.isShowing()) {
+             dialog.show();
+         }
+	}
+
+	public void getData() {
+
 		HashMap<String, Object> tempMap1 = new HashMap<String, Object>();
 		tempMap1.put("TRANCODE", "199011");
 		tempMap1.put("PHONENUMBER", ApplicationEnvironment.getInstance()
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.MerchantQuery, tempMap1, getMerchantHandler());
-		new LKHttpRequestQueue().addHttpRequest(req1)
-		.executeQueue(null, new LKHttpRequestQueueDone() {
-			@Override
-			public void onComplete() {
-				super.onComplete();
-			}
+				TransferRequestTag.MerchantQuery, tempMap1,
+				getMerchantHandler());
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(null,
+				new LKHttpRequestQueueDone() {
+					@Override
+					public void onComplete() {
+						super.onComplete();
+					}
 
-		});
-		
+				});
+
 		HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 		tempMap2.put("PHONENUMBER", ApplicationEnvironment.getInstance()
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.GetDownLoadHead,
-				tempMap2, getDownLoadHeadHandler());
-		new LKHttpRequestQueue().addHttpRequest(req2)
-		.executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
-			@Override
-			public void onComplete() {
-				super.onComplete();
-			}
+		LKHttpRequest req2 = new LKHttpRequest(
+				TransferRequestTag.GetDownLoadHead, tempMap2,
+				getDownLoadHeadHandler());
+		new LKHttpRequestQueue().addHttpRequest(req2).executeQueue("正在请求数据...",
+				new LKHttpRequestQueueDone() {
+					@Override
+					public void onComplete() {
+						super.onComplete();
+					}
 
-		});
+				});
 	}
+
 	// 商户信息查询
 	private void merchantQuery() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
@@ -276,7 +334,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
-	// 上传图像
+	// 上传头像
 	private void loadUpHead() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("HEADIMG", bitmap_str);
@@ -307,7 +365,49 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				String RSPMSG = (String) map.get("RSPMSG");
 
 				if (RSPCOD.equals("000000")) {
-					Toast.makeText(MerchantActivity.this, "头像设置成功",
+					Toast.makeText(MerchantActivity.this, "街景设置成功",
+							Toast.LENGTH_SHORT).show();
+				} else {
+					Toast.makeText(MerchantActivity.this, RSPMSG,
+							Toast.LENGTH_SHORT).show();
+				}
+
+			}
+
+		};
+	}
+	// 上传街景
+	private void loadUpStreet() {
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("HEADIMG", bitmap_str);
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
+				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.LoadUpStreetImg,
+				tempMap, getLoadUpStreetImgHandler());
+
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
+				new LKHttpRequestQueueDone() {
+
+					@Override
+					public void onComplete() {
+						super.onComplete();
+					}
+				});
+	}
+
+	private LKAsyncHttpResponseHandler getLoadUpStreetImgHandler() {
+		return new LKAsyncHttpResponseHandler() {
+
+			@Override
+			public void successAction(Object obj) {
+				@SuppressWarnings("unchecked")
+				HashMap<String, Object> map = (HashMap<String, Object>) obj;
+				String RSPCOD = (String) map.get("RSPCOD");
+				String RSPMSG = (String) map.get("RSPMSG");
+
+				if (RSPCOD.equals("000000")) {
+					Toast.makeText(MerchantActivity.this, "街景设置成功",
 							Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(MerchantActivity.this, RSPMSG,
@@ -319,6 +419,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		};
 	}
 
+	
 	// 下载图像
 	private void getDownLoadHead() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
@@ -326,8 +427,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetDownLoadHead,
-				tempMap, getDownLoadHeadHandler());
+		LKHttpRequest req1 = new LKHttpRequest(
+				TransferRequestTag.GetDownLoadHead, tempMap,
+				getDownLoadHeadHandler());
 
 		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
 				new LKHttpRequestQueueDone() {
@@ -348,11 +450,13 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
 				String RSPCOD = (String) map.get("RSPCOD");
 				String RSPMSG = (String) map.get("RSPMSG");
-				
+
 				if (RSPCOD.equals("000000")) {
-					
-					if((String) map.get("HEADIMG") != null){
-						ibtn_head.setImageBitmap(BitmapUtil.convertStringToBitmap((String) map.get("HEADIMG")));
+
+					if ((String) map.get("HEADIMG") != null) {
+						ibtn_head.setImageBitmap(BitmapUtil
+								.convertStringToBitmap((String) map
+										.get("HEADIMG")));
 					}
 				}
 
@@ -371,11 +475,17 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode == 1) {
-			Bitmap bm = null;
+		if (requestCode == 100 || requestCode == 101) {
+			Bitmap bm = BitmapFactory.decodeFile(sdcardTempFile.getAbsolutePath());
+//			Bitmap bm = null;
 			try {
 				Bundle extras = data.getExtras();
-				bm = ImageCrop((Bitmap) extras.get("data"));
+//				if(isHead){
+//					bm = ImageCrop((Bitmap) extras.get("data"));	
+//				}else{
+//					bm = (Bitmap) extras.get("data");
+//				}
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -383,29 +493,33 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			if (bm != null) {
 				Log.i("bm0:", bm.toString());
 				bitmap_str = BitmapUtil.bitmaptoString(bm);
-				ibtn_head.setImageBitmap(bm);
-				BitmapUtil.saveMyBitmap(bm);
-				loadUpHead();
+				if (isHead) {
+					ibtn_head.setImageBitmap(bm);
+					BitmapUtil.saveMyBitmap(bm);
+					loadUpHead();
+				} else {
+					iv_top.setImageBitmap(bm);
+					loadUpStreet();
+				}
 
 			}
 		}
 	}
 
 	/**
-     * 按正方形裁切图片
-     */
-    public static Bitmap ImageCrop(Bitmap bitmap) {
-        int w = bitmap.getWidth(); // 得到图片的宽，高
-        int h = bitmap.getHeight();
+	 * 按正方形裁切图片
+	 */
+	public static Bitmap ImageCrop(Bitmap bitmap) {
+		int w = bitmap.getWidth(); // 得到图片的宽，高
+		int h = bitmap.getHeight();
 
-        int wh = w > h ? h : w;// 裁切后所取的正方形区域边长
+		int wh = w > h ? h : w;// 裁切后所取的正方形区域边长
 
-        int retX = w > h ? (w - h) / 2 : 0;//基于原图，取正方形左上角x坐标
-        int retY = w > h ? 0 : (h - w) / 2;
+		int retX = w > h ? (w - h) / 2 : 0;// 基于原图，取正方形左上角x坐标
+		int retY = w > h ? 0 : (h - w) / 2;
 
-        //下面这句是关键
-        return Bitmap.createBitmap(bitmap, retX, retY, wh, wh, null, false);
-    }
+		// 下面这句是关键
+		return Bitmap.createBitmap(bitmap, retX, retY, wh, wh, null, false);
+	}
 
-	
 }

@@ -318,7 +318,7 @@ public class TransferListActivity extends BaseActivity implements
 	private void queryCashFlow() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put(
-				"PHONENUMBER",
+				"phoneNumber",
 				ApplicationEnvironment.getInstance()
 						.getPreferences(TransferListActivity.this)
 						.getString(Constants.kUSERNAME, ""));
