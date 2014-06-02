@@ -7,8 +7,14 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/top" >
+         >
 
+        <ImageView android:id="@+id/iv_top"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/top"
+            />
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
