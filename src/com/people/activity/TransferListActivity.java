@@ -1,6 +1,5 @@
 package com.people.activity;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,14 +40,12 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
-import com.people.util.StringUtil;
 import com.people.view.CashAdapter;
 import com.people.view.LKAlertDialog;
 import com.people.view.TransferAdapter;
 
 // 流水
-public class TransferListActivity extends BaseActivity implements
-		OnClickListener, OnItemClickListener, OnScrollListener {
+public class TransferListActivity extends BaseActivity implements OnClickListener, OnItemClickListener, OnScrollListener {
 
 	private static final int INDEX_CONTENT = 0;
 	private static final int INDEX_PATH = 1;
@@ -91,7 +88,7 @@ public class TransferListActivity extends BaseActivity implements
 
 	private int totalPage = 0;
 	private int currentPage = 0;
-	
+
 	private int currentDelete = 0;
 
 	@Override
@@ -118,8 +115,7 @@ public class TransferListActivity extends BaseActivity implements
 
 		setupViews();
 
-		mContentAdapter = new TransferAdapter(TransferListActivity.this, 0,
-				arrayTransfer);
+		mContentAdapter = new TransferAdapter(TransferListActivity.this, 0, arrayTransfer);
 		mContentLv.setAdapter(mContentAdapter);
 
 		mCashAdapter = new CashAdapter(TransferListActivity.this, 0, arrayCash);
@@ -141,10 +137,8 @@ public class TransferListActivity extends BaseActivity implements
 		mLinePath = findViewById(R.id.v_path_line_selected);
 
 		mViewPager = (ViewPager) findViewById(R.id.view_pager);
-		mContentLv = (ListView) mLayoutInflater.inflate(
-				R.layout.layout_list_view, null);
-		mCashLv = (ListView) mLayoutInflater.inflate(R.layout.layout_list_view,
-				null);
+		mContentLv = (ListView) mLayoutInflater.inflate(R.layout.layout_list_view, null);
+		mCashLv = (ListView) mLayoutInflater.inflate(R.layout.layout_list_view, null);
 		mContentLv.setOnItemClickListener(this);
 		mCashLv.setOnItemClickListener(this);
 		mCashLv.setOnScrollListener(this);
@@ -210,8 +204,7 @@ public class TransferListActivity extends BaseActivity implements
 
 		case R.id.btn_refresh:
 
-			Animation myAnimation = AnimationUtils.loadAnimation(this,
-					R.anim.refresh_anim);
+			Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.refresh_anim);
 			LinearInterpolator lir = new LinearInterpolator();
 			myAnimation.setInterpolator(lir);
 			btn_refresh.startAnimation(myAnimation);
@@ -242,24 +235,18 @@ public class TransferListActivity extends BaseActivity implements
 	private void queryHistory() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199008");
-		tempMap.put(
-				"PHONENUMBER",
-				ApplicationEnvironment.getInstance()
-						.getPreferences(TransferListActivity.this)
-						.getString(Constants.kUSERNAME, ""));
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(TransferListActivity.this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.FlowQuery,
-				tempMap, queryTransferHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.FlowQuery, tempMap, queryTransferHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
 
-				});
+		});
 	}
 
 	private LKAsyncHttpResponseHandler queryTransferHandler() {
@@ -272,20 +259,17 @@ public class TransferListActivity extends BaseActivity implements
 				btn_refresh.clearAnimation();
 				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
 					long totalAmount = 0L;
-					arrayTransfer
-							.addAll((ArrayList<TradeModel>) ((HashMap) obj)
-									.get("list"));
+					arrayTransfer.addAll((ArrayList<TradeModel>) ((HashMap) obj).get("list"));
 					for (int i = 0; i < arrayTransfer.size(); i++) {
 						TradeModel model = arrayTransfer.get(i);
 						if (model.getTxncd().equalsIgnoreCase("0200200000")) {
 
 						} else {
-							totalAmount += Long.parseLong(model
-									.getTxnamt());
+							totalAmount += Long.parseLong(model.getTxnamt());
 						}
 
 					}
-					totalAmountTransfer = "￥" + totalAmount/100.00f;
+					totalAmountTransfer = "￥" + totalAmount / 100.00f;
 					totalNumTransfer = arrayTransfer.size() + "";
 					tv_totalmoney.setText(totalAmountTransfer);
 					tv_totalnum.setText(totalNumTransfer);
@@ -296,11 +280,8 @@ public class TransferListActivity extends BaseActivity implements
 					}
 					mContentAdapter.notifyDataSetChanged();
 
-				} else if (((HashMap) obj).get("RSPMSG").toString() != null
-						&& ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-					Toast.makeText(getApplicationContext(),
-							((HashMap) obj).get("RSPMSG").toString(),
-							Toast.LENGTH_SHORT).show();
+				} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 					if (arrayTransfer.size() == 0) {
 						iv_nodata.setVisibility(View.VISIBLE);
 					} else {
@@ -317,26 +298,20 @@ public class TransferListActivity extends BaseActivity implements
 	// 查询现金流水
 	private void queryCashFlow() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put(
-				"PHONENUMBER",
-				ApplicationEnvironment.getInstance()
-						.getPreferences(TransferListActivity.this)
-						.getString(Constants.kUSERNAME, ""));
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(TransferListActivity.this).getString(Constants.kUSERNAME, ""));
 		tempMap.put("pageIndex", currentPage + "");
 		tempMap.put("pageSize", Constants.kPAGESIZE);
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.GetCashCharge, tempMap, queryCashHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetCashCharge, tempMap, queryCashHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
 
-				});
+		});
 	}
 
 	private LKAsyncHttpResponseHandler queryCashHandler() {
@@ -348,19 +323,16 @@ public class TransferListActivity extends BaseActivity implements
 				btn_refresh.clearAnimation();
 				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
 					float totalAmount = 0;
-					int totalNum = Integer.valueOf((String) ((HashMap) obj)
-							.get("TOTALROWNUMS"));
-					if(totalNum == 0){
+					int totalNum = Integer.valueOf((String) ((HashMap) obj).get("TOTALROWNUMS"));
+					if (totalNum == 0) {
 						iv_nodata.setVisibility(View.VISIBLE);
 						return;
 					}
-					totalPage = Integer.valueOf((String) ((HashMap) obj)
-							.get("TOTALPAGE"));
-					ArrayList<CashModel> tmpArray = (ArrayList<CashModel>) ((HashMap) obj)
-							.get("list");
-					if(tmpArray == null){
+					totalPage = Integer.valueOf((String) ((HashMap) obj).get("TOTALPAGE"));
+					ArrayList<CashModel> tmpArray = (ArrayList<CashModel>) ((HashMap) obj).get("list");
+					if (tmpArray == null) {
 						iv_nodata.setVisibility(View.VISIBLE);
-					}else{
+					} else {
 						for (int i = 0; i < tmpArray.size(); i++) {
 							arrayCash.add(tmpArray.get(i));
 						}
@@ -382,12 +354,9 @@ public class TransferListActivity extends BaseActivity implements
 						mCashAdapter.notifyDataSetChanged();
 						moreView.setVisibility(View.GONE);
 					}
-					
-				} else if (((HashMap) obj).get("RSPMSG").toString() != null
-						&& ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-					Toast.makeText(getApplicationContext(),
-							((HashMap) obj).get("RSPMSG").toString(),
-							Toast.LENGTH_SHORT).show();
+
+				} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 					if (arrayCash.size() == 0) {
 						iv_nodata.setVisibility(View.VISIBLE);
 					} else {
@@ -414,24 +383,20 @@ public class TransferListActivity extends BaseActivity implements
 			public void onClick(DialogInterface dialog, int arg1) {
 				dialog.dismiss();
 
-				String index0 = arrayCash.get(Integer.valueOf(index))
-						.getTransId();
+				String index0 = arrayCash.get(Integer.valueOf(index)).getTransId();
 				HashMap<String, Object> tempMap = new HashMap<String, Object>();
 				tempMap.put("transId", index0);
 
-				LKHttpRequest req1 = new LKHttpRequest(
-						TransferRequestTag.CashDelete, tempMap,
-						deletCashHandler());
+				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CashDelete, tempMap, deletCashHandler());
 
-				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-						"正在请求数据...", new LKHttpRequestQueueDone() {
+				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-							@Override
-							public void onComplete() {
-								super.onComplete();
-							}
+					@Override
+					public void onComplete() {
+						super.onComplete();
+					}
 
-						});
+				});
 			}
 		});
 		dialog.create().show();
@@ -450,9 +415,9 @@ public class TransferListActivity extends BaseActivity implements
 					for (int i = 0; i < arrayCash.size(); i++) {
 						CashModel model = arrayCash.get(i);
 						totalAmount += Float.valueOf(model.getAmount());
-						
+
 					}
-					
+
 					totalAmountCash = "￥" + totalAmount;
 					totalNumCash = arrayCash.size() + "";
 					tv_totalmoney.setText(totalAmountCash);
@@ -465,11 +430,8 @@ public class TransferListActivity extends BaseActivity implements
 					mCashAdapter.notifyDataSetChanged();
 					Toast.makeText(TransferListActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
 
-				} else if (((HashMap) obj).get("RSPMSG").toString() != null
-						&& ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-					Toast.makeText(getApplicationContext(),
-							((HashMap) obj).get("RSPMSG").toString(),
-							Toast.LENGTH_SHORT).show();
+				} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 					if (arrayCash.size() == 0) {
 						iv_nodata.setVisibility(View.VISIBLE);
 					} else {
@@ -492,14 +454,12 @@ public class TransferListActivity extends BaseActivity implements
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 			if ((System.currentTimeMillis() - exitTimeMillis) > 2000) {
 				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
 				exitTimeMillis = System.currentTimeMillis();
 			} else {
-				ArrayList<BaseActivity> list = BaseActivity
-						.getAllActiveActivity();
+				ArrayList<BaseActivity> list = BaseActivity.getAllActiveActivity();
 				for (BaseActivity activity : list) {
 					activity.finish();
 				}
@@ -515,8 +475,7 @@ public class TransferListActivity extends BaseActivity implements
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		if (isCurrentList) {// 交易列表
-			Intent intent = new Intent(TransferListActivity.this,
-					TransferDetailActivity.class);
+			Intent intent = new Intent(TransferListActivity.this, TransferDetailActivity.class);
 			intent.putExtra("model", arrayTransfer.get(arg2));
 			startActivityForResult(intent, 0);
 		} else {// 现金列表
@@ -599,7 +558,7 @@ public class TransferListActivity extends BaseActivity implements
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
-		
+
 	}
-	
+
 }
