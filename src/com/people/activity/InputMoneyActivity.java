@@ -79,8 +79,6 @@ public class InputMoneyActivity extends BaseActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		tv_show_money.setText("0.0");
 	}
 
 	public final class CatalogHolder {

@@ -118,6 +118,7 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 				intent8.putExtra("index", arg2);
 				startActivity(intent8);
 				break;
+				
 			case 14:// 推荐我们
 				Intent intent14 = new Intent(ToolsActivity.this, ShareSettingActivity.class);
 				ToolsActivity.this.startActivity(intent14);
