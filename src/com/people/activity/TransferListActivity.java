@@ -298,17 +298,9 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	// 查询现金流水
 	private void queryCashFlow() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-<<<<<<< HEAD
 		tempMap.put("TRANCODE", "200003");
 		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(TransferListActivity.this).getString(Constants.kUSERNAME, ""));
 		tempMap.put("operationId", "getTransaction");
-=======
-		tempMap.put(
-				"phoneNumber",
-				ApplicationEnvironment.getInstance()
-						.getPreferences(TransferListActivity.this)
-						.getString(Constants.kUSERNAME, ""));
->>>>>>> 36c232f7167cd4c126d9a189731af0d5a589bc29
 		tempMap.put("pageIndex", currentPage + "");
 		tempMap.put("pageSize", Constants.kPAGESIZE);
 
