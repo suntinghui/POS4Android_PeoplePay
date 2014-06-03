@@ -25,7 +25,8 @@ import com.people.qpos.QPOS;
 
 // 工具
 public class ToolsActivity extends BaseActivity implements OnClickListener {
-	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 };
+	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 ,
+			R.drawable.swip_icon_n_9, R.drawable.swip_icon_n_10, R.drawable.swip_icon_n_11, R.drawable.swip_icon_n_12, R.drawable.swip_icon_n_13, R.drawable.swip_icon_n_14, R.drawable.swip_icon_n_15, R.drawable.swip_icon_n_16, R.drawable.swip_icon_n_17 };
 
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
@@ -116,6 +117,10 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 				Intent intent8 = new Intent(ToolsActivity.this, ShowActivity.class);
 				intent8.putExtra("index", arg2);
 				startActivity(intent8);
+				break;
+			case 14:// 推荐我们
+				Intent intent14 = new Intent(ToolsActivity.this, ShareSettingActivity.class);
+				ToolsActivity.this.startActivity(intent14);
 				break;
 			default:
 				break;
