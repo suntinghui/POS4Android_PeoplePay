@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -16,8 +17,16 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+<<<<<<< HEAD
 
 import com.people.R;
+=======
+import android.widget.SlidingDrawer.OnDrawerCloseListener;
+import android.widget.SlidingDrawer.OnDrawerOpenListener;
+
+import com.people.R;
+import com.people.view.SlidingDrawerEx;
+>>>>>>> b79843348bfad86a4cb128b7dbde7536e9d8bc63
 import com.people.view.beginguide.CircleFlowIndicator;
 import com.people.view.beginguide.ViewFlow;
 import com.people.view.beginguide.ViewFlow.ViewSwitchListener;
@@ -26,8 +35,20 @@ import com.people.view.beginguide.ViewFlow.ViewSwitchListener;
 public class ShowActivity extends BaseActivity  {
 
 	private int[] resIds;
+<<<<<<< HEAD
 	private int[] resBgIds = new int[] { R.drawable.lotteryticket_1, R.drawable.game_1, R.drawable.taxi_1, R.drawable.flights_1, R.drawable.fixed_1, R.drawable.qq_1, R.drawable.card_1, R.drawable.phone_1, R.drawable.donate_1 };
 
+=======
+	private int[] resBgIds = new int[] { R.drawable.lotteryticket_1,
+			R.drawable.game_1, R.drawable.taxi_1,
+			R.drawable.flights_1, R.drawable.fixed_1,
+			R.drawable.qq_1, R.drawable.card_1,
+			R.drawable.phone_1, R.drawable.donate_1
+			};
+
+	private PopupWindow popup;
+	private SlidingDrawerEx slideDrawer = null;
+>>>>>>> b79843348bfad86a4cb128b7dbde7536e9d8bc63
 	private LinearLayout layout;
 
 	@Override
@@ -87,8 +108,14 @@ public class ShowActivity extends BaseActivity  {
 		View view = getLayoutInflater().inflate(R.layout.show_images, null);
 
 		FrameLayout layout = (FrameLayout) view.findViewById(R.id.content);
+<<<<<<< HEAD
 		final PopupWindow popup = new PopupWindow(layout, LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
 		//popup.setAnimationStyle(R.style.PopupAnimation);
+=======
+		popup = new PopupWindow(layout,
+				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
+		popup.setAnimationStyle(R.style.PopupAnimation);
+>>>>>>> b79843348bfad86a4cb128b7dbde7536e9d8bc63
 		popup.setBackgroundDrawable(new BitmapDrawable());
 		popup.setFocusable(true);
 		popup.update();
@@ -152,9 +179,25 @@ public class ShowActivity extends BaseActivity  {
 		}
 
 	}
+<<<<<<< HEAD
 
 	@Override
 	public void onBackPressed() {
 	}
 
+=======
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			popup.dismiss();
+			getWindow().clearFlags(
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			ShowActivity.this.finish();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+>>>>>>> b79843348bfad86a4cb128b7dbde7536e9d8bc63
 }
