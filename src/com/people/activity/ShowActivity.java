@@ -2,16 +2,15 @@ package com.people.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -20,21 +19,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.SlidingDrawer.OnDrawerCloseListener;
 import android.widget.SlidingDrawer.OnDrawerOpenListener;
-import android.widget.Toast;
 
 import com.people.R;
-import com.people.activity.ChooseQPOSModeActivity.ImageAdapter;
-import com.people.client.ApplicationEnvironment;
-import com.people.client.Constants;
-import com.people.qpos.QPOS;
-import com.people.qpos.ThreadCancel;
-import com.people.qpos.ThreadPowerOff;
 import com.people.view.SlidingDrawerEx;
 import com.people.view.beginguide.CircleFlowIndicator;
 import com.people.view.beginguide.ViewFlow;
 import com.people.view.beginguide.ViewFlow.ViewSwitchListener;
-
-import dspread.voicemodem.CardReader;
 
 @SuppressWarnings("deprecation")
 public class ShowActivity extends BaseActivity implements OnDrawerOpenListener, OnDrawerCloseListener{
@@ -47,6 +37,7 @@ public class ShowActivity extends BaseActivity implements OnDrawerOpenListener, 
 			R.drawable.phone_1, R.drawable.donate_1
 			};
 
+	private PopupWindow popup;
 	private SlidingDrawerEx slideDrawer = null;
 	private LinearLayout layout;
 	@Override
@@ -124,7 +115,7 @@ public class ShowActivity extends BaseActivity implements OnDrawerOpenListener, 
 		View view = getLayoutInflater().inflate(R.layout.show_images, null);
 
 		FrameLayout layout = (FrameLayout) view.findViewById(R.id.content);
-		final PopupWindow popup = new PopupWindow(layout,
+		popup = new PopupWindow(layout,
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT, true);
 		popup.setAnimationStyle(R.style.PopupAnimation);
 		popup.setBackgroundDrawable(new BitmapDrawable());
@@ -220,5 +211,18 @@ public class ShowActivity extends BaseActivity implements OnDrawerOpenListener, 
 			return imageView;
 		}
 
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			popup.dismiss();
+			getWindow().clearFlags(
+					WindowManager.LayoutParams.FLAG_FULLSCREEN);
+			ShowActivity.this.finish();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }
