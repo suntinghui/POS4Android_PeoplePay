@@ -20,7 +20,6 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
@@ -44,15 +43,14 @@ import com.people.view.LKAlertDialog;
 public class InputMoneyActivity extends BaseActivity {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
-	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "C",
-			"0", "." };
+	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "." };
 
 	private TextView tv_show_money;
 	private RelativeLayout layout_swip;
 
 	private long exitTimeMillis = 0;
 	private long common_btnn = 0;
-	
+
 	Button btn_calculator;
 
 	@Override
@@ -75,7 +73,14 @@ public class InputMoneyActivity extends BaseActivity {
 
 		btn_calculator = (Button) findViewById(R.id.btn_calculator);
 		btn_calculator.setOnClickListener(listener);
+
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
 		
+		tv_show_money.setText("0.0");
 	}
 
 	public final class CatalogHolder {
@@ -106,12 +111,10 @@ public class InputMoneyActivity extends BaseActivity {
 			CatalogHolder holder = null;
 
 			if (null == convertView) {
-				convertView = this.mInflater.inflate(R.layout.item_inputmoney,
-						null);
+				convertView = this.mInflater.inflate(R.layout.item_inputmoney, null);
 				holder = new CatalogHolder();
 
-				holder.btn_num = (Button) convertView
-						.findViewById(R.id.btn_num);
+				holder.btn_num = (Button) convertView.findViewById(R.id.btn_num);
 				holder.btn_num.setTag(1000 + position);
 				holder.btn_num.setOnClickListener(listener);
 				holder.btn_num.setOnTouchListener(touchLister);
@@ -123,8 +126,7 @@ public class InputMoneyActivity extends BaseActivity {
 
 			holder.btn_num.setText(num[position]);
 			if (position == 9) {
-				holder.btn_num.setTextColor(InputMoneyActivity.this
-						.getResources().getColor(R.color.orange));
+				holder.btn_num.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.orange));
 			}
 
 			return convertView;
@@ -137,18 +139,14 @@ public class InputMoneyActivity extends BaseActivity {
 		public boolean onTouch(View arg0, MotionEvent arg1) {
 			Button btn = (Button) arg0;
 
-			if (arg1.getAction() == MotionEvent.ACTION_DOWN
-					|| arg1.getAction() == MotionEvent.ACTION_MOVE) {
+			if (arg1.getAction() == MotionEvent.ACTION_DOWN || arg1.getAction() == MotionEvent.ACTION_MOVE) {
 
-				btn.setTextColor(InputMoneyActivity.this.getResources()
-						.getColor(R.color.blue_1));
+				btn.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.blue_1));
 			} else {
 				if ((Integer) arg0.getTag() == 1009) {
-					btn.setTextColor(InputMoneyActivity.this.getResources()
-							.getColor(R.color.orange));
+					btn.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.orange));
 				} else {
-					btn.setTextColor(InputMoneyActivity.this.getResources()
-							.getColor(R.color.gray_1));
+					btn.setTextColor(InputMoneyActivity.this.getResources().getColor(R.color.gray_1));
 				}
 
 			}
@@ -165,32 +163,22 @@ public class InputMoneyActivity extends BaseActivity {
 				}
 				common_btnn = System.nanoTime();
 
-				layout_swip.startAnimation(AnimationUtils.loadAnimation(
-						InputMoneyActivity.this, R.anim.inputmoney_anim));
+				layout_swip.startAnimation(AnimationUtils.loadAnimation(InputMoneyActivity.this, R.anim.inputmoney_anim));
 
-				if (String.format("%1$.2f",
-						Double.valueOf(tv_show_money.getText().toString()))
-						.equals("0.00")) {
-					Toast toast = Toast.makeText(InputMoneyActivity.this,
-							"输入金额无效", Toast.LENGTH_SHORT);
+				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
+					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
 					toast.show();
 
 				} else {
-					Intent intent = new Intent(InputMoneyActivity.this,
-							SearchAndSwipeActivity.class);
+					Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
 
 					intent.putExtra("TYPE", TransferRequestTag.Consume);
 					intent.putExtra("TRANCODE", "199005");
-					intent.putExtra("PHONENUMBER",
-							ApplicationEnvironment.getInstance()
-									.getPreferences(InputMoneyActivity.this)
-									.getString(Constants.kUSERNAME, ""));
+					intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
 					intent.putExtra("PCSIM", "获取不到");
 					intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
-					intent.putExtra("CTXNAT", StringUtil.amount2String(String
-							.format("%1$.2f", Double.valueOf(tv_show_money
-									.getText().toString()))));
+					intent.putExtra("CTXNAT", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString()))));
 					intent.putExtra("CRDNO", "");
 					intent.putExtra("CHECKX", "0.0");
 					intent.putExtra("APPTOKEN", "APPTOKEN");
@@ -201,11 +189,8 @@ public class InputMoneyActivity extends BaseActivity {
 				}
 
 			} else if (arg0.getId() == R.id.btn_cash) { // 现金记账
-				if (String.format("%1$.2f",
-						Double.valueOf(tv_show_money.getText().toString()))
-						.equals("0.00")) {
-					Toast toast = Toast.makeText(InputMoneyActivity.this,
-							"输入金额无效", Toast.LENGTH_SHORT);
+				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
+					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
 					toast.show();
 
@@ -215,11 +200,11 @@ public class InputMoneyActivity extends BaseActivity {
 				}
 
 			} else if (arg0.getId() == R.id.btn_calculator) {
-				Animation myAnimation= AnimationUtils.loadAnimation(InputMoneyActivity.this,R.anim.calculator_scale_anim);
+				Animation myAnimation = AnimationUtils.loadAnimation(InputMoneyActivity.this, R.anim.calculator_scale_anim);
 				btn_calculator.startAnimation(myAnimation);
-				Intent intentc = new Intent(InputMoneyActivity.this,
-						CalculatorActivity.class);
+				Intent intentc = new Intent(InputMoneyActivity.this, CalculatorActivity.class);
 				startActivityForResult(intentc, 0);
+				
 			} else {
 				String tmp = "";
 				String tv_str = tv_show_money.getText().toString();
@@ -233,8 +218,7 @@ public class InputMoneyActivity extends BaseActivity {
 				case 1006:
 				case 1007:
 				case 1008:
-					String temp = String.format("%1$.2f",
-							Double.valueOf(tv_str));
+					String temp = String.format("%1$.2f", Double.valueOf(tv_str));
 					if (temp.length() > 10) {
 						break;
 					}
@@ -258,14 +242,12 @@ public class InputMoneyActivity extends BaseActivity {
 						tv_show_money.setText("0");
 
 					} else {
-						tv_show_money.setText(tv_str.toString().substring(0,
-								tv_str.length() - 1));
+						tv_show_money.setText(tv_str.toString().substring(0, tv_str.length() - 1));
 					}
 					break;
 
 				case 1010: // 0
-					if (tv_str.length() > 11 || tv_str.equals("0")
-							|| tv_str.equals("0.0") || tv_str.equals("0.00")) {
+					if (tv_str.length() > 11 || tv_str.equals("0") || tv_str.equals("0.0") || tv_str.equals("0.00")) {
 						break;
 					}
 
@@ -307,20 +289,17 @@ public class InputMoneyActivity extends BaseActivity {
 	// 程序退出
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 			if ((System.currentTimeMillis() - exitTimeMillis) > 2000) {
 				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
 				exitTimeMillis = System.currentTimeMillis();
 			} else {
-				ArrayList<BaseActivity> list = BaseActivity
-						.getAllActiveActivity();
-				if(list != null){
+				ArrayList<BaseActivity> list = BaseActivity.getAllActiveActivity();
+				if (list != null) {
 					for (BaseActivity activity : list) {
 						activity.finish();
 					}
 				}
-				
 
 				android.os.Process.killProcess(android.os.Process.myPid());
 				System.exit(0);
@@ -336,22 +315,19 @@ public class InputMoneyActivity extends BaseActivity {
 		tempMap.put("transType", "01");
 		tempMap.put("curType", "CNY");
 		tempMap.put("transAmt", tv_show_money.getText().toString());
-		tempMap.put("phoneNum", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		tempMap.put("phoneNum", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CashCharge,
-				tempMap, cashChargeHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CashCharge, tempMap, cashChargeHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在记账...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在记账...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-					}
+			}
 
-				});
+		});
 	}
 
 	private LKAsyncHttpResponseHandler cashChargeHandler() {
@@ -361,11 +337,10 @@ public class InputMoneyActivity extends BaseActivity {
 			@Override
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString()
-							.equals("000000")) {
+					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
 						LKAlertDialog dialog = new LKAlertDialog(InputMoneyActivity.this);
 						dialog.setTitle("提示");
-						dialog.setMessage("记账成功！金额： ￥"+tv_show_money.getText().toString());
+						dialog.setMessage("记账成功！金额： ￥" + tv_show_money.getText().toString());
 						dialog.setCancelable(false);
 						dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
@@ -376,12 +351,8 @@ public class InputMoneyActivity extends BaseActivity {
 						});
 
 						dialog.create().show();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null
-							&& ((HashMap) obj).get("RSPMSG").toString()
-									.length() != 0) {
-						Toast.makeText(getApplicationContext(),
-								((HashMap) obj).get("RSPMSG").toString(),
-								Toast.LENGTH_SHORT).show();
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 					}
 				} else {
 				}
@@ -393,14 +364,14 @@ public class InputMoneyActivity extends BaseActivity {
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-//		super.onActivityResult(requestCode, resultCode, data);
-		
-		if(resultCode == RESULT_OK){
-			Bundle b=data.getExtras();  //data为B中回传的Intent
-			String str=b.getString("amount");
+
+		// super.onActivityResult(requestCode, resultCode, data);
+
+		if (resultCode == RESULT_OK) {
+			Bundle b = data.getExtras(); // data为B中回传的Intent
+			String str = b.getString("amount");
 			tv_show_money.setText(str);
 		}
 	}
-	
+
 }
