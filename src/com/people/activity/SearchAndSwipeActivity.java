@@ -134,6 +134,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			} else if (type == TransferRequestTag.ConsumeCancel) {
 				new ConsumeCancelAction().doAction();
 				
+			} else if (type == TransferRequestTag.PhoneRecharge) {
+				new PhoneRechargeAction().doAction();
 			}
 		}
 	}
@@ -519,6 +521,114 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 	}
 	
+	// 手机充值
+	class PhoneRechargeAction {
+		private String tid = "";
+		private String pid = "";
+		public void doAction() {
+			new ThreadDeviceID(getDeviceIDHandler, SearchAndSwipeActivity.this).start();
+		}
+
+		private Handler getDeviceIDHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case CardReader.SUCCESS:
+					HashMap<String, String> map = (HashMap<String, String>) msg.obj;
+					tid = map.get("TID");
+					pid = map.get("PID");
+
+					String amountStr = StringUtil.String2AmountFloat4QPOS(intent.getStringExtra("CTXNAT")) + "";
+
+					new ThreadSwip_SixPass(swipeHandler, SearchAndSwipeActivity.this, amountStr, getExtraString()).start();
+
+					break;
+				}
+			}
+		};
+
+
+			private Handler swipeHandler = new Handler() {
+				@Override
+				public void handleMessage(Message msg) {
+					switch (msg.what) {
+					case CardReader.SUCCESS:
+						HashMap<String, String> map = (HashMap<String, String>) msg.obj;
+
+						transfer(map);
+
+						break;
+						
+					default:
+						Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+						SearchAndSwipeActivity.this.finish();
+						break;
+					}
+				}
+			};
+
+			private String getExtraString() {
+				StringBuffer sb = new StringBuffer();
+				sb.append(intent.getStringExtra("TRANCODE"));
+				sb.append(intent.getStringExtra("CTXNAT"));
+				sb.append(intent.getStringExtra("TSEQNO"));
+				sb.append(intent.getStringExtra("TTXNTM"));
+				sb.append(intent.getStringExtra("TTXNDT"));
+
+				return sb.toString();
+			}
+
+			private void transfer(HashMap<String, String> map) {
+				HashMap<String, Object> tempMap = new HashMap<String, Object>();
+				tempMap.put("TRANCODE", intent.getStringExtra("TRANCODE"));
+				tempMap.put("SELLTEL_B", intent.getStringExtra("SELLTEL_B")); // 消费撤销唯一凭证
+				tempMap.put("phoneNumber_B", intent.getStringExtra("phoneNumber_B"));
+				tempMap.put("Track2_B", map.get("CARD"));
+				tempMap.put("CARDNOJLN_B", map.get("PIN")); // 支付密码???
+				tempMap.put("TXNAMT_B", intent.getStringExtra("TXNAMT_B"));
+				tempMap.put("POSTYPE_B", intent.getStringExtra("POSTYPE_B"));
+				tempMap.put("RAND_B", "");
+				tempMap.put("CHECKX_B", intent.getStringExtra("CHECKX_B"));
+				tempMap.put("CHECKY_B", intent.getStringExtra("CHECKY_B"));
+				tempMap.put("TERMINALNUMBER_B", pid); // PSAM卡号 "UN201410000046"
+				tempMap.put("PACKAGEMAC", map.get("MAC")); // MAC
+				
+				
+				LKHttpRequest req = new LKHttpRequest(TransferRequestTag.PhoneRecharge, tempMap, transferHandler());
+
+				new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在交易，请稍候...", new LKHttpRequestQueueDone() {
+
+					@Override
+					public void onComplete() {
+						super.onComplete();
+
+					}
+
+				});
+			}
+
+			private LKAsyncHttpResponseHandler transferHandler() {
+				return new LKAsyncHttpResponseHandler() {
+
+					@Override
+					public void successAction(Object obj) {
+						@SuppressWarnings("unchecked")
+						HashMap<String, String> map = (HashMap<String, String>) obj;
+						if (map.get("RSPCOD").equals("000000")) {
+							Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
+							intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
+							startActivityForResult(intent0, 0);
+							
+						} else {
+							gotoTradeFailureActivity(map.get("RSPMSG"));
+						}
+					}
+
+				};
+			}
+
+		}
+		
 	private void gotoTradeFailureActivity(String msg){
 		if (msg == null || msg.trim().equals("")){
 			msg = "交易失败";

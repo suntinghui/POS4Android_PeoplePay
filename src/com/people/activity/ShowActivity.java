@@ -156,27 +156,27 @@ public class ShowActivity extends BaseActivity implements OnDrawerOpenListener, 
 	// SlideDrawer
 	@Override
 	public void onDrawerOpened() {
-		slideDrawer.setSelected(true);
-		slideDrawer.getHandle().setBackgroundResource(
-				R.drawable.handle_selected);
-		ViewFlow viewFlow = (ViewFlow) findViewById(R.id.guide_gallery);
-		viewFlow.setAdapter(new ImageAdapter(ShowActivity.this));
-		CircleFlowIndicator indic = (CircleFlowIndicator) findViewById(R.id.viewflowindic);
-		viewFlow.setFlowIndicator(indic);
-
-		LinearLayout topLayout = (LinearLayout) findViewById(R.id.topLayout);
-		topLayout.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+//		slideDrawer.setSelected(true);
+//		slideDrawer.getHandle().setBackgroundResource(
+//				R.drawable.handle_selected);
+//		ViewFlow viewFlow = (ViewFlow) findViewById(R.id.guide_gallery);
+//		viewFlow.setAdapter(new ImageAdapter(ShowActivity.this));
+//		CircleFlowIndicator indic = (CircleFlowIndicator) findViewById(R.id.viewflowindic);
+//		viewFlow.setFlowIndicator(indic);
+//
+//		LinearLayout topLayout = (LinearLayout) findViewById(R.id.topLayout);
+//		topLayout.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
 	}
 
 	@Override
 	public void onDrawerClosed() {
-		slideDrawer.setSelected(false);
-		LinearLayout topLayout = (LinearLayout) findViewById(R.id.topLayout);
-		topLayout.setGravity(Gravity.CENTER_HORIZONTAL
-				| Gravity.CENTER_VERTICAL);
-
-		slideDrawer.getHandle().setBackgroundResource(R.drawable.handle_normal);
-		System.gc();
+//		slideDrawer.setSelected(false);
+//		LinearLayout topLayout = (LinearLayout) findViewById(R.id.topLayout);
+//		topLayout.setGravity(Gravity.CENTER_HORIZONTAL
+//				| Gravity.CENTER_VERTICAL);
+//
+//		slideDrawer.getHandle().setBackgroundResource(R.drawable.handle_normal);
+//		System.gc();
 	}
 
 	public class ImageAdapter extends BaseAdapter {
