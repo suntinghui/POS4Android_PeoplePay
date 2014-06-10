@@ -1,6 +1,7 @@
 package com.people.util;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -12,14 +13,17 @@ import android.widget.Toast;
 
 import com.people.R;
 import com.people.activity.BaseActivity;
+import com.people.client.ApplicationEnvironment;
 
 public class FileUtil {
 
 	// 附件及所有文件都存放在本目录下
 	public static String getDownloadPath() {
 		// 其它程序无法访问
-		// String path = ApplicationEnvironment.getInstance().getApplication().getFilesDir().getPath()+"/download/";
-		String path = Environment.getExternalStorageDirectory() + "/众付宝/Attachment/";
+		// String path =
+		// ApplicationEnvironment.getInstance().getApplication().getFilesDir().getPath()+"/download/";
+		String path = Environment.getExternalStorageDirectory()
+				+ "/众付宝/Attachment/";
 		File file = new File(path);
 		if (!file.exists()) {
 			// file.mkdir();
@@ -67,7 +71,8 @@ public class FileUtil {
 
 	// Open File
 	public static void openFile(String fileName) {
-		// Toast.makeText(BaseActivity.getTopActivity(), "正在调用第三方程序", Toast.LENGTH_LONG).show();
+		// Toast.makeText(BaseActivity.getTopActivity(), "正在调用第三方程序",
+		// Toast.LENGTH_LONG).show();
 		// new ShowProgressHudTask().execute("2000", "正在调用第三方程序");
 
 		try {
@@ -77,68 +82,86 @@ public class FileUtil {
 				Intent intent = null;
 				Resources res = BaseActivity.getTopActivity().getResources();
 
-				if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingText))) {
+				if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingText))) {
 					intent = getTextFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingPdf))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingPdf))) {
 					intent = getPdfFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingWord))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingWord))) {
 					intent = getWordFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingExcel))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingExcel))) {
 					intent = getExcelFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingPPT))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingPPT))) {
 					intent = getPPTFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingImage))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingImage))) {
 					intent = getImageFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingWebText))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingWebText))) {
 					intent = getHtmlFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingPackage))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingPackage))) {
 					intent = getApkFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingAudio))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingAudio))) {
 					intent = getAudioFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingVideo))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingVideo))) {
 					intent = getVideoFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
-				} else if (checkEndsWithInStringArray(fileName, res.getStringArray(R.array.fileEndingChm))) {
+				} else if (checkEndsWithInStringArray(fileName,
+						res.getStringArray(R.array.fileEndingChm))) {
 					intent = getChmFileIntent(file);
 					BaseActivity.getTopActivity().startActivity(intent);
 
 				} else {
-					BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "不支持此格式的文件！");
+					BaseActivity.getTopActivity().showDialog(
+							BaseActivity.MODAL_DIALOG, "不支持此格式的文件！");
 				}
 
 			} else {
-				BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "文件下载出错，请重新下载");
+				BaseActivity.getTopActivity().showDialog(
+						BaseActivity.MODAL_DIALOG, "文件下载出错，请重新下载");
 			}
 		} catch (ActivityNotFoundException e) {
 			e.printStackTrace();
-			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "对不起，您需要先在手机中安装打开[ " + getFileExtension(fileName) + " ]文件的软件。");
+			BaseActivity.getTopActivity().showDialog(
+					BaseActivity.MODAL_DIALOG,
+					"对不起，您需要先在手机中安装打开[ " + getFileExtension(fileName)
+							+ " ]文件的软件。");
 		} catch (Exception e) {
 			e.printStackTrace();
-			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "对不起，打开文件出错，请与相关人员联系获取解决此问题的解决方案。");
+			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG,
+					"对不起，打开文件出错，请与相关人员联系获取解决此问题的解决方案。");
 		}
 	}
 
 	// 定义用于检查要打开的文件的后缀是否在遍历后缀数组中
-	private static boolean checkEndsWithInStringArray(String checkItsEnd, String[] fileEndings) {
+	private static boolean checkEndsWithInStringArray(String checkItsEnd,
+			String[] fileEndings) {
 		for (String aEnd : fileEndings) {
 			if (checkItsEnd.endsWith(aEnd))
 				return true;
@@ -152,7 +175,9 @@ public class FileUtil {
 
 	// android获取一个用于打开HTML文件的intent
 	private static Intent getHtmlFileIntent(File file) {
-		Uri uri = Uri.parse(file.toString()).buildUpon().encodedAuthority("com.android.htmlfileprovider").scheme("content").encodedPath(file.toString()).build();
+		Uri uri = Uri.parse(file.toString()).buildUpon()
+				.encodedAuthority("com.android.htmlfileprovider")
+				.scheme("content").encodedPath(file.toString()).build();
 		Intent intent = new Intent("android.intent.action.VIEW");
 		intent.setDataAndType(uri, "text/html");
 		return intent;
@@ -255,7 +280,8 @@ public class FileUtil {
 		Intent intent = new Intent();
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setAction(android.content.Intent.ACTION_VIEW);
-		intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+		intent.setDataAndType(Uri.fromFile(file),
+				"application/vnd.android.package-archive");
 		return intent;
 	}
 

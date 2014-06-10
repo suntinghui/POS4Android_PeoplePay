@@ -82,7 +82,7 @@ public class TransferRequestTag {
 			requestTagMap.put(GetCityName, "http://211.147.87.29:8092/Vpm/199032.tranm");
 			requestTagMap.put(GetBank, "http://211.147.87.29:8092/Vpm/199035.tranm");
 			requestTagMap.put(GetBankBranch, "http://211.147.87.29:8092/Vpm/199034.tranm");
-			requestTagMap.put(UpLoadImage, "http://211.147.87.29:8092/Vpm/199021.tranm");
+			requestTagMap.put(UpLoadImage, "http://211.147.87.29:8092/Vpm/199021.tran");
 			requestTagMap.put(CheckTicket, "http://211.147.87.29:8092/Vpm/199036.tranm");
 			requestTagMap.put(SendTicket, "http://211.147.87.29:8092/Vpm/199037.tranm");
 			requestTagMap.put(DrawMoney, "http://211.147.87.29:8092/Vpm/199025.tranm");

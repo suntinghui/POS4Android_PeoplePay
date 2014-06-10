@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -644,7 +645,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("TRANCODE", "199021");
 		tempMap.put("PHONENUMBER", "18500612529");// 
 		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
-		tempMap.put("photos", imgToBase64(mImagePath));// bitmap_zoom
+		tempMap.put("photos", imgToBase64(mImagePath));// bitmap_zoom   imgToBase64(mImagePath)
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage,
 				tempMap, getUpLoadImageHandler());
 
@@ -691,7 +692,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight
 						/ height
 						: bmpWidth / width;
-
+				
 				if (inSampleSize > 1)
 					if (inSampleSize == 2) {// 小米3
 						options.inSampleSize = inSampleSize * 6;// 设置缩放比例
@@ -710,8 +711,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 					else{
 						options.inSampleSize = inSampleSize * 2;
 					}
-
-				// options.inSampleSize = 8;
+				options.inSampleSize = 30;
 				// 这里一定要将其设置回false，因为之前我们将其设置成了true
 				// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
 				options.inJustDecodeBounds = false;

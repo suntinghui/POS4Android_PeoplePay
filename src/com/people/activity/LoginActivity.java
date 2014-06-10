@@ -1,5 +1,6 @@
 package com.people.activity;
 
+import java.io.FileOutputStream;
 import java.util.HashMap;
 
 import android.content.Intent;

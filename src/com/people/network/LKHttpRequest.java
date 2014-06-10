@@ -18,6 +18,7 @@ import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.util.AESUtil;
 import com.people.util.MD5Util;
+import com.people.util.MyLog;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -93,7 +94,8 @@ public class LKHttpRequest {
 		
 		String result = temp.replace("</EPOSPROTOCOL>", PCSIMXML + "</EPOSPROTOCOL>");
 
-		Log.e("reqest body:", result);
+//		Log.e("reqest body:", result);
+		MyLog.i("result:", result);
 
 		String AESValue = "";
 		try {
