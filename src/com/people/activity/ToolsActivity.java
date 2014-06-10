@@ -91,8 +91,6 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 
 			case 8: 
 				break;
-			case 14:
-				break;
 			default:
 				break;
 			}
