@@ -645,7 +645,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("TRANCODE", "199021");
 		tempMap.put("PHONENUMBER", "18500612529");// 
 		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
-		tempMap.put("photos", imgToBase64(mImagePath));// bitmap_zoom   imgToBase64(mImagePath)
+		tempMap.put("photos", "");// bitmap_zoom   imgToBase64(mImagePath)
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage,
 				tempMap, getUpLoadImageHandler());
 
@@ -693,25 +693,25 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 						/ height
 						: bmpWidth / width;
 				
-				if (inSampleSize > 1)
-					if (inSampleSize == 2) {// 小米3
-						options.inSampleSize = inSampleSize * 6;// 设置缩放比例
-					} else if (inSampleSize == 3) {// 华为C8220
-						if (height > 800) {
-							options.inSampleSize = inSampleSize * 4;
-						} else {
-							options.inSampleSize = inSampleSize * 2;// 设置缩放比例
-						}
-					} else if (inSampleSize == 4) {
-						options.inSampleSize = inSampleSize * 2;
-					}
-					else if(inSampleSize == 5){
-						options.inSampleSize = inSampleSize * 2;
-					}
-					else{
-						options.inSampleSize = inSampleSize * 2;
-					}
-				options.inSampleSize = 30;
+//				if (inSampleSize > 1)
+//					if (inSampleSize == 2) {// 小米3
+//						options.inSampleSize = inSampleSize * 6;// 设置缩放比例
+//					} else if (inSampleSize == 3) {// 华为C8220
+//						if (height > 800) {
+//							options.inSampleSize = inSampleSize * 4;
+//						} else {
+//							options.inSampleSize = inSampleSize * 2;// 设置缩放比例
+//						}
+//					} else if (inSampleSize == 4) {
+//						options.inSampleSize = inSampleSize * 2;
+//					}
+//					else if(inSampleSize == 5){
+//						options.inSampleSize = inSampleSize * 2;
+//					}
+//					else{
+//						options.inSampleSize = inSampleSize * 2;
+//					}
+				options.inSampleSize = 40;
 				// 这里一定要将其设置回false，因为之前我们将其设置成了true
 				// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
 				options.inJustDecodeBounds = false;
@@ -737,6 +737,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			out.close();
 
 			byte[] imgBytes = out.toByteArray();
+			Log.i("image size: ", Base64.encodeToString(imgBytes, Base64.DEFAULT).length()+"");
 			return Base64.encodeToString(imgBytes, Base64.DEFAULT);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -769,7 +770,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				/ height
 				: bmpWidth / width;
 		Log.i("inSampleSize:", inSampleSize+"");
-		options.inSampleSize = 12;
+		options.inSampleSize = 30;
 //		if (inSampleSize > 1)
 //			if (inSampleSize == 2) {// 小米3
 //				options.inSampleSize = inSampleSize * 6;// 设置缩放比例
