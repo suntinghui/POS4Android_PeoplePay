@@ -91,12 +91,20 @@ public class BitmapUtil {
 		}
 	}
 	
-	public static String bitmaptoString(Bitmap bitmap) {
+	public static String bitmaptoBase64(Bitmap bitmap) {
 
 		// 将Bitmap转换成字符串
 		String string = null;
 		ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-		bitmap.compress(CompressFormat.PNG, 100, bStream);
+		bitmap.compress(CompressFormat.JPEG, 100, bStream);
+		
+		try {
+			bStream.flush();
+			bStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		byte[] bytes = bStream.toByteArray();
 		string = Base64.encodeToString(bytes, Base64.DEFAULT);
 		return string;

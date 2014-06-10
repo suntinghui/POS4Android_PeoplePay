@@ -102,6 +102,12 @@ public class ParseResponseXML {
 			case TransferRequestTag.CashDelete:
 				
 				return cashDelete();
+			
+			case TransferRequestTag.GetProvinceName:
+				return getProvinceName();
+				
+			case TransferRequestTag.GetCityName:
+				return getCityName();
 			}
 
 		} catch (XmlPullParserException e) {
@@ -181,7 +187,61 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
+	
+	private static Object getProvinceName() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
 
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				}
+				break;
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+	
+	private static Object getCityName() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				}
+				break;
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+	
 	private static Object modifyLoginPwd() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 

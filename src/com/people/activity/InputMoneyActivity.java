@@ -171,7 +171,7 @@ public class InputMoneyActivity extends BaseActivity {
 				} else {
 					Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
 
-					intent.putExtra("TYPE", TransferRequestTag.Consume);
+					intent.putExtra("TYPE", TransferRequestTag.PhoneRecharge);
 					intent.putExtra("TRANCODE", "199005");
 					intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
 					intent.putExtra("PCSIM", "获取不到");

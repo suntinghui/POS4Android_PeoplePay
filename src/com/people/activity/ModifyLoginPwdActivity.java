@@ -68,7 +68,7 @@ public class ModifyLoginPwdActivity extends BaseActivity implements OnClickListe
 		tempMap.put("PASSWORD", et_old_pwd.getText().toString());
 		tempMap.put("PASSWORDNEW", et_confirm_pwd.getText().toString());
 		
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ModifyLoginPwd, tempMap, getRegisterHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ModifyLoginPwd, tempMap, getModifyHandler());
 		
 		new LKHttpRequestQueue().addHttpRequest(req1)
 		.executeQueue("正在修改请稍候...", new LKHttpRequestQueueDone(){
@@ -82,7 +82,7 @@ public class ModifyLoginPwdActivity extends BaseActivity implements OnClickListe
 		});	
 	}
 	
-	private LKAsyncHttpResponseHandler getRegisterHandler(){
+	private LKAsyncHttpResponseHandler getModifyHandler(){
 		 return new LKAsyncHttpResponseHandler(){
 			 
 			@Override
