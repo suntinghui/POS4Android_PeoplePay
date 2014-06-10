@@ -645,7 +645,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("TRANCODE", "199021");
 		tempMap.put("PHONENUMBER", "18500612529");// 
 		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
-		tempMap.put("photos", "");// bitmap_zoom   imgToBase64(mImagePath)
+		tempMap.put("photos", imgToBase64(mImagePath));// bitmap_zoom   imgToBase64(mImagePath)
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage,
 				tempMap, getUpLoadImageHandler());
 
