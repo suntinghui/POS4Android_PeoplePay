@@ -60,8 +60,8 @@ import com.sun.mail.iap.ByteArray;
 
 // 商户
 public class MerchantActivity extends BaseActivity implements OnClickListener {
-    public static final String IMAGE_UNSPECIFIED = "image/*";  
-    
+	public static final String IMAGE_UNSPECIFIED = "image/*";
+
 	private LinearLayout layout_msg_blow;
 	private Boolean isClicked = false;
 	private ImageView iv_pull;
@@ -82,12 +82,13 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	private AlertDialog dialog;
 	private File sdcardTempFile;
 	private int crop = 180;
-	
-	private String bitmap_zoom ;
+
+	private String bitmap_zoom;
 
 	private byte[] mContent;
 	private Bitmap myBitmap;
 	private String mImagePath;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,9 +97,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		iv_top = (ImageView) findViewById(R.id.iv_top);
 		iv_top.setOnClickListener(this);
 
-		sdcardTempFile = new File("/mnt/sdcard/", "tmp_pic_"
-				+ SystemClock.currentThreadTimeMillis() + ".jpg");
-		
+		sdcardTempFile = new File("/mnt/sdcard/", "tmp_pic_" + SystemClock.currentThreadTimeMillis() + ".jpg");
+
 		layout_msg_blow = (LinearLayout) findViewById(R.id.layout_msg_blow);
 		layout_msg_blow.setOnClickListener(this);
 		LinearLayout layout_msg_top = (LinearLayout) findViewById(R.id.layout_msg_top);
@@ -143,8 +143,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		case R.id.layout_msg_top:
 			isClicked = !isClicked;
 			if (isClicked) {
-				Animation myAnimation = AnimationUtils.loadAnimation(this,
-						R.anim.merchant_anim);
+				Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.merchant_anim);
 				layout_msg_blow.startAnimation(myAnimation);
 				layout_msg_blow.setVisibility(View.VISIBLE);
 				iv_pull.setBackgroundResource(R.drawable.merchant_icon_push);
@@ -163,8 +162,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			getUpLoadImage();
 			break;
 		case R.id.layout_2:
-			Intent intent2 = new Intent(MerchantActivity.this,
-					SettingActivity.class);
+			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
 			startActivity(intent2);
 			break;
 		case R.id.layout_3:
@@ -172,24 +170,21 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			dialog.setTitle("提示");
 			dialog.setMessage("客服热线：4006269987");
 			dialog.setCancelable(false);
-			dialog.setPositiveButton("拨打",
-					new DialogInterface.OnClickListener() {
+			dialog.setPositiveButton("拨打", new DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int arg1) {
-							dialog.dismiss();
-							Intent intent = new Intent(Intent.ACTION_CALL, Uri
-									.parse("tel:" + "4006269987"));
-							startActivity(intent);
-						}
-					});
-			dialog.setNegativeButton("取消",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					});
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					dialog.dismiss();
+					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006269987"));
+					startActivity(intent);
+				}
+			});
+			dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
 			dialog.create().show();
 			break;
 		case R.id.btn_exit:
@@ -197,22 +192,20 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			dialog1.setTitle("提示");
 			dialog1.setMessage("你确定要退出吗？");
 			dialog1.setCancelable(false);
-			dialog1.setPositiveButton("确定",
-					new DialogInterface.OnClickListener() {
+			dialog1.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int arg1) {
-							dialog.dismiss();
-							MerchantActivity.this.finish();
-						}
-					});
-			dialog1.setNegativeButton("取消",
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							dialog.dismiss();
-						}
-					});
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					dialog.dismiss();
+					MerchantActivity.this.finish();
+				}
+			});
+			dialog1.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					dialog.dismiss();
+				}
+			});
 			dialog1.create().show();
 			break;
 		default:
@@ -223,43 +216,39 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 	private void showDialog() {
 		if (dialog == null) {
-			dialog = new AlertDialog.Builder(this).setItems(
-					new String[] { "相机", "相册" },
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							if (which == 0) {
-								Intent intent = new Intent(
-										"android.media.action.IMAGE_CAPTURE");
-								intent.putExtra("output",
-										Uri.fromFile(sdcardTempFile));
-								intent.putExtra("crop", "true");
-								intent.putExtra("aspectX", 1);// 裁剪框比例
-								intent.putExtra("aspectY", 1);
-								intent.putExtra("outputX", 80);// 输出图片大小
-								intent.putExtra("outputY", 80);
-								startActivityForResult(intent, 100);
-							} else {
-//								Intent intent = new Intent(
-//										"android.intent.action.PICK");
-//								intent.setDataAndType(
-//										MediaStore.Images.Media.INTERNAL_CONTENT_URI,
-//										"image/*");
-//								intent.putExtra("output",
-//										Uri.fromFile(sdcardTempFile));
-//								intent.putExtra("crop", "true");
-//								intent.putExtra("aspectX", 2);// 裁剪框比例
-//								intent.putExtra("aspectY", 1.5);
-//								intent.putExtra("outputX", 320);// 输出图片大小
-//								intent.putExtra("outputY", 150);
-//								startActivityForResult(intent, 101);
-								
-								Intent intent = new Intent(Intent.ACTION_PICK, null);  
-				                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);  
-				                startActivityForResult(intent, 101);  
-							}
-						}
-					}).create();
+			dialog = new AlertDialog.Builder(this).setItems(new String[] { "相机", "相册" }, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if (which == 0) {
+						Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+						intent.putExtra("output", Uri.fromFile(sdcardTempFile));
+						intent.putExtra("crop", "true");
+						intent.putExtra("aspectX", 1);// 裁剪框比例
+						intent.putExtra("aspectY", 1);
+						intent.putExtra("outputX", 80);// 输出图片大小
+						intent.putExtra("outputY", 80);
+						startActivityForResult(intent, 100);
+					} else {
+						// Intent intent = new Intent(
+						// "android.intent.action.PICK");
+						// intent.setDataAndType(
+						// MediaStore.Images.Media.INTERNAL_CONTENT_URI,
+						// "image/*");
+						// intent.putExtra("output",
+						// Uri.fromFile(sdcardTempFile));
+						// intent.putExtra("crop", "true");
+						// intent.putExtra("aspectX", 2);// 裁剪框比例
+						// intent.putExtra("aspectY", 1.5);
+						// intent.putExtra("outputX", 320);// 输出图片大小
+						// intent.putExtra("outputY", 150);
+						// startActivityForResult(intent, 101);
+
+						Intent intent = new Intent(Intent.ACTION_PICK, null);
+						intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
+						startActivityForResult(intent, 101);
+					}
+				}
+			}).create();
 		}
 		if (!dialog.isShowing()) {
 			dialog.show();
@@ -270,56 +259,45 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 		HashMap<String, Object> tempMap1 = new HashMap<String, Object>();
 		tempMap1.put("TRANCODE", "199011");
-		tempMap1.put("PHONENUMBER", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		tempMap1.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.MerchantQuery, tempMap1,
-				getMerchantHandler());
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(null,
-				new LKHttpRequestQueueDone() {
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.MerchantQuery, tempMap1, getMerchantHandler());
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(null, new LKHttpRequestQueueDone() {
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
 
-				});
+		});
 
 		HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
-		tempMap2.put("PHONENUMBER", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		tempMap2.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req2 = new LKHttpRequest(
-				TransferRequestTag.GetDownLoadHead, tempMap2,
-				getDownLoadHeadHandler());
-		new LKHttpRequestQueue().addHttpRequest(req2).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
+		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.GetDownLoadHead, tempMap2, getDownLoadHeadHandler());
+		new LKHttpRequestQueue().addHttpRequest(req2).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
 
-				});
+		});
 	}
 
 	// 商户信息查询
 	private void merchantQuery() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199011");
-		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.MerchantQuery, tempMap, getMerchantHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.MerchantQuery, tempMap, getMerchantHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
-				});
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getMerchantHandler() {
@@ -337,14 +315,12 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				String MERNAM = (String) map.get("MERNAM");
 
 				if (RSPCOD.equals("000000")) {
-					tv_bank_no.setText(ACTNO == null ? "" : StringUtil
-							.formatCardId(StringUtil.formatAccountNo(ACTNO)));
+					tv_bank_no.setText(ACTNO == null ? "" : StringUtil.formatCardId(StringUtil.formatAccountNo(ACTNO)));
 					tv_open_account_name.setText(ACTNAM == null ? "" : ACTNAM);
 					tv_open_account_bank.setText(OPNBNK == null ? "" : OPNBNK);
 					tv_head.setText(MERNAM == null ? "" : MERNAM);
 				} else {
-					Toast.makeText(MerchantActivity.this, RSPMSG,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(MerchantActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -355,14 +331,12 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	// 程序退出
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK
-				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
 			if ((System.currentTimeMillis() - exitTimeMillis) > 2000) {
 				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
 				exitTimeMillis = System.currentTimeMillis();
 			} else {
-				ArrayList<BaseActivity> list = BaseActivity
-						.getAllActiveActivity();
+				ArrayList<BaseActivity> list = BaseActivity.getAllActiveActivity();
 				for (BaseActivity activity : list) {
 					activity.finish();
 				}
@@ -379,20 +353,17 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	private void loadUpHead() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("HEADIMG", bitmap_str);
-		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.LoadUpHead,
-				tempMap, getLoadUpHeadHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.LoadUpHead, tempMap, getLoadUpHeadHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
-				});
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getLoadUpHeadHandler() {
@@ -406,11 +377,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				String RSPMSG = (String) map.get("RSPMSG");
 
 				if (RSPCOD.equals("000000")) {
-					Toast.makeText(MerchantActivity.this, "街景设置成功",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(MerchantActivity.this, "街景设置成功", Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(MerchantActivity.this, RSPMSG,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(MerchantActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -422,21 +391,17 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	private void loadUpStreet() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("HEADIMG", bitmap_str);
-		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.LoadUpStreetImg, tempMap,
-				getLoadUpStreetImgHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.LoadUpStreetImg, tempMap, getLoadUpStreetImgHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
-				});
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getLoadUpStreetImgHandler() {
@@ -450,11 +415,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				String RSPMSG = (String) map.get("RSPMSG");
 
 				if (RSPCOD.equals("000000")) {
-					Toast.makeText(MerchantActivity.this, "街景设置成功",
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(MerchantActivity.this, "街景设置成功", Toast.LENGTH_SHORT).show();
 				} else {
-					Toast.makeText(MerchantActivity.this, RSPMSG,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(MerchantActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -466,21 +429,17 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	private void getDownLoadHead() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("HEADIMG", bitmap_str);
-		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.GetDownLoadHead, tempMap,
-				getDownLoadHeadHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetDownLoadHead, tempMap, getDownLoadHeadHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
-				});
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getDownLoadHeadHandler() {
@@ -496,9 +455,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				if (RSPCOD.equals("000000")) {
 
 					if ((String) map.get("HEADIMG") != null) {
-						ibtn_head.setImageBitmap(BitmapUtil
-								.convertStringToBitmap((String) map
-										.get("HEADIMG")));
+						ibtn_head.setImageBitmap(BitmapUtil.convertStringToBitmap((String) map.get("HEADIMG")));
 					}
 				}
 
@@ -508,8 +465,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void actionCamera() {
-		Intent getImageByCamera = new Intent(
-				"android.media.action.IMAGE_CAPTURE");
+		Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
 		startActivityForResult(getImageByCamera, 1);
 	}
 
@@ -518,8 +474,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		// super.onActivityResult(requestCode, resultCode, data);
 
 		if (requestCode == 100 || requestCode == 101) {
-			Bitmap bm = BitmapFactory.decodeFile(sdcardTempFile
-					.getAbsolutePath());
+			Bitmap bm = BitmapFactory.decodeFile(sdcardTempFile.getAbsolutePath());
 			// Bitmap bm = null;
 			try {
 				Bundle extras = data.getExtras();
@@ -533,71 +488,74 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			if (bm != null) {
-//				bitmap_str = BitmapUtil.bitmaptoBase64(bm);
-//				bitmap_zoom = BitmapUtil.bitmaptoBase64(bitmapZoom(bm));
-				
-				try {
-				      ContentResolver resolver = getContentResolver();
-		              Uri originalUri = data.getData();//取数据
-		              mContent = readStream(resolver.openInputStream(Uri.parse(originalUri.toString())));// 将图片内容解析成字节数组  
-		              myBitmap = getPicFromByTes(mContent, null);// 将字节数组转换为ImageView可调用的Bitmap对象
-		              mImagePath = getPath(originalUri);
-		          } catch (Exception e) {
-		              System.out.print(e.getMessage());
-		          }
-					
-//				if (isHead) {
-//					ibtn_head.setImageBitmap(bm);
-//					BitmapUtil.saveMyBitmap(bm);
-//					loadUpHead();
-//				} else {
-//					iv_top.setImageBitmap(bm);
-//					loadUpStreet();
-//				}
+			// if (bm != null) {
+			// bitmap_str = BitmapUtil.bitmaptoBase64(bm);
+			// bitmap_zoom = BitmapUtil.bitmaptoBase64(bitmapZoom(bm));
 
+			try {
+				ContentResolver resolver = getContentResolver();
+				Uri originalUri = data.getData();// 取数据
+
+				mContent = readStream(resolver.openInputStream(Uri.parse(originalUri.toString())));
+				BitmapFactory.Options opt = new BitmapFactory.Options();
+				opt.inJustDecodeBounds = true;
+				opt.inDither = false;
+				opt.inPurgeable = true;
+				opt.inSampleSize = 3;
+				// opt.inTempStorage = new byte[12 * 1024];
+				opt.inJustDecodeBounds = false;
+				// 将字节数组转换为ImageView可调用的Bitmap对象
+				myBitmap = getPicFromBytes(mContent, opt);
+
+				mImagePath = getPath(originalUri);
+			} catch (Exception e) {
+				System.out.print(e.getMessage());
 			}
-//		}
-	}
 
-	private String getPath(Uri originalUri){
-		String []imgs={MediaStore.Images.Media.DATA};//将图片URI转换成存储路径 
-		Cursor cursor=this.managedQuery(originalUri, imgs, null, null, null); 
-		int index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA); 
-		cursor.moveToFirst(); 
-		return cursor.getString(index);  
-	}
-		
-		//相机调用的方法getPicFromByTes，将字节数组转换为ImageView可调用的Bitmap对象  
-		  private Bitmap getPicFromByTes(byte[] bytes, BitmapFactory.Options opts) {
-		  if (bytes != null)
-		      if (opts != null)
-		          
-		          return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
-		          
-		      else
-		          return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-		      
-		  return null;
+			// if (isHead) {
+			// ibtn_head.setImageBitmap(bm);
+			// BitmapUtil.saveMyBitmap(bm);
+			// loadUpHead();
+			// } else {
+			// iv_top.setImageBitmap(bm);
+			// loadUpStreet();
+			// }
 
 		}
+		// }
+	}
 
-		//相机调用readStream，将图片内容解析成字节数组 
-		private byte[] readStream(InputStream openInputStream) throws Exception {
-		  byte[] buffer = new byte[1024];
-		  int len = -1;
-		  ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		  while ((len = openInputStream.read(buffer)) != -1) {
-		      outStream.write(buffer, 0, len);
-		  }
-		  byte[] data = outStream.toByteArray();
-		  outStream.close();
-		  openInputStream.close();
-		  return data;
+	private String getPath(Uri originalUri) {
+		String[] imgs = { MediaStore.Images.Media.DATA };// 将图片URI转换成存储路径
+		Cursor cursor = this.managedQuery(originalUri, imgs, null, null, null);
+		int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(index);
+	}
 
-		  // TODO Auto-generated method stub
+	// 相机调用的方法getPicFromBytes，将字节数组转换为ImageView可调用的Bitmap对象
+	public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
+		if (bytes != null)
+			if (opts != null)
+				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
+			else
+				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+		return null;
+	}
 
+	// 相机调用readStream，将图片内容解析成字节数组
+	public static byte[] readStream(InputStream inStream) throws Exception {
+		byte[] buffer = new byte[1024];
+		int len = -1;
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		while ((len = inStream.read(buffer)) != -1) {
+			outStream.write(buffer, 0, len);
 		}
+		byte[] data = outStream.toByteArray();
+		outStream.close();
+		inStream.close();
+		return data;
+	}
 
 	/**
 	 * 按正方形裁切图片
@@ -617,47 +575,45 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 	// 上传图片
 	private void getUpLoadImage() {
-//		String fileName = "test.txt"; //文件名字
-//
-//		String res=""; 
-//
-//		try{ 
-//
-//		   InputStream in = getResources().getAssets().open(fileName);
-//
-//		   // \Test\assets\yan.txt这里有这样的文件存在
-//
-//		   int length = in.available();         
-//
-//		byte [] buffer = new byte[length];        
-//
-//		in.read(buffer);            
-//
-//		res = EncodingUtils.getString(buffer, "UTF-8");     
-//
-//		}catch(Exception e){ 
-//
-//		      e.printStackTrace();         
-//
-//		   }
-		
+		// String fileName = "test.txt"; //文件名字
+		//
+		// String res="";
+		//
+		// try{
+		//
+		// InputStream in = getResources().getAssets().open(fileName);
+		//
+		// // \Test\assets\yan.txt这里有这样的文件存在
+		//
+		// int length = in.available();
+		//
+		// byte [] buffer = new byte[length];
+		//
+		// in.read(buffer);
+		//
+		// res = EncodingUtils.getString(buffer, "UTF-8");
+		//
+		// }catch(Exception e){
+		//
+		// e.printStackTrace();
+		//
+		// }
+
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199021");
-		tempMap.put("PHONENUMBER", "18500612529");// 
+		tempMap.put("PHONENUMBER", "18500612529");//
 		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
-		tempMap.put("photos", imgToBase64(mImagePath));// bitmap_zoom   imgToBase64(mImagePath)
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage,
-				tempMap, getUpLoadImageHandler());
+		tempMap.put("photos", imgToBase64(mImagePath));// bitmap_zoom imgToBase64(mImagePath)
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage, tempMap, getUpLoadImageHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-					}
-				});
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getUpLoadImageHandler() {
@@ -670,13 +626,13 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 		};
 	}
-	
+
 	public String imgToBase64(String imgPath) {
 		WindowManager windowManager0 = getWindowManager();
-        Display display = windowManager0.getDefaultDisplay();
-        int height = display.getHeight() ;
-        int width = display.getWidth() ;
-        
+		Display display = windowManager0.getDefaultDisplay();
+		int height = display.getHeight();
+		int width = display.getWidth();
+
 		Bitmap bitmap = null;
 		if (imgPath != null && imgPath.length() > 0) {
 			FileDescriptor fd;
@@ -689,28 +645,26 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 				int bmpheight = options.outHeight;
 				int bmpWidth = options.outWidth;
-				int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight
-						/ height
-						: bmpWidth / width;
-				
-//				if (inSampleSize > 1)
-//					if (inSampleSize == 2) {// 小米3
-//						options.inSampleSize = inSampleSize * 6;// 设置缩放比例
-//					} else if (inSampleSize == 3) {// 华为C8220
-//						if (height > 800) {
-//							options.inSampleSize = inSampleSize * 4;
-//						} else {
-//							options.inSampleSize = inSampleSize * 2;// 设置缩放比例
-//						}
-//					} else if (inSampleSize == 4) {
-//						options.inSampleSize = inSampleSize * 2;
-//					}
-//					else if(inSampleSize == 5){
-//						options.inSampleSize = inSampleSize * 2;
-//					}
-//					else{
-//						options.inSampleSize = inSampleSize * 2;
-//					}
+				int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight / height : bmpWidth / width;
+
+				// if (inSampleSize > 1)
+				// if (inSampleSize == 2) {// 小米3
+				// options.inSampleSize = inSampleSize * 6;// 设置缩放比例
+				// } else if (inSampleSize == 3) {// 华为C8220
+				// if (height > 800) {
+				// options.inSampleSize = inSampleSize * 4;
+				// } else {
+				// options.inSampleSize = inSampleSize * 2;// 设置缩放比例
+				// }
+				// } else if (inSampleSize == 4) {
+				// options.inSampleSize = inSampleSize * 2;
+				// }
+				// else if(inSampleSize == 5){
+				// options.inSampleSize = inSampleSize * 2;
+				// }
+				// else{
+				// options.inSampleSize = inSampleSize * 2;
+				// }
 				options.inSampleSize = 40;
 				// 这里一定要将其设置回false，因为之前我们将其设置成了true
 				// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
@@ -737,7 +691,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			out.close();
 
 			byte[] imgBytes = out.toByteArray();
-			Log.i("image size: ", Base64.encodeToString(imgBytes, Base64.DEFAULT).length()+"");
+			Log.i("image size: ", Base64.encodeToString(imgBytes, Base64.DEFAULT).length() + "");
 			return Base64.encodeToString(imgBytes, Base64.DEFAULT);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -752,86 +706,79 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 	}
-	
-	private Bitmap bitmapZoom(Bitmap bm){
+
+	private Bitmap bitmapZoom(Bitmap bm) {
 		WindowManager windowManager = getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        int height = display.getHeight() ;
-        int width = display.getWidth() ;
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-		
+		Display display = windowManager.getDefaultDisplay();
+		int height = display.getHeight();
+		int width = display.getWidth();
+		BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+
 		String path = sdcardTempFile.getPath();
-        Bitmap bitmap = BitmapFactory.decodeFile(path,options);//此时返回bm为空  
-        options.inJustDecodeBounds = false; 
+		Bitmap bitmap = BitmapFactory.decodeFile(path, options);// 此时返回bm为空
+		options.inJustDecodeBounds = false;
 		int bmpheight = options.outHeight;
 		int bmpWidth = options.outWidth;
-		int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight
-				/ height
-				: bmpWidth / width;
-		Log.i("inSampleSize:", inSampleSize+"");
+		int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight / height : bmpWidth / width;
+		Log.i("inSampleSize:", inSampleSize + "");
 		options.inSampleSize = 30;
-//		if (inSampleSize > 1)
-//			if (inSampleSize == 2) {// 小米3
-//				options.inSampleSize = inSampleSize * 6;// 设置缩放比例
-//			} else if (inSampleSize == 3) {// 华为C8220
-//				if (height > 800) {
-//					options.inSampleSize = inSampleSize * 4;
-//				} else {
-//					options.inSampleSize = inSampleSize * 2;// 设置缩放比例
-//				}
-//			} else if (inSampleSize == 4) {
-//				options.inSampleSize = inSampleSize * 2;
-//			}
-//			else if(inSampleSize == 5){
-//				options.inSampleSize = inSampleSize * 2;
-//			}
-//			else{
-//				options.inSampleSize = inSampleSize * 2;
-//			}
-		Log.i("options.inSampleSize:", options.inSampleSize+"");
-        //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了  
-        bitmap = BitmapFactory.decodeFile(path, options);  
-//        return compressImage(bitmap);//压缩好比例大小后再进行质量压缩 
-        
-        return bitmap;
-        
-        
-        
-        
-        
-		
-//		 // 获得图片的宽高
-//	    int width = bm.getWidth();
-//	    int height = bm.getHeight();
-//	    // 设置想要的大小
-//	    int newWidth = 120;
-//	    int newHeight = 280;
-//	    // 计算缩放比例
-//	    float scaleWidth = ((float) newWidth) / width;
-//	    float scaleHeight = ((float) newHeight) / height;
-//	    // 取得想要缩放的matrix参数
-//	    Matrix matrix = new Matrix();
-//	    matrix.postScale(scaleWidth, scaleHeight);
-//	    // 得到新的图片
-//	    Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix,
-//	      true);
-//	    
-//	    return newbm;
+		// if (inSampleSize > 1)
+		// if (inSampleSize == 2) {// 小米3
+		// options.inSampleSize = inSampleSize * 6;// 设置缩放比例
+		// } else if (inSampleSize == 3) {// 华为C8220
+		// if (height > 800) {
+		// options.inSampleSize = inSampleSize * 4;
+		// } else {
+		// options.inSampleSize = inSampleSize * 2;// 设置缩放比例
+		// }
+		// } else if (inSampleSize == 4) {
+		// options.inSampleSize = inSampleSize * 2;
+		// }
+		// else if(inSampleSize == 5){
+		// options.inSampleSize = inSampleSize * 2;
+		// }
+		// else{
+		// options.inSampleSize = inSampleSize * 2;
+		// }
+		Log.i("options.inSampleSize:", options.inSampleSize + "");
+		// 重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
+		bitmap = BitmapFactory.decodeFile(path, options);
+		// return compressImage(bitmap);//压缩好比例大小后再进行质量压缩
+
+		return bitmap;
+
+		// // 获得图片的宽高
+		// int width = bm.getWidth();
+		// int height = bm.getHeight();
+		// // 设置想要的大小
+		// int newWidth = 120;
+		// int newHeight = 280;
+		// // 计算缩放比例
+		// float scaleWidth = ((float) newWidth) / width;
+		// float scaleHeight = ((float) newHeight) / height;
+		// // 取得想要缩放的matrix参数
+		// Matrix matrix = new Matrix();
+		// matrix.postScale(scaleWidth, scaleHeight);
+		// // 得到新的图片
+		// Bitmap newbm = Bitmap.createBitmap(bm, 0, 0, width, height, matrix,
+		// true);
+		//
+		// return newbm;
 	}
-	
-    private Bitmap compressImage(Bitmap image) {  
-        
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();  
-        image.compress(Bitmap.CompressFormat.JPEG, 100, baos);//质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中  
-        int options = 100;  
-        while ( baos.toByteArray().length / 1024>100) {  //循环判断如果压缩后图片是否大于100kb,大于继续压缩         
-            baos.reset();//重置baos即清空baos  
-            image.compress(Bitmap.CompressFormat.JPEG, options, baos);//这里压缩options%，把压缩后的数据存放到baos中  
-            options -= 10;//每次都减少10  
-        }  
-        ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());//把压缩后的数据baos存放到ByteArrayInputStream中  
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);//把ByteArrayInputStream数据生成图片  
-        return bitmap;  
-    }  
+
+	private Bitmap compressImage(Bitmap image) {
+
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
+		int options = 100;
+		while (baos.toByteArray().length / 1024 > 100) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+			baos.reset();// 重置baos即清空baos
+			image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
+			options -= 10;// 每次都减少10
+		}
+		ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+		Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
+		return bitmap;
+	}
 }
