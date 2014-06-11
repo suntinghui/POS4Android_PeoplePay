@@ -600,10 +600,11 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		// }
 
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("photos", imgToBase64(mImagePath));
 		tempMap.put("TRANCODE", "199021");
-		tempMap.put("PHONENUMBER", "18500612529");//
+		tempMap.put("PHONENUMBER", "13917662264");//
 		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
-		tempMap.put("photos", imgToBase64(mImagePath));// bitmap_zoom imgToBase64(mImagePath)
+		// bitmap_zoom imgToBase64(mImagePath)
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage, tempMap, getUpLoadImageHandler());
 
 		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
@@ -647,25 +648,25 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				int bmpWidth = options.outWidth;
 				int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight / height : bmpWidth / width;
 
-				// if (inSampleSize > 1)
-				// if (inSampleSize == 2) {// 小米3
-				// options.inSampleSize = inSampleSize * 6;// 设置缩放比例
-				// } else if (inSampleSize == 3) {// 华为C8220
-				// if (height > 800) {
-				// options.inSampleSize = inSampleSize * 4;
-				// } else {
-				// options.inSampleSize = inSampleSize * 2;// 设置缩放比例
-				// }
-				// } else if (inSampleSize == 4) {
-				// options.inSampleSize = inSampleSize * 2;
-				// }
-				// else if(inSampleSize == 5){
-				// options.inSampleSize = inSampleSize * 2;
-				// }
-				// else{
-				// options.inSampleSize = inSampleSize * 2;
-				// }
-				options.inSampleSize = 40;
+				 if (inSampleSize > 1)
+				 if (inSampleSize == 2) {// 小米3
+				 options.inSampleSize = inSampleSize * 6;// 设置缩放比例
+				 } else if (inSampleSize == 3) {// 华为C8220
+				 if (height > 800) {
+				 options.inSampleSize = inSampleSize * 4;
+				 } else {
+				 options.inSampleSize = inSampleSize * 2;// 设置缩放比例
+				 }
+				 } else if (inSampleSize == 4) {
+				 options.inSampleSize = inSampleSize * 2;
+				 }
+				 else if(inSampleSize == 5){
+				 options.inSampleSize = inSampleSize * 2;
+				 }
+				 else{
+				 options.inSampleSize = inSampleSize * 2;
+				 }
+//				options.inSampleSize = 40;
 				// 这里一定要将其设置回false，因为之前我们将其设置成了true
 				// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
 				options.inJustDecodeBounds = false;
