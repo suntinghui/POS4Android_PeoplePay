@@ -78,8 +78,31 @@ public class LKHttpRequest {
 	/****************************************/
 
 	public void post() {
-		this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
+		if (!Constants.IMAGEUPLOAD){
+			this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
+		} else {
+			this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getImageEntity(this), null, this.responseHandler);			
+		}
 	}
+	
+	private HttpEntity getImageEntity(LKHttpRequest request){
+		try{
+			HashMap<String, Object> map = request.getRequestDataMap();
+			
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(); 
+	        nameValuePairs.add(new BasicNameValuePair("TRANCODE", (String) map.get("TRANCODE"))); 
+	        nameValuePairs.add(new BasicNameValuePair("PHONENUMBER", (String) map.get("PHONENUMBER"))); 
+	        nameValuePairs.add(new BasicNameValuePair("PHOTOS", (String) map.get("PHOTOS"))); 
+	        nameValuePairs.add(new BasicNameValuePair("FILETYPE", (String) map.get("FILETYPE"))); 
+	        HttpEntity entity = new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8);
+	        
+	        return entity;
+		} catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 
 	private HttpEntity getHttpEntity(LKHttpRequest request) {
 

@@ -1,6 +1,8 @@
 package com.people.client;
 
 public class Constants {
+	
+	public static boolean IMAGEUPLOAD							    = false;
 
 	// 当前系统的版本号
 	public static final int VERSION 					          	= 3;
