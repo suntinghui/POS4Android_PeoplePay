@@ -52,7 +52,10 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.util.AESUtil;
 import com.people.util.BitmapUtil;
+import com.people.util.MD5Util;
+import com.people.util.MyLog;
 import com.people.util.StringUtil;
 import com.people.view.CircularImage;
 import com.people.view.LKAlertDialog;
@@ -575,35 +578,38 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 	// 上传图片
 	private void getUpLoadImage() {
-		// String fileName = "test.txt"; //文件名字
-		//
-		// String res="";
-		//
-		// try{
-		//
-		// InputStream in = getResources().getAssets().open(fileName);
-		//
-		// // \Test\assets\yan.txt这里有这样的文件存在
-		//
-		// int length = in.available();
-		//
-		// byte [] buffer = new byte[length];
-		//
-		// in.read(buffer);
-		//
-		// res = EncodingUtils.getString(buffer, "UTF-8");
-		//
-		// }catch(Exception e){
-		//
-		// e.printStackTrace();
-		//
-		// }
+		Constants.isImage = true;
+		 String fileName = "test.txt"; //文件名字
+		
+		 String res="";
+		
+		 try{
+		
+		 InputStream in = getResources().getAssets().open(fileName);
+		
+		 // \Test\assets\yan.txt这里有这样的文件存在
+		
+		 int length = in.available();
+		
+		 byte [] buffer = new byte[length];
+		
+		 in.read(buffer);
+		
+		 res = EncodingUtils.getString(buffer, "UTF-8");
+//		 MyLog.i("aes decode:  ", AESUtil.decryptString(res, MD5Util.MD5Crypto(Constants.AESKEY)));
+		
+		 }catch(Exception e){
+		
+		 e.printStackTrace();
+		
+		 }
 
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("photos", imgToBase64(mImagePath));
+		// res imgToBase64(mImagePath)
 		tempMap.put("TRANCODE", "199021");
-		tempMap.put("PHONENUMBER", "13917662264");//
+		tempMap.put("PHONENUMBER", "13917662264");
 		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
+		tempMap.put("photos", res); // photos
 		// bitmap_zoom imgToBase64(mImagePath)
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage, tempMap, getUpLoadImageHandler());
 
@@ -666,7 +672,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				 else{
 				 options.inSampleSize = inSampleSize * 2;
 				 }
-//				options.inSampleSize = 40;
+				options.inSampleSize = 40;
 				// 这里一定要将其设置回false，因为之前我们将其设置成了true
 				// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
 				options.inJustDecodeBounds = false;

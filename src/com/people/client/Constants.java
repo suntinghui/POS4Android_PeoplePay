@@ -41,5 +41,6 @@ public class Constants {
 	public static final String kBPUSH_USERID						="userid";
 	public static final String kBPUSH_CHANNELID						="channelid";
 	
-
+	public static String APPTOKEN								="";
+	public static Boolean  isImage  = false;
 }

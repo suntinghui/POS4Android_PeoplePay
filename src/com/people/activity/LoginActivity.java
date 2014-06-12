@@ -85,7 +85,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.btn_forget_pwd:
-			myAccount();
+			register();
 //			Intent intent = new Intent(LoginActivity.this,
 //					ForgetPwdActivity.class);
 //			startActivity(intent);
@@ -150,8 +150,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				String RSPCOD = (String) map.get("RSPCOD");
 				String RSPMSG = (String) map.get("RSPMSG");
 				String PHONENUMBER = (String) map.get("PHONENUMBER");
+				Constants.APPTOKEN = (String) map.get("APPTOKEN");
 
-				if (RSPCOD.equals("000000")) {
+				if (RSPCOD.equals("00")) {
 					Editor editor = ApplicationEnvironment.getInstance()
 							.getPreferences(LoginActivity.this).edit();
 					editor.putString(Constants.kUSERNAME, PHONENUMBER);
@@ -191,7 +192,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private void register() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199001");
-		tempMap.put("PHONENUMBER", "18500612529");
+		tempMap.put("PHONENUMBER", "15974022475");
 		tempMap.put("PASSWORD", "123456");
 		tempMap.put("CPASSWORD", "123456");
 		tempMap.put("MSCODE", "636363");

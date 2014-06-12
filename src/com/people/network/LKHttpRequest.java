@@ -91,8 +91,11 @@ public class LKHttpRequest {
 		
 		String PCSIM = MD5Util.MD5Crypto(temp);
 		String PCSIMXML = "<PACKAGEMAC>" + PCSIM + "</PACKAGEMAC>";
-		
-		String result = temp.replace("</EPOSPROTOCOL>", PCSIMXML + "</EPOSPROTOCOL>");
+		String APPTOKEN ="";
+//		if(Constants.APPTOKEN.length() != 0){
+//			APPTOKEN = "<APPTOKEN>"+Constants.APPTOKEN+"</APPTOKEN>";
+//		}
+		String result = temp.replace("</EPOSPROTOCOL>", PCSIMXML + APPTOKEN + "</EPOSPROTOCOL>");
 
 //		Log.e("reqest body:", result);
 		MyLog.i("result:", result);
@@ -100,7 +103,9 @@ public class LKHttpRequest {
 		String AESValue = "";
 		try {
 			AESValue = AESUtil.encryptString(result, MD5Util.MD5Crypto(Constants.AESKEY));
-			Log.e("REQUEST:", AESValue);
+//			Log.e("REQUEST:", AESValue);
+			
+			MyLog.i("AESValue", AESValue);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -113,7 +118,12 @@ public class LKHttpRequest {
 //				AESValue = result;
 //			}
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(); 
-            nameValuePairs.add(new BasicNameValuePair("requestParam", AESValue)); 
+			if(Constants.isImage){
+				nameValuePairs.add(new BasicNameValuePair("requestParam", result));
+			}else{
+				nameValuePairs.add(new BasicNameValuePair("requestParam", AESValue));
+			}
+             
             entity = new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8);
             
 		} catch (UnsupportedEncodingException e) {

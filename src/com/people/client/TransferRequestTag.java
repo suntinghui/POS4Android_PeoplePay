@@ -51,7 +51,7 @@ public class TransferRequestTag {
 		if (null == requestTagMap) {	
 			requestTagMap = new HashMap<Integer, String>();
 
-			requestTagMap.put(Login, "http://211.147.87.24:8092/posm/199002.tran5");
+			requestTagMap.put(Login, "http://211.147.87.29:8092/Vpm/199002.tranm");// http://211.147.87.29:8092  http://211.147.87.24:8092/posm/199002.tran5
 			requestTagMap.put(Register, "http://211.147.87.29:8092/Vpm/199001.tranm");
 			requestTagMap.put(ModifyLoginPwd, "http://211.147.87.24:8092/posm/199003.tran5");
 			requestTagMap.put(ForgetLoginPwd, "http://211.147.87.24:8092/posm/199004.tran5");
