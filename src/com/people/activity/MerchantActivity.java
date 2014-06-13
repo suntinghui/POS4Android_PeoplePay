@@ -186,7 +186,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.MerchantQuery, tempMap1, getLoginHandler());
+				TransferRequestTag.MerchantQuery, tempMap1, getMerchantQueryHandler());
 		HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 		tempMap2.put("PHONENUMBER", ApplicationEnvironment.getInstance()
 				.getPreferences(this).getString(Constants.kUSERNAME, ""));
@@ -202,27 +202,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 		});
 	}
-	// 商户信息查询
-	private void merchantQuery() {
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199011");
-		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.MerchantQuery, tempMap, getLoginHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据...",
-				new LKHttpRequestQueueDone() {
-
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
-				});
-	}
-
-	private LKAsyncHttpResponseHandler getLoginHandler() {
+	private LKAsyncHttpResponseHandler getMerchantQueryHandler() {
 		return new LKAsyncHttpResponseHandler() {
 
 			@Override
