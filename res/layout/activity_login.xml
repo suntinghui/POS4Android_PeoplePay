@@ -34,8 +34,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="18dip"
             android:background="@null"
-            android:inputType="phone"
             android:hint="@string/str_user_hint"
+            android:inputType="phone"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textColorHint="@color/white" />
@@ -88,15 +88,31 @@
         android:background="@drawable/btn"
         android:text="@string/str_login" />
 
-    <Button
-        android:id="@+id/btn_forget_pwd"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dip"
-        android:background="@color/clear"
-        android:text="@string/login_forget_pwd"
-        android:textColor="@drawable/text_white_blue"
-        android:textSize="17sp" />
+        android:layout_marginLeft="40dip"
+        android:layout_marginRight="40dip"
+        android:layout_marginTop="20dip" >
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/clear"
+            android:text="@string/login_register"
+            android:textColor="@drawable/text_white_blue"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btn_forget_pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@color/clear"
+            android:text="@string/login_forget_pwd"
+            android:textColor="@drawable/text_white_blue"
+            android:textSize="19sp" />
+    </RelativeLayout>
 
 </LinearLayout>

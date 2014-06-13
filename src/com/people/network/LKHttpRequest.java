@@ -136,16 +136,8 @@ public class LKHttpRequest {
 		HttpEntity entity = null;
 		try {
 			
-//			//test
-//			if( == TransferRequestTag.LoadUpHead){
-//				AESValue = result;
-//			}
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(); 
-			if(Constants.isImage){
-				nameValuePairs.add(new BasicNameValuePair("requestParam", result));
-			}else{
-				nameValuePairs.add(new BasicNameValuePair("requestParam", AESValue));
-			}
+			nameValuePairs.add(new BasicNameValuePair("requestParam", AESValue));
              
             entity = new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8);
             
