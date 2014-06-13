@@ -2,8 +2,6 @@ package com.people.client;
 
 public class Constants {
 	
-	public static boolean IMAGEUPLOAD							    = false;
-
 	// 当前系统的版本号
 	public static final int VERSION 					          	= 3;
 
@@ -43,5 +41,5 @@ public class Constants {
 	public static final String kBPUSH_USERID						="userid";
 	public static final String kBPUSH_CHANNELID						="channelid";
 	
-	public static String APPTOKEN								="";
+	public static String APPTOKEN									="";
 }

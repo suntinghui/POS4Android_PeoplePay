@@ -41,18 +41,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		setContentView(R.layout.activity_login);
 
 		logoImageView = (ImageView) this.findViewById(R.id.logoImageView);
-		Animation myAnimation = AnimationUtils.loadAnimation(this,
-				R.anim.login_logo_anim);
+		Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.login_logo_anim);
 		logoImageView.startAnimation(myAnimation);
 
 		usernameEdit = (EditText) this.findViewById(R.id.et_user);
-		usernameEdit.setText(ApplicationEnvironment.getInstance()
-				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		usernameEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 		usernameEdit.setSelection(usernameEdit.getText().toString().length());
 
 		passwordEdit = (EditText) this.findViewById(R.id.et_pwd);
-		 passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD,
-		 ""));
+		passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
 
 		Button btn_login = (Button) this.findViewById(R.id.btn_login);
 		btn_login.setOnClickListener(this);
@@ -75,7 +72,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			}
 
 			// TEST
-//			 register();
+			// register();
 			// getProvinceName();
 			// getCityName();
 			// getBank();
@@ -83,14 +80,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			// getUpLoadImage();
 			// checkTicket();
 			// sendTicket();
-//			drawMoney();
-//			myAccount();
+			// drawMoney();
+			// myAccount();
 			break;
 
 		case R.id.btn_forget_pwd:
-			
-			Intent intent = new Intent(LoginActivity.this,
-					ForgetPwdActivity.class);
+
+			Intent intent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.btn_register:
@@ -122,19 +118,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("PASSWORD", passwordEdit.getText().toString().trim());
 		tempMap.put("PCSIM", "不能获取");
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Login,
-				tempMap, getLoginHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Login, tempMap, getLoginHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在登录请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在登录请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getLoginHandler() {
@@ -143,12 +137,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -158,21 +149,16 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				Constants.APPTOKEN = (String) map.get("APPTOKEN");
 
 				if (RSPCOD.equals("00")) {
-					Editor editor = ApplicationEnvironment.getInstance()
-							.getPreferences(LoginActivity.this).edit();
+					Editor editor = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).edit();
 					editor.putString(Constants.kUSERNAME, PHONENUMBER);
-					editor.putString(Constants.kPASSWORD, passwordEdit
-							.getText().toString().trim());
+					editor.putString(Constants.kPASSWORD, passwordEdit.getText().toString().trim());
 					editor.commit();
 
-					Intent intent0 = new Intent(LoginActivity.this,
-							ChooseQPOSModeActivity.class);
-					intent.putExtra("FROM",
-							ChooseQPOSModeActivity.FROM_SETTINGACTIVITY);
+					Intent intent0 = new Intent(LoginActivity.this, ChooseQPOSModeActivity.class);
+					intent.putExtra("FROM", ChooseQPOSModeActivity.FROM_SETTINGACTIVITY);
 					LoginActivity.this.startActivity(intent0);
 				} else {
-					Toast.makeText(LoginActivity.this, RSPMSG,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(LoginActivity.this, RSPMSG, Toast.LENGTH_SHORT).show();
 				}
 
 			}
@@ -183,9 +169,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private void startPushService() {
 		try {
 			// 以apikey的方式登录，开启推送。
-			PushManager.startWork(getApplicationContext(),
-					PushConstants.LOGIN_TYPE_API_KEY,
-					BPushUtil.getMetaValue(this, "api_key"));
+			PushManager.startWork(getApplicationContext(), PushConstants.LOGIN_TYPE_API_KEY, BPushUtil.getMetaValue(this, "api_key"));
 			PushSettings.enableDebugMode(getApplicationContext(), false);
 
 		} catch (Exception e) {
@@ -197,7 +181,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private void register() {
 		Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
 		startActivity(intent);
-		
+
 	}
 
 	// 获取省份名称
@@ -205,20 +189,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199031");
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.GetProvinceName, tempMap,
-				getProvinceNameHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetProvinceName, tempMap, getProvinceNameHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getProvinceNameHandler() {
@@ -227,12 +208,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -251,19 +229,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("TRANCODE", "199032");
 		tempMap.put("PARCOD", "6500");
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetCityName,
-				tempMap, getCityNameHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetCityName, tempMap, getCityNameHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getCityNameHandler() {
@@ -272,12 +248,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -295,19 +268,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199035");
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetBank,
-				tempMap, getBankHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetBank, tempMap, getBankHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getBankHandler() {
@@ -316,12 +287,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -341,20 +309,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("CITYCOD", "6510");
 		tempMap.put("BBANKCOD", "303");
 		// BankNo: 303651000870
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.GetBankBranch, tempMap,
-				getBankBranchHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetBankBranch, tempMap, getBankBranchHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getBankBranchHandler() {
@@ -363,12 +328,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -388,19 +350,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("PHONENUMBER", "18500612529");
 		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
 		tempMap.put("PHOTOS", "MYPIC");
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage,
-				tempMap, getUpLoadImageHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage, tempMap, getUpLoadImageHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getUpLoadImageHandler() {
@@ -409,12 +369,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -432,19 +389,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199036");
 		tempMap.put("LOGNO", "14000554");
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CheckTicket,
-				tempMap, getCheckTicketHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CheckTicket, tempMap, getCheckTicketHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getCheckTicketHandler() {
@@ -453,12 +408,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -477,19 +429,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("TRANCODE", "199037");
 		tempMap.put("PHONENUMBER", "13945621452");
 		tempMap.put("LOGNO", "14000554");
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SendTicket,
-				tempMap, getSendTicketHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SendTicket, tempMap, getSendTicketHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getSendTicketHandler() {
@@ -498,12 +448,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -525,19 +472,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("PAYTYPE", "1"); // 1 快速提现 2 普通提现
 		tempMap.put("PASSWORD", "111111");
 		tempMap.put("PAYDATE", "20140506");
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.DrawMoney,
-				tempMap, getDrawMoneyHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.DrawMoney, tempMap, getDrawMoneyHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getDrawMoneyHandler() {
@@ -546,12 +491,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
@@ -569,19 +511,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199026");
 		tempMap.put("PHONENUMBER", "13945621452");
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.MyAccount,
-				tempMap, getMyAccountHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.MyAccount, tempMap, getMyAccountHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						passwordEdit.setText("");
-					}
-				});
+				passwordEdit.setText("");
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getMyAccountHandler() {
@@ -590,12 +530,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
+				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
 				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
+				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
 				BaseActivity.getTopActivity().startService(intent);
 
 				HashMap<String, Object> map = (HashMap<String, Object>) obj;
