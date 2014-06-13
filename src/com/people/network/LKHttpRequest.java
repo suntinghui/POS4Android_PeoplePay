@@ -78,11 +78,12 @@ public class LKHttpRequest {
 	/****************************************/
 
 	public void post() {
-		if (!Constants.IMAGEUPLOAD){
-			this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
+		if (this.getMethodTag() == TransferRequestTag.UpLoadImage) { // 图片上传
+			this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getImageEntity(this), null, this.responseHandler);
 		} else {
-			this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getImageEntity(this), null, this.responseHandler);			
+			this.client.post(ApplicationEnvironment.getInstance().getApplication(), TransferRequestTag.getRequestTagMap().get(this.getMethodTag()), this.getHttpEntity(this), null, this.responseHandler);
 		}
+		
 	}
 	
 	private HttpEntity getImageEntity(LKHttpRequest request){
