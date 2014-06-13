@@ -85,12 +85,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.btn_forget_pwd:
-			register();
-//			Intent intent = new Intent(LoginActivity.this,
-//					ForgetPwdActivity.class);
-//			startActivity(intent);
+			
+			Intent intent = new Intent(LoginActivity.this,
+					ForgetPwdActivity.class);
+			startActivity(intent);
 			break;
-
+		case R.id.btn_register:
+			register();
+			break;
 		default:
 			break;
 		}
@@ -190,50 +192,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	// 注册
 	private void register() {
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199001");
-		tempMap.put("PHONENUMBER", "15974022475");
-		tempMap.put("PASSWORD", "123456");
-		tempMap.put("CPASSWORD", "123456");
-		tempMap.put("MSCODE", "636363");
-
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Register,
-				tempMap, getRegisterHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在登录请稍候...", new LKHttpRequestQueueDone() {
-
-					@Override
-					public void onComplete() {
-						super.onComplete();
-
-						passwordEdit.setText("");
-					}
-				});
-	}
-
-	private LKAsyncHttpResponseHandler getRegisterHandler() {
-		return new LKAsyncHttpResponseHandler() {
-
-			@Override
-			public void successAction(Object obj) {
-				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance()
-						.getPreferences(LoginActivity.this)
-						.getBoolean(Constants.kGESTRUECLOSE, false);
-				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(),
-						TimeoutService.class);
-				BaseActivity.getTopActivity().startService(intent);
-
-				HashMap<String, Object> map = (HashMap<String, Object>) obj;
-				String RSPCOD = (String) map.get("RSPCOD");
-				String RSPMSG = (String) map.get("RSPMSG");
-				String PHONENUMBER = (String) map.get("PHONENUMBER");
-
-			}
-
-		};
+		Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+		startActivity(intent);
+		
 	}
 
 	// 获取省份名称
