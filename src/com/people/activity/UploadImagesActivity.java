@@ -250,7 +250,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 
 	// 上传图片
 	private void getUpLoadImage() {
-		Constants.IMAGEUPLOAD = true;
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199021");
 		tempMap.put("PHONENUMBER", "13917662264");//
@@ -263,7 +262,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void onComplete() {
 				super.onComplete();
-				Constants.IMAGEUPLOAD = false;
 
 			}
 		});
