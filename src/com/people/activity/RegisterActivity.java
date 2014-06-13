@@ -26,7 +26,10 @@ import com.people.view.LKAlertDialog;
 public class RegisterActivity extends BaseActivity implements OnClickListener {
 	EditText et_phone;
 	EditText et_security_code;
-
+	EditText et_pwd;
+	EditText et_pwd_confirm;
+	private Boolean isSelected = false;
+	private Button btn_select;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -34,18 +37,22 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 		Button btn_back = (Button) this.findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
-		Button btn_next = (Button) this.findViewById(R.id.btn_next);
-		btn_next.setOnClickListener(this);
+		Button btn_confirm = (Button) this.findViewById(R.id.btn_confirm);
+		btn_confirm.setOnClickListener(this);
 		Button btn_securitycode = (Button) findViewById(R.id.btn_securitycode);
 		btn_securitycode.setOnClickListener(this);
+		btn_select = (Button) findViewById(R.id.btn_select);
+		btn_select.setOnClickListener(this);
 		et_phone = (EditText) findViewById(R.id.et_account);
 		et_security_code = (EditText) findViewById(R.id.et_securitycode);
+		et_pwd = (EditText) findViewById(R.id.et_pwd);
+		et_pwd_confirm = (EditText) findViewById(R.id.et_pwd_confirm);
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_next:
+		case R.id.btn_confirm:
 			if (checkValue()) {
 				registerAction();
 			}
@@ -63,6 +70,14 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.btn_back:
 			this.finish();
+			break;
+		case R.id.btn_select:
+			if(isSelected){
+				btn_select.setBackgroundResource(R.drawable.select_button_s);
+			}else{
+				btn_select.setBackgroundResource(R.drawable.select_button_n);
+			}
+			isSelected = !isSelected;
 			break;
 		default:
 			break;
@@ -123,16 +138,16 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	private void registerAction() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199001");
-		tempMap.put("PHONENUMBER", "15974022475");
-		tempMap.put("PASSWORD", "123456");
-		tempMap.put("CPASSWORD", "123456");
-		tempMap.put("MSCODE", "636363");
+		tempMap.put("PHONENUMBER", et_phone.getText());
+		tempMap.put("PASSWORD", et_pwd.getText());
+		tempMap.put("CPASSWORD", et_pwd_confirm.getText());
+		tempMap.put("MSCODE", et_security_code.getText());
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Register,
 				tempMap, getRegisterHandler());
 
 		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在登录请稍候...", new LKHttpRequestQueueDone() {
+				"正在注册，请稍候...", new LKHttpRequestQueueDone() {
 
 					@Override
 					public void onComplete() {
@@ -162,6 +177,26 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 		if (et_security_code.getText().length() == 0) {
 			Toast.makeText(this, "请输入验证码!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		
+		if(!isSelected){
+			Toast.makeText(this, "请勾选同意用户注册协议", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		
+		if(et_pwd.length() == 0){
+			Toast.makeText(this, "请输入登录密码!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		
+		if(et_pwd_confirm.length() == 0){
+			Toast.makeText(this, "请输入确认密码!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		
+		if(!et_pwd_confirm.getText().equals(et_pwd.getText())){
+			Toast.makeText(this, "密码两次输入不正确!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		return true;

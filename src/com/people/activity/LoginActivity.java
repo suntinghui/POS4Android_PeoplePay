@@ -59,6 +59,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		Button btn_forget_pwd = (Button) findViewById(R.id.btn_forget_pwd);
 		btn_forget_pwd.setOnClickListener(this);
+		
+		Button btn_register = (Button) findViewById(R.id.btn_register);
+		btn_register.setOnClickListener(this);
 
 		startPushService();
 	}
