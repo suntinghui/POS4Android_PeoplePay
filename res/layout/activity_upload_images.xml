@@ -37,12 +37,12 @@
 	    android:layout_marginRight="25dip"
 	    android:layout_marginTop="20dip">
 	    
-	    <Button android:id="@+id/btn_one"
+	    <ImageView android:id="@+id/iv_one"
 	        android:layout_width="120dip"
 	        android:layout_height="130dip"
 	        android:background="@drawable/add_card_icon_one"/>
 	    
-	    <Button android:id="@+id/btn_two"
+	    <ImageView android:id="@+id/iv_two"
 	        android:layout_width="120dip"
 	        android:layout_height="130dip"
 	        android:layout_marginLeft="40dip"
@@ -57,12 +57,12 @@
 	    android:layout_marginRight="25dip"
 	    android:layout_marginTop="20dip">
 	    
-	    <Button android:id="@+id/btn_three"
+	    <ImageView android:id="@+id/iv_three"
 	        android:layout_width="120dip"
 	        android:layout_height="130dip"
 	        android:background="@drawable/add_card_icon"/>
 	    
-	    <Button android:id="@+id/btn_four"
+	    <ImageView android:id="@+id/iv_four"
 	        android:layout_width="120dip"
 	        android:layout_height="130dip"
 	        android:layout_marginLeft="40dip"
@@ -75,7 +75,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
-        android:layout_marginTop="35dip"
+        android:layout_marginTop="45dip"
         android:background="@drawable/btn"
         android:text="下一步" />
 

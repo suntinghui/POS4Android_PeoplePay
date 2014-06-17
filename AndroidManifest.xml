@@ -286,6 +286,32 @@
             </intent-filter>
         </activity>
         
+         <activity android:name=".activity.UpLoadFirstActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.UpLoadFirstActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.UpLoadSecondActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.UpLoadSecondActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         <activity android:name=".activity.BankBranchActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.BankBranchActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         
+         
           <!-- push service client -->
         <receiver android:name="com.people.push.PushMessageReceiver">
             <intent-filter>

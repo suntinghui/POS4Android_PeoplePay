@@ -28,9 +28,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.people.R;
-import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
@@ -53,7 +54,17 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 	private String mImagePath;
 	
 	private AlertDialog dialog;
-
+	private int index  = 1;
+	
+	private ImageView iv_one;
+	private ImageView iv_two;
+	private ImageView iv_three;
+	private ImageView iv_four;
+	
+	private String str_one;
+	private String str_two;
+	private String str_three;
+	private String str_four;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -61,14 +72,16 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 
 		sdcardTempFile = new File("/mnt/sdcard/", "tmp_pic_" + SystemClock.currentThreadTimeMillis() + ".jpg");
 		
-		Button btn_one = (Button) findViewById(R.id.btn_one);
-		btn_one.setOnClickListener(this);
-		Button btn_two = (Button) findViewById(R.id.btn_two);
-		btn_two.setOnClickListener(this);
-		Button btn_three = (Button) findViewById(R.id.btn_three);
-		btn_three.setOnClickListener(this);
-		Button btn_four = (Button) findViewById(R.id.btn_four);
-		btn_four.setOnClickListener(this);
+		iv_one = (ImageView) findViewById(R.id.iv_one);
+		iv_one.setOnClickListener(this);
+		iv_two = (ImageView) findViewById(R.id.iv_two);
+		iv_two.setOnClickListener(this);
+		iv_three = (ImageView) findViewById(R.id.iv_three);
+		iv_three.setOnClickListener(this);
+		iv_four = (ImageView) findViewById(R.id.iv_four);
+		iv_four.setOnClickListener(this);
+		Button btn_next = (Button) findViewById(R.id.btn_next);
+		btn_next.setOnClickListener(this);
 	}
 
 	@Override
@@ -77,18 +90,42 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		case R.id.btn_back:
 			this.finish();
 			break;
-		case R.id.btn_one:
+		case R.id.iv_one:
+			index = 1;
 			showDialog();
 			break;
-		case R.id.btn_two:
+		case R.id.iv_two:
+			index = 2;
 			showDialog();
 			break;
-		case R.id.btn_three:
+		case R.id.iv_three:
+			index = 3;
 			showDialog();
 			break;
-		case R.id.btn_four:
+		case R.id.iv_four:
+			index = 4;
 			showDialog();
 			break;
+		case R.id.btn_next:
+			if(str_one == null || str_one.length() == 0){
+				Toast.makeText(UploadImagesActivity.this, "获取身份证正面照片", Toast.LENGTH_SHORT).show();
+			}
+			
+			if(str_two == null || str_two.length() == 0){
+				Toast.makeText(UploadImagesActivity.this, "获取身份证反面照片", Toast.LENGTH_SHORT).show();
+			}
+			
+			if(str_three == null || str_three.length() == 0){
+				Toast.makeText(UploadImagesActivity.this, "获取收款银行卡照片", Toast.LENGTH_SHORT).show();
+			}
+			
+			if(str_four == null || str_four.length() == 0){
+				Toast.makeText(UploadImagesActivity.this, "获取申请人手持身份证照片", Toast.LENGTH_SHORT).show();
+			}
+			
+			Log.i("str:  +++", "one="+str_one +"   two="+str_two+"   three"+str_three+"   four="+str_four);
+			break;
+			
 		default:
 			break;
 		}
@@ -137,13 +174,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 	}
 
 
-	// 下载图像
-
-	private void actionCamera() {
-		Intent getImageByCamera = new Intent("android.media.action.IMAGE_CAPTURE");
-		startActivityForResult(getImageByCamera, 1);
-	}
-
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
@@ -187,17 +217,29 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				System.out.print(e.getMessage());
 			}
 
-			// if (isHead) {
-			// ibtn_head.setImageBitmap(bm);
-			// BitmapUtil.saveMyBitmap(bm);
-			// loadUpHead();
-			// } else {
-			// iv_top.setImageBitmap(bm);
-			// loadUpStreet();
-			// }
+			switch (index) {// MYPIC、IDPIC、IDPIC2、CARDPIC
+			case 1:
+				
+				iv_one.setImageBitmap(myBitmap);
+				getUpLoadImage("IDPIC");
+				break;
+			case 2:
+				iv_two.setImageBitmap(myBitmap);
+				getUpLoadImage("IDPIC2");
+				break;
+			case 3:
+				iv_three.setImageBitmap(myBitmap);
+				getUpLoadImage("CARDPIC");
+				break;
+			case 4:
+				iv_four.setImageBitmap(myBitmap);
+				getUpLoadImage("MYPIC");
+				break;
+			default:
+				break;
+			}
 
 		}
-		// }
 	}
 
 	private String getPath(Uri originalUri) {
@@ -249,11 +291,11 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 	}
 
 	// 上传图片
-	private void getUpLoadImage() {
+	private void getUpLoadImage(String type) {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199021");
 		tempMap.put("PHONENUMBER", "13917662264");//
-		tempMap.put("FILETYPE", "MYPIC"); // MYPIC、IDPIC、IDPIC2、CARDPIC
+		tempMap.put("FILETYPE", type); // MYPIC、IDPIC、IDPIC2、CARDPIC
 		tempMap.put("PHOTOS", imgToBase64(mImagePath));// bitmap_zoom imgToBase64(mImagePath)
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage, tempMap, getUpLoadImageHandler());
 
@@ -272,7 +314,34 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 
 			@Override
 			public void successAction(Object obj) {
+				HashMap<String, String> respMap = (HashMap<String, String>) obj;
+				if("00".equals(respMap.get("RSPCOD"))){
+					if(respMap.get("RSPMSG") != null && respMap.get("RSPMSG").length() !=0){
+						String showStr = "";
+						Toast.makeText(UploadImagesActivity.this, "图片上传成功", Toast.LENGTH_SHORT).show();
+						switch (index) {
+						case 1:
+							str_one = respMap.get("FILENAME");
+							showStr = "身份证正面照片上传成功";
+							break;
+						case 2:
+							str_two = respMap.get("FILENAME");
+							showStr = "身份证反面照片上传成功";
+							break;
+						case 3:
+							str_three = respMap.get("FILENAME");
+							showStr = "收款银行卡照片上传成功";
+							break;
+						case 4:
+							str_four = respMap.get("FILENAME");
+							showStr = "申请人手持身份证照片上传成功";
+							break;
 
+						default:
+							break;
+						}
+					}
+				}
 			}
 
 		};

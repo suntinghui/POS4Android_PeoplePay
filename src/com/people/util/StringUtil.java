@@ -13,9 +13,13 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Vector;
 import java.util.regex.Pattern;
+
+import org.json.JSONObject;
 
 import android.util.Base64;
 
@@ -382,4 +386,26 @@ public class StringUtil {
 		return hex.toString();
 	}
 
+	public static HashMap<String, String> JSONObject2Map(JSONObject jsonObject) {
+		HashMap<String, String> responseMap = new HashMap<String, String>();
+
+		try {
+			@SuppressWarnings("unchecked")
+			Iterator<String> keys = jsonObject.keys();
+			while (keys.hasNext()) {
+				String key = (String) keys.next();
+				responseMap.put(key, jsonObject.getString(key));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return responseMap;
+	}
+	
+	public static boolean checkIdCard(String idCard) {
+        String regex = "[1-9]\\d{13,16}[a-zA-Z0-9]{1}";
+        return Pattern.matches(regex,idCard);
+    }
+     
 }

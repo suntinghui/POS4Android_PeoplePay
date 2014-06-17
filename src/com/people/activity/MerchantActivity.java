@@ -114,7 +114,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.layout_upload_image:
 			Intent intentUpload = new Intent(MerchantActivity.this,
-					UploadImagesActivity.class);
+					UpLoadFirstActivity.class);
 			startActivity(intentUpload);
 			break;
 		case R.id.layout_2:

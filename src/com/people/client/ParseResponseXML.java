@@ -6,15 +6,22 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.util.Log;
 import android.util.Xml;
 
+import com.people.model.Bank;
 import com.people.model.CashModel;
+import com.people.model.CityModel;
+import com.people.model.Province;
 import com.people.model.TradeModel;
+import com.people.util.StringUtil;
 
 public class ParseResponseXML {
 
@@ -22,7 +29,7 @@ public class ParseResponseXML {
 
 	public static Object parseXML(int reqType, String responseStr) {
 		Log.e("response:", responseStr);
-
+		
 		try {
 			inStream = new ByteArrayInputStream(responseStr.getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e1) {
@@ -95,7 +102,7 @@ public class ParseResponseXML {
 				
 			case TransferRequestTag.CashCharge:
 				return cashCharge();
-				
+			
 			case TransferRequestTag.GetCashCharge:
 				return getCashChargeList();
 				
@@ -108,6 +115,16 @@ public class ParseResponseXML {
 				
 			case TransferRequestTag.GetCityName:
 				return getCityName();
+				
+			case TransferRequestTag.GetBank:
+				return getBank();
+				
+			case TransferRequestTag.GetBankBranch:
+				return getBranchBank();
+				
+			case TransferRequestTag.UpLoadImage:
+				return upLoadImages(responseStr);
+				
 			}
 
 		} catch (XmlPullParserException e) {
@@ -116,6 +133,9 @@ public class ParseResponseXML {
 		} catch (IOException e) {
 			e.printStackTrace();
 
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} finally {
 			try {
 				if (null != inStream)
@@ -189,8 +209,10 @@ public class ParseResponseXML {
 	}
 	
 	private static Object getProvinceName() throws XmlPullParserException, IOException {
-		HashMap<String, String> respMap = null;
+		HashMap<String, Object> respMap = null;
 
+		ArrayList<Province> list = new ArrayList<Province>();
+		Province model = null;
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
 		int eventType = parser.getEventType();
@@ -198,13 +220,26 @@ public class ParseResponseXML {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
-					respMap = new HashMap<String, String>();
+					respMap = new HashMap<String, Object>();
 				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPCOD", parser.nextText());
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+					model = new Province();
+				} else if ("AREACOD".equalsIgnoreCase(parser.getName())){
+					model.setCode(Integer.valueOf(parser.nextText()));
+				} else if ("AREANAM".equalsIgnoreCase(parser.getName())){
+					model.setName(parser.nextText());
+				}
+				break;
+			case XmlPullParser.END_TAG:
+				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
+					list.add(model); // 服务器返回顺序不对，这里进行倒序
+				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("list", list);
 				}
 				break;
 			}
@@ -216,8 +251,10 @@ public class ParseResponseXML {
 	}
 	
 	private static Object getCityName() throws XmlPullParserException, IOException {
-		HashMap<String, String> respMap = null;
+		HashMap<String, Object> respMap = null;
 
+		ArrayList<CityModel> list = new ArrayList<CityModel>();
+		CityModel model = null;
 		XmlPullParser parser = Xml.newPullParser();
 		parser.setInput(inStream, "UTF-8");
 		int eventType = parser.getEventType();
@@ -225,19 +262,123 @@ public class ParseResponseXML {
 			switch (eventType) {
 			case XmlPullParser.START_TAG:
 				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
-					respMap = new HashMap<String, String>();
+					respMap = new HashMap<String, Object>();
 				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPCOD", parser.nextText());
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+					model = new CityModel();
+				} else if ("AREACOD".equalsIgnoreCase(parser.getName())){
+					model.setCode(Integer.valueOf(parser.nextText()));
+				} else if ("AREANAM".equalsIgnoreCase(parser.getName())){
+					model.setName(parser.nextText());
+				}
+				break;
+			case XmlPullParser.END_TAG:
+				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
+					list.add(model); // 服务器返回顺序不对，这里进行倒序
+				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("list", list);
 				}
 				break;
 			}
 
 			eventType = parser.next();
 		}
+
+		return respMap;
+	}
+	
+	private static Object getBank() throws XmlPullParserException, IOException {
+		HashMap<String, Object> respMap = null;
+
+		ArrayList<Bank> list = new ArrayList<Bank>();
+		Bank model = null;
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, Object>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+					model = new Bank();
+				} else if ("BANKCOD".equalsIgnoreCase(parser.getName())){
+					model.setCode(Integer.valueOf(parser.nextText()));
+				} else if ("BANKNAM".equalsIgnoreCase(parser.getName())){
+					model.setName(parser.nextText());
+				}
+				break;
+			case XmlPullParser.END_TAG:
+				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
+					list.add(model); // 服务器返回顺序不对，这里进行倒序
+				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("list", list);
+				}
+				break;
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+	
+	private static Object getBranchBank() throws XmlPullParserException, IOException {
+		HashMap<String, Object> respMap = null;
+
+		ArrayList<Bank> list = new ArrayList<Bank>();
+		Bank model = null;
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, Object>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+					model = new Bank();
+				} else if ("BANKCOD".equalsIgnoreCase(parser.getName())){
+					model.setCode(Integer.valueOf(parser.nextText()));
+				} else if ("BANKNAM".equalsIgnoreCase(parser.getName())){
+					model.setName(parser.nextText());
+				}
+				break;
+			case XmlPullParser.END_TAG:
+				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
+					list.add(model); // 服务器返回顺序不对，这里进行倒序
+				} else if ("TRANDETAILS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("list", list);
+				}
+				break;
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+	
+	private static Object upLoadImages(String reponseStr) throws JSONException {
+		HashMap<String, String> respMap = StringUtil.JSONObject2Map(new JSONObject(reponseStr));
+
 
 		return respMap;
 	}
