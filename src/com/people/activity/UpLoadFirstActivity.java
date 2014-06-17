@@ -74,15 +74,15 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		case R.id.btn_confirm:
 			if (checkValue()) {
 				HashMap<String, String> map = new HashMap<String, String>();
-//				map.put("USERNAME", et_name.getText().toString());
-//				map.put("IDNUMBER", et_id.getText().toString());
-//				map.put("MERNAME", et_merchant_name.getText().toString());
-//				map.put("SCOBUS", scope[positon]);
-//				map.put("MERADDRESS", et_address.getText().toString());
-//				map.put("TERMID", et_serial.getText().toString());
+				map.put("USERNAME", et_name.getText().toString());
+				map.put("IDNUMBER", et_id.getText().toString());
+				map.put("MERNAME", et_merchant_name.getText().toString());
+				map.put("SCOBUS", scope[positon]);
+				map.put("MERADDRESS", et_address.getText().toString());
+				map.put("TERMID", et_serial.getText().toString());
 				
 				Intent intent = new Intent(UpLoadFirstActivity.this, UpLoadSecondActivity.class);
-//				intent.putExtra("map", map);
+				intent.putExtra("map", map);
 				startActivity(intent);
 			}
 
@@ -144,30 +144,38 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 
 
 	public Boolean checkValue() {
-//		if(et_name.getText().length() == 0){
-//			Toast.makeText(this, "姓名不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_id.getText().length() == 0){
-//			Toast.makeText(this, "身份证不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_merchant_name.getText().length() == 0){
-//			Toast.makeText(this, "商户名称不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_address.getText().length() == 0){
-//			Toast.makeText(this, "地址不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_serial.getText().length() == 0){
-//			Toast.makeText(this, "机器序列号不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(StringUtil.checkIdCard(et_id.getText().toString())){
-//			Toast.makeText(this, "身份证号码不合法！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
+		if(et_name.getText().length() == 0){
+			Toast.makeText(this, "姓名不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_id.getText().length() == 0){
+			Toast.makeText(this, "身份证不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_merchant_name.getText().length() == 0){
+			Toast.makeText(this, "商户名称不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_address.getText().length() == 0){
+			Toast.makeText(this, "地址不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_serial.getText().length() == 0){
+			Toast.makeText(this, "机器序列号不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(StringUtil.checkIdCard(et_id.getText().toString())){
+			Toast.makeText(this, "身份证号码不合法！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
 		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if(resultCode == 6){
+			finish();
+		}
 	}
 }

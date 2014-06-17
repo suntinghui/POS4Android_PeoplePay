@@ -547,7 +547,7 @@ containing a value of this type.
         public static final int bottomToTop=0x7f050001;
         public static final int btn_access=0x7f05000c;
         public static final int btn_back=0x7f05000b;
-        public static final int btn_branch_bank=0x7f050098;
+        public static final int btn_bank_branch=0x7f050098;
         public static final int btn_calculator=0x7f050041;
         public static final int btn_cash=0x7f050045;
         public static final int btn_complete=0x7f05000f;
