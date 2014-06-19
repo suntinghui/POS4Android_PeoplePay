@@ -108,15 +108,20 @@ public class UpLoadSecondActivity extends BaseActivity implements
 	}
 
 	public Boolean checkValue() {
-		if (et_name.getText().length() == 0) {
-			Toast.makeText(this, "开户行不能为空！", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (et_account.getText().length() == 0) {
-			Toast.makeText(this, "银行账号不能为空！", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-
+//		if (et_name.getText().length() == 0) {
+//			Toast.makeText(this, "开户行不能为空！", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+//		if (et_account.getText().length() == 0) {
+//			Toast.makeText(this, "银行账号不能为空！", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+//
+//		if(currentBankBankCode == null || currentBankBankCode.length() == 0){
+//			Toast.makeText(this, "支行不能为空！", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+		
 		return true;
 	}
 

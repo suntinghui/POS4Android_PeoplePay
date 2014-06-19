@@ -24,8 +24,9 @@ import com.people.view.LKAlertDialog;
 
 // 忘记密码
 public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
-	EditText et_phone ;
-	EditText et_security_code ;
+	EditText et_phone;
+	EditText et_security_code;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,20 +46,21 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_next:
-			if(checkValue()){
-				nextAction();	
+			if (checkValue()) {
+				checkSMS();
+				
 			}
-			
+
 			break;
 		case R.id.btn_securitycode:
-			if(et_phone.getText().toString().length() == 0){
+			if (et_phone.getText().toString().length() == 0) {
 				Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
-			}else if(et_phone.getText().toString().length() != 11){
+			} else if (et_phone.getText().toString().length() != 11) {
 				Toast.makeText(this, "手机号不合法", Toast.LENGTH_SHORT).show();
-			}else{
-				sendSMS();	
+			} else {
+				sendSMS();
 			}
-			
+
 			break;
 		case R.id.btn_back:
 			this.finish();
@@ -80,8 +82,8 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsSend,
 				tempMap, sendSMSHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取短信验证码...",
-				new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+				"正在获取短信验证码...", new LKHttpRequestQueueDone() {
 
 					@Override
 					public void onComplete() {
@@ -99,10 +101,9 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString()
-							.equals("000000")) {
-						Toast.makeText(getApplicationContext(), "短信发送成功，请注意查收！",
-								Toast.LENGTH_SHORT).show();
+					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
+						Toast.makeText(getApplicationContext(),
+								"短信发送成功，请注意查收！", Toast.LENGTH_SHORT).show();
 					} else if (((HashMap) obj).get("RSPMSG").toString() != null
 							&& ((HashMap) obj).get("RSPMSG").toString()
 									.length() != 0) {
@@ -117,19 +118,19 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 
 		};
 	}
-	
-	// 忘记密码
-		private void nextAction() {
+
+	// 短信码验证
+		private void checkSMS() {
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("TRANCODE", "199004");
-			tempMap.put("MESSAGECODE", et_security_code.getText().toString().trim());
-			tempMap.put("PHONENUMBER ", et_phone.getText().toString().trim());
+			tempMap.put("TRANCODE", "199019");
+			tempMap.put("PHONENUMBER", et_phone.getText().toString().trim());
+			tempMap.put("CHECKCODE", et_security_code.getText().toString()); // 100001－注册 100002－忘记密码
 
-			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.ForgetLoginPwd,
-					tempMap, forgetPwdHandler());
+			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsCheck,
+					tempMap, checkSMSHandler());
 
-			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...",
-					new LKHttpRequestQueueDone() {
+			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+					"正在验证短信验证码...", new LKHttpRequestQueueDone() {
 
 						@Override
 						public void onComplete() {
@@ -140,27 +141,18 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 					});
 		}
 
-		private LKAsyncHttpResponseHandler forgetPwdHandler() {
+		private LKAsyncHttpResponseHandler checkSMSHandler() {
 			return new LKAsyncHttpResponseHandler() {
 
 				@SuppressWarnings("rawtypes")
 				@Override
 				public void successAction(Object obj) {
 					if (obj instanceof HashMap) {
-						if (((HashMap) obj).get("RSPCOD").toString()
-								.equals("00000")) {
-							LKAlertDialog dialog = new LKAlertDialog(ForgetPwdActivity.this);
-							dialog.setTitle("提示");
-							dialog.setMessage("请牢记密码："+((HashMap) obj).get("NEWPASSWD").toString());
-							dialog.setCancelable(false);
-							dialog.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+						if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
+							Intent intent = new Intent(ForgetPwdActivity.this, SetPwdActivity.class);
+							intent.putExtra("PHONENUMBER", et_phone.getText().toString());
+							startActivityForResult(intent, 0);
 
-								@Override
-								public void onClick(DialogInterface dialog, int arg1) {
-									dialog.dismiss();
-								}
-							});
-							dialog.create().show();
 						} else if (((HashMap) obj).get("RSPMSG").toString() != null
 								&& ((HashMap) obj).get("RSPMSG").toString()
 										.length() != 0) {
@@ -176,17 +168,29 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 			};
 		}
 		
-		public Boolean checkValue(){
-			
-			if(et_phone.getText().length() == 0){
-				Toast.makeText(this, "请输入手机号!", Toast.LENGTH_SHORT).show();
-				return false;
-			}
-			
-			if(et_security_code.getText().length() == 0){
-				Toast.makeText(this, "请输入验证码!", Toast.LENGTH_SHORT).show();
-				return false;
-			}
-			return true;
+	public Boolean checkValue() {
+
+		if (et_phone.getText().length() == 0) {
+			Toast.makeText(this, "请输入手机号!", Toast.LENGTH_SHORT).show();
+			return false;
 		}
+
+		if (et_security_code.getText().length() == 0) {
+			Toast.makeText(this, "请输入验证码!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+//		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == 5){
+			this.finish();
+		}
+		
+	}
+	
+	
 }

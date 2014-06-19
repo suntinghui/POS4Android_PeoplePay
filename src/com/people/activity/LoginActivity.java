@@ -146,7 +146,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				String RSPCOD = (String) map.get("RSPCOD");
 				String RSPMSG = (String) map.get("RSPMSG");
 				String PHONENUMBER = (String) map.get("PHONENUMBER");
-				Constants.APPTOKEN = (String) map.get("APPTOKEN");
+//				Constants.APPTOKEN = (String) map.get("APPTOKEN");
 
 				if (RSPCOD.equals("00")) {
 					Editor editor = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).edit();

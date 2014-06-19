@@ -47,6 +47,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 	private CircularImage ibtn_head;
 	private String bitmap_str = null;
+	
+	private String STATUS = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,9 +112,20 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			startActivity(intent1);
 			break;
 		case R.id.layout_upload_image:
-			Intent intentUpload = new Intent(MerchantActivity.this,
-					UpLoadFirstActivity.class);
-			startActivity(intentUpload);
+			if(STATUS.equals("0")){
+				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
+			}else if(STATUS.equals("1")){
+				Toast.makeText(MerchantActivity.this, "账户已关闭", Toast.LENGTH_SHORT).show();
+			}else if(STATUS.equals("2")){
+				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
+			}else if(STATUS.equals("5")){
+				Toast.makeText(MerchantActivity.this, "正在审核中", Toast.LENGTH_SHORT).show();
+			}else if(STATUS.equals("3") || STATUS.equals("6")){
+				Intent intentUpload = new Intent(MerchantActivity.this,
+						UpLoadFirstActivity.class);
+				startActivity(intentUpload);
+			}
+			
 			break;
 		case R.id.layout_2:
 			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
@@ -170,7 +183,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	public void getData() {
 
 		HashMap<String, Object> tempMap1 = new HashMap<String, Object>();
-		tempMap1.put("TRANCODE", "199011");
+		tempMap1.put("TRANCODE", "199022");
 		tempMap1.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.MerchantQuery, tempMap1, getMerchantQueryHandler());
@@ -200,8 +213,9 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				String ACTNAM = (String) map.get("ACTNAM");
 				String OPNBNK = (String) map.get("OPNBNK");
 				String MERNAM = (String) map.get("MERNAM");
+				STATUS = (String) map.get("STATUS");
 
-				if (RSPCOD.equals("000000")) {
+				if (RSPCOD.equals("00")) {
 					tv_bank_no.setText(ACTNO == null ? "" : StringUtil.formatCardId(StringUtil.formatAccountNo(ACTNO)));
 					tv_open_account_name.setText(ACTNAM == null ? "" : ACTNAM);
 					tv_open_account_bank.setText(OPNBNK == null ? "" : OPNBNK);

@@ -144,6 +144,6 @@
         android:layout_marginRight="25dip"
         android:layout_marginTop="35dip"
         android:background="@drawable/btn"
-        android:text="确 定" />
+        android:text="下一步" />
 
 </LinearLayout>

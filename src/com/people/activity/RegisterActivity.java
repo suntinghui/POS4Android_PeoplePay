@@ -54,7 +54,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.btn_confirm:
 			if (checkValue()) {
-				registerAction();
+				checkSMS();
 			}
 
 			break;
@@ -116,7 +116,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
 					if (((HashMap) obj).get("RSPCOD").toString()
-							.equals("000000")) {
+							.equals("00")) {
 						Toast.makeText(getApplicationContext(),
 								"短信发送成功，请注意查收！", Toast.LENGTH_SHORT).show();
 					} else if (((HashMap) obj).get("RSPMSG").toString() != null
@@ -201,4 +201,52 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		}
 		return true;
 	}
+	
+	// 短信码验证
+			private void checkSMS() {
+				HashMap<String, Object> tempMap = new HashMap<String, Object>();
+				tempMap.put("TRANCODE", "199019");
+				tempMap.put("PHONENUMBER", et_phone.getText().toString().trim());
+				tempMap.put("CHECKCODE", et_security_code.getText().toString()); // 100001－注册 100002－忘记密码
+
+				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsCheck,
+						tempMap, checkSMSHandler());
+
+				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+						"正在验证短信验证码...", new LKHttpRequestQueueDone() {
+
+							@Override
+							public void onComplete() {
+								super.onComplete();
+
+							}
+
+						});
+			}
+
+			private LKAsyncHttpResponseHandler checkSMSHandler() {
+				return new LKAsyncHttpResponseHandler() {
+
+					@SuppressWarnings("rawtypes")
+					@Override
+					public void successAction(Object obj) {
+						if (obj instanceof HashMap) {
+							if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
+								registerAction();
+
+							} else if (((HashMap) obj).get("RSPMSG").toString() != null
+									&& ((HashMap) obj).get("RSPMSG").toString()
+											.length() != 0) {
+								Toast.makeText(getApplicationContext(),
+										((HashMap) obj).get("RSPMSG").toString(),
+										Toast.LENGTH_SHORT).show();
+							}
+						} else {
+						}
+
+					}
+
+				};
+			}
+			
 }

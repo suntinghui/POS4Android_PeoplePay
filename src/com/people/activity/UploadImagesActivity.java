@@ -6,9 +6,12 @@ import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -19,8 +22,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
 import android.provider.MediaStore;
+import android.text.format.DateFormat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
@@ -164,25 +169,25 @@ public class UploadImagesActivity extends BaseActivity implements
 
 	private Boolean chechValue() {
 		if (str_one == null || str_one.length() == 0) {
-			Toast.makeText(UploadImagesActivity.this, "获取身份证正面照片",
+			Toast.makeText(UploadImagesActivity.this, "身份证正面照片不能为空",
 					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
 		if (str_two == null || str_two.length() == 0) {
-			Toast.makeText(UploadImagesActivity.this, "获取身份证反面照片",
+			Toast.makeText(UploadImagesActivity.this, "身份证反面照片不能为空",
 					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
 		if (str_three == null || str_three.length() == 0) {
-			Toast.makeText(UploadImagesActivity.this, "获取收款银行卡照片",
+			Toast.makeText(UploadImagesActivity.this, "收款银行卡照片不能为空",
 					Toast.LENGTH_SHORT).show();
 			return false;
 		}
 
 		if (str_four == null || str_four.length() == 0) {
-			Toast.makeText(UploadImagesActivity.this, "获取申请人手持身份证照片",
+			Toast.makeText(UploadImagesActivity.this, "申请人手持身份证照片不能为空",
 					Toast.LENGTH_SHORT).show();
 			return false;
 		}
@@ -197,16 +202,21 @@ public class UploadImagesActivity extends BaseActivity implements
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							if (which == 0) {
-								Intent intent = new Intent(
-										"android.media.action.IMAGE_CAPTURE");
-								intent.putExtra("output",
-										Uri.fromFile(sdcardTempFile));
-								intent.putExtra("crop", "true");
-								intent.putExtra("aspectX", 1);// 裁剪框比例
-								intent.putExtra("aspectY", 1);
-								intent.putExtra("outputX", 80);// 输出图片大小
-								intent.putExtra("outputY", 80);
-								startActivityForResult(intent, 100);
+//								Intent intent = new Intent(
+//										"android.media.action.IMAGE_CAPTURE");
+//								intent.putExtra("output",
+//										Uri.fromFile(sdcardTempFile));
+//								intent.putExtra("crop", "true");
+//								intent.putExtra("aspectX", 1);// 裁剪框比例
+//								intent.putExtra("aspectY", 1);
+//								intent.putExtra("outputX", 80);// 输出图片大小
+//								intent.putExtra("outputY", 80);
+//								startActivityForResult(intent, 100);
+								
+
+							    Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+							     startActivityForResult(camera, 100);
+
 							} else {
 								// Intent intent = new Intent(
 								// "android.intent.action.PICK");
@@ -228,6 +238,7 @@ public class UploadImagesActivity extends BaseActivity implements
 										MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
 										IMAGE_UNSPECIFIED);
 								startActivityForResult(intent, 101);
+								
 							}
 						}
 					}).create();
@@ -241,7 +252,38 @@ public class UploadImagesActivity extends BaseActivity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
 
-		if (requestCode == 100 || requestCode == 101) {
+		if(requestCode == 100 || null != data){
+			String sdState=Environment.getExternalStorageState();
+			   if(!sdState.equals(Environment.MEDIA_MOUNTED)){
+			    return;
+			   }
+			   new DateFormat();
+			   String name= "tmp_pic_"
+						+ SystemClock.currentThreadTimeMillis() + ".jpg";
+			   Bundle bundle = data.getExtras();
+			   //获取相机返回的数据，并转换为图片格式
+			   Bitmap bitmap = (Bitmap)bundle.get("data");
+			   FileOutputStream fout = null;
+			   File file = new File("/mnt/sdcard/");
+			   file.mkdirs();
+			   String filename=file.getPath()+name;
+			   try {
+			    fout = new FileOutputStream(filename);
+			    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fout);
+			   } catch (FileNotFoundException e) {
+			    e.printStackTrace();
+			   }finally{
+			    try {
+			     fout.flush();
+			     fout.close();
+			    } catch (IOException e) {
+			     e.printStackTrace();
+			    }
+			   }
+			   //显示图片
+			   
+		}
+		if ( requestCode == 101) {
 			Bitmap bm = BitmapFactory.decodeFile(sdcardTempFile
 					.getAbsolutePath());
 			// Bitmap bm = null;
