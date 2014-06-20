@@ -45,9 +45,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private ListView listView = null;
 	private Adapter adapter = null;
 
-	private Integer[] imageIds = { R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
+	private Integer[] imageIds = {R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
 
-	private String[] titles = { "关于系统", "意见反馈", "检查更新", "帮助" };
+	private String[] titles = { "忘记密码", "关于系统", "意见反馈", "检查更新", "帮助" };
 	private ImageButton ibtn_gesture;
 	private Boolean isOpen = false;
 
@@ -91,21 +91,31 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				switch (arg2) {
-				case 0:
-					Intent intent0 = new Intent(SettingActivity.this, AboutSystemActivity.class);
-					SettingActivity.this.startActivity(intent0);
+				
+				case 0: // 修改密码
+					Intent intent0 = new Intent(SettingActivity.this, ModifyLoginPwdActivity.class);
+					startActivity(intent0);
 					break;
-				case 1:
-					Intent intent1 = new Intent(SettingActivity.this, FeedBackActivity.class);
+				
+				case 1: // 关于系统
+					Intent intent1 = new Intent(SettingActivity.this, AboutSystemActivity.class);
 					SettingActivity.this.startActivity(intent1);
 					break;
-				case 2:
+					
+				case 2: // 意见反馈
+					Intent intent2 = new Intent(SettingActivity.this, FeedBackActivity.class);
+					SettingActivity.this.startActivity(intent2);
+					break;
+					
+				case 3: // 检查更新
 					checkUpdate();
 					break;
-				case 3:
-					Intent intent3 = new Intent(SettingActivity.this, HelpActivity.class);
-					SettingActivity.this.startActivity(intent3);
+					
+				case 4: // 帮助
+					Intent intent4 = new Intent(SettingActivity.this, HelpActivity.class);
+					SettingActivity.this.startActivity(intent4);
 					break;
+					
 				default:
 					break;
 

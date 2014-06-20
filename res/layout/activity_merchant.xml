@@ -226,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dip"
                         android:layout_toRightOf="@id/iv_1"
-                        android:text="@string/modify_pwd" />
+                        android:text="提现" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -261,7 +261,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dip"
-                        android:background="@drawable/merchant_icon_1" />
+                        android:background="@drawable/merchant_icon_2" />
 
                     <TextView
                         style="@style/black_16"
@@ -304,7 +304,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dip"
-                        android:background="@drawable/merchant_icon_2" />
+                        android:background="@drawable/set_icon_0" />
 
                     <TextView
                         style="@style/black_16"

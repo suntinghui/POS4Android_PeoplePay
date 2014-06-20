@@ -47,7 +47,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 	private CircularImage ibtn_head;
 	private String bitmap_str = null;
-	
+
 	private String STATUS = "";
 
 	@Override
@@ -92,6 +92,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			// loadUpHead();
 			actionCamera();
 			break;
+
 		case R.id.layout_msg_top:
 			isClicked = !isClicked;
 			if (isClicked) {
@@ -104,33 +105,37 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				iv_pull.setBackgroundResource(R.drawable.merchant_icon_pull);
 			}
 			break;
+
 		case R.id.layout_msg_blow:
 			getData();
 			break;
-		case R.id.layout_1:
+
+		case R.id.layout_1: // 提现
 			Intent intent1 = new Intent(MerchantActivity.this, ModifyLoginPwdActivity.class);
 			startActivity(intent1);
 			break;
-		case R.id.layout_upload_image:
-			if(STATUS.equals("0")){
+
+		case R.id.layout_upload_image: // 实名认证
+			if (STATUS.equals("0")) {
 				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
-			}else if(STATUS.equals("1")){
+			} else if (STATUS.equals("1")) {
 				Toast.makeText(MerchantActivity.this, "账户已关闭", Toast.LENGTH_SHORT).show();
-			}else if(STATUS.equals("2")){
+			} else if (STATUS.equals("2")) {
 				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
-			}else if(STATUS.equals("5")){
+			} else if (STATUS.equals("5")) {
 				Toast.makeText(MerchantActivity.this, "正在审核中", Toast.LENGTH_SHORT).show();
-			}else if(STATUS.equals("3") || STATUS.equals("6")){
-				Intent intentUpload = new Intent(MerchantActivity.this,
-						UpLoadFirstActivity.class);
+			} else if (STATUS.equals("3") || STATUS.equals("6")) {
+				Intent intentUpload = new Intent(MerchantActivity.this, UpLoadFirstActivity.class);
 				startActivity(intentUpload);
 			}
-			
+
 			break;
+
 		case R.id.layout_2:
 			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
 			startActivity(intent2);
 			break;
+
 		case R.id.layout_3:
 			LKAlertDialog dialog = new LKAlertDialog(this);
 			dialog.setTitle("提示");
