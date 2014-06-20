@@ -89,7 +89,7 @@ public class TransferRequestTag {
 			requestTagMap.put(SendTicket, "http://211.147.87.29:8092/Vpm/199037.tranm");
 			requestTagMap.put(DrawMoney, "http://211.147.87.29:8092/Vpm/199025.tranm");
 			requestTagMap.put(MyAccount, "http://211.147.87.29:8092/Vpm/199026.tranm");
-			requestTagMap.put(PhoneRecharge, "￼http://211.147.87.29:8092/Vpm/708110.tranm");
+			requestTagMap.put(PhoneRecharge, "http://211.147.87.29:8092/Vpm/708110.tranp");
 			requestTagMap.put(Authentication, "￼http://211.147.87.29:8092/Vpm/199030.tranm");
 			
 			

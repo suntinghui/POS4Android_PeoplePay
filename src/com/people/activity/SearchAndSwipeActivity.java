@@ -244,8 +244,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
 			tempMap.put("TRANCODE", "199020");
 			tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(SearchAndSwipeActivity.this).getString(Constants.kUSERNAME, "")); // 手机号
-			tempMap.put("TERMINALNUMBER", tid);
-			tempMap.put("PSAMCARDNO", pid);
+			tempMap.put("TERMINALNUMBER", tid);//tid
+			tempMap.put("PSAMCARDNO", pid);//
 			tempMap.put("TERMINALSERIANO", AppDataCenter.getTraceAuditNum());
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.SignIn, tempMap, signHandler());
 
