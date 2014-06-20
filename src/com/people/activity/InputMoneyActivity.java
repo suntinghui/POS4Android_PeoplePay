@@ -171,14 +171,15 @@ public class InputMoneyActivity extends BaseActivity {
 				} else {
 					Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
 
-					intent.putExtra("TYPE", TransferRequestTag.PhoneRecharge);
+					intent.putExtra("TYPE", TransferRequestTag.Consume);
 					intent.putExtra("TRANCODE", "199005");
 					intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
 					intent.putExtra("PCSIM", "获取不到");
 					intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
 					intent.putExtra("CTXNAT", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString()))));
-					intent.putExtra("CRDNO", "");
+					intent.putExtra("CRDNO", "6226200102329969");
 					intent.putExtra("CHECKX", "0.0");
+					intent.putExtra("CHECKY", "0.0");
 					intent.putExtra("APPTOKEN", "APPTOKEN");
 					intent.putExtra("TTXNTM", DateUtil.getSystemTime());
 					intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());

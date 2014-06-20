@@ -21,18 +21,20 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.people.R;
-import com.people.qpos.QPOS;
 
 // 工具
 public class ToolsActivity extends BaseActivity implements OnClickListener {
-	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 
-			};
+	private Integer[] imageIds = { R.drawable.swip_icon_n_0,
+			R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2,
+			R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4,
+			R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6,
+			R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 };
 
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
 
 	private long exitTimeMillis = 0;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,37 +61,52 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 
 	private OnItemClickListener onclickcistener = new OnItemClickListener() {
 
-		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-			
-			arg1.startAnimation(AnimationUtils.loadAnimation(ToolsActivity.this, R.anim.scale_anim));
-			
+		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+				long arg3) {
+
+			arg1.startAnimation(AnimationUtils.loadAnimation(
+					ToolsActivity.this, R.anim.scale_anim));
+
 			switch (arg2) {
-			case 0: 
+			case 0:
 				break;
 
-			case 1: 
+			case 1:
 				break;
 
-			case 2: 
+			case 2:
 				break;
 
-			case 3:
+			case 3:// 卡卡转账
+
+				Intent intent4 = new Intent(ToolsActivity.this,
+						CardCardActivity.class);
+				ToolsActivity.this.startActivity(intent4);
 				break;
 
 			case 4:
+
 				break;
 
 			case 5: // 推荐我们
-				Intent intent5 = new Intent(ToolsActivity.this, ShareSettingActivity.class);
+				Intent intent5 = new Intent(ToolsActivity.this,
+						ShareSettingActivity.class);
 				ToolsActivity.this.startActivity(intent5);
 				break;
-			case 6:
+			case 6://信用卡转账
+				Intent intent6 = new Intent(ToolsActivity.this,
+						CreditCardActivity.class);
+				ToolsActivity.this.startActivity(intent6);
 				break;
 
-			case 7: 
+			case 7://手机充值
+				
+				Intent intent7 = new Intent(ToolsActivity.this,
+						MobileChargeActivity.class);
+				ToolsActivity.this.startActivity(intent7);
 				break;
 
-			case 8: 
+			case 8:
 				break;
 			default:
 				break;
@@ -127,10 +144,12 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 			CatalogHolder holder = null;
 
 			if (null == convertView) {
-				convertView = this.mInflater.inflate(R.layout.item_catalog, null);
+				convertView = this.mInflater.inflate(R.layout.item_catalog,
+						null);
 				holder = new CatalogHolder();
 
-				holder.CatalogCellImage = (ImageView) convertView.findViewById(R.id.catalogCellImage);
+				holder.CatalogCellImage = (ImageView) convertView
+						.findViewById(R.id.catalogCellImage);
 
 				convertView.setTag(holder);
 			} else {
@@ -146,12 +165,14 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 	// 程序退出
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
 			if ((System.currentTimeMillis() - exitTimeMillis) > 2000) {
 				Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
 				exitTimeMillis = System.currentTimeMillis();
 			} else {
-				ArrayList<BaseActivity> list = BaseActivity.getAllActiveActivity();
+				ArrayList<BaseActivity> list = BaseActivity
+						.getAllActiveActivity();
 				for (BaseActivity activity : list) {
 					activity.finish();
 				}

@@ -24,4 +24,24 @@
         
     </array>
    
+    <array name="papers">
+        <item>身份证</item>
+        <item>军官证</item>
+        <item>护照</item>
+        <item>回乡证</item>
+        <item>台胞证</item>
+        <item>警官证</item>
+        <item>士兵证</item>
+        <item>其他证件类型</item>
+        
+    </array>
+    
+    <array name="amount">
+        <item>10元</item>
+        <item>50元</item>
+        <item>100元</item>
+        <item>200元</item>
+        <item>300元</item>
+        
+    </array>
 </resources>

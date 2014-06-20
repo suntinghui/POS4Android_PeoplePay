@@ -74,15 +74,15 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		case R.id.btn_confirm:
 			if (checkValue()) {
 				HashMap<String, String> map = new HashMap<String, String>();
-//				map.put("USERNAME", et_name.getText().toString());
-//				map.put("IDNUMBER", et_id.getText().toString());
-//				map.put("MERNAME", et_merchant_name.getText().toString());
-//				map.put("SCOBUS", scope[positon]);
-//				map.put("MERADDRESS", et_address.getText().toString());
-//				map.put("TERMID", et_serial.getText().toString());
+				map.put("USERNAME", et_name.getText().toString());
+				map.put("IDNUMBER", et_id.getText().toString());
+				map.put("MERNAME", et_merchant_name.getText().toString());
+				map.put("SCOBUS", scope[positon]);
+				map.put("MERADDRESS", et_address.getText().toString());
+				map.put("TERMID", et_serial.getText().toString());
 				
 				Intent intent = new Intent(UpLoadFirstActivity.this, UpLoadSecondActivity.class);
-//				intent.putExtra("map", map);
+				intent.putExtra("map", map);
 				startActivity(intent);
 			}
 
@@ -169,5 +169,13 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 //			return false;
 //		}
 		return true;
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		if(resultCode == 6){
+			finish();
+		}
 	}
 }

@@ -40,13 +40,20 @@ public class UpLoadSecondActivity extends BaseActivity implements
 	private ArrayList<CityModel> cities;
 	private ArrayList<Bank> banks;
 	private ArrayList<Bank> branchBanks;
-	private Button btn_branch_bank;
+	private Button btn_bank_branch;
+	
+	private String currentBankBankName;
+	private String currentBankBankCode;
+	
+	private HashMap<String, String> fromForeMap;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_upload_second);
 
+		fromForeMap = (HashMap<String, String>) this.getIntent().getSerializableExtra("map");
 		Button btn_back = (Button) this.findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
 		Button btn_confirm = (Button) this.findViewById(R.id.btn_confirm);
@@ -59,8 +66,8 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		spinner2 = (Spinner) findViewById(R.id.spinner2);
 		spinner3 = (Spinner) findViewById(R.id.spinner3);
 		
-		btn_branch_bank = (Button) findViewById(R.id.btn_branch_bank);
-		btn_branch_bank.setOnClickListener(this);
+		btn_bank_branch = (Button) findViewById(R.id.btn_bank_branch);
+		btn_bank_branch.setOnClickListener(this);
 
 		getProvinceName();
 
@@ -71,28 +78,28 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		switch (v.getId()) {
 		case R.id.btn_confirm:
 			if (checkValue()) {
-				// HashMap<String, String> map = new HashMap<String, String>();
-				// map.put("USERNAME", et_name.getText().toString());
-				// map.put("IDNUMBER", et_id.getText().toString());
-				// map.put("MERNAME", et_merchant_name.getText().toString());
-				// map.put("SCOBUS", scope[positon]);
-				// map.put("MERADDRESS", et_address.getText().toString());
-				// map.put("TERMID", et_serial.getText().toString());
-				//
-				// Intent intent = new Intent(UpLoadSecondActivity.this,
-				// UploadImagesActivity.class);
-				// intent.putExtra("map", map);
-				// startActivity(intent);
+				fromForeMap.put("BANKUSERNAME", et_name.getText().toString());
+				fromForeMap.put("BANKAREA", currentCity.getCode()+"");
+				fromForeMap.put("BIGBANKCOD", currentBank.getCode()+"");
+				fromForeMap.put("BIGBANKNAM", currentBank.getName());
+				fromForeMap.put("BANKCOD", currentBankBankCode);
+				fromForeMap.put("BANKNAM", currentBankBankName);
+				fromForeMap.put("BANKACCOUNT", et_account.getText().toString());
+				
+				 Intent intent = new Intent(UpLoadSecondActivity.this,
+				 UploadImagesActivity.class);
+				 intent.putExtra("map", fromForeMap);
+				 startActivity(intent);
 			}
 
 			break;
 		case R.id.btn_back:
 			this.finish();
 			break;
-		case R.id.btn_branch_bank:
+		case R.id.btn_bank_branch:
 			Intent intent_b = new Intent(UpLoadSecondActivity.this, BankBranchActivity.class);
 			intent_b.putExtra("list", banks);
-			startActivity(intent_b);
+			startActivityForResult(intent_b, 0);
 			break;
 		default:
 			break;
@@ -101,15 +108,20 @@ public class UpLoadSecondActivity extends BaseActivity implements
 	}
 
 	public Boolean checkValue() {
-		if (et_name.getText().length() == 0) {
-			Toast.makeText(this, "开户行不能为空！", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (et_account.getText().length() == 0) {
-			Toast.makeText(this, "银行账号不能为空！", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-
+//		if (et_name.getText().length() == 0) {
+//			Toast.makeText(this, "开户行不能为空！", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+//		if (et_account.getText().length() == 0) {
+//			Toast.makeText(this, "银行账号不能为空！", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+//
+//		if(currentBankBankCode == null || currentBankBankCode.length() == 0){
+//			Toast.makeText(this, "支行不能为空！", Toast.LENGTH_SHORT).show();
+//			return false;
+//		}
+		
 		return true;
 	}
 
@@ -344,13 +356,27 @@ public class UpLoadSecondActivity extends BaseActivity implements
 					if ("00".equals(recieveMap.get("RSPCOD"))) {
 						branchBanks = (ArrayList<Bank>) recieveMap.get("list");
 						if (branchBanks != null && branchBanks.size() != 0) {
-							String firstBank = ((Bank)(branchBanks.get(0))).getName();
-							btn_branch_bank.setText(firstBank);
+							currentBankBankName = ((Bank)(branchBanks.get(0))).getName();
+							currentBankBankCode = ((Bank)(branchBanks.get(0))).getCode()+"";
+							btn_bank_branch.setText(currentBankBankName);
 						}
 					}
 
 				}
 
 			};
+		}
+		
+		@Override
+		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+			
+			if(resultCode == 5){
+				currentBankBankCode = data.getStringExtra("bankbranchid");
+				currentBankBankName = data.getStringExtra("bankbranchname");
+				btn_bank_branch.setText(currentBankBankName);
+			}else if(resultCode == 6){
+				UpLoadSecondActivity.this.setResult(6);
+				finish();
+			}
 		}
 }

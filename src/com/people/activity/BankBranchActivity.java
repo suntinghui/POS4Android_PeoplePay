@@ -110,14 +110,4 @@ public class BankBranchActivity extends BaseActivity implements OnClickListener 
 		}
 	}
 	
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-//		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode == 5){
-//			bankbranchid = data.getStringExtra("bankbranchid");
-//			bankbranchname = data.getStringExtra("bankbranchname");
-//			btn_bank_branch.setText(bankbranchname);
-		}
-	}
 }

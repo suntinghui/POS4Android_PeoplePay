@@ -121,8 +121,8 @@ public class LKHttpRequest {
 //		}
 		String result = temp.replace("</EPOSPROTOCOL>", PCSIMXML + APPTOKEN + "</EPOSPROTOCOL>");
 
-//		Log.e("reqest body:", result);
-		MyLog.i("result:", result);
+		Log.e("reqest body:", result);
+//		MyLog.i("result:", result);
 
 		String AESValue = "";
 		try {

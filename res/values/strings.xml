@@ -27,6 +27,7 @@
     <string name="login_register"><u>注册</u></string>
     <string name="register_deal">同意用户注册协议</string>
     <string name="forgetpwd_title">忘记密码</string>
+    <string name="contacts_title">联系人列表</string>
     <string name="bank_branch_title">支行</string>
     <string name="upload_title">图片上传</string>
     <string name="register_title">注册</string>
@@ -84,6 +85,7 @@
     <string name="str_about_version">众付宝 For Android V1.0</string>
     <string name="str_about_bottom1">---北京众人科技股份有限公司版权所有---</string>
     <string name="str_about_bottom2">Copyright © 2006-2014 by 众付宝 All rights reserved</string>
+    <string name="set_pwd_title">设置密码</string>
     <string name="modifypwd_title">修改密码</string>
     <string name="modifypwd_oldpwd">原密码</string>
     <string name="modifypwd_newpwd">新密码</string>
@@ -91,6 +93,10 @@
     <string name="modifypwd_oldpwd_hint">请输入原密码</string>
     <string name="modifypwd_newpwd_hint">请输入新密码</string>
     <string name="modifypwd_confirmpwd_hint">请输入确认密码</string>
+    <string name="set_new_pwd">设置密码</string>
+    <string name="set_new_pwd_h">设置密码,长度6～10位</string>
+    <string name="set_confirm_pwd">确认密码</string>
+    <string name="set_confirm_pwd_h">请再次输入密码</string>
     <string name="hand_sign_title">请签名</string>
     <string name="trade_success">结果</string>
     <string name="gesture_forget">忘记手势？</string>
@@ -99,7 +105,32 @@
     <string name="cash_delete"><u>删除</u></string>
     <string name="p_scope">请选择经营范围</string>
     <string name="confirm">确认</string>
+    <string name="cardcard_title">卡卡转账</string>
+    <string name="cardcard_in_name">转入卡卡主姓名</string>
+    <string name="cardcard_in_name_h">请输入姓名</string>
+    <string name="cardcard_out_name">转出卡卡主姓名</string>
+    <string name="cardcard_out_name_h">请输入姓名</string>
+    <string name="cardcard_papers_type">证件类型</string>
+    <string name="cardcard_papers_num">证件号码</string>
+    <string name="cardcard_papers_num_h">请输入证件号码</string>
+    <string name="cardcard_papers_card_num">收款银行卡号</string>
+    <string name="cardcard_papers_card_num_h">请输入卡号</string>
+    <string name="cardcard_papers_amount">还款金额</string>
+    <string name="cardcard_papers_amount_h">请输入金额</string>
+    <string name="cardcard_papers_phone">手机号码</string>
+    <string name="cardcard_papers_phone_h">请输入接收短信的手机号码</string>
+    <string name="cardcard_papers_tips">资金到账后短信提醒</string>
+    <string name="cardcard_papers_type_tips">请选择证件类型</string>
     
+    <string name="creditcard_titles">信用卡还款</string>
+    <string name="creditcard_card_num">信用卡卡号</string>
+    
+    <string name="recharge_title">手机充值</string>
+    <string name="recharge_tips">请选择你要充值的面额</string>
+    
+    <string name="contacts_prompt">手机号不能为空</string>
+    <string name="contacts_prompt_phone_illeg">手机号不合法</string>
+    <string name="contacts_querying">正在查询...</string>
     
     <string name="one">1</string>
     <string name="two">2</string>
