@@ -90,6 +90,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			// loadUpHead();
 			actionCamera();
 			break;
+			
 		case R.id.layout_msg_top:
 			isClicked = !isClicked;
 			if (isClicked) {
@@ -102,22 +103,26 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				iv_pull.setBackgroundResource(R.drawable.merchant_icon_pull);
 			}
 			break;
+
 		case R.id.layout_msg_blow:
 			getData();
 			break;
-		case R.id.layout_1:
+
+		case R.id.layout_1: // 提现
 			Intent intent1 = new Intent(MerchantActivity.this, ModifyLoginPwdActivity.class);
 			startActivity(intent1);
 			break;
-		case R.id.layout_upload_image:
-			Intent intentUpload = new Intent(MerchantActivity.this,
-					UpLoadFirstActivity.class);
+
+		case R.id.layout_upload_image: // 实名认证
+			Intent intentUpload = new Intent(MerchantActivity.this, UpLoadFirstActivity.class);
 			startActivity(intentUpload);
 			break;
+			
 		case R.id.layout_2:
 			Intent intent2 = new Intent(MerchantActivity.this, SettingActivity.class);
 			startActivity(intent2);
 			break;
+			
 		case R.id.layout_3:
 			LKAlertDialog dialog = new LKAlertDialog(this);
 			dialog.setTitle("提示");
