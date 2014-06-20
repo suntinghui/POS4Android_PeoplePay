@@ -122,7 +122,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	private void doAction() {
 		String preDate = ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPRESIGNDATE, "0101");
 		String nowDate = DateUtil.getSystemMonthDay();
-		
+
 		if (!preDate.equals(nowDate)) {
 			new Sign().doAction();
 
@@ -244,7 +244,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
 			tempMap.put("TRANCODE", "199020");
 			tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(SearchAndSwipeActivity.this).getString(Constants.kUSERNAME, "")); // 手机号
-			tempMap.put("TERMINALNUMBER", tid);//tid
+			tempMap.put("TERMINALNUMBER", tid);// tid
 			tempMap.put("PSAMCARDNO", pid);//
 			tempMap.put("TERMINALSERIANO", AppDataCenter.getTraceAuditNum());
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.SignIn, tempMap, signHandler());
@@ -291,7 +291,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					editor.commit();
 
 					SearchAndSwipeActivity.this.doAction();
-					
+
 					break;
 
 				default:
@@ -334,7 +334,6 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		private Handler swipeHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
-				Log.i("msg:", msg + "");
 				switch (msg.what) {
 				case CardReader.SUCCESS:
 					HashMap<String, String> map = (HashMap<String, String>) msg.obj;
@@ -376,7 +375,6 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			tempMap.put("CRDNO", intent.getStringExtra("CRDNO")); // 卡号
 			tempMap.put("CHECKX", intent.getStringExtra("CHECKX")); // 横坐标
 			tempMap.put("CHECKY", intent.getStringExtra("CHECKY")); // 纵坐标
-			tempMap.put("APPTOKEN", intent.getStringExtra("apptoken"));
 			tempMap.put("TTXNTM", intent.getStringExtra("TTXNTM")); // 交易时间
 			tempMap.put("TTXNDT", intent.getStringExtra("TTXNDT")); // 交易日期
 			tempMap.put("PSAMCARDNO", pid); // PSAM卡号 "UN201410000046"

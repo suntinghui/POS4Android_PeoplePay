@@ -115,19 +115,14 @@ public class LKHttpRequest {
 		
 		String PCSIM = MD5Util.MD5Crypto(temp);
 		String PCSIMXML = "<PACKAGEMAC>" + PCSIM + "</PACKAGEMAC>";
-		String APPTOKEN ="";
-//		if(Constants.APPTOKEN.length() != 0){
-//			APPTOKEN = "<APPTOKEN>"+Constants.APPTOKEN+"</APPTOKEN>";
-//		}
-		String result = temp.replace("</EPOSPROTOCOL>", PCSIMXML + APPTOKEN + "</EPOSPROTOCOL>");
+		
+		String result = temp.replace("</EPOSPROTOCOL>", PCSIMXML + "</EPOSPROTOCOL>");
 
 		Log.e("reqest body:", result);
-//		MyLog.i("result:", result);
 
 		String AESValue = "";
 		try {
 			AESValue = AESUtil.encryptString(result, MD5Util.MD5Crypto(Constants.AESKEY));
-//			Log.e("REQUEST:", AESValue);
 			
 			MyLog.i("AESValue", AESValue);
 		} catch (Exception e1) {
