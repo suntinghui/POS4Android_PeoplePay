@@ -376,7 +376,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			tempMap.put("CRDNO", intent.getStringExtra("CRDNO")); // 卡号
 			tempMap.put("CHECKX", intent.getStringExtra("CHECKX")); // 横坐标
 			tempMap.put("CHECKY", intent.getStringExtra("CHECKY")); // 纵坐标
-			tempMap.put("APPTOKEN", intent.getStringExtra("APPTOKEN"));
+			tempMap.put("APPTOKEN", intent.getStringExtra("apptoken"));
 			tempMap.put("TTXNTM", intent.getStringExtra("TTXNTM")); // 交易时间
 			tempMap.put("TTXNDT", intent.getStringExtra("TTXNDT")); // 交易日期
 			tempMap.put("PSAMCARDNO", pid); // PSAM卡号 "UN201410000046"
@@ -403,7 +403,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
 
-					if (map.get("RSPCOD").equals("000000")) {
+					if (map.get("RSPCOD").equals("00")) {
 						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
 						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
 						startActivityForResult(intent0, 0);
@@ -552,7 +552,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					tid = map.get("TID");
 					pid = map.get("PID");
 
-					String amountStr = StringUtil.String2AmountFloat4QPOS(intent.getStringExtra("CTXNAT")) + "";
+					String amountStr = StringUtil.String2AmountFloat4QPOS(intent.getStringExtra("TXNAMT_B")) + "";
 
 					new ThreadSwip_SixPass(swipeHandler, SearchAndSwipeActivity.this, amountStr, getExtraString()).start();
 
@@ -583,7 +583,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		private String getExtraString() {
 			StringBuffer sb = new StringBuffer();
 			sb.append(intent.getStringExtra("TRANCODE"));
-			sb.append(intent.getStringExtra("CTXNAT"));
+			sb.append(intent.getStringExtra("TXNAMT_B"));
 			sb.append(intent.getStringExtra("TSEQNO"));
 			sb.append(intent.getStringExtra("TTXNTM"));
 			sb.append(intent.getStringExtra("TTXNDT"));

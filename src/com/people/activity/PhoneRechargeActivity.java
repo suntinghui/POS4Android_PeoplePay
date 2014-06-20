@@ -55,44 +55,7 @@ public class PhoneRechargeActivity extends BaseActivity implements OnClickListen
 	}
 
 	
-	// 充值
-		private void confirmAction() {
-//			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-//			tempMap.put("TRANCODE", "708110");
-//
-//			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.PhoneRecharge,
-//					tempMap, forgetPwdHandler());
-//
-//			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在提交...",
-//					new LKHttpRequestQueueDone() {
-//
-//						@Override
-//						public void onComplete() {
-//							super.onComplete();
-//
-//						}
-//
-//					});
-			
-			Intent intent = new Intent(this, SearchAndSwipeActivity.class);
-
-			intent.putExtra("TYPE", TransferRequestTag.PhoneRecharge);
-			intent.putExtra("TRANCODE", "708110");
-			intent.putExtra("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
-			intent.putExtra("phoneNumber_B", "15011302093");
-			intent.putExtra("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf("100"))));
-			intent.putExtra("CARDNOJLN_B", "123456");
-			intent.putExtra("CHECKX_B", "0.0");
-			intent.putExtra("POSTYPE_B", "1");
-			intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
-			intent.putExtra("CRDNO", "");
-			intent.putExtra("CHECKY_B", "0.0");
-			intent.putExtra("APPTOKEN", "APPTOKEN");
-			intent.putExtra("TTXNTM", DateUtil.getSystemTime());
-			intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
-
-			startActivity(intent);
-		}
+	
 
 		
 //		public Boolean checkValue(){
