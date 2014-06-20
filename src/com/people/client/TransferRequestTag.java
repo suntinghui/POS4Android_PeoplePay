@@ -72,13 +72,13 @@ public class TransferRequestTag {
 			requestTagMap.put(SmsSend, "http://211.147.87.29:8092/Vpm/199018.tranm");
 			requestTagMap.put(SmsCheck, "http://211.147.87.29:8092/Vpm/199019.tranm");
 			requestTagMap.put(MerchantQuery, "http://211.147.87.29:8092/Vpm/199022.tranm");
-			requestTagMap.put(CashCharge, "http://192.168.4.122:8080/zfb/mpos/transProcess.do?operationId=addTransaction");
-			requestTagMap.put(GetCashCharge, "http://192.168.4.122:8080/zfb/mpos/transProcess.do?operationId=getTransaction");
-			requestTagMap.put(LoadUpHead, "http://192.168.4.122:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");
-			requestTagMap.put(GetDownLoadHead, "http://192.168.4.122:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
-			requestTagMap.put(LoadUpStreetImg, "http://192.168.4.122:8080/zfb/mpos/transProcess.do?operationId=setStreetImg");
-			requestTagMap.put(GetDownLoadStreetImg, "http://192.168.4.122:8080/zfb/mpos/transProcess.do?operationId=getStreetImg");
-			requestTagMap.put(CashDelete, "http://192.168.4.122:8080/zfb/mpos/transProcess.do?operationId=delTransaInfo");
+			requestTagMap.put(CashCharge, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=addTransaction");
+			requestTagMap.put(GetCashCharge, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getTransaction");
+			requestTagMap.put(LoadUpHead, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");
+			requestTagMap.put(GetDownLoadHead, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
+			requestTagMap.put(LoadUpStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setStreetImg");
+			requestTagMap.put(GetDownLoadStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getStreetImg");
+			requestTagMap.put(CashDelete, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=delTransaInfo");
 			
 			requestTagMap.put(GetProvinceName, "http://211.147.87.29:8092/Vpm/199031.tranm");
 			requestTagMap.put(GetCityName, "http://211.147.87.29:8092/Vpm/199032.tranm");

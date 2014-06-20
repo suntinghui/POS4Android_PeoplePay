@@ -11,6 +11,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -52,21 +53,21 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	private Intent intent = null;
 
 	private AnimationDrawable animaition = null;
-	
+
 	private RelativeLayout layout_search;
 	private RelativeLayout layout_swip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		setContentView(R.layout.activity_search_swipe);
 
 		this.registerReceiver(mQPOSUpdateReceiver, makeUpdateIntentFilter());
 
 		backBtn = (Button) this.findViewById(R.id.btn_back);
 		backBtn.setOnClickListener(this);
-		
+
 		bluetoothBtn = (Button) this.findViewById(R.id.bluetooth_btn);
 		bluetoothBtn.setOnClickListener(this);
 		if (QPOS.getCardReader().getMode() == CardReader.BLUETOOTHMODE) {
@@ -77,22 +78,21 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 		titleView = (TextView) this.findViewById(R.id.titleView);
 		titleView.setText("检测设备");
-		
+
 		layout_search = (RelativeLayout) findViewById(R.id.layout_search);
 		layout_swip = (RelativeLayout) findViewById(R.id.layout_swip);
-		
+
 		ImageView iv_blue = (ImageView) findViewById(R.id.iv_blue);
-		Animation myAnimation= AnimationUtils.loadAnimation(this,R.anim.check_device_anim);
-		LinearInterpolator lir = new LinearInterpolator();  
-		myAnimation.setInterpolator(lir); 
+		Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.check_device_anim);
+		LinearInterpolator lir = new LinearInterpolator();
+		myAnimation.setInterpolator(lir);
 		iv_blue.startAnimation(myAnimation);
-		
+
 		ImageView iv_device = (ImageView) findViewById(R.id.iv_device);
-		Animation myAnimation1= AnimationUtils.loadAnimation(this,R.anim.swip_scale_anim);
-		LinearInterpolator lir1 = new LinearInterpolator();  
-		myAnimation1.setInterpolator(lir1); 
+		Animation myAnimation1 = AnimationUtils.loadAnimation(this, R.anim.swip_scale_anim);
+		LinearInterpolator lir1 = new LinearInterpolator();
+		myAnimation1.setInterpolator(lir1);
 		iv_device.startAnimation(myAnimation1);
-		
 
 		intent = this.getIntent();
 
@@ -122,7 +122,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	private void doAction() {
 		String preDate = ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPRESIGNDATE, "0101");
 		String nowDate = DateUtil.getSystemMonthDay();
-		if (!preDate.equals(nowDate)) { 
+		
+		if (!preDate.equals(nowDate)) {
 			new Sign().doAction();
 
 		} else {
@@ -130,25 +131,25 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 			if (type == TransferRequestTag.Consume) {
 				new ConsumeAction().doAction();
-				
+
 			} else if (type == TransferRequestTag.ConsumeCancel) {
 				new ConsumeCancelAction().doAction();
-				
+
 			} else if (type == TransferRequestTag.PhoneRecharge) {
 				new PhoneRechargeAction().doAction();
 			}
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
-		
+
 		this.backAction(null);
 	}
 
 	public void backAction(View view) {
 		new ThreadCancel(null, this).start();
-		
+
 		this.finish();
 	}
 
@@ -175,9 +176,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 				layout_search.setVisibility(View.GONE);
 				layout_swip.setVisibility(View.VISIBLE);
 				ImageView iv_card = (ImageView) findViewById(R.id.iv_card);
-				Animation myAnimation0= AnimationUtils.loadAnimation(SearchAndSwipeActivity.this,R.anim.swip_card_anim);
-				LinearInterpolator lir0 = new LinearInterpolator();  
-				myAnimation0.setInterpolator(lir0); 
+				Animation myAnimation0 = AnimationUtils.loadAnimation(SearchAndSwipeActivity.this, R.anim.swip_card_anim);
+				LinearInterpolator lir0 = new LinearInterpolator();
+				myAnimation0.setInterpolator(lir0);
 				iv_card.startAnimation(myAnimation0);
 
 			} else if (Constants.ACTION_QPOS_SWIPEDONE.equals(action)) {
@@ -192,6 +193,16 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		intentFilter.addAction(Constants.ACTION_QPOS_STARTSWIPE);
 		intentFilter.addAction(Constants.ACTION_QPOS_SWIPEDONE);
 		return intentFilter;
+	}
+
+	private void gotoTradeFailureActivity(String msg) {
+		if (msg == null || msg.trim().equals("")) {
+			msg = "交易失败";
+		}
+
+		Intent intent = new Intent(this, TradeFaiureActivity.class);
+		intent.putExtra("MESSAGE", msg);
+		startActivityForResult(intent, 0);
 	}
 
 	// ////////////////////////////////////////////////////////////////////////////////////////////////
@@ -218,9 +229,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					signAction();
 
 					break;
-					
+
 				default:
-					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+					Toast.makeText(SearchAndSwipeActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
 					SearchAndSwipeActivity.this.finish();
 					break;
 				}
@@ -229,7 +240,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 		private void signAction() {
 			Toast.makeText(SearchAndSwipeActivity.this, "正在签到请稍候...", Toast.LENGTH_LONG).show();
-			
+
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
 			tempMap.put("TRANCODE", "199020");
 			tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(SearchAndSwipeActivity.this).getString(Constants.kUSERNAME, "")); // 手机号
@@ -261,11 +272,11 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 						String macKey = map.get("MACKEY");
 
 						new ThreadUpDataKey(mHandler, SearchAndSwipeActivity.this, desKey + pinKey + macKey).start();
-						
+
 					} else { // 签到失败
 						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}
-					
+
 				}
 			};
 		}
@@ -284,7 +295,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					break;
 
 				default:
-					gotoTradeFailureActivity( (String)msg.obj);
+					gotoTradeFailureActivity((String) msg.obj);
 					break;
 				}
 			}
@@ -323,6 +334,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		private Handler swipeHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
+				Log.i("msg:", msg + "");
 				switch (msg.what) {
 				case CardReader.SUCCESS:
 					HashMap<String, String> map = (HashMap<String, String>) msg.obj;
@@ -330,9 +342,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					transfer(map);
 
 					break;
-					
+
 				default:
-					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+					Toast.makeText(SearchAndSwipeActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
 					SearchAndSwipeActivity.this.finish();
 					break;
 				}
@@ -363,6 +375,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			tempMap.put("TPINBLK", map.get("PIN")); // 支付密码???
 			tempMap.put("CRDNO", intent.getStringExtra("CRDNO")); // 卡号
 			tempMap.put("CHECKX", intent.getStringExtra("CHECKX")); // 横坐标
+			tempMap.put("CHECKY", intent.getStringExtra("CHECKY")); // 纵坐标
 			tempMap.put("APPTOKEN", intent.getStringExtra("APPTOKEN"));
 			tempMap.put("TTXNTM", intent.getStringExtra("TTXNTM")); // 交易时间
 			tempMap.put("TTXNDT", intent.getStringExtra("TTXNDT")); // 交易日期
@@ -389,14 +402,14 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 				public void successAction(Object obj) {
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
-					
+
 					if (map.get("RSPCOD").equals("000000")) {
 						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
 						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
 						startActivityForResult(intent0, 0);
-						
+
 						Toast.makeText(BaseActivity.getTopActivity(), "交易成功", Toast.LENGTH_SHORT).show();
-						
+
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}
@@ -446,9 +459,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					transfer(map);
 
 					break;
-					
+
 				default:
-					Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
+					Toast.makeText(SearchAndSwipeActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
 					SearchAndSwipeActivity.this.finish();
 					break;
 				}
@@ -510,7 +523,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
 						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
 						startActivityForResult(intent0, 0);
-						
+
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}
@@ -520,11 +533,12 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		}
 
 	}
-	
+
 	// 手机充值
 	class PhoneRechargeAction {
 		private String tid = "";
 		private String pid = "";
+
 		public void doAction() {
 			new ThreadDeviceID(getDeviceIDHandler, SearchAndSwipeActivity.this).start();
 		}
@@ -547,96 +561,84 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			}
 		};
 
+		private Handler swipeHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+				case CardReader.SUCCESS:
+					HashMap<String, String> map = (HashMap<String, String>) msg.obj;
 
-			private Handler swipeHandler = new Handler() {
+					transfer(map);
+
+					break;
+
+				default:
+					Toast.makeText(SearchAndSwipeActivity.this, (String) msg.obj, Toast.LENGTH_SHORT).show();
+					SearchAndSwipeActivity.this.finish();
+					break;
+				}
+			}
+		};
+
+		private String getExtraString() {
+			StringBuffer sb = new StringBuffer();
+			sb.append(intent.getStringExtra("TRANCODE"));
+			sb.append(intent.getStringExtra("CTXNAT"));
+			sb.append(intent.getStringExtra("TSEQNO"));
+			sb.append(intent.getStringExtra("TTXNTM"));
+			sb.append(intent.getStringExtra("TTXNDT"));
+
+			return sb.toString();
+		}
+
+		private void transfer(HashMap<String, String> map) {
+			HashMap<String, Object> tempMap = new HashMap<String, Object>();
+			tempMap.put("TRANCODE", intent.getStringExtra("TRANCODE"));
+			tempMap.put("SELLTEL_B", intent.getStringExtra("SELLTEL_B")); // 消费撤销唯一凭证
+			tempMap.put("phoneNumber_B", intent.getStringExtra("phoneNumber_B"));
+			tempMap.put("Track2_B", map.get("CARD"));
+			tempMap.put("CARDNOJLN_B", map.get("PIN")); // 支付密码???
+			tempMap.put("TXNAMT_B", intent.getStringExtra("TXNAMT_B"));
+			tempMap.put("POSTYPE_B", intent.getStringExtra("POSTYPE_B"));
+			tempMap.put("RAND_B", "");
+			tempMap.put("CHECKX_B", intent.getStringExtra("CHECKX_B"));
+			tempMap.put("CHECKY_B", intent.getStringExtra("CHECKY_B"));
+			tempMap.put("TERMINALNUMBER_B", pid); // PSAM卡号 "UN201410000046"
+			tempMap.put("PACKAGEMAC", map.get("MAC")); // MAC
+
+			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.PhoneRecharge, tempMap, transferHandler());
+
+			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在交易，请稍候...", new LKHttpRequestQueueDone() {
+
 				@Override
-				public void handleMessage(Message msg) {
-					switch (msg.what) {
-					case CardReader.SUCCESS:
-						HashMap<String, String> map = (HashMap<String, String>) msg.obj;
+				public void onComplete() {
+					super.onComplete();
 
-						transfer(map);
+				}
 
-						break;
-						
-					default:
-						Toast.makeText(SearchAndSwipeActivity.this, (String)msg.obj, Toast.LENGTH_SHORT).show();
-						SearchAndSwipeActivity.this.finish();
-						break;
+			});
+		}
+
+		private LKAsyncHttpResponseHandler transferHandler() {
+			return new LKAsyncHttpResponseHandler() {
+
+				@Override
+				public void successAction(Object obj) {
+					@SuppressWarnings("unchecked")
+					HashMap<String, String> map = (HashMap<String, String>) obj;
+					if (map.get("RSPCOD").equals("000000")) {
+						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
+						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
+						startActivityForResult(intent0, 0);
+
+					} else {
+						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}
 				}
+
 			};
-
-			private String getExtraString() {
-				StringBuffer sb = new StringBuffer();
-				sb.append(intent.getStringExtra("TRANCODE"));
-				sb.append(intent.getStringExtra("CTXNAT"));
-				sb.append(intent.getStringExtra("TSEQNO"));
-				sb.append(intent.getStringExtra("TTXNTM"));
-				sb.append(intent.getStringExtra("TTXNDT"));
-
-				return sb.toString();
-			}
-
-			private void transfer(HashMap<String, String> map) {
-				HashMap<String, Object> tempMap = new HashMap<String, Object>();
-				tempMap.put("TRANCODE", intent.getStringExtra("TRANCODE"));
-				tempMap.put("SELLTEL_B", intent.getStringExtra("SELLTEL_B")); // 消费撤销唯一凭证
-				tempMap.put("phoneNumber_B", intent.getStringExtra("phoneNumber_B"));
-				tempMap.put("Track2_B", map.get("CARD"));
-				tempMap.put("CARDNOJLN_B", map.get("PIN")); // 支付密码???
-				tempMap.put("TXNAMT_B", intent.getStringExtra("TXNAMT_B"));
-				tempMap.put("POSTYPE_B", intent.getStringExtra("POSTYPE_B"));
-				tempMap.put("RAND_B", "");
-				tempMap.put("CHECKX_B", intent.getStringExtra("CHECKX_B"));
-				tempMap.put("CHECKY_B", intent.getStringExtra("CHECKY_B"));
-				tempMap.put("TERMINALNUMBER_B", pid); // PSAM卡号 "UN201410000046"
-				tempMap.put("PACKAGEMAC", map.get("MAC")); // MAC
-				
-				
-				LKHttpRequest req = new LKHttpRequest(TransferRequestTag.PhoneRecharge, tempMap, transferHandler());
-
-				new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在交易，请稍候...", new LKHttpRequestQueueDone() {
-
-					@Override
-					public void onComplete() {
-						super.onComplete();
-
-					}
-
-				});
-			}
-
-			private LKAsyncHttpResponseHandler transferHandler() {
-				return new LKAsyncHttpResponseHandler() {
-
-					@Override
-					public void successAction(Object obj) {
-						@SuppressWarnings("unchecked")
-						HashMap<String, String> map = (HashMap<String, String>) obj;
-						if (map.get("RSPCOD").equals("000000")) {
-							Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-							intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
-							startActivityForResult(intent0, 0);
-							
-						} else {
-							gotoTradeFailureActivity(map.get("RSPMSG"));
-						}
-					}
-
-				};
-			}
-
 		}
-		
-	private void gotoTradeFailureActivity(String msg){
-		if (msg == null || msg.trim().equals("")){
-			msg = "交易失败";
-		}
-		
-		Intent intent = new Intent(this, TradeFaiureActivity.class);
-		intent.putExtra("MESSAGE", msg);
-		startActivityForResult(intent, 0);
+
 	}
 
 }
