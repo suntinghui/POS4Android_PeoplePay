@@ -44,7 +44,9 @@ public class TransferRequestTag {
 	public static final int DrawMoney = 34; // 提现						 用户密码错误
 	public static final int MyAccount = 35; // 我的账户				     13945621452 此商户不存在或未审核通过或已关闭
 	public static final int PhoneRecharge = 36; // 手机充值   
-	public static final int Authentication = 37; // 实名认证
+	public static final int Authentication = 37; // 实名认证  
+	public static final int CardCard = 38; // 卡卡转账
+	public static final int CreditCard = 39; // 
 	
 	private static HashMap<Integer, String> requestTagMap = null;
 
@@ -91,6 +93,8 @@ public class TransferRequestTag {
 			requestTagMap.put(MyAccount, "http://211.147.87.29:8092/Vpm/199026.tranm");
 			requestTagMap.put(PhoneRecharge, "http://211.147.87.29:8092/Vpm/708110.tranp");
 			requestTagMap.put(Authentication, "￼http://211.147.87.29:8092/Vpm/199030.tranm");
+			requestTagMap.put(CardCard, "￼http://211.147.87.29:8092/Vpm/708100.tranm");
+			requestTagMap.put(CreditCard, "￼http://211.147.87.29:8092/Vpm/708110.tranm");
 			
 			
 			// 192.168.4.115:8080  测试服务器地址

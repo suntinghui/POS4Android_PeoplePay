@@ -18,7 +18,7 @@ import com.people.model.TradeModel;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
-// 流水详情
+// 信用卡余额
 public class TransferDetailActivity extends BaseActivity implements OnClickListener {
 	
 	private TradeModel model = null;
@@ -27,7 +27,7 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		this.setContentView(R.layout.activity_transfer_detail);
+		this.setContentView(R.layout.activity_creditcard_balance);
 
 		model = (TradeModel) this.getIntent().getSerializableExtra("model");
 

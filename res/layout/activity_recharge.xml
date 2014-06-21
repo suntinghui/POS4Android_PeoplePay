@@ -87,6 +87,6 @@
         android:layout_marginRight="25dip"
         android:layout_marginTop="30dip"
         android:background="@drawable/btn"
-        android:text="确 定" />
+        android:text="刷		卡" />
 
 </LinearLayout>

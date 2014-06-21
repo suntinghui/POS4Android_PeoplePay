@@ -27,6 +27,7 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 	private Spinner spinner = null;
 
 	private String[] amount = { "10", "50", "100", "200", "300" };
+	private String currentAmount = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 		Button btn_phone = (Button) findViewById(R.id.btn_phone);
 		btn_phone.setOnClickListener(this);
 
+		currentAmount = amount[0];
 		et_phone = (EditText) findViewById(R.id.et_phone);
 
 		spinner = (Spinner) findViewById(R.id.spinner);
@@ -53,7 +55,7 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-
+		currentAmount = amount[arg2];
 	}
 
 	@Override
@@ -110,14 +112,14 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 		intent.putExtra("TYPE", TransferRequestTag.PhoneRecharge);
 		intent.putExtra("TRANCODE", "708110");
 		intent.putExtra("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
-		intent.putExtra("phoneNumber_B", "15011302093");
-		intent.putExtra("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf("100"))));
+		intent.putExtra("phoneNumber_B", et_phone.getText().toString());
+		intent.putExtra("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(currentAmount))));
 		intent.putExtra("CHECKX_B", "0.0");
 		intent.putExtra("POSTYPE_B", "1");
 		intent.putExtra("CHECKY_B", "0.0");
-		intent.putExtra("TTXNTM", DateUtil.getSystemTime());
-		intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
-		intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
+//		intent.putExtra("TTXNTM", DateUtil.getSystemTime());
+//		intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
+//		intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
 
 		startActivity(intent);
 	}
