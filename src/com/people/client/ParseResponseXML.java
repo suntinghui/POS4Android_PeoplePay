@@ -668,6 +668,8 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("TOTALPAGE".equalsIgnoreCase(parser.getName())) {
 					respMap.put("TOTALPAGE", parser.nextText());
+				} else if ("TOTALTRANSAMT".equalsIgnoreCase(parser.getName())){
+					respMap.put("TOTALTRANSAMT", parser.nextText());
 				} else if ("CURRENTROWNUMS".equalsIgnoreCase(parser.getName())) {
 					respMap.put("CURRENTROWNUMS", parser.nextText());
 				} else if ("TOTALROWNUMS".equalsIgnoreCase(parser.getName())) {

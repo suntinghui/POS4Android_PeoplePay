@@ -90,6 +90,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	private int currentPage = 0;
 
 	private int currentDelete = 0;
+	
+	private boolean clickFlag = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -218,11 +220,13 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 			break;
 		case R.id.vg_content:
+			clickFlag = true;
 			// 交易流水
 			switchTo(INDEX_CONTENT);
 			break;
 
 		case R.id.vg_path:
+			clickFlag = true;
 			// 现金流水
 			switchTo(INDEX_PATH);
 			break;
@@ -324,7 +328,6 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			public void successAction(Object obj) {
 				btn_refresh.clearAnimation();
 				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-					float totalAmount = 0;
 					int totalNum = Integer.valueOf((String) ((HashMap) obj).get("TOTALROWNUMS"));
 					if (totalNum == 0) {
 						iv_nodata.setVisibility(View.VISIBLE);
@@ -338,16 +341,14 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 						for (int i = 0; i < tmpArray.size(); i++) {
 							arrayCash.add(tmpArray.get(i));
 						}
-						for (int i = 0; i < arrayCash.size(); i++) {
-							CashModel model = arrayCash.get(i);
-							totalAmount += Float.valueOf(model.getAmount());
-
-						}
+						
 						count = arrayCash.size();
-						totalAmountCash = "￥" + totalAmount;
-						totalNumCash = arrayCash.size() + "";
+						totalAmountCash = "￥" + (String) ((HashMap) obj).get("TOTALTRANSAMT");
+						totalNumCash = totalNum + "";
+						
 						tv_totalmoney.setText(totalAmountCash);
 						tv_totalnum.setText(totalNumCash);
+						
 						if (arrayCash.size() == 0) {
 							iv_nodata.setVisibility(View.VISIBLE);
 						} else {
@@ -375,6 +376,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	// 删除现金记账
 	public void deleteCashItem(final String index) {
 		currentDelete = Integer.valueOf(index);
+		
 		LKAlertDialog dialog = new LKAlertDialog(this);
 		dialog.setTitle("提示");
 		dialog.setMessage("确定删除当前记账");
@@ -527,7 +529,11 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 		@Override
 		public void onPageSelected(int index) {
-			switchTo(index);
+			if (!clickFlag) {
+				switchTo(index);
+			}
+			
+			clickFlag = false;
 		}
 
 	}

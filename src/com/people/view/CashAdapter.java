@@ -13,18 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.people.R;
-import com.people.activity.BaseActivity;
 import com.people.activity.TransferListActivity;
 import com.people.model.CashModel;
 import com.people.util.DateUtil;
-import com.people.util.StringUtil;
-
 
 public class CashAdapter extends BaseAdapter implements OnClickListener {
 
 	private LayoutInflater mLayoutInflater;
 	private ArrayList<CashModel> array = new ArrayList<CashModel>();
-	private Context mContext ;
+	private Context mContext;
+
 	public CashAdapter(Context context, int resource, ArrayList<CashModel> objects) {
 
 		mLayoutInflater = LayoutInflater.from(context);
@@ -45,7 +43,7 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 			holder.tv_week = (TextView) convertView.findViewById(R.id.tv_week);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.btn_delete = (Button) convertView.findViewById(R.id.btn_delete);
-			holder.btn_delete.setTag(1000+position);
+			holder.btn_delete.setTag(position);
 			holder.btn_delete.setOnClickListener(this);
 
 			convertView.setTag(holder);
@@ -56,10 +54,10 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 		CashModel model = array.get(position);
 		String amount = model.getAmount();
 		if (amount != null) {
-			holder.tv_amount.setText("￥"+amount);
+			holder.tv_amount.setText("￥" + amount);
 		}
 
-		holder.tv_date.setText(DateUtil.getDayWeekTime(model.getDate().replaceAll("-", "")+model.getTime().replaceAll(":", "")));
+		holder.tv_date.setText(DateUtil.getDayWeekTime(model.getDate().replaceAll("-", "") + model.getTime().replaceAll(":", "")));
 		return convertView;
 	}
 
@@ -97,9 +95,9 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public void onClick(View arg0) {
 		TransferListActivity activity = (TransferListActivity) mContext;
-		Integer tag = (Integer) arg0.getTag()-1000;
-		activity.deleteCashItem(tag+"");
-		
+		Integer tag = (Integer) arg0.getTag();
+		activity.deleteCashItem(tag + "");
+
 	}
 
 }

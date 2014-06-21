@@ -1,6 +1,5 @@
 package com.people.qpos;
 
-import dspread.voicemodem.CardReader;
 import android.content.Context;
 import android.os.Handler;
 
