@@ -3,6 +3,7 @@ package com.people.view;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -43,20 +44,21 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 			holder.tv_week = (TextView) convertView.findViewById(R.id.tv_week);
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.btn_delete = (Button) convertView.findViewById(R.id.btn_delete);
-			holder.btn_delete.setTag(position);
-			holder.btn_delete.setOnClickListener(this);
+			
+			Log.i("settag: ", position+"");
 
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-
+		holder.btn_delete.setTag(position+10000);
+		holder.btn_delete.setOnClickListener(this);
 		CashModel model = array.get(position);
 		String amount = model.getAmount();
 		if (amount != null) {
 			holder.tv_amount.setText("￥" + amount);
 		}
-
+		Log.i("item: ", position+"    "+amount+"");
 		holder.tv_date.setText(DateUtil.getDayWeekTime(model.getDate().replaceAll("-", "") + model.getTime().replaceAll(":", "")));
 		return convertView;
 	}
@@ -79,6 +81,7 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public int getCount() {
+		Log.i("count:", array.size()+"");
 		return array.size();
 	}
 
@@ -94,8 +97,10 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public void onClick(View arg0) {
+		
 		TransferListActivity activity = (TransferListActivity) mContext;
-		Integer tag = (Integer) arg0.getTag();
+		Integer tag = (Integer) arg0.getTag()-10000;
+		Log.i("onClick: ", tag+"");
 		activity.deleteCashItem(tag + "");
 
 	}

@@ -63,7 +63,7 @@ public class TransferRequestTag {
 			requestTagMap.put(Consume, "http://211.147.87.29:8092/Vpm/199005.tranm");
 			requestTagMap.put(ConsumeCancel, "http://211.147.87.23:8088/posp/199006.tran");
 			requestTagMap.put(BalanceQuery, "http://211.147.87.23:8088/posp/199007.tran");
-			requestTagMap.put(FlowQuery, "http://211.147.87.29:8092/Vpm/199031.tranm"); // 流水查询
+			requestTagMap.put(FlowQuery, "http://211.147.87.29:8092/Vpm/199008.tranm"); // 流水查询
 			requestTagMap.put(CreditCardApply, "http://211.147.87.23:8080/posp/199010.tran");// 信用卡额度申请
 			requestTagMap.put(ClearQuery, "http://211.147.87.23:8080/posp/199009.tran");
 			requestTagMap.put(AppCommend, "http://211.147.87.24:8092/posm/199011.tran5");
