@@ -1,6 +1,5 @@
 package com.people.activity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.Intent;
@@ -21,14 +20,12 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
-import com.people.util.StringUtil;
 
 // 基本信息
 public class UpLoadFirstActivity extends BaseActivity implements OnClickListener {
 	private EditText et_name;
 	private EditText et_id;
 	private EditText et_merchant_name;
-	private Spinner spinner;
 	private EditText et_address;
 	private EditText et_serial;
 	private String[] scope = {"服装","3c家电","美容化妆、健身养身","品牌直销","办公用品印刷","家居建材家具","商业服务、成人教育","生活服务","箱包皮具服饰","食品饮料烟酒零售","文化体育休闲玩意","杂货超市","餐饮娱乐、休闲度假",
@@ -72,19 +69,19 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_confirm:
-			if (checkValue()) {
+//			if (checkValue()) {
 				HashMap<String, String> map = new HashMap<String, String>();
-				map.put("USERNAME", et_name.getText().toString());
-				map.put("IDNUMBER", et_id.getText().toString());
-				map.put("MERNAME", et_merchant_name.getText().toString());
-				map.put("SCOBUS", scope[positon]);
-				map.put("MERADDRESS", et_address.getText().toString());
-				map.put("TERMID", et_serial.getText().toString());
+//				map.put("USERNAME", et_name.getText().toString());
+//				map.put("IDNUMBER", et_id.getText().toString());
+//				map.put("MERNAME", et_merchant_name.getText().toString());
+//				map.put("SCOBUS", scope[positon]);
+//				map.put("MERADDRESS", et_address.getText().toString());
+//				map.put("TERMID", et_serial.getText().toString());
 				
 				Intent intent = new Intent(UpLoadFirstActivity.this, UpLoadSecondActivity.class);
 				intent.putExtra("map", map);
 				startActivity(intent);
-			}
+//			}
 
 			break;
 		case R.id.btn_back:

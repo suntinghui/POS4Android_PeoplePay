@@ -226,7 +226,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="25dip"
                         android:layout_toRightOf="@id/iv_1"
-                        android:text="提现" />
+                        android:text="@string/draw_money" />
 
                     <ImageView
                         android:layout_width="wrap_content"

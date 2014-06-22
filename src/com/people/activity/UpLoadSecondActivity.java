@@ -77,20 +77,20 @@ public class UpLoadSecondActivity extends BaseActivity implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_confirm:
-			if (checkValue()) {
-				fromForeMap.put("BANKUSERNAME", et_name.getText().toString());
-				fromForeMap.put("BANKAREA", currentCity.getCode()+"");
-				fromForeMap.put("BIGBANKCOD", currentBank.getCode()+"");
-				fromForeMap.put("BIGBANKNAM", currentBank.getName());
-				fromForeMap.put("BANKCOD", currentBankBankCode);
-				fromForeMap.put("BANKNAM", currentBankBankName);
-				fromForeMap.put("BANKACCOUNT", et_account.getText().toString());
+//			if (checkValue()) {
+//				fromForeMap.put("BANKUSERNAME", et_name.getText().toString());
+//				fromForeMap.put("BANKAREA", currentCity.getCode()+"");
+//				fromForeMap.put("BIGBANKCOD", currentBank.getCode()+"");
+//				fromForeMap.put("BIGBANKNAM", currentBank.getName());
+//				fromForeMap.put("BANKCOD", currentBankBankCode);
+//				fromForeMap.put("BANKNAM", currentBankBankName);
+//				fromForeMap.put("BANKACCOUNT", et_account.getText().toString());
 				
 				 Intent intent = new Intent(UpLoadSecondActivity.this,
 				 UploadImagesActivity.class);
 				 intent.putExtra("map", fromForeMap);
 				 startActivity(intent);
-			}
+//			}
 
 			break;
 		case R.id.btn_back:
