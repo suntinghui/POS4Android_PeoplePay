@@ -114,7 +114,6 @@
                 android:background="@null"
                 android:hint="@string/forgetpwd_securitycode_hint"
                 android:inputType="number"
-                android:maxLength="6"
                 android:singleLine="true" />
         </LinearLayout>
     </LinearLayout>
@@ -151,7 +150,6 @@
             android:background="@null"
             android:hint="@string/forgetpwd_pwd_hint"
             android:inputType="number"
-            android:maxLength="6"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -193,7 +191,6 @@
             android:background="@null"
             android:hint="@string/forgetpwd_pwd_confirm_hint"
             android:inputType="number"
-            android:maxLength="6"
             android:singleLine="true" />
     </LinearLayout>
 

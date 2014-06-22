@@ -60,7 +60,6 @@
             android:layout_marginLeft="18dip"
             android:background="@drawable/bg_borderbox"
             android:hint="@string/upload_first_name_h"
-            android:maxLength="6"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -96,7 +95,6 @@
             android:layout_marginLeft="18dip"
             android:background="@drawable/bg_borderbox"
             android:hint="@string/upload_first_id_h"
-            android:maxLength="6"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -132,7 +130,6 @@
             android:layout_marginLeft="35dip"
             android:background="@drawable/bg_borderbox"
             android:hint="@string/upload_first_merchant_name_h"
-            android:maxLength="6"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -201,7 +198,6 @@
             android:layout_marginLeft="35dip"
             android:background="@drawable/bg_borderbox"
             android:hint="@string/upload_first_address_h"
-            android:maxLength="6"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -238,7 +234,6 @@
             android:background="@drawable/bg_borderbox"
             android:hint="@string/upload_first_serial_h"
             android:inputType="number"
-            android:maxLength="6"
             android:singleLine="true" />
     </LinearLayout>
 
