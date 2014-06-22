@@ -206,7 +206,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			return false;
 		}
 
-		if (!et_pwd_confirm.getText().equals(et_pwd.getText())) {
+		if (!et_pwd_confirm.getText().toString().equals(et_pwd.getText().toString())) {
 			Toast.makeText(this, "密码两次输入不正确!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
