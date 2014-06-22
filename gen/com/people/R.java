@@ -862,6 +862,7 @@ containing a value of this type.
         public static final int contacts_title=0x7f09001b;
         public static final int creditcard_card_num=0x7f09007a;
         public static final int creditcard_titles=0x7f090079;
+        public static final int deal=0x7f090097;
         public static final int dengyu=0x7f09008e;
         public static final int dihao=0x7f090090;
         public static final int draw_lock_tips=0x7f090016;

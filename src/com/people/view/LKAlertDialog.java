@@ -130,4 +130,8 @@ public class LKAlertDialog extends Dialog {
 
 		return this;
 	}
+	
+	public void mSetCancelable(Boolean cancel){
+		this.setCancelable(cancel);
+	}
 }

@@ -81,6 +81,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	private String totalAmountCash = "￥0.0";
 	private String totalNumCash = "0";
 	private String totalNumTransfer;
+	
+	private long totalAmount = 0L;
 
 	private View moreView; // 加载更多页面
 	private int lastItem;
@@ -164,7 +166,12 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 		if (activeIdx == INDEX_CONTENT) {
 			isCurrentList = true;
-			iv_nodata.setVisibility(View.GONE);
+			if(totalAmount == 0){
+				iv_nodata.setVisibility(View.VISIBLE);
+			}else{
+				iv_nodata.setVisibility(View.GONE);
+			}
+			
 			tv_totalnum.setText(totalNumTransfer);
 			tv_totalmoney.setText(totalAmountTransfer);
 			mTvContent.setTextColor(mTextColorSelected);
@@ -181,8 +188,6 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		} else if (activeIdx == INDEX_PATH) {
 			isCurrentList = false;
 			iv_nodata.setVisibility(View.GONE);
-			tv_totalnum.setText(totalNumCash);
-			tv_totalmoney.setText(totalAmountCash);
 			mTvPath.setTextColor(mTextColorSelected);
 			mTvContent.setTextColor(mTextColorUnselected);
 			mLinePath.setVisibility(View.VISIBLE);
@@ -261,8 +266,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			public void successAction(Object obj) {
 				arrayTransfer.clear();
 				btn_refresh.clearAnimation();
-				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-					long totalAmount = 0L;
+				if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
+					 totalAmount = 0L;
 					arrayTransfer.addAll((ArrayList<TradeModel>) ((HashMap) obj).get("list"));
 					for (int i = 0; i < arrayTransfer.size(); i++) {
 						TradeModel model = arrayTransfer.get(i);
@@ -273,24 +278,22 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 						}
 
 					}
-					totalAmountTransfer = "￥" + totalAmount / 100.00f;
-					totalNumTransfer = arrayTransfer.size() + "";
-					tv_totalmoney.setText(totalAmountTransfer);
-					tv_totalnum.setText(totalNumTransfer);
+					
 					if (arrayTransfer.size() == 0) {
+						totalAmountTransfer = "￥0.0";
+						totalNumTransfer = "0";
 						iv_nodata.setVisibility(View.VISIBLE);
 					} else {
+						totalAmountTransfer = "￥" + totalAmount / 100.00f;
+						totalNumTransfer = arrayTransfer.size() + "";
 						iv_nodata.setVisibility(View.GONE);
 					}
+					tv_totalmoney.setText(totalAmountTransfer);
+					tv_totalnum.setText(totalNumTransfer);
 					mContentAdapter.notifyDataSetChanged();
 
 				} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-					if (arrayTransfer.size() == 0) {
-						iv_nodata.setVisibility(View.VISIBLE);
-					} else {
-						iv_nodata.setVisibility(View.GONE);
-					}
 				}
 
 			}
@@ -331,40 +334,42 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 					int totalNum = Integer.valueOf((String) ((HashMap) obj).get("TOTALROWNUMS"));
 					if (totalNum == 0) {
 						iv_nodata.setVisibility(View.VISIBLE);
+						mCashAdapter.notifyDataSetChanged();
+						tv_totalmoney.setText("￥0.0");
+						tv_totalnum.setText("0");
 						return;
 					}
 					totalPage = Integer.valueOf((String) ((HashMap) obj).get("TOTALPAGE"));
 					ArrayList<CashModel> tmpArray = (ArrayList<CashModel>) ((HashMap) obj).get("list");
 					if (tmpArray == null) {
 						iv_nodata.setVisibility(View.VISIBLE);
+						mCashAdapter.notifyDataSetChanged();
+						tv_totalmoney.setText("￥0.0");
+						tv_totalnum.setText("0");
 					} else {
 						for (int i = 0; i < tmpArray.size(); i++) {
 							arrayCash.add(tmpArray.get(i));
 						}
 						
 						count = arrayCash.size();
-						totalAmountCash = "￥" + (String) ((HashMap) obj).get("TOTALTRANSAMT");
-						totalNumCash = totalNum + "";
-						
-						tv_totalmoney.setText(totalAmountCash);
-						tv_totalnum.setText(totalNumCash);
 						
 						if (arrayCash.size() == 0) {
+							totalAmountCash = "￥0.0";
+							totalNumCash = "0";
 							iv_nodata.setVisibility(View.VISIBLE);
 						} else {
+							totalAmountCash = "￥" + (String) ((HashMap) obj).get("TOTALTRANSAMT");
+							totalNumCash = totalNum + "";
 							iv_nodata.setVisibility(View.GONE);
 						}
+						tv_totalmoney.setText(totalAmountCash);
+						tv_totalnum.setText(totalNumCash);
 						mCashAdapter.notifyDataSetChanged();
 						moreView.setVisibility(View.GONE);
 					}
 
 				} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
-					if (arrayCash.size() == 0) {
-						iv_nodata.setVisibility(View.VISIBLE);
-					} else {
-						iv_nodata.setVisibility(View.GONE);
-					}
 				}
 
 			}
@@ -377,6 +382,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	public void deleteCashItem(final String index) {
 		currentDelete = Integer.valueOf(index);
 		
+		Log.i("delete tag:", currentDelete+"");
 		LKAlertDialog dialog = new LKAlertDialog(this);
 		dialog.setTitle("提示");
 		dialog.setMessage("确定删除当前记账");
@@ -414,25 +420,9 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			@Override
 			public void successAction(Object obj) {
 				if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-					arrayCash.remove(currentDelete);
-					float totalAmount = 0;
-					for (int i = 0; i < arrayCash.size(); i++) {
-						CashModel model = arrayCash.get(i);
-						totalAmount += Float.valueOf(model.getAmount());
-
-					}
-
-					totalAmountCash = "￥" + totalAmount;
-					totalNumCash = arrayCash.size() + "";
-					tv_totalmoney.setText(totalAmountCash);
-					tv_totalnum.setText(totalNumCash);
-					if (arrayCash.size() == 0) {
-						iv_nodata.setVisibility(View.VISIBLE);
-					} else {
-						iv_nodata.setVisibility(View.GONE);
-					}
-					mCashAdapter.notifyDataSetChanged();
-					Toast.makeText(TransferListActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
+					currentPage = 0;
+					arrayCash.clear();
+					queryCashFlow();
 
 				} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 					Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
