@@ -351,6 +351,13 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".activity.WithdrawalCashActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.WithdrawalCashActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
          
          
           <!-- push service client -->

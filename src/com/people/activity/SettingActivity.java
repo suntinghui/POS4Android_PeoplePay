@@ -47,7 +47,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 
 	private Integer[] imageIds = {R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
 
-	private String[] titles = { "忘记密码", "关于系统", "意见反馈", "检查更新", "帮助" };
+	private String[] titles = { "修改密码", "关于系统", "意见反馈", "检查更新", "帮助" };
 	private ImageButton ibtn_gesture;
 	private Boolean isOpen = false;
 

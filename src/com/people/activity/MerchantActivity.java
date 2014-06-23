@@ -139,7 +139,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.layout_1: // 提现
-			Intent intent1 = new Intent(MerchantActivity.this, ModifyLoginPwdActivity.class);
+			Intent intent1 = new Intent(MerchantActivity.this, WithdrawalCashActivity.class);
 			startActivity(intent1);
 			break;
 
