@@ -129,6 +129,14 @@ public class DateUtil {
 	}
 
 	/**
+	 * 取得手机日期 yyyyMMdd
+	 * 
+	 * @return
+	 */
+	public static String getSystemDate2() {
+		return new SimpleDateFormat("yyyyMMdd").format(new Date());
+	}
+	/**
 	 * 根据日期返回MMdd
 	 * 
 	 * @param date

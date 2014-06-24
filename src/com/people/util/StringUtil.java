@@ -404,7 +404,7 @@ public class StringUtil {
 	}
 	
 	public static boolean checkIdCard(String idCard) {
-        String regex = "[1-9]\\d{13,16}[a-zA-Z0-9]{1}";
+        String regex = "\\d{15}|\\d{18}";
         return Pattern.matches(regex,idCard);
     }
      

@@ -177,7 +177,7 @@ public class InputMoneyActivity extends BaseActivity {
 					intent.putExtra("PCSIM", "获取不到");
 					intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
 					intent.putExtra("CTXNAT", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString()))));
-					intent.putExtra("CRDNO", "6226200102329969");
+					intent.putExtra("CRDNO", "");
 					intent.putExtra("CHECKX", "0.0");
 					intent.putExtra("CHECKY", "0.0");
 					intent.putExtra("APPTOKEN", "APPTOKEN");

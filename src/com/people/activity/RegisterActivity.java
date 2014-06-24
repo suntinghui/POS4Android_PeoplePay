@@ -74,12 +74,13 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			this.finish();
 			break;
 		case R.id.btn_select:
+			isSelected = !isSelected;
 			if (isSelected) {
 				btn_select.setBackgroundResource(R.drawable.select_button_s);
 			} else {
 				btn_select.setBackgroundResource(R.drawable.select_button_n);
 			}
-			isSelected = !isSelected;
+			
 			break;
 		case R.id.btn_deal:
 			dealAction();
@@ -151,10 +152,10 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	private void registerAction() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199001");
-		tempMap.put("PHONENUMBER", et_phone.getText());
-		tempMap.put("PASSWORD", et_pwd.getText());
-		tempMap.put("CPASSWORD", et_pwd_confirm.getText());
-		tempMap.put("MSCODE", et_security_code.getText());
+		tempMap.put("PHONENUMBER", et_phone.getText().toString());
+		tempMap.put("PASSWORD", et_pwd.getText().toString());
+		tempMap.put("CPASSWORD", et_pwd_confirm.getText().toString());
+		tempMap.put("MSCODE", et_security_code.getText().toString());
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Register, tempMap, getRegisterHandler());
 
@@ -173,7 +174,15 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 
 			@Override
 			public void successAction(Object obj) {
-
+				if (obj instanceof HashMap) {
+					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
+						
+						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+					}
+				} else {
+				}
 			}
 
 		};

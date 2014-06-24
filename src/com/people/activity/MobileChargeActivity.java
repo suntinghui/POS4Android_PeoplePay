@@ -1,5 +1,8 @@
 package com.people.activity;
 
+import java.util.HashMap;
+
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
+import com.people.view.LKAlertDialog;
 
 public class MobileChargeActivity extends BaseActivity implements OnClickListener, OnItemSelectedListener {
 
@@ -26,7 +30,7 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 
 	private Spinner spinner = null;
 
-	private String[] amount = { "10", "50", "100", "200", "300" };
+	private String[] amount = { "50", "100", "200", "300" };
 	private String currentAmount = "";
 
 	@Override
@@ -66,13 +70,28 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		if (null != data) {
+		if (requestCode == 110 && null != data) {
 			Bundle bundle = data.getExtras();
 			String str = bundle.getString("phoneNumber");
 			if (null != str) {
 				et_phone.setText(str);
 			}
+		}else if(resultCode == 100){
+			LKAlertDialog dialog = new LKAlertDialog(this);
+			dialog.setTitle("提示");
+			dialog.setMessage("充值成功");
+			dialog.setCancelable(false);
+			dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					dialog.dismiss();
+				}
+			});
+			
+			dialog.create().show();
 		}
+		
 
 	}
 
@@ -92,36 +111,56 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 			finish();
 			break;
 		case R.id.btn_confirm:
-			confirmAction();
 			if (checkValue()) {
-				confirmAction();
+				LKAlertDialog dialog = new LKAlertDialog(this);
+				dialog.setTitle("提示");
+				dialog.setMessage("手机号		" +et_phone.getText().toString()+"\n充值金额		"+currentAmount+"元");
+				dialog.setCancelable(false);
+				dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						dialog.dismiss();
+						rechargeAction();
+					}
+				});
+				dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				dialog.create().show();
 			}
 			break;
 		case R.id.btn_phone:
 			Intent intent_p = new Intent(MobileChargeActivity.this, ContactsActivity.class);
-			startActivityForResult(intent_p, 100);
+			startActivityForResult(intent_p, 110);
 			break;
 		}
 	}
 
 	// 充值
-	private void confirmAction() {
-
+	private void rechargeAction(){
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("TRANCODE", "708103");
+		map.put("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+		
+		map.put("phoneNumber_B", et_phone.getText().toString());//接收信息手机号
+		map.put("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(currentAmount))));//交易金额
+		map.put("POSTYPE_B", "1");//POSTYPE_B   1 普通刷卡器 2 小刷卡器
+		map.put("CHECKX_B", "0.0");//当前经度
+		map.put("CHECKY_B", "0.0");//当前纬度
+		
+		map.put("TSeqNo_B", AppDataCenter.getTraceAuditNum());
+		map.put("TTxnTm_B", DateUtil.getSystemTime());
+		map.put("TTxnDt_B", DateUtil.getSystemMonthDay());
+		
 		Intent intent = new Intent(this, SearchAndSwipeActivity.class);
-
 		intent.putExtra("TYPE", TransferRequestTag.PhoneRecharge);
-		intent.putExtra("TRANCODE", "708110");
-		intent.putExtra("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
-		intent.putExtra("phoneNumber_B", et_phone.getText().toString());
-		intent.putExtra("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(currentAmount))));
-		intent.putExtra("CHECKX_B", "0.0");
-		intent.putExtra("POSTYPE_B", "1");
-		intent.putExtra("CHECKY_B", "0.0");
-//		intent.putExtra("TTXNTM", DateUtil.getSystemTime());
-//		intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
-//		intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
-
-		startActivity(intent);
+		intent.putExtra("map", map);
+		startActivityForResult(intent, 100);
 	}
 
 }
