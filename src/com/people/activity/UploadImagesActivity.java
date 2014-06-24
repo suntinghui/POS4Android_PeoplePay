@@ -32,6 +32,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.people.R;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
@@ -111,7 +113,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 
 				HashMap<String, Object> tempMap = new HashMap<String, Object>();
 				tempMap.put("TRANCODE", "199030");
-				tempMap.put("PHONENUMBER", "13917662264");//
+				tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 				tempMap.put("USERNAME", fromForeMap.get("USERNAME"));
 				tempMap.put("IDNUMBER", fromForeMap.get("IDNUMBER"));
 				tempMap.put("MERNAME", fromForeMap.get("MERNAME"));
@@ -197,19 +199,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 						}
 
 					} else {
-						// Intent intent = new Intent(
-						// "android.intent.action.PICK");
-						// intent.setDataAndType(
-						// MediaStore.Images.Media.INTERNAL_CONTENT_URI,
-						// "image/*");
-						// intent.putExtra("output",
-						// Uri.fromFile(sdcardTempFile));
-						// intent.putExtra("crop", "true");
-						// intent.putExtra("aspectX", 2);// 裁剪框比例
-						// intent.putExtra("aspectY", 1.5);
-						// intent.putExtra("outputX", 320);// 输出图片大小
-						// intent.putExtra("outputY", 150);
-						// startActivityForResult(intent, 101);
 
 						Intent intent = new Intent(Intent.ACTION_PICK, null);
 						intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, IMAGE_UNSPECIFIED);
@@ -234,7 +223,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 			myBitmap = decodeFile(file);
 
 		}
-		if (requestCode == 101) {
+		if (requestCode == 101 || null != data ) {
 
 			try {
 				ContentResolver resolver = getContentResolver();
@@ -332,7 +321,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 	private void getUpLoadImage(String type) {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199021");
-		tempMap.put("PHONENUMBER", "13917662264");//
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 		tempMap.put("FILETYPE", type); // MYPIC、IDPIC、IDPIC2、CARDPIC
 		tempMap.put("PHOTOS", imgToBase64(mImagePath));// bitmap_zoom
 														// imgToBase64(mImagePath)
@@ -426,7 +415,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 					} else {
 						options.inSampleSize = inSampleSize * 2;
 					}
-				options.inSampleSize = 40;
 				// 这里一定要将其设置回false，因为之前我们将其设置成了true
 				// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
 				options.inJustDecodeBounds = false;
@@ -452,7 +440,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 			out.close();
 
 			byte[] imgBytes = out.toByteArray();
-			Log.i("image size: ", Base64.encodeToString(imgBytes, Base64.DEFAULT).length() + "");
 			return Base64.encodeToString(imgBytes, Base64.DEFAULT);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

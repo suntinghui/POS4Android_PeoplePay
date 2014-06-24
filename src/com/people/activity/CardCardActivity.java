@@ -1,5 +1,7 @@
 package com.people.activity;
 
+import java.util.HashMap;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.people.R;
+import com.people.client.AppDataCenter;
+import com.people.client.ApplicationEnvironment;
+import com.people.client.Constants;
+import com.people.client.TransferRequestTag;
+import com.people.util.DateUtil;
+import com.people.util.StringUtil;
 import com.people.view.LKAlertDialog;
 
 // 卡卡转账
@@ -25,6 +34,7 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 	private EditText et_amount;
 	private EditText et_phone;
 	private String[] scope = {"身份证","军官证","护照","回乡证","台胞证","警官证","士兵证","其他证件类型"};
+	private String[] scopeId = {"01","02","03","04","05","06","07","99"};
 	private int positon = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +77,6 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 		case R.id.btn_confirm:
 			
 			if (checkValue()) {
-//				HashMap<String, String> map = new HashMap<String, String>();
-//				map.put("SELLTEL_B", "SELLTEL_B");//
-//				map.put("CARDNO1_B", );//接收转账卡号
-//				map.put("phoneNumber_B", );//接收信息手机号
-//				map.put("Track2_B", );//磁道信息
-//				map.put("CARDNOJLN_B", );//交易密码
-//				map.put("TXNAMT_B", );//交易金额
-//				map.put("POSTYPE_B", );//POSTYPE_B   1 普通刷卡器 2 小刷卡器
-//				map.put("RAND_B", );//RAND_B
-//				map.put("CHECKX_B", );//当前经度
-//				map.put("CHECKY_B", );//当前纬度
-//				map.put("TERMINALNUMBER_B", );//机器 PSAM 号
-//				
-//				Intent intent = new Intent(CardCardActivity.this, UpLoadSecondActivity.class);
-//				intent.putExtra("map", map);
-//				startActivity(intent);
 				
 				LKAlertDialog dialog = new LKAlertDialog(this);
 				dialog.setTitle("提示");
@@ -93,6 +87,7 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 					@Override
 					public void onClick(DialogInterface dialog, int arg1) {
 						dialog.dismiss();
+						cardCardAction();
 					}
 				});
 				dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -101,8 +96,9 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 						dialog.dismiss();
 					}
 				});
+				dialog.create().show();
 			}
-
+			
 			break;
 		case R.id.btn_back:
 			this.finish();
@@ -113,32 +109,60 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 
 	}
 
+	private void cardCardAction(){
+		HashMap<String, String> map = new HashMap<String, String>();
+		
+		map.put("TRANCODE", "708101");
+		map.put("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+		map.put("CARDNO1_B", et_card_num.getText().toString());//接收转账卡号
+		map.put("INCARDNAM_B", et_in_name.getText().toString());
+		map.put("OUTCARDNAM_B", et_out_name.getText().toString());
+		map.put("OUT_IDTYP_B", scopeId[positon]);
+		map.put("OUT_IDTYPNAM_B", scope[positon]);
+		map.put("OUT_IDCARD_B", et_papers_num.getText().toString());
+		
+		map.put("phoneNumber_B", et_phone.getText().toString());//接收信息手机号
+		map.put("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(et_amount.getText().toString()))));//交易金额
+		map.put("POSTYPE_B", "1");//POSTYPE_B   1 普通刷卡器 2 小刷卡器
+		map.put("CHECKX_B", "0.0");//当前经度
+		map.put("CHECKY_B", "0.0");//当前纬度
+		
+		map.put("TSeqNo_B", AppDataCenter.getTraceAuditNum());
+		map.put("TTxnTm_B", DateUtil.getSystemTime());
+		map.put("TTxnDt_B", DateUtil.getSystemMonthDay());
+		
+		Intent intent = new Intent(CardCardActivity.this, SearchAndSwipeActivity.class);
+		intent.putExtra("TYPE", TransferRequestTag.CardCard);
+		intent.putExtra("map", map);
+		startActivityForResult(intent, 101);
+	}
 
 	public Boolean checkValue() {
-//		if(et_name.getText().length() == 0){
-//			Toast.makeText(this, "姓名不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_id.getText().length() == 0){
-//			Toast.makeText(this, "身份证不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_merchant_name.getText().length() == 0){
-//			Toast.makeText(this, "商户名称不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_address.getText().length() == 0){
-//			Toast.makeText(this, "地址不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(et_serial.getText().length() == 0){
-//			Toast.makeText(this, "机器序列号不能为空！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
-//		if(StringUtil.checkIdCard(et_id.getText().toString())){
-//			Toast.makeText(this, "身份证号码不合法！", Toast.LENGTH_SHORT).show();
-//			return false;
-//		}
+		if(et_in_name.getText().length() == 0){
+			Toast.makeText(this, "转入卡卡主姓名不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_out_name.getText().length() == 0){
+			Toast.makeText(this, "转出卡卡主姓名不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_papers_num.getText().length() == 0){
+			Toast.makeText(this, "证件号不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_amount.getText().length() == 0){
+			Toast.makeText(this, "金额不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_card_num.getText().length() == 0){
+			Toast.makeText(this, "收款卡号不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if(et_phone.getText().length() == 0){
+			Toast.makeText(this, "手机号码不能为空！", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		
 		return true;
 	}
 	
@@ -147,6 +171,20 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 		
 		if(resultCode == 6){
 			finish();
+		}else if(resultCode == 100){
+			LKAlertDialog dialog = new LKAlertDialog(this);
+			dialog.setTitle("提示");
+			dialog.setMessage("转账成功");
+			dialog.setCancelable(false);
+			dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int arg1) {
+					dialog.dismiss();
+				}
+			});
+			
+			dialog.create().show();
 		}
 	}
 }

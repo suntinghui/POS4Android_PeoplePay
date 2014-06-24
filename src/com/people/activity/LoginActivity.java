@@ -390,42 +390,5 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		};
 	}
 
-	// 我的账户
-	private void myAccount() {
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199026");
-		tempMap.put("PHONENUMBER", "13945621452");
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.MyAccount, tempMap, getMyAccountHandler());
-
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
-
-			@Override
-			public void onComplete() {
-				super.onComplete();
-
-				passwordEdit.setText("");
-			}
-		});
-	}
-
-	private LKAsyncHttpResponseHandler getMyAccountHandler() {
-		return new LKAsyncHttpResponseHandler() {
-
-			@Override
-			public void successAction(Object obj) {
-				@SuppressWarnings("unchecked")
-				Boolean isOpen = ApplicationEnvironment.getInstance().getPreferences(LoginActivity.this).getBoolean(Constants.kGESTRUECLOSE, false);
-				// 启动超时退出服务
-				Intent intent = new Intent(BaseActivity.getTopActivity(), TimeoutService.class);
-				BaseActivity.getTopActivity().startService(intent);
-
-				HashMap<String, Object> map = (HashMap<String, Object>) obj;
-				String RSPCOD = (String) map.get("RSPCOD");
-				String RSPMSG = (String) map.get("RSPMSG");
-				String PHONENUMBER = (String) map.get("PHONENUMBER");
-
-			}
-
-		};
-	}
+	
 }

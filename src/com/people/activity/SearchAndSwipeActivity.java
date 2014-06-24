@@ -554,7 +554,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					tid = map.get("TID");
 					pid = map.get("PID");
 
-					String amountStr = StringUtil.String2AmountFloat4QPOS(intent.getStringExtra("TXNAMT_B")) + "";
+					HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
+					String amountStr = StringUtil.String2AmountFloat4QPOS(intentMap.get("TXNAMT_B")) + "";
 
 					new ThreadSwip_SixPass(swipeHandler, SearchAndSwipeActivity.this, amountStr, getExtraString()).start();
 
@@ -583,30 +584,38 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		};
 
 		private String getExtraString() {
+			HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
 			StringBuffer sb = new StringBuffer();
-			sb.append(intent.getStringExtra("TRANCODE"));
-			// sb.append(intent.getStringExtra("TXNAMT_B"));
-			// sb.append(intent.getStringExtra("TSEQNO"));
-			// sb.append(intent.getStringExtra("TTXNTM"));
-			// sb.append(intent.getStringExtra("TTXNDT"));
+			sb.append(intentMap.get("TRANCODE"));
+			sb.append(intentMap.get("TXNAMT_B"));
+			sb.append(intentMap.get("TSeqNo_B"));
+			sb.append(intentMap.get("TTxnTm_B"));
+			sb.append(intentMap.get("TTxnDt_B"));
+			sb.append(StringUtil.asciiToHex(pid.replace("UN", ""))); // UN201410000046->201410000046
 
 			return sb.toString();
 		}
 
 		private void transfer(HashMap<String, String> map) {
+			HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("TRANCODE", intent.getStringExtra("TRANCODE"));
-			tempMap.put("SELLTEL_B", intent.getStringExtra("SELLTEL_B")); // 消费撤销唯一凭证
-			tempMap.put("phoneNumber_B", intent.getStringExtra("phoneNumber_B"));
+			tempMap.put("TRANCODE", intentMap.get("TRANCODE"));
+			tempMap.put("SELLTEL_B", intentMap.get("SELLTEL_B")); // 消费撤销唯一凭证
+			
+			tempMap.put("phoneNumber_B", intentMap.get("phoneNumber_B"));// 接收信息手机号
 			tempMap.put("Track2_B", map.get("CARD"));
-			tempMap.put("CARDNOJLN_B", map.get("PIN")); // 支付密码???
-			tempMap.put("TXNAMT_B", intent.getStringExtra("TXNAMT_B"));
-			tempMap.put("POSTYPE_B", intent.getStringExtra("POSTYPE_B"));
-			tempMap.put("RAND_B", "");
-			tempMap.put("CHECKX_B", intent.getStringExtra("CHECKX_B"));
-			tempMap.put("CHECKY_B", intent.getStringExtra("CHECKY_B"));
-			tempMap.put("TERMINALNUMBER_B", pid); // PSAM卡号 "UN201410000046"
-			tempMap.put("PACKAGEMAC", map.get("MAC")); // MAC
+			tempMap.put("CRDNOJLN_B", map.get("PIN")); // 支付密码???
+			tempMap.put("TXNAMT_B", intentMap.get("TXNAMT_B"));
+			tempMap.put("TSeqNo_B", intentMap.get("TSeqNo_B"));
+			tempMap.put("TTxnTm_B", intentMap.get("TTxnTm_B"));
+			tempMap.put("TTxnDt_B", intentMap.get("TTxnDt_B"));
+			
+			tempMap.put("POSTYPE_B", intentMap.get("POSTYPE_B"));
+//			tempMap.put("RAND_B", "");
+			tempMap.put("CHECKX_B", intentMap.get("CHECKX_B"));
+			tempMap.put("CHECKY_B", intentMap.get("CHECKY_B"));
+			tempMap.put("TERMINALNUMBER_B", pid);
+			tempMap.put("MAC_B", map.get("MAC")); // MAC
 
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.PhoneRecharge, tempMap, transferHandler());
 
@@ -628,10 +637,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 				public void successAction(Object obj) {
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
-					if (map.get("RSPCOD").equals("00")) {
-						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
-						startActivityForResult(intent0, 0);
+					if (map.get("RSPCOD") != null && map.get("RSPCOD").equals("00")) {
+						SearchAndSwipeActivity.this.setResult(100);
+						SearchAndSwipeActivity.this.finish();
 
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
@@ -660,8 +668,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					HashMap<String, String> map = (HashMap<String, String>) msg.obj;
 					tid = map.get("TID");
 					pid = map.get("PID");
-
-					String amountStr = StringUtil.String2AmountFloat4QPOS(intent.getStringExtra("TXNAMT_B")) + "";
+					HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
+					String amountStr = StringUtil.String2AmountFloat4QPOS(intentMap.get("TXNAMT_B")) + "";
 
 					new ThreadSwip_SixPass(swipeHandler, SearchAndSwipeActivity.this, amountStr, getExtraString()).start();
 
@@ -690,31 +698,45 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		};
 
 		private String getExtraString() {
+			HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
 			StringBuffer sb = new StringBuffer();
-			sb.append(intent.getStringExtra("TRANCODE"));
-			// sb.append(intent.getStringExtra("TXNAMT_B"));
-			// sb.append(intent.getStringExtra("TSEQNO"));
-			// sb.append(intent.getStringExtra("TTXNTM"));
-			// sb.append(intent.getStringExtra("TTXNDT"));
+			sb.append(intentMap.get("TRANCODE"));
+			sb.append(intentMap.get("TXNAMT_B"));
+			sb.append(intentMap.get("TSeqNo_B"));
+			sb.append(intentMap.get("TTxnTm_B"));
+			sb.append(intentMap.get("TTxnDt_B"));
+			sb.append(StringUtil.asciiToHex(pid.replace("UN", ""))); // UN201410000046->201410000046
 
 			return sb.toString();
 		}
 
 		private void transfer(HashMap<String, String> map) {
+			HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("TRANCODE", intent.getStringExtra("TRANCODE"));
-			tempMap.put("SELLTEL_B", intent.getStringExtra("SELLTEL_B")); // 消费撤销唯一凭证
-			tempMap.put("CARDNO1_B", intent.getStringExtra("CARDNO1_B"));// 信用卡卡号
-			tempMap.put("phoneNumber_B", intent.getStringExtra("phoneNumber_B"));// 接收信息手机号
+			tempMap.put("TRANCODE", intentMap.get("TRANCODE"));
+			tempMap.put("SELLTEL_B", intentMap.get("SELLTEL_B")); // 消费撤销唯一凭证
+			tempMap.put("CRDNO1_B", intentMap.get("CARDNO1_B"));// 信用卡卡号
+			
+			tempMap.put("INCARDNAM_B", intentMap.get("INCARDNAM_B"));
+			tempMap.put("OUTCARDNAM_B", intentMap.get("OUTCARDNAM_B"));
+			tempMap.put("OUT_IDTYP_B", intentMap.get("OUT_IDTYP_B"));
+			tempMap.put("OUT_IDTYPNAM_B", intentMap.get("OUT_IDTYPNAM_B"));
+			tempMap.put("OUT_IDCARD_B", intentMap.get("OUT_IDCARD_B"));
+			
+			tempMap.put("phoneNumber_B", intentMap.get("phoneNumber_B"));// 接收信息手机号
 			tempMap.put("Track2_B", map.get("CARD"));
-			tempMap.put("CARDNOJLN_B", map.get("PIN")); // 支付密码???
-			tempMap.put("TXNAMT_B", intent.getStringExtra("TXNAMT_B"));
-			tempMap.put("POSTYPE_B", intent.getStringExtra("POSTYPE_B"));
+			tempMap.put("CRDNOJLN_B", map.get("PIN")); // 支付密码???
+			tempMap.put("TXNAMT_B", intentMap.get("TXNAMT_B"));
+			tempMap.put("TSeqNo_B", intentMap.get("TSeqNo_B"));
+			tempMap.put("TTxnTm_B", intentMap.get("TTxnTm_B"));
+			tempMap.put("TTxnDt_B", intentMap.get("TTxnDt_B"));
+			
+			tempMap.put("POSTYPE_B", intentMap.get("POSTYPE_B"));
 			tempMap.put("RAND_B", "");
-			tempMap.put("CHECKX_B", intent.getStringExtra("CHECKX_B"));
-			tempMap.put("CHECKY_B", intent.getStringExtra("CHECKY_B"));
+			tempMap.put("CHECKX_B", intentMap.get("CHECKX_B"));
+			tempMap.put("CHECKY_B", intentMap.get("CHECKY_B"));
 			tempMap.put("TERMINALNUMBER_B", pid); // PSAM卡号 "UN201410000046"
-			tempMap.put("PACKAGEMAC", map.get("MAC")); // MAC
+			tempMap.put("MAC_B", map.get("MAC")); // MAC
 
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.CardCard, tempMap, transferHandler());
 
@@ -737,9 +759,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
 					if (map.get("RSPCOD").equals("00")) {
-						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
-						startActivityForResult(intent0, 0);
+						SearchAndSwipeActivity.this.setResult(100);
+						SearchAndSwipeActivity.this.finish();
 
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
@@ -769,7 +790,8 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					tid = map.get("TID");
 					pid = map.get("PID");
 
-					String amountStr = StringUtil.String2AmountFloat4QPOS(intent.getStringExtra("TXNAMT_B")) + "";
+					HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
+					String amountStr = StringUtil.String2AmountFloat4QPOS(intentMap.get("TXNAMT_B")) + "";
 
 					new ThreadSwip_SixPass(swipeHandler, SearchAndSwipeActivity.this, amountStr, getExtraString()).start();
 
@@ -798,31 +820,38 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 		};
 
 		private String getExtraString() {
+			HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
 			StringBuffer sb = new StringBuffer();
-			sb.append(intent.getStringExtra("TRANCODE"));
-			// sb.append(intent.getStringExtra("TXNAMT_B"));
-			// sb.append(intent.getStringExtra("TSEQNO"));
-			// sb.append(intent.getStringExtra("TTXNTM"));
-			// sb.append(intent.getStringExtra("TTXNDT"));
+			sb.append(intentMap.get("TRANCODE"));
+			sb.append(intentMap.get("TXNAMT_B"));
+			sb.append(intentMap.get("TSeqNo_B"));
+			sb.append(intentMap.get("TTxnTm_B"));
+			sb.append(intentMap.get("TTxnDt_B"));
+			sb.append(StringUtil.asciiToHex(pid.replace("UN", ""))); // UN201410000046->201410000046
 
 			return sb.toString();
 		}
 
 		private void transfer(HashMap<String, String> map) {
+			HashMap<String, String> intentMap = (HashMap<String, String>) intent.getSerializableExtra("map");
 			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("TRANCODE", intent.getStringExtra("TRANCODE"));
-			tempMap.put("SELLTEL_B", intent.getStringExtra("SELLTEL_B")); // 消费撤销唯一凭证
-			tempMap.put("CARDNO1_B", intent.getStringExtra("CARDNO1_B"));// 接收转账卡号
-			tempMap.put("phoneNumber_B", intent.getStringExtra("phoneNumber_B"));// 接收信息手机号
+			tempMap.put("TRANCODE", intentMap.get("TRANCODE"));
+			tempMap.put("SELLTEL_B", intentMap.get("SELLTEL_B")); // 消费撤销唯一凭证
+			tempMap.put("CRDNO1_B", intentMap.get("CARDNO1_B"));// 信用卡卡号
+			
+			tempMap.put("phoneNumber_B", intentMap.get("phoneNumber_B"));// 接收信息手机号
 			tempMap.put("Track2_B", map.get("CARD"));
-			tempMap.put("CARDNOJLN_B", map.get("PIN")); // 支付密码???
-			tempMap.put("TXNAMT_B", intent.getStringExtra("TXNAMT_B"));
-			tempMap.put("POSTYPE_B", intent.getStringExtra("POSTYPE_B"));
-			tempMap.put("RAND_B", "");
-			tempMap.put("CHECKX_B", intent.getStringExtra("CHECKX_B"));
-			tempMap.put("CHECKY_B", intent.getStringExtra("CHECKY_B"));
-			tempMap.put("TERMINALNUMBER_B", pid); // PSAM卡号 "UN201410000046"
-			tempMap.put("PACKAGEMAC", map.get("MAC")); // MAC
+			tempMap.put("CRDNOJLN_B", map.get("PIN")); // 支付密码???
+			tempMap.put("TXNAMT_B", intentMap.get("TXNAMT_B"));
+			tempMap.put("TSeqNo_B", intentMap.get("TSeqNo_B"));
+			tempMap.put("TTxnTm_B", intentMap.get("TTxnTm_B"));
+			tempMap.put("TTxnDt_B", intentMap.get("TTxnDt_B"));
+			
+			tempMap.put("POSTYPE_B", intentMap.get("POSTYPE_B"));
+			tempMap.put("CHECKX_B", intentMap.get("CHECKX_B"));
+			tempMap.put("CHECKY_B", intentMap.get("CHECKY_B"));
+			tempMap.put("TERMINALNUMBER_B", pid);
+			tempMap.put("MAC_B", map.get("MAC")); // MAC
 
 			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.CreditCard, tempMap, transferHandler());
 
@@ -844,10 +873,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 				public void successAction(Object obj) {
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
-					if (map.get("RSPCOD").equals("00")) {
-						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
-						startActivityForResult(intent0, 0);
+					if (map.get("RSPCOD") != null && map.get("RSPCOD").equals("00")) {
+						SearchAndSwipeActivity.this.setResult(100);
+						SearchAndSwipeActivity.this.finish();
 
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));

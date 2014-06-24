@@ -139,25 +139,23 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.layout_1: // 提现
-			Intent intent1 = new Intent(MerchantActivity.this, WithdrawalCashActivity.class);
+			Intent intent1 = new Intent(MerchantActivity.this, MyAccountActivity.class);
 			startActivity(intent1);
 			break;
 
 		case R.id.layout_upload_image: // 实名认证
-			Intent intentUpload = new Intent(MerchantActivity.this, UpLoadFirstActivity.class);
-			startActivity(intentUpload);
-//			if (STATUS.equals("0")) {
-//				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
-//			} else if (STATUS.equals("1")) {
-//				Toast.makeText(MerchantActivity.this, "账户已关闭", Toast.LENGTH_SHORT).show();
-//			} else if (STATUS.equals("2")) {
-//				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
-//			} else if (STATUS.equals("5")) {
-//				Toast.makeText(MerchantActivity.this, "正在审核中", Toast.LENGTH_SHORT).show();
-//			} else if (STATUS.equals("3") || STATUS.equals("6")) {
-//				Intent intentUpload = new Intent(MerchantActivity.this, UpLoadFirstActivity.class);
-//				startActivity(intentUpload);
-//			}
+			if (STATUS.equals("0")) {
+				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
+			} else if (STATUS.equals("1")) {
+				Toast.makeText(MerchantActivity.this, "账户已关闭", Toast.LENGTH_SHORT).show();
+			} else if (STATUS.equals("2")) {
+				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
+			} else if (STATUS.equals("5")) {
+				Toast.makeText(MerchantActivity.this, "正在审核中", Toast.LENGTH_SHORT).show();
+			} else if (STATUS.equals("3") || STATUS.equals("6")) {
+				Intent intent = new Intent(MerchantActivity.this, UpLoadFirstActivity.class);
+				startActivity(intent);
+			}
 
 			break;
 
@@ -380,7 +378,7 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			myBitmap = decodeFile(file);
 
 		}
-		if (requestCode == 101) {
+		if (requestCode == 101 || null != data) {
 
 			try {
 				ContentResolver resolver = getContentResolver();
@@ -559,7 +557,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 						} else {
 							options.inSampleSize = inSampleSize * 2;
 						}
-					options.inSampleSize = 40;
 					// 这里一定要将其设置回false，因为之前我们将其设置成了true
 					// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
 					options.inJustDecodeBounds = false;

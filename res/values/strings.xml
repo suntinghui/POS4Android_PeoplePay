@@ -133,6 +133,14 @@
     <string name="contacts_prompt_phone_illeg">手机号不合法</string>
     <string name="contacts_querying">正在查询...</string>
     
+    <string name="my_account_title">我的帐户</string>
+    <string name="my_account_balance">账户余额</string>
+    <string name="my_account_amount">提现金额</string>
+    <string name="my_account_amount_h">请输入提现金额</string>
+    <string name="my_account_type">请选择提现方式</string>
+    <string name="my_account_nomal">普通提现（免手续费）</string>
+    <string name="my_account_fast">快速提现</string>
+    
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>

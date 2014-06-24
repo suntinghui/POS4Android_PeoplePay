@@ -70,11 +70,13 @@
     <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
-            android:layout_height="45dip"
+            android:layout_height="40dip"
             android:layout_marginLeft="25dip"
             android:layout_marginRight="25dip"
             android:drawSelectorOnTop="true"
             android:layout_marginTop="10dip"
+            android:paddingLeft="8dip"
+            android:background="@drawable/selectbg"
             android:prompt="@string/recharge_tips" />
 
     
