@@ -188,6 +188,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		} else if (activeIdx == INDEX_PATH) {
 			isCurrentList = false;
 			iv_nodata.setVisibility(View.GONE);
+			tv_totalnum.setText("0");
+			tv_totalmoney.setText("￥0.0");
 			mTvPath.setTextColor(mTextColorSelected);
 			mTvContent.setTextColor(mTextColorUnselected);
 			mLinePath.setVisibility(View.VISIBLE);

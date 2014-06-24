@@ -140,6 +140,9 @@ public class ParseResponseXML {
 			case TransferRequestTag.MyAccount:
 				
 				return myAccountAction();
+			case TransferRequestTag.DrawMoney:
+				
+				return drawMoneyAction();
 			}
 
 		} catch (XmlPullParserException e) {
@@ -597,6 +600,33 @@ public class ParseResponseXML {
 					respMap.put("RSPCOD", parser.nextText());
 				} else if ("LOGNO".equalsIgnoreCase(parser.getName())) {
 					respMap.put("LOGNO", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				}
+				break;
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+	
+	private static Object drawMoneyAction() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {

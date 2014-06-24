@@ -141,6 +141,10 @@
     <string name="my_account_nomal">普通提现（免手续费）</string>
     <string name="my_account_fast">快速提现</string>
     
+    <string name="drawmoney_tips">单日最低不得低于100元，最高不得高于100000元</string>
+    <string name="drawmoney_pwd">密码</string>
+    <string name="drawmoney_pwd_h">请输入登录密码</string>
+    
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>

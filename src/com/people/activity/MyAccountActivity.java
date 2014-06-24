@@ -19,11 +19,13 @@ import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
+import com.people.util.DateUtil;
 
 // 我的账户
 public class MyAccountActivity extends BaseActivity implements OnClickListener {
 	TextView tv_balance;
 	EditText et_amount;
+	String amount;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class MyAccountActivity extends BaseActivity implements OnClickListener {
 
 		tv_balance = (TextView) this.findViewById(R.id.tv_balance);
 		et_amount = (EditText) findViewById(R.id.et_amount);
-		
+
 		myAccount();
 
 	}
@@ -48,18 +50,32 @@ public class MyAccountActivity extends BaseActivity implements OnClickListener {
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-		case R.id.btn_fast:
-			if (checkValue()) {
-
-			}
-
-			break;
 		case R.id.btn_nomal:
 			if (checkValue()) {
 
+				String PAYDATE = DateUtil.getSystemDate2();
+
+				Intent intent_n = new Intent(MyAccountActivity.this, WithdrawalCashActivity.class);
+				intent_n.putExtra("PAYAMT", et_amount.getText().toString());
+				intent_n.putExtra("PAYTYPE", "2");
+				intent_n.putExtra("PAYDATE", PAYDATE);
+				startActivity(intent_n);
 			}
 
 			break;
+		case R.id.btn_fast:
+			if (checkValue()) {
+				String PAYDATE = DateUtil.getSystemDate2();
+
+				Intent intent_n = new Intent(MyAccountActivity.this, WithdrawalCashActivity.class);
+				intent_n.putExtra("PAYAMT", et_amount.getText().toString());
+				intent_n.putExtra("PAYTYPE", "1");
+				intent_n.putExtra("PAYDATE", PAYDATE);
+				startActivity(intent_n);
+			}
+
+			break;
+		
 		case R.id.btn_back:
 			this.finish();
 			break;
@@ -110,8 +126,8 @@ public class MyAccountActivity extends BaseActivity implements OnClickListener {
 			public void successAction(Object obj) {
 				HashMap<String, String> map = (HashMap<String, String>) obj;
 				if (map.get("RSPCOD") != null && map.get("RSPCOD").equals("00")) {
-
-					tv_balance.setText("￥"+map.get("CASHACBAL"));
+					amount =  map.get("CASHACBAL");
+					tv_balance.setText("￥" + map.get("CASHACBAL"));
 
 				} else {
 					Toast.makeText(MyAccountActivity.this, map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
