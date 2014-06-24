@@ -71,17 +71,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 				login();
 			}
 
-			// TEST
-			// register();
-			// getProvinceName();
-			// getCityName();
-			// getBank();
-			// getBankBranch();
-			// getUpLoadImage();
-			// checkTicket();
-			// sendTicket();
-			// drawMoney();
-			// myAccount();
 			break;
 
 		case R.id.btn_forget_pwd:
