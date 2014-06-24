@@ -90,6 +90,11 @@ public class MyAccountActivity extends BaseActivity implements OnClickListener {
 			Toast.makeText(this, "提现金额不能为空", Toast.LENGTH_SHORT).show();
 			return false;
 		}
+		
+		if(amount == null || "".equals(amount) || Double.valueOf(amount) == 0.00){
+			Toast.makeText(this, "账户余额不足", Toast.LENGTH_SHORT).show();
+			return false;
+		}
 		return true;
 	}
 

@@ -1,33 +1,35 @@
 package com.people.view;
 
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
+
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.people.R;
+import com.people.activity.TransferListActivity;
 import com.people.model.TradeModel;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
-
-import android.content.Context;
-import android.graphics.Color;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 public class TransferAdapter extends BaseAdapter {
 
 	private LayoutInflater mLayoutInflater;
 	private ArrayList<TradeModel> array = new ArrayList<TradeModel>();
-	
+	private Context mContext;
 	public TransferAdapter(Context context, int resource, ArrayList<TradeModel> objects) {
 
 		mLayoutInflater = LayoutInflater.from(context);
 		array = objects;
+		mContext = context;
 	}
 
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -44,7 +46,6 @@ public class TransferAdapter extends BaseAdapter {
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.tv_cardnum = (TextView) convertView.findViewById(R.id.tv_cardnum);
 			holder.tv_revoke = (TextView) convertView.findViewById(R.id.tv_revoke);
-
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -97,5 +98,6 @@ public class TransferAdapter extends BaseAdapter {
 	public Object getItem(int position) {
 		return null;
 	}
+
 
 }

@@ -375,7 +375,7 @@ public class UpLoadSecondActivity extends BaseActivity implements
 				currentBankBankName = data.getStringExtra("bankbranchname");
 				btn_bank_branch.setText(currentBankBankName);
 			}else if(resultCode == 6){
-				UpLoadSecondActivity.this.setResult(6);
+				UpLoadSecondActivity.this.setResult(6, UpLoadSecondActivity.this.getIntent());
 				finish();
 			}
 		}
