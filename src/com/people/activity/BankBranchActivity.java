@@ -43,7 +43,7 @@ public class BankBranchActivity extends BaseActivity implements OnClickListener 
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				Intent intent = new Intent();
-				intent.putExtra("bankbranchid", arrayList.get(arg2).getCode());
+				intent.putExtra("bankbranchid", arrayList.get(arg2).getCode()+"");
 				intent.putExtra("bankbranchname", arrayList.get(arg2).getName());
 				BankBranchActivity.this.setResult(5, intent);
 				finish();

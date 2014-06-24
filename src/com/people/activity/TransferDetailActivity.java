@@ -55,11 +55,11 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		Button btn_revoke = (Button) findViewById(R.id.btn_revoke);
 		btn_revoke.setOnClickListener(this);
 
-		if (model.getTxncd().equals("0200000000") && model.getTxnsts().equalsIgnoreCase("S") && model.getLogDate().equalsIgnoreCase(DateUtil.formatDate2(new Date()))) {
-			btn_revoke.setVisibility(View.VISIBLE);
-		} else {
-			btn_revoke.setVisibility(View.GONE);
-		}
+//		if (model.getTxncd().equals("0200000000") && model.getTxnsts().equalsIgnoreCase("S") && model.getLogDate().equalsIgnoreCase(DateUtil.formatDate2(new Date()))) {
+//			btn_revoke.setVisibility(View.VISIBLE);
+//		} else {
+//			btn_revoke.setVisibility(View.GONE);
+//		}
 	}
 
 	@Override
