@@ -91,6 +91,7 @@ public class ParseResponseXML {
 
 			case TransferRequestTag.MerchantQuery:
 				return merchantQuery();
+				
 			case TransferRequestTag.LoadUpHead:
 				return loadUpHead();
 				
@@ -107,7 +108,6 @@ public class ParseResponseXML {
 				return getCashChargeList();
 				
 			case TransferRequestTag.CashDelete:
-				
 				return cashDelete();
 			
 			case TransferRequestTag.GetProvinceName:
@@ -126,23 +126,26 @@ public class ParseResponseXML {
 				return upLoadImages(responseStr);
 			
 			case TransferRequestTag.Authentication:
-				
 				return authentication();
+				
 			case TransferRequestTag.CardCard:
-				
 				return cardCardAction();
+				
 			case TransferRequestTag.CreditCard:
-				
 				return creditCardAction();
+				
 			case TransferRequestTag.PhoneRecharge:
-				
 				return phoneRechargeAction();
+				
 			case TransferRequestTag.MyAccount:
-				
 				return myAccountAction();
-			case TransferRequestTag.DrawMoney:
 				
+			case TransferRequestTag.DrawMoney:
 				return drawMoneyAction();
+				
+			case TransferRequestTag.SendTicket:
+				return sendTicket();
+				
 			}
 
 		} catch (XmlPullParserException e) {
@@ -152,7 +155,6 @@ public class ParseResponseXML {
 			e.printStackTrace();
 
 		} catch (JSONException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -1040,6 +1042,34 @@ public class ParseResponseXML {
 					respMap.put("RSPCOD", parser.nextText());
 				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PHONENUMBER", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				}
+				break;
+
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+	
+	private static Object sendTicket() throws XmlPullParserException, IOException {
+		HashMap<String, String> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {

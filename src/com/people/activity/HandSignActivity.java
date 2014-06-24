@@ -1,16 +1,10 @@
 package com.people.activity;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -21,12 +15,9 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -97,7 +88,8 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.okButton:
 			if (hasSign) {
-				Intent intent = new Intent(HandSignActivity.this, TradeSuccessActivity.class);
+				Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
+				intent.putExtra("LOGNO", getIntent().getStringExtra("LOGNO"));
 				startActivityForResult(intent, 0);
 
 			} else {

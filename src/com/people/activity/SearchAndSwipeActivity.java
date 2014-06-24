@@ -408,6 +408,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					if (map.get("RSPCOD").equals("00")) {
 						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
 						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
+						intent0.putExtra("LOGNO", map.get("LOGNO"));
 						startActivityForResult(intent0, 0);
 
 						Toast.makeText(BaseActivity.getTopActivity(), "交易成功", Toast.LENGTH_SHORT).show();
@@ -524,6 +525,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					if (map.get("RSPCOD").equals("00")) {
 						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
 						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
+						intent0.putExtra("LOGNO", map.get("LOGNO"));
 						startActivityForResult(intent0, 0);
 
 					} else {

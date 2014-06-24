@@ -55,6 +55,9 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
     
+    <style name="checkBoxSelectTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+		<item name="android:button">@drawable/checkbox_selector</item>
+	</style>
     
     <style name="black_14">
         <item name="android:textSize">14sp</item>

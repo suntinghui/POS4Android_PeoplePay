@@ -63,8 +63,12 @@ public class ChooseQPOSModeActivity extends BaseActivity implements OnDrawerOpen
 			Log.e("MODE", "选择蓝牙连接方式...");
 
 			QPOS.changeCardReader(CardReader.BLUETOOTHMODE);
+			
+			// TODO 关闭设备有问题。。。
+			/*
 			new ThreadPowerOff(null, this).start();
 			Toast.makeText(this, "设备已关机，请重新启动", Toast.LENGTH_SHORT).show();
+			*/
 
 		} else if (view.getId() == R.id.choose_line_btn) {
 			Log.e("MODE", "选择数据线连接方式...");
