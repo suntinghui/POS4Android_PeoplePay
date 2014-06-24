@@ -1,12 +1,15 @@
 package com.people.activity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -18,6 +21,7 @@ import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -30,7 +34,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.people.R;
+import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
+import com.people.client.TransferRequestTag;
+import com.people.network.LKAsyncHttpResponseHandler;
+import com.people.network.LKHttpRequest;
+import com.people.network.LKHttpRequestQueue;
+import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.StringUtil;
 
 public class HandSignActivity extends BaseActivity implements OnClickListener {
@@ -88,9 +98,7 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.okButton:
 			if (hasSign) {
-				Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
-				intent.putExtra("LOGNO", getIntent().getStringExtra("LOGNO"));
-				startActivityForResult(intent, 0);
+				upLoadSignImage(getIntent().getStringExtra("LOGNO"));
 
 			} else {
 				Toast.makeText(this, "您还没有签名，请先完成签名", Toast.LENGTH_SHORT).show();
@@ -308,4 +316,72 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		return super.onKeyDown(keyCode, event);
 	}
 
+	// 上传签购单
+		private void upLoadSignImage(String LOGNO) {
+			HashMap<String, Object> tempMap = new HashMap<String, Object>();
+			tempMap.put("TRANCODE", "199010");
+			tempMap.put("LOGNO", LOGNO);
+			tempMap.put("ELESIGNA", bitmapToBase64(bitmap));
+
+			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UploadSignImage, tempMap, getLoginHandler());
+
+			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在上传，请稍候...", new LKHttpRequestQueueDone() {
+
+				@Override
+				public void onComplete() {
+					super.onComplete();
+
+				}
+			});
+		}
+
+		private LKAsyncHttpResponseHandler getLoginHandler() {
+			return new LKAsyncHttpResponseHandler() {
+
+				@Override
+				public void successAction(Object obj) {
+				
+					HashMap<String, String> respMap = (HashMap<String, String>) obj;
+					if ("00".equals(respMap.get("RSPCOD"))) {
+						
+						Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
+						intent.putExtra("LOGNO", getIntent().getStringExtra("LOGNO"));
+						startActivityForResult(intent, 0);
+					}else{
+						Toast.makeText(HandSignActivity.this, respMap.get("RSPMSG"), Toast.LENGTH_SHORT).show();
+					}
+				}
+					
+			};
+		}
+		
+		public static String bitmapToBase64(Bitmap bitmap) {  
+			  
+		    String result = null;  
+		    ByteArrayOutputStream baos = null;  
+		    try {  
+		        if (bitmap != null) {  
+		            baos = new ByteArrayOutputStream();  
+		            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);  
+		  
+		            baos.flush();  
+		            baos.close();  
+		  
+		            byte[] bitmapBytes = baos.toByteArray();  
+		            result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);  
+		        }  
+		    } catch (IOException e) {  
+		        e.printStackTrace();  
+		    } finally {  
+		        try {  
+		            if (baos != null) {  
+		                baos.flush();  
+		                baos.close();  
+		            }  
+		        } catch (IOException e) {  
+		            e.printStackTrace();  
+		        }  
+		    }  
+		    return result;  
+		}  
 }
