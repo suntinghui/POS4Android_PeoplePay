@@ -321,8 +321,7 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 	private void upLoadSignImage(String LOGNO) {
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 - 100)压缩文件
-		byte[] bt = stream.toByteArray();
-		String photoStr = byte2hex(bt);
+		String photoStr = byte2hex(getBitmapByte(bitmap));
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199010");
 		tempMap.put("LOGNO", LOGNO);
@@ -380,4 +379,34 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		}
 		return sb.toString();
 	}
+	
+	public byte[] getBitmapByte(Bitmap bitmap){   
+	    ByteArrayOutputStream out = new ByteArrayOutputStream();   
+	    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);   
+	    try {   
+	        out.flush();   
+	        out.close();   
+	    } catch (IOException e) {   
+	        e.printStackTrace();   
+	    }   
+	    return out.toByteArray();   
+	}   
+	
+	public static String binaryString2hexString(String bString)  
+    {  
+        if (bString == null || bString.equals("") || bString.length() % 8 != 0)  
+            return null;  
+        StringBuffer tmp = new StringBuffer();  
+        int iTmp = 0;  
+        for (int i = 0; i < bString.length(); i += 4)  
+        {  
+            iTmp = 0;  
+            for (int j = 0; j < 4; j++)  
+            {  
+                iTmp += Integer.parseInt(bString.substring(i + j, i + j + 1)) << (4 - j - 1);  
+            }  
+            tmp.append(Integer.toHexString(iTmp));  
+        }  
+        return tmp.toString();  
+    }  
 }
