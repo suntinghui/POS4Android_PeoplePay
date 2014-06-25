@@ -237,7 +237,7 @@
         android:layout_marginRight="25dip"
         android:layout_marginTop="50dip"
         android:background="@drawable/btn"
-        android:text="撤  销"
+        android:text="完	成"
         android:visibility="visible" />
 
 </LinearLayout>
