@@ -292,7 +292,8 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 			saveBitmapToFile(scaleBitmap(), signImageName);
 
 			/***
-			 * TransferSuccessDBHelper helper = new TransferSuccessDBHelper(); helper.updateATransfer(tracenum, signImageName, phoneNum);
+			 * TransferSuccessDBHelper helper = new TransferSuccessDBHelper();
+			 * helper.updateATransfer(tracenum, signImageName, phoneNum);
 			 *****/
 			return null;
 		}
@@ -317,71 +318,66 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 	}
 
 	// 上传签购单
-		private void upLoadSignImage(String LOGNO) {
-			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("TRANCODE", "199010");
-			tempMap.put("LOGNO", LOGNO);
-			tempMap.put("ELESIGNA", bitmapToBase64(bitmap));
+	private void upLoadSignImage(String LOGNO) {
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 - 100)压缩文件
+		byte[] bt = stream.toByteArray();
+		String photoStr = byte2hex(bt);
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("TRANCODE", "199010");
+		tempMap.put("LOGNO", LOGNO);
+		tempMap.put("ELESIGNA", photoStr);
 
-			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UploadSignImage, tempMap, getLoginHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UploadSignImage, tempMap, getLoginHandler());
 
-			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在上传，请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在上传，请稍候...", new LKHttpRequestQueueDone() {
 
-				@Override
-				public void onComplete() {
-					super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
+			}
+		});
+	}
+
+	private LKAsyncHttpResponseHandler getLoginHandler() {
+		return new LKAsyncHttpResponseHandler() {
+
+			@Override
+			public void successAction(Object obj) {
+
+				HashMap<String, String> respMap = (HashMap<String, String>) obj;
+				if ("00".equals(respMap.get("RSPCOD"))) {
+
+					Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
+					intent.putExtra("LOGNO", getIntent().getStringExtra("LOGNO"));
+					startActivityForResult(intent, 0);
+				} else {
+					Toast.makeText(HandSignActivity.this, respMap.get("RSPMSG"), Toast.LENGTH_SHORT).show();
 				}
-			});
-		}
+			}
 
-		private LKAsyncHttpResponseHandler getLoginHandler() {
-			return new LKAsyncHttpResponseHandler() {
+		};
+	}
 
-				@Override
-				public void successAction(Object obj) {
-				
-					HashMap<String, String> respMap = (HashMap<String, String>) obj;
-					if ("00".equals(respMap.get("RSPCOD"))) {
-						
-						Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
-						intent.putExtra("LOGNO", getIntent().getStringExtra("LOGNO"));
-						startActivityForResult(intent, 0);
-					}else{
-						Toast.makeText(HandSignActivity.this, respMap.get("RSPMSG"), Toast.LENGTH_SHORT).show();
-					}
-				}
-					
-			};
+	/**
+	 * 二进制转字符串
+	 * 
+	 * @param b
+	 * @return
+	 */
+	public static String byte2hex(byte[] b) {
+		StringBuffer sb = new StringBuffer();
+		String stmp = "";
+		for (int n = 0; n < b.length; n++) {
+			stmp = Integer.toHexString(b[n] & 0XFF);
+			if (stmp.length() == 1) {
+				sb.append("0" + stmp);
+			} else {
+				sb.append(stmp);
+			}
+
 		}
-		
-		public static String bitmapToBase64(Bitmap bitmap) {  
-			  
-		    String result = null;  
-		    ByteArrayOutputStream baos = null;  
-		    try {  
-		        if (bitmap != null) {  
-		            baos = new ByteArrayOutputStream();  
-		            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);  
-		  
-		            baos.flush();  
-		            baos.close();  
-		  
-		            byte[] bitmapBytes = baos.toByteArray();  
-		            result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);  
-		        }  
-		    } catch (IOException e) {  
-		        e.printStackTrace();  
-		    } finally {  
-		        try {  
-		            if (baos != null) {  
-		                baos.flush();  
-		                baos.close();  
-		            }  
-		        } catch (IOException e) {  
-		            e.printStackTrace();  
-		        }  
-		    }  
-		    return result;  
-		}  
+		return sb.toString();
+	}
 }
