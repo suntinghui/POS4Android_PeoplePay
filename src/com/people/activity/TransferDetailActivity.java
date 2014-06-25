@@ -1,13 +1,18 @@
 package com.people.activity;
 
-import java.util.Date;
+import java.util.HashMap;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.people.R;
 import com.people.client.AppDataCenter;
@@ -15,13 +20,20 @@ import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.model.TradeModel;
+import com.people.network.LKAsyncHttpResponseHandler;
+import com.people.network.LKHttpRequest;
+import com.people.network.LKHttpRequestQueue;
+import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 
 // 流水详情
-public class TransferDetailActivity extends BaseActivity implements OnClickListener {
+public class TransferDetailActivity extends BaseActivity implements OnClickListener, OnCheckedChangeListener {
 	
 	private TradeModel model = null;
+	private CheckBox checkBox = null;
+	private EditText phoneNumEdit = null;
+	private Button btn_revoke;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +46,10 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		TextView tv_status = (TextView) findViewById(R.id.tv_status);
 		tv_status.setText(model.getStatus());
 
+		checkBox = (CheckBox) this.findViewById(R.id.checkBox);
+		checkBox.setOnCheckedChangeListener(this);
+		phoneNumEdit = (EditText) this.findViewById(R.id.phoneText);
+		
 		TextView tv_money_before = (TextView) findViewById(R.id.tv_money_before);
 		TextView tv_money_after = (TextView) findViewById(R.id.tv_money_after);
 		String tmp = StringUtil.String2SymbolAmount(model.getTxnamt()).substring(1);
@@ -52,7 +68,7 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		TextView tv_flow_num = (TextView) findViewById(R.id.tv_flow_num);
 		tv_flow_num.setText(model.getLogNo());
 
-		Button btn_revoke = (Button) findViewById(R.id.btn_revoke);
+		btn_revoke = (Button) findViewById(R.id.btn_revoke);
 		btn_revoke.setOnClickListener(this);
 
 //		if (model.getTxncd().equals("0200000000") && model.getTxnsts().equalsIgnoreCase("S") && model.getLogDate().equalsIgnoreCase(DateUtil.formatDate2(new Date()))) {
@@ -66,7 +82,22 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.btn_revoke:
-			revokeTransfer();
+//			revokeTransfer();
+			if (checkBox.isChecked()) {
+				String phoneNum = phoneNumEdit.getText().toString();
+				if (phoneNum.equals("")) {
+					Toast.makeText(this, "请输入手机号", Toast.LENGTH_SHORT).show();
+					return;
+				} else if (phoneNum.length() != 11) {
+					Toast.makeText(this, "手机号不合法", Toast.LENGTH_SHORT).show();
+					return;
+				} else {
+					this.sendTicket();
+				}
+
+			} else {
+				this.finish();
+			}
 			break;
 
 		default:
@@ -77,6 +108,42 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 	public void backAction(View view) {
 		this.setResult(RESULT_CANCELED);
 		this.finish();
+	}
+	
+	private void sendTicket(){
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("TRANCODE", "199037");
+		tempMap.put("PHONENUMBER", phoneNumEdit.getText().toString().trim());
+		tempMap.put("LOGNO", model.getLogNo());
+
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SendTicket, tempMap, getTicketHandler());
+
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在处理请稍候...", new LKHttpRequestQueueDone() {
+
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
+		});
+	}
+	
+	private LKAsyncHttpResponseHandler getTicketHandler() {
+		return new LKAsyncHttpResponseHandler() {
+
+			@Override
+			public void successAction(Object obj) {
+				HashMap<String, String> map = (HashMap<String, String>) obj;
+				String respCode = map.get("RSPCOD");
+				if (respCode.equals("00")){
+					Toast.makeText(TransferDetailActivity.this, "交易小票发送成功，请查收", Toast.LENGTH_SHORT).show();
+					
+					TransferDetailActivity.this.finish();
+					
+				} else {
+					Toast.makeText(TransferDetailActivity.this, map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
+				}
+			}
+		};
 	}
 	
 	private void revokeTransfer(){
@@ -96,6 +163,17 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
 		
 		startActivityForResult(intent, 0);
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+		switch (arg0.getId()) {
+		case R.id.checkBox:
+			phoneNumEdit.setVisibility(arg1 ? View.VISIBLE : View.INVISIBLE);
+			btn_revoke.setText(arg1?"发送小票":"完    成");
+			break;
+		}
+		
 	}
 
 }

@@ -57,6 +57,7 @@
     
     <style name="checkBoxSelectTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
 		<item name="android:button">@drawable/checkbox_selector</item>
+		    <item name="android:paddingLeft">25dip</item>  
 	</style>
     
     <style name="black_14">

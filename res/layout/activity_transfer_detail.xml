@@ -193,6 +193,39 @@
         android:layout_height="1dip"
         android:layout_marginTop="13dip"
         android:background="@color/gray" />
+    
+     <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dip"
+            android:layout_marginRight="25dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dip"
+            android:orientation="vertical" >
+
+            <CheckBox
+                android:id="@+id/checkBox"
+                style="@style/checkBoxSelectTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:background="@null"
+                android:text="是否发送交易小票"
+                android:textColor="@drawable/text_orange_blue" />
+
+            <EditText
+                android:id="@+id/phoneText"
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:layout_marginTop="15dip"
+                android:background="@drawable/bg_borderbox"
+                android:hint="请输入手机号"
+                android:inputType="phone"
+                android:maxLength="11"
+                android:paddingLeft="10dip"
+                android:singleLine="true" 
+                android:visibility="invisible"/>
+        </LinearLayout>
 
     <Button
         android:id="@+id/btn_revoke"
@@ -205,6 +238,6 @@
         android:layout_marginTop="50dip"
         android:background="@drawable/btn"
         android:text="撤  销"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.people.activity;
 
 import java.util.HashMap;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -116,6 +117,17 @@ public class ConsumeSuccessActivity extends BaseActivity implements OnClickListe
 				}
 			}
 		};
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		if(resultCode == RESULT_OK){
+			this.setResult(RESULT_OK);
+			this.finish();
+		}
 	}
 
 }

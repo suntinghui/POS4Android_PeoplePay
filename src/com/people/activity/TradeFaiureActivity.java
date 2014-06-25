@@ -27,7 +27,7 @@ public class TradeFaiureActivity extends BaseActivity implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_confirm:
-			TradeFaiureActivity.this.setResult(RESULT_OK);
+			TradeFaiureActivity.this.setResult(RESULT_CANCELED);
 			this.finish();
 			
 			break;
@@ -39,7 +39,7 @@ public class TradeFaiureActivity extends BaseActivity implements OnClickListener
 
 	@Override
 	public void onBackPressed() {
-		TradeFaiureActivity.this.setResult(RESULT_OK);
+		TradeFaiureActivity.this.setResult(RESULT_CANCELED);
 		this.finish();
 	}
 

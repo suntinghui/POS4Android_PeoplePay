@@ -76,22 +76,14 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 			if (null != str) {
 				et_phone.setText(str);
 			}
-		}else if(resultCode == 100){
-			LKAlertDialog dialog = new LKAlertDialog(this);
-			dialog.setTitle("提示");
-			dialog.setMessage("充值成功");
-			dialog.setCancelable(false);
-			dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int arg1) {
-					dialog.dismiss();
-				}
-			});
-			
-			dialog.create().show();
 		}
-		
+		if(requestCode == 100){
+			if(resultCode == RESULT_OK){
+				finish();
+			}else if(resultCode == RESULT_CANCELED){
+				
+			}
+		}
 
 	}
 
