@@ -109,7 +109,7 @@ public class ConsumeSuccessActivity extends BaseActivity implements OnClickListe
 				String respCode = map.get("RSPCOD");
 				if (respCode.equals("00")){
 					Toast.makeText(ConsumeSuccessActivity.this, "交易小票发送成功，请查收", Toast.LENGTH_SHORT).show();
-					
+					ConsumeSuccessActivity.this.setResult(RESULT_OK);
 					ConsumeSuccessActivity.this.finish();
 					
 				} else {
@@ -122,7 +122,7 @@ public class ConsumeSuccessActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-		super.onActivityResult(requestCode, resultCode, data);
+//		super.onActivityResult(requestCode, resultCode, data);
 		
 		if(resultCode == RESULT_OK){
 			this.setResult(RESULT_OK);

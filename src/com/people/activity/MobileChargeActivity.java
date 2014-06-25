@@ -88,7 +88,7 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 	}
 
 	private boolean checkValue() {
-		if ("".equals(et_phone.getText())) {
+		if ("".equals(et_phone.getText().toString())) {
 			Toast.makeText(this, "请输入要充值手机号码", Toast.LENGTH_SHORT).show();
 			return false;
 		}
