@@ -189,8 +189,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		} else if (activeIdx == INDEX_PATH) {
 			isCurrentList = false;
 			iv_nodata.setVisibility(View.GONE);
-			tv_totalnum.setText("0");
-			tv_totalmoney.setText("￥0.0");
+			tv_totalnum.setText(totalNumCash);
+			tv_totalmoney.setText(totalAmountCash);
 			mTvPath.setTextColor(mTextColorSelected);
 			mTvContent.setTextColor(mTextColorUnselected);
 			mLinePath.setVisibility(View.VISIBLE);
@@ -340,6 +340,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 						mCashAdapter.notifyDataSetChanged();
 						tv_totalmoney.setText("￥0.0");
 						tv_totalnum.setText("0");
+						totalAmountCash = "￥0.0";
+						totalNumCash = "0";
 						return;
 					}
 					totalPage = Integer.valueOf((String) ((HashMap) obj).get("TOTALPAGE"));

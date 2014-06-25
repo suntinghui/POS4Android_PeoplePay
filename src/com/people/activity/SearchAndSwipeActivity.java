@@ -411,8 +411,6 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 						intent0.putExtra("LOGNO", map.get("LOGNO"));
 						startActivityForResult(intent0, 0);
 
-						Toast.makeText(BaseActivity.getTopActivity(), "交易成功", Toast.LENGTH_SHORT).show();
-
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
 					}

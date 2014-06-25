@@ -27,11 +27,19 @@
             android:text="@string/modifypwd_title" />
     </RelativeLayout>
 
+    <TextView
+        style="@style/gray_15"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_marginLeft="25dip"
+        android:layout_marginTop="15dip"
+        android:text="@string/forgetpwd_pwd_tips" />
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
         android:background="@color/gray" 
-        android:layout_marginTop="30dip"/>
+        android:layout_marginTop="5dip"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
