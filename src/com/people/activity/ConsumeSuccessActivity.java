@@ -90,7 +90,7 @@ public class ConsumeSuccessActivity extends BaseActivity implements OnClickListe
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SendTicket, tempMap, getTicketHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在处理请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在发送小票请稍候...", new LKHttpRequestQueueDone() {
 
 			@Override
 			public void onComplete() {

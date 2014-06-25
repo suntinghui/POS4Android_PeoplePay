@@ -1,15 +1,11 @@
 package com.people.activity;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -21,7 +17,6 @@ import android.graphics.Path;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,8 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.people.R;
-import com.people.client.ApplicationEnvironment;
-import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
@@ -55,8 +48,6 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 	private PaintView paintView = null;
 
 	private boolean hasSign = false; // 简单判断用户是否有签名
-
-	private String signImageName = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +89,7 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		switch (view.getId()) {
 		case R.id.okButton:
 			if (hasSign) {
-				upLoadSignImage(getIntent().getStringExtra("LOGNO"));
+				new UploadSignImageTask().execute();
 
 			} else {
 				Toast.makeText(this, "您还没有签名，请先完成签名", Toast.LENGTH_SHORT).show();
@@ -112,59 +103,6 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 			}
 
 			break;
-		}
-	}
-
-	private Bitmap scaleBitmap() {
-		int width = bitmap.getWidth();
-		int height = bitmap.getHeight();
-		// 设置想要的大小
-		int newWidth = this.getWindowManager().getDefaultDisplay().getWidth();
-		int newHeight = height;
-		// 计算缩放比例
-		float scaleWidth = ((float) newWidth) / width;
-		float scaleHeight = ((float) newHeight) / height;
-		// 取得想要缩放的matrix参数
-		Matrix matrix = new Matrix();
-		matrix.postScale(scaleWidth, scaleWidth); // 使其等比缩放
-		// 得到新的图片
-		Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
-
-		Canvas canvas = new Canvas(newBitmap);
-		canvas.drawColor(Color.parseColor("#fafad2"));
-		canvas.drawBitmap(bitmap, 0, 0, null);
-
-		return newBitmap;
-	}
-
-	private void saveBitmapToFile(Bitmap mBitmap, String bitName) {
-		File mWorkingPath = new File(Constants.SIGNIMAGESPATH);
-		if (!mWorkingPath.exists()) {
-			if (!mWorkingPath.mkdirs()) {
-
-			}
-		}
-
-		File f = new File(Constants.SIGNIMAGESPATH + bitName + ".JPEG");
-		try {
-			f.createNewFile();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		FileOutputStream fOut = null;
-		try {
-			fOut = new FileOutputStream(f);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		mBitmap.compress(Bitmap.CompressFormat.JPEG, 50, fOut);
-
-		try {
-			fOut.flush();
-			fOut.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -279,35 +217,6 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	class SaveImageTask extends AsyncTask<Object, Object, Object> {
-
-		@Override
-		protected void onPreExecute() {
-			HandSignActivity.this.showDialog(BaseActivity.PROGRESS_DIALOG, "正在保存签名信息");
-		}
-
-		@Override
-		protected Object doInBackground(Object... arg0) {
-			// 保存图片
-			saveBitmapToFile(scaleBitmap(), signImageName);
-
-			/***
-			 * TransferSuccessDBHelper helper = new TransferSuccessDBHelper();
-			 * helper.updateATransfer(tracenum, signImageName, phoneNum);
-			 *****/
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Object result) {
-			HandSignActivity.this.hideDialog(BaseActivity.PROGRESS_DIALOG);
-			Intent intent = new Intent();
-			setResult(RESULT_OK, intent);
-			finish();
-		}
-
-	}
-
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
@@ -316,30 +225,52 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-
+	
 	// 上传签购单
-	private void upLoadSignImage(String LOGNO) {
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);// (0 - 100)压缩文件
-		String photoStr = byte2hex(getBitmapByte(bitmap));
-		HashMap<String, Object> tempMap = new HashMap<String, Object>();
-		tempMap.put("TRANCODE", "199010");
-		tempMap.put("LOGNO", LOGNO);
-		tempMap.put("ELESIGNA", photoStr);
+	class UploadSignImageTask extends AsyncTask{
+		
+		String photoStr = null;
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UploadSignImage, tempMap, getLoginHandler());
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			
+			HandSignActivity.this.showDialog(BaseActivity.PROGRESS_DIALOG, "正在解析签名请稍候...");
+		}
+		
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);// (0 - 100)压缩文件
+			photoStr = StringUtil.bytes2HexString(getBitmapByte(bitmap));
+			
+			return null;
+		}
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在上传，请稍候...", new LKHttpRequestQueueDone() {
+		@Override
+		protected void onPostExecute(Object result) {
+			super.onPostExecute(result);
+			
+			HashMap<String, Object> tempMap = new HashMap<String, Object>();
+			tempMap.put("TRANCODE", "199010");
+			tempMap.put("LOGNO", getIntent().getStringExtra("LOGNO"));
+			tempMap.put("ELESIGNA", photoStr);
 
-			@Override
-			public void onComplete() {
-				super.onComplete();
+			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UploadSignImage, tempMap, getUploadImageHandler());
 
-			}
-		});
+			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在上传图片请稍候...", new LKHttpRequestQueueDone() {
+
+				@Override
+				public void onComplete() {
+					super.onComplete();
+
+				}
+			});
+		}
+
 	}
 
-	private LKAsyncHttpResponseHandler getLoginHandler() {
+	private LKAsyncHttpResponseHandler getUploadImageHandler() {
 		return new LKAsyncHttpResponseHandler() {
 
 			@Override
@@ -351,6 +282,7 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 					Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
 					intent.putExtra("LOGNO", getIntent().getStringExtra("LOGNO"));
 					startActivityForResult(intent, 0);
+
 				} else {
 					Toast.makeText(HandSignActivity.this, respMap.get("RSPMSG"), Toast.LENGTH_SHORT).show();
 				}
@@ -359,54 +291,16 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		};
 	}
 
-	/**
-	 * 二进制转字符串
-	 * 
-	 * @param b
-	 * @return
-	 */
-	public static String byte2hex(byte[] b) {
-		StringBuffer sb = new StringBuffer();
-		String stmp = "";
-		for (int n = 0; n < b.length; n++) {
-			stmp = Integer.toHexString(b[n] & 0XFF);
-			if (stmp.length() == 1) {
-				sb.append("0" + stmp);
-			} else {
-				sb.append(stmp);
-			}
-
+	public byte[] getBitmapByte(Bitmap bitmap) {
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+		try {
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-		return sb.toString();
+		return out.toByteArray();
 	}
-	
-	public byte[] getBitmapByte(Bitmap bitmap){   
-	    ByteArrayOutputStream out = new ByteArrayOutputStream();   
-	    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);   
-	    try {   
-	        out.flush();   
-	        out.close();   
-	    } catch (IOException e) {   
-	        e.printStackTrace();   
-	    }   
-	    return out.toByteArray();   
-	}   
-	
-	public static String binaryString2hexString(String bString)  
-    {  
-        if (bString == null || bString.equals("") || bString.length() % 8 != 0)  
-            return null;  
-        StringBuffer tmp = new StringBuffer();  
-        int iTmp = 0;  
-        for (int i = 0; i < bString.length(); i += 4)  
-        {  
-            iTmp = 0;  
-            for (int j = 0; j < 4; j++)  
-            {  
-                iTmp += Integer.parseInt(bString.substring(i + j, i + j + 1)) << (4 - j - 1);  
-            }  
-            tmp.append(Integer.toHexString(iTmp));  
-        }  
-        return tmp.toString();  
-    }  
+
 }
