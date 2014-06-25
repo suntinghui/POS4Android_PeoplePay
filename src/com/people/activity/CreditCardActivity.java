@@ -121,22 +121,10 @@ public class CreditCardActivity extends BaseActivity implements OnClickListener 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-		if(resultCode == 6){
+		if(resultCode == RESULT_OK){
 			finish();
-		}else if(resultCode == 100){
-			LKAlertDialog dialog = new LKAlertDialog(this);
-			dialog.setTitle("提示");
-			dialog.setMessage("还款成功");
-			dialog.setCancelable(false);
-			dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int arg1) {
-					dialog.dismiss();
-				}
-			});
+		}else if(resultCode == RESULT_CANCELED){
 			
-			dialog.create().show();
 		}
 	}
 }

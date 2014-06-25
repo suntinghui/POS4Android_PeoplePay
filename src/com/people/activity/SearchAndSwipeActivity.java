@@ -640,8 +640,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
 					if (map.get("RSPCOD") != null && map.get("RSPCOD").equals("00")) {
-						SearchAndSwipeActivity.this.setResult(100);
-						SearchAndSwipeActivity.this.finish();
+						Intent intent = new Intent(SearchAndSwipeActivity.this, TradeSuccessActivity.class);
+						intent.putExtra("tips", "充值成功");
+						startActivityForResult(intent, 102);
 
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
@@ -761,8 +762,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
 					if (map.get("RSPCOD").equals("00")) {
-						SearchAndSwipeActivity.this.setResult(100);
-						SearchAndSwipeActivity.this.finish();
+						Intent intent = new Intent(SearchAndSwipeActivity.this, TradeSuccessActivity.class);
+						intent.putExtra("tips", "转账成功");
+						startActivityForResult(intent, 101);
 
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
@@ -876,8 +878,9 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 					@SuppressWarnings("unchecked")
 					HashMap<String, String> map = (HashMap<String, String>) obj;
 					if (map.get("RSPCOD") != null && map.get("RSPCOD").equals("00")) {
-						SearchAndSwipeActivity.this.setResult(100);
-						SearchAndSwipeActivity.this.finish();
+						Intent intent = new Intent(SearchAndSwipeActivity.this, TradeSuccessActivity.class);
+						intent.putExtra("tips", "还款成功");
+						startActivityForResult(intent, 100);
 
 					} else {
 						gotoTradeFailureActivity(map.get("RSPMSG"));
@@ -887,5 +890,12 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			};
 		}
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		this.finish();
 	}
 }
