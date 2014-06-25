@@ -101,7 +101,7 @@ public class MyAccountActivity extends BaseActivity implements OnClickListener {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == 5) {
+		if (resultCode == RESULT_OK) {
 			this.finish();
 		}
 

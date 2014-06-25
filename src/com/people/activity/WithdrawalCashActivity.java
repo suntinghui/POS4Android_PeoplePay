@@ -110,7 +110,9 @@ public class WithdrawalCashActivity extends BaseActivity implements OnClickListe
 			public void successAction(Object obj) {
 				HashMap<String, String> map = (HashMap<String, String>) obj;
 				if (map.get("RSPCOD") != null && map.get("RSPCOD").equals("00")) {
-					Toast.makeText(WithdrawalCashActivity.this, "提现成功", Toast.LENGTH_SHORT).show();;
+					Intent intent = new Intent(WithdrawalCashActivity.this, TradeSuccessActivity.class);
+					intent.putExtra("tips", "提现成功");
+					startActivityForResult(intent, 101);
 
 				} else {
 					Toast.makeText(WithdrawalCashActivity.this, map.get("RSPMSG"), Toast.LENGTH_SHORT).show();
@@ -118,5 +120,15 @@ public class WithdrawalCashActivity extends BaseActivity implements OnClickListe
 			}
 
 		};
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if(resultCode == RESULT_OK){
+			this.setResult(RESULT_OK);
+			this.finish();
+		}
 	}
 }

@@ -60,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="15dip"
-                android:background="@null" />
+                android:background="@null" 
+                android:text="￥0.0"/>
         </RelativeLayout>
 
         <View
