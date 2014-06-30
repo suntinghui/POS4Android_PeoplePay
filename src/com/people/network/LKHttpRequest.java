@@ -89,7 +89,7 @@ public class LKHttpRequest {
 	private HttpEntity getImageEntity(LKHttpRequest request){
 		try{
 			HashMap<String, Object> map = request.getRequestDataMap();
-			
+
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(); 
 	        nameValuePairs.add(new BasicNameValuePair("TRANCODE", (String) map.get("TRANCODE"))); 
 	        nameValuePairs.add(new BasicNameValuePair("PHONENUMBER", (String) map.get("PHONENUMBER"))); 

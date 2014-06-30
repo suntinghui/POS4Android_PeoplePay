@@ -49,6 +49,7 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		checkBox = (CheckBox) this.findViewById(R.id.checkBox);
 		checkBox.setOnCheckedChangeListener(this);
 		phoneNumEdit = (EditText) this.findViewById(R.id.phoneText);
+		phoneNumEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 		
 		TextView tv_money_before = (TextView) findViewById(R.id.tv_money_before);
 		TextView tv_money_after = (TextView) findViewById(R.id.tv_money_after);

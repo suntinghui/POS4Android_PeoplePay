@@ -28,7 +28,6 @@
             android:text="@string/upload_second_title" />
     </RelativeLayout>
 
-
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -48,13 +47,13 @@
         <EditText
             android:id="@+id/et_name"
             style="@style/black_17"
-            android:paddingLeft="8dip"
             android:layout_width="fill_parent"
             android:layout_height="40dip"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="35dip"
             android:background="@drawable/bg_borderbox"
             android:hint="@string/upload_second_name_h"
+            android:paddingLeft="8dip"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -80,30 +79,33 @@
             android:background="@null"
             android:text="@string/upload_second_address" />
 
-        <LinearLayout android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="18dip"
-            android:orientation="horizontal">
+            android:orientation="horizontal" >
+
             <Spinner
-            android:id="@+id/spinner1"
-            android:layout_weight="1"
-            android:layout_marginRight="5dip"
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:paddingLeft="8dip"
-            android:drawSelectorOnTop="true"
-            android:background="@drawable/selectbg"
-            android:prompt="@string/p_scope" />
+                android:id="@+id/spinner1"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginRight="5dip"
+                android:layout_weight="1"
+                android:background="@drawable/selectbg"
+                android:drawSelectorOnTop="true"
+                android:paddingLeft="8dip"
+                android:prompt="@string/p_scope" />
+
             <Spinner
-            android:id="@+id/spinner2"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dip"
-            android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:paddingLeft="8dip"
-            android:drawSelectorOnTop="true"
-            android:background="@drawable/selectbg"
-            android:prompt="@string/p_scope" />
+                android:id="@+id/spinner2"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginLeft="5dip"
+                android:layout_weight="1"
+                android:background="@drawable/selectbg"
+                android:drawSelectorOnTop="true"
+                android:paddingLeft="8dip"
+                android:prompt="@string/p_scope" />
         </LinearLayout>
     </LinearLayout>
 
@@ -112,7 +114,6 @@
         android:layout_height="1dp"
         android:layout_marginTop="12dip"
         android:background="@color/gray" />
-
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -134,11 +135,13 @@
             android:id="@+id/spinner3"
             android:layout_width="match_parent"
             android:layout_height="40dip"
-            android:paddingLeft="8dip"
             android:layout_marginLeft="18dip"
-            android:drawSelectorOnTop="true"
+            android:paddingRight="33dip"
             android:background="@drawable/selectbg"
-            android:prompt="@string/p_scope" />
+            android:drawSelectorOnTop="true"
+            android:paddingLeft="8dip"
+            android:prompt="@string/p_scope"
+           />
     </LinearLayout>
 
     <View
@@ -146,7 +149,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="12dip"
         android:background="@color/gray" />
-    
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -163,26 +166,33 @@
             android:background="@null"
             android:text="@string/upload_second_bank_address" />
 
-        <RelativeLayout android:layout_width="match_parent"
-            android:layout_height="40dip"
-            android:layout_marginLeft="18dip"
-            android:background="@drawable/bg_borderbox">
-            <Button
-            style="@style/black_17"
-            android:id="@+id/btn_bank_branch"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dip"
-            android:background="@null"
-            
-             />
-            <ImageView android:layout_width="wrap_content"
+            android:layout_marginLeft="18dip"
+            android:background="@drawable/bg_borderbox" >
+
+            <Button
+                android:id="@+id/btn_bank_branch"
+                style="@style/black_17"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginRight="30dip"
+                android:background="@drawable/inputmoney_btn_selector"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/image_arrow_right"
-                android:layout_marginRight="10dip"/>
+                android:layout_marginRight="10dip"
+                android:background="@drawable/image_arrow_right" />
         </RelativeLayout>
-        
     </LinearLayout>
 
     <View
@@ -210,7 +220,6 @@
         <EditText
             android:id="@+id/et_account"
             style="@style/black_17"
-            android:paddingLeft="8dip"
             android:layout_width="fill_parent"
             android:layout_height="40dip"
             android:layout_gravity="center_vertical"
@@ -218,6 +227,7 @@
             android:background="@drawable/bg_borderbox"
             android:hint="@string/upload_second_account_h"
             android:inputType="number"
+            android:paddingLeft="8dip"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -226,7 +236,6 @@
         android:layout_height="1dp"
         android:layout_marginTop="12dip"
         android:background="@color/gray" />
-
 
     <Button
         android:id="@+id/btn_confirm"

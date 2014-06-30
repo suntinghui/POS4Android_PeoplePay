@@ -28,8 +28,7 @@ import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 
 // 账户信息
-public class UpLoadSecondActivity extends BaseActivity implements
-		OnClickListener {
+public class UpLoadSecondActivity extends BaseActivity implements OnClickListener {
 	private EditText et_name;
 	private EditText et_account;
 	private Spinner spinner1, spinner2, spinner3;
@@ -41,10 +40,10 @@ public class UpLoadSecondActivity extends BaseActivity implements
 	private ArrayList<Bank> banks;
 	private ArrayList<Bank> branchBanks;
 	private Button btn_bank_branch;
-	
+
 	private String currentBankBankName;
 	private String currentBankBankCode;
-	
+
 	private HashMap<String, String> fromForeMap;
 
 	@SuppressWarnings("unchecked")
@@ -68,6 +67,9 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		
 		btn_bank_branch = (Button) findViewById(R.id.btn_bank_branch);
 		btn_bank_branch.setOnClickListener(this);
+		btn_bank_branch.setFocusable(true);
+		btn_bank_branch.setFocusableInTouchMode(true);
+		btn_bank_branch.requestFocus();
 
 		getProvinceName();
 
@@ -79,17 +81,16 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		case R.id.btn_confirm:
 			if (checkValue()) {
 				fromForeMap.put("BANKUSERNAME", et_name.getText().toString());
-				fromForeMap.put("BANKAREA", currentCity.getCode()+"");
-				fromForeMap.put("BIGBANKCOD", currentBank.getCode()+"");
+				fromForeMap.put("BANKAREA", currentCity.getCode() + "");
+				fromForeMap.put("BIGBANKCOD", currentBank.getCode() + "");
 				fromForeMap.put("BIGBANKNAM", currentBank.getName());
 				fromForeMap.put("BANKCOD", currentBankBankCode);
 				fromForeMap.put("BANKNAM", currentBankBankName);
 				fromForeMap.put("BANKACCOUNT", et_account.getText().toString());
-				
-				 Intent intent = new Intent(UpLoadSecondActivity.this,
-				 UploadImagesActivity.class);
-				 intent.putExtra("map", fromForeMap);
-				 startActivity(intent);
+
+				Intent intent = new Intent(UpLoadSecondActivity.this, UploadImagesActivity.class);
+				intent.putExtra("map", fromForeMap);
+				startActivity(intent);
 			}
 
 			break;
@@ -98,7 +99,7 @@ public class UpLoadSecondActivity extends BaseActivity implements
 			break;
 		case R.id.btn_bank_branch:
 			Intent intent_b = new Intent(UpLoadSecondActivity.this, BankBranchActivity.class);
-			intent_b.putExtra("list", banks);
+			intent_b.putExtra("list", branchBanks);
 			startActivityForResult(intent_b, 0);
 			break;
 		default:
@@ -117,11 +118,11 @@ public class UpLoadSecondActivity extends BaseActivity implements
 			return false;
 		}
 
-		if(currentBankBankCode == null || currentBankBankCode.length() == 0){
+		if (currentBankBankCode == null || currentBankBankCode.length() == 0) {
 			Toast.makeText(this, "支行不能为空！", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -134,10 +135,9 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		 *      android.view.View, int, long)
 		 */
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			currentBank = banks.get(position);
-			getBranchBank(currentCity.getCode()+"", currentBank.getCode()+"");
+			getBranchBank(currentCity.getCode() + "", currentBank.getCode() + "");
 		}
 
 		/**
@@ -159,23 +159,20 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199032");
 		tempMap.put("PARCOD", provinceCode);
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetCityName,
-				tempMap, getCityNameHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetCityName, tempMap, getCityNameHandler());
 
 		// 获取银行
 		HashMap<String, Object> tempMap1 = new HashMap<String, Object>();
 		tempMap1.put("TRANCODE", "199035");
 		tempMap1.put("PARCOD", provinceCode);
-		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.GetBank,
-				tempMap1, getBankHandler());
-		new LKHttpRequestQueue().addHttpRequest(req1, req2).executeQueue(null,
-				new LKHttpRequestQueueDone() {
-					@Override
-					public void onComplete() {
-						super.onComplete();
-					}
+		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.GetBank, tempMap1, getBankHandler());
+		new LKHttpRequestQueue().addHttpRequest(req1, req2).executeQueue(null, new LKHttpRequestQueueDone() {
+			@Override
+			public void onComplete() {
+				super.onComplete();
+			}
 
-				});
+		});
 
 	}
 
@@ -188,8 +185,7 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		 *      android.view.View, int, long)
 		 */
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			onProvinChange(position);
 		}
 
@@ -208,8 +204,7 @@ public class UpLoadSecondActivity extends BaseActivity implements
 	final class CityAdapter extends ProvinceAdapter {
 
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			currentCity = cities.get(position);
 		}
 	}
@@ -217,14 +212,11 @@ public class UpLoadSecondActivity extends BaseActivity implements
 	protected void dialog(String message) {
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(message)
-				.setCancelable(false)
-				.setPositiveButton(R.string.confirm,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								dialog.dismiss();
-							}
-						});
+		builder.setMessage(message).setCancelable(false).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int id) {
+				dialog.dismiss();
+			}
+		});
 		AlertDialog alert = builder.create();
 		alert.show();
 
@@ -235,19 +227,16 @@ public class UpLoadSecondActivity extends BaseActivity implements
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199031");
 
-		LKHttpRequest req1 = new LKHttpRequest(
-				TransferRequestTag.GetProvinceName, tempMap,
-				getProvinceNameHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetProvinceName, tempMap, getProvinceNameHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-				"正在获取省份信息...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取省份信息...", new LKHttpRequestQueueDone() {
 
-					@Override
-					public void onComplete() {
-						super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-					}
-				});
+			}
+		});
 	}
 
 	private LKAsyncHttpResponseHandler getProvinceNameHandler() {
@@ -261,10 +250,7 @@ public class UpLoadSecondActivity extends BaseActivity implements
 				if ("00".equals(recieveMap.get("RSPCOD"))) {
 					provices = (ArrayList<Province>) recieveMap.get("list");
 					if (provices != null && provices.size() != 0) {
-						ArrayAdapter<Province> provinceAdapter = new ArrayAdapter<Province>(
-								UpLoadSecondActivity.this,
-								R.layout.simple_spinner_item,
-								android.R.id.text1, provices);
+						ArrayAdapter<Province> provinceAdapter = new ArrayAdapter<Province>(UpLoadSecondActivity.this, R.layout.simple_spinner_item, android.R.id.text1, provices);
 						spinner1.setAdapter(provinceAdapter);
 						spinner1.setOnItemSelectedListener(new ProvinceAdapter());
 					}
@@ -288,10 +274,7 @@ public class UpLoadSecondActivity extends BaseActivity implements
 					if (cities != null && cities.size() != 0) {
 						spinner2.setOnItemSelectedListener(new CityAdapter());
 
-						ArrayAdapter<CityModel> cityAdapter = new ArrayAdapter<CityModel>(
-								UpLoadSecondActivity.this,
-								R.layout.simple_spinner_item,
-								android.R.id.text1, cities);
+						ArrayAdapter<CityModel> cityAdapter = new ArrayAdapter<CityModel>(UpLoadSecondActivity.this, R.layout.simple_spinner_item, android.R.id.text1, cities);
 						spinner2.setAdapter(cityAdapter);
 					}
 
@@ -299,7 +282,6 @@ public class UpLoadSecondActivity extends BaseActivity implements
 			}
 		};
 	}
-
 
 	private LKAsyncHttpResponseHandler getBankHandler() {
 		return new LKAsyncHttpResponseHandler() {
@@ -312,71 +294,65 @@ public class UpLoadSecondActivity extends BaseActivity implements
 					if (banks != null && banks.size() != 0) {
 						spinner3.setOnItemSelectedListener(new BankAdapter());
 
-						ArrayAdapter<Bank> bankAdapter = new ArrayAdapter<Bank>(
-								UpLoadSecondActivity.this,
-								R.layout.simple_spinner_item,
-								android.R.id.text1, banks);
+						ArrayAdapter<Bank> bankAdapter = new ArrayAdapter<Bank>(UpLoadSecondActivity.this, R.layout.simple_spinner_item, android.R.id.text1, banks);
 						spinner3.setAdapter(bankAdapter);
 					}
 				}
 			}
 		};
 	}
-	
+
 	// 获取支行
-		private void getBranchBank(String cityCode, String bankCode) {
-			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("TRANCODE", "199034");
-			tempMap.put("CITYCOD", cityCode);
-			tempMap.put("BBANKCOD", bankCode);
+	private void getBranchBank(String cityCode, String bankCode) {
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("TRANCODE", "199034");
+		tempMap.put("CITYCOD", cityCode);
+		tempMap.put("BBANKCOD", bankCode);
 
-			LKHttpRequest req1 = new LKHttpRequest(
-					TransferRequestTag.GetBankBranch, tempMap,
-					getBranchHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetBankBranch, tempMap, getBranchHandler());
 
-			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
-					"正在获取支行信息...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取支行信息...", new LKHttpRequestQueueDone() {
 
-						@Override
-						public void onComplete() {
-							super.onComplete();
+			@Override
+			public void onComplete() {
+				super.onComplete();
 
-						}
-					});
-		}
+			}
+		});
+	}
 
-		private LKAsyncHttpResponseHandler getBranchHandler() {
-			return new LKAsyncHttpResponseHandler() {
+	private LKAsyncHttpResponseHandler getBranchHandler() {
+		return new LKAsyncHttpResponseHandler() {
 
+			@SuppressWarnings("unchecked")
+			@Override
+			public void successAction(Object obj) {
 				@SuppressWarnings("unchecked")
-				@Override
-				public void successAction(Object obj) {
-					@SuppressWarnings("unchecked")
-					HashMap<String, Object> recieveMap = (HashMap<String, Object>) obj;
-					if ("00".equals(recieveMap.get("RSPCOD"))) {
-						branchBanks = (ArrayList<Bank>) recieveMap.get("list");
-						if (branchBanks != null && branchBanks.size() != 0) {
-							currentBankBankName = ((Bank)(branchBanks.get(0))).getName();
-							currentBankBankCode = ((Bank)(branchBanks.get(0))).getCode()+"";
-							btn_bank_branch.setText(currentBankBankName);
-						}
+				HashMap<String, Object> recieveMap = (HashMap<String, Object>) obj;
+				if ("00".equals(recieveMap.get("RSPCOD"))) {
+					branchBanks = (ArrayList<Bank>) recieveMap.get("list");
+					if (branchBanks != null && branchBanks.size() != 0) {
+						currentBankBankName = ((Bank) (branchBanks.get(0))).getName();
+						currentBankBankCode = ((Bank) (branchBanks.get(0))).getCode() + "";
+						btn_bank_branch.setText(currentBankBankName);
 					}
-
 				}
 
-			};
-		}
-		
-		@Override
-		protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-			
-			if(resultCode == 5){
-				currentBankBankCode = data.getStringExtra("bankbranchid");
-				currentBankBankName = data.getStringExtra("bankbranchname");
-				btn_bank_branch.setText(currentBankBankName);
-			}else if(resultCode == 6){
-				UpLoadSecondActivity.this.setResult(6, UpLoadSecondActivity.this.getIntent());
-				finish();
 			}
+
+		};
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+		if (resultCode == 5) {
+			currentBankBankCode = data.getStringExtra("bankbranchid");
+			currentBankBankName = data.getStringExtra("bankbranchname");
+			btn_bank_branch.setText(currentBankBankName);
+		} else if (resultCode == 6) {
+			UpLoadSecondActivity.this.setResult(6, UpLoadSecondActivity.this.getIntent());
+			finish();
 		}
+	}
 }
