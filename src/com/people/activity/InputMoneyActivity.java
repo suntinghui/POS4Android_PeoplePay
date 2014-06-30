@@ -185,6 +185,7 @@ public class InputMoneyActivity extends BaseActivity {
 					intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
 
 					startActivity(intent);
+					tv_show_money.setText("0");
 				}
 
 			} else if (arg0.getId() == R.id.btn_cash) { // 现金记账
@@ -337,6 +338,7 @@ public class InputMoneyActivity extends BaseActivity {
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
 					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
+						
 						LKAlertDialog dialog = new LKAlertDialog(InputMoneyActivity.this);
 						dialog.setTitle("提示");
 						dialog.setMessage("记账成功！金额： ￥" + tv_show_money.getText().toString());
@@ -346,6 +348,7 @@ public class InputMoneyActivity extends BaseActivity {
 							@Override
 							public void onClick(DialogInterface dialog, int arg1) {
 								dialog.dismiss();
+								tv_show_money.setText("0");
 							}
 						});
 
