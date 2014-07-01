@@ -345,14 +345,13 @@ public class UpLoadSecondActivity extends BaseActivity implements OnClickListene
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-		if (resultCode == 5) {
+		if(resultCode == RESULT_OK){
+			this.setResult(RESULT_OK);
+			finish();
+		}else if (resultCode == 5) {
 			currentBankBankCode = data.getStringExtra("bankbranchid");
 			currentBankBankName = data.getStringExtra("bankbranchname");
 			btn_bank_branch.setText(currentBankBankName);
-		} else if (resultCode == 6) {
-			UpLoadSecondActivity.this.setResult(6, UpLoadSecondActivity.this.getIntent());
-			finish();
-		}
+		} 
 	}
 }

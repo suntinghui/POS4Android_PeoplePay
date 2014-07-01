@@ -466,7 +466,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				HashMap<String, String> respMap = (HashMap<String, String>) obj;
 				if ("00".equals(respMap.get("RSPCOD"))) {
 					Toast.makeText(UploadImagesActivity.this, "实名认证成功！", Toast.LENGTH_SHORT).show();
-					UploadImagesActivity.this.setResult(6, UploadImagesActivity.this.getIntent());
+					UploadImagesActivity.this.setResult(RESULT_OK);
 					finish();
 				} else {
 					Toast.makeText(UploadImagesActivity.this, respMap.get("RSPMSG"), Toast.LENGTH_SHORT).show();

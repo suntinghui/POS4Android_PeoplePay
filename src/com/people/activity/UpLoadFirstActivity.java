@@ -171,8 +171,7 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		
-		if(resultCode == 6){
+		if(resultCode == RESULT_OK){
 			finish();
 		}
 	}
