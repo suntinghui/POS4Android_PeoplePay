@@ -155,7 +155,7 @@ public class BaseActivity extends Activity {
 		return super.onCreateDialog(id);
 	}
 
-	private void showProgressDialog() {
+	public void showProgressDialog() {
 		try {
 			// 这里应该关闭其它提示型的对话框
 			this.hideDialog(ALL_DIALOG);
@@ -179,7 +179,7 @@ public class BaseActivity extends Activity {
 		}
 	}
 
-	private void showAlertDialog() {
+	public void showAlertDialog() {
 		try {
 			// 这里应该关闭其它提示型的对话框
 			this.hideDialog(ALL_DIALOG);

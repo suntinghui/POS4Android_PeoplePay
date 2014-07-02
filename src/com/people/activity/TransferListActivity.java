@@ -1,5 +1,6 @@
 package com.people.activity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -51,9 +52,8 @@ import com.people.view.TransferAdapter;
 // 流水
 public class TransferListActivity extends BaseActivity implements OnClickListener, OnItemClickListener, OnScrollListener {
 
-	static final int MONTHYEARDATESELECTOR_ID = 0;
+	static final int MONTHYEARDATESELECTOR_ID = 4;
 
-	
 	private static final int INDEX_CONTENT = 0;
 	private static final int INDEX_PATH = 1;
 
@@ -102,6 +102,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	private int currentDelete = 0;
 
 	private boolean clickFlag = false;
+	private String dateStr;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -119,9 +120,15 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 		btn_refresh = (Button) findViewById(R.id.btn_refresh);
 		btn_refresh.setOnClickListener(this);
+		
+
 		btn_date = (Button) findViewById(R.id.btn_date);
 		btn_date.setOnClickListener(this);
-
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM");
+		dateStr=sdf.format(new java.util.Date());
+		btn_date.setText(dateStr);
+		btn_date.setVisibility(View.GONE);
+		
 		tv_totalnum = (TextView) findViewById(R.id.tv_totalnum);
 		tv_totalmoney = (TextView) findViewById(R.id.tv_totalmoney);
 
@@ -175,6 +182,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	private void switchTo(int activeIdx) {
 
 		if (activeIdx == INDEX_CONTENT) {
+			btn_date.setVisibility(View.GONE);
 			isCurrentList = true;
 			if (totalAmount == 0) {
 				iv_nodata.setVisibility(View.VISIBLE);
@@ -196,6 +204,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			}
 
 		} else if (activeIdx == INDEX_PATH) {
+			btn_date.setVisibility(View.VISIBLE);
 			isCurrentList = false;
 			iv_nodata.setVisibility(View.GONE);
 			tv_totalnum.setText(totalNumCash);
@@ -222,7 +231,6 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			break;
 
 		case R.id.btn_refresh:
-
 			Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.refresh_anim);
 			LinearInterpolator lir = new LinearInterpolator();
 			myAnimation.setInterpolator(lir);
@@ -325,6 +333,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 		tempMap.put("operationId", "getTransaction");
 		tempMap.put("pageIndex", currentPage + "");
 		tempMap.put("pageSize", Constants.kPAGESIZE);
+		tempMap.put("dateStr", dateStr);
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetCashCharge, tempMap, queryCashHandler());
 
@@ -633,11 +642,11 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 			moreView.setVisibility(arg0.VISIBLE);
 
 			if (currentPage < totalPage - 1) {
-				Log.i("count", currentPage + "");
 				currentPage++;
 				queryCashFlow();
 			} else {
 				moreView.setVisibility(View.GONE);
+				Toast.makeText(this, "已经是最后一页数据", Toast.LENGTH_SHORT).show();
 			}
 
 		}
@@ -652,23 +661,31 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 	@Override
     protected Dialog onCreateDialog(int id) {
-        // this method is called after invoking 'showDialog' for the first time
-        // here we initiate the corresponding DateSlideSelector and return the dialog to its caller
-    	
-        final Calendar c = Calendar.getInstance();
-        switch (id) {
+		final Calendar c = Calendar.getInstance();
+    	switch (id) {
         case MONTHYEARDATESELECTOR_ID:
             return new MonthYearDateSlider(this,mMonthYearSetListener,c);
+        case PROGRESS_DIALOG:
+			this.showProgressDialog();
+			break;
+
+		case MODAL_DIALOG:
+			this.showAlertDialog();
+			break;
         }
-        return null;
+    	return super.onCreateDialog(id);
+//        return null;
     }
 	
 	 private DateSlider.OnDateSetListener mMonthYearSetListener =
 		        new DateSlider.OnDateSetListener() {
 		            public void onDateSet(DateSlider view, Calendar selectedDate) {
-		                // update the dateText view with the corresponding date
-		                btn_date.setText(String.format("%n%tB %tY", selectedDate, selectedDate));
-		                Log.i("month:", selectedDate.get(Calendar.YEAR)+" "+selectedDate.get(Calendar.MONTH)+1);
+		            	String month = String.format("%02d", selectedDate.get(Calendar.MONTH)+1);
+		                dateStr = selectedDate.get(Calendar.YEAR)+"-"+month;
+		                btn_date.setText(dateStr);
+		                currentPage = 0;
+		                arrayCash.clear();
+		                queryCashFlow();
 		            }
 		    };
 }

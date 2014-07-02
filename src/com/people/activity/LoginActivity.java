@@ -1,10 +1,12 @@
 package com.people.activity;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -39,6 +41,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
 		setContentView(R.layout.activity_login);
 
+//		Log.i("test----", getSer());
 		logoImageView = (ImageView) this.findViewById(R.id.logoImageView);
 		Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.login_logo_anim);
 		logoImageView.startAnimation(myAnimation);
@@ -48,7 +51,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		usernameEdit.setSelection(usernameEdit.getText().toString().length());
 
 		passwordEdit = (EditText) this.findViewById(R.id.et_pwd);
-//		passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
+		passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kPASSWORD, ""));
 
 		Button btn_login = (Button) this.findViewById(R.id.btn_login);
 		btn_login.setOnClickListener(this);
@@ -335,5 +338,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		};
 	}
 
+	private String getSer() {
+		String serialnum = "";
+		try {
+			Class<?> c = Class.forName("android.os.SystemProperties");
+			Method get = c.getMethod("get", String.class, String.class);
+			serialnum = (String) (get.invoke(c, "ro.serialno", "unknown"));
+		} catch (Exception ignored) {
+			ignored.printStackTrace();
+		}
+		
+		return serialnum;
+	}
 	
 }

@@ -146,7 +146,7 @@
     <string name="drawmoney_pwd_h">请输入登录密码</string>
     
     <string name="check_ticket">查看交易小票</string>
-    <string name="dateSliderTitle">Selected date</string>
+    <string name="dateSliderTitle">选择日期</string>
     
     <string name="one">1</string>
     <string name="two">2</string>

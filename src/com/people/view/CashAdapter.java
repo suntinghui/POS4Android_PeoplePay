@@ -45,8 +45,6 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 			holder.tv_date = (TextView) convertView.findViewById(R.id.tv_date);
 			holder.btn_delete = (Button) convertView.findViewById(R.id.btn_delete);
 			
-			Log.i("settag: ", position+"");
-
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -58,7 +56,6 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 		if (amount != null) {
 			holder.tv_amount.setText("￥" + amount);
 		}
-		Log.i("item: ", position+"    "+amount+"");
 		holder.tv_date.setText(DateUtil.getDayWeekTime(model.getDate().replaceAll("-", "") + model.getTime().replaceAll(":", "")));
 		return convertView;
 	}
@@ -81,7 +78,6 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 
 	@Override
 	public int getCount() {
-		Log.i("count:", array.size()+"");
 		return array.size();
 	}
 
@@ -100,7 +96,6 @@ public class CashAdapter extends BaseAdapter implements OnClickListener {
 		
 		TransferListActivity activity = (TransferListActivity) mContext;
 		Integer tag = (Integer) arg0.getTag()-10000;
-		Log.i("onClick: ", tag+"");
 		activity.deleteCashItem(tag + "");
 
 	}

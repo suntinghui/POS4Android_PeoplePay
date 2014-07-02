@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -116,6 +117,7 @@ public class InputMoneyActivity extends BaseActivity {
 				holder.btn_num.setTag(1000 + position);
 				holder.btn_num.setOnClickListener(listener);
 				holder.btn_num.setOnTouchListener(touchLister);
+				holder.btn_num.setOnLongClickListener(longListener);
 				convertView.setTag(holder);
 
 			} else {
@@ -151,6 +153,23 @@ public class InputMoneyActivity extends BaseActivity {
 			return false;
 		}
 	};
+	
+	private OnLongClickListener longListener = new OnLongClickListener() {
+		
+		@Override
+		public boolean onLongClick(View arg0) {
+			switch (Integer.valueOf((String) arg0.getTag())) {
+			case 1009://长按删除
+				
+				break;
+
+			default:
+				break;
+			}
+			return false;
+		}
+	};
+	
 	private OnClickListener listener = new OnClickListener() {
 
 		@Override

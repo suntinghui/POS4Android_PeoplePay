@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.people.view.SliderContainer
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.people"
+    android:id="@+id/dateSliderContainer"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <com.people.view.ScrollLayout
+        style="@style/Scroller"
+        app:labelerClass="com.people.view.YearLabeler"
+        app:labelerFormat="%tY"
+        app:childWidth="150dp"/>
+    <com.people.view.ScrollLayout
+        style="@style/Scroller"
+        app:labelerClass="com.people.view.MonthLabeler"
+        app:labelerFormat="%tB"
+        app:childWidth="200dp"/>
+    
+    <include layout="@layout/dialogbuttons"/>
+    
+</com.people.view.SliderContainer>
