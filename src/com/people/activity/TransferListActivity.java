@@ -1,10 +1,12 @@
 package com.people.activity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -31,7 +33,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.people.R;
-import com.people.client.AppDataCenter;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
@@ -42,12 +43,17 @@ import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.view.CashAdapter;
+import com.people.view.DateSlider;
 import com.people.view.LKAlertDialog;
+import com.people.view.MonthYearDateSlider;
 import com.people.view.TransferAdapter;
 
 // 流水
 public class TransferListActivity extends BaseActivity implements OnClickListener, OnItemClickListener, OnScrollListener {
 
+	static final int MONTHYEARDATESELECTOR_ID = 0;
+
+	
 	private static final int INDEX_CONTENT = 0;
 	private static final int INDEX_PATH = 1;
 
@@ -73,6 +79,7 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 	private long exitTimeMillis = 0;
 	private Button btn_refresh;
+	private Button btn_date;
 
 	private ImageView iv_nodata;
 
@@ -112,6 +119,8 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 		btn_refresh = (Button) findViewById(R.id.btn_refresh);
 		btn_refresh.setOnClickListener(this);
+		btn_date = (Button) findViewById(R.id.btn_date);
+		btn_date.setOnClickListener(this);
 
 		tv_totalnum = (TextView) findViewById(R.id.tv_totalnum);
 		tv_totalmoney = (TextView) findViewById(R.id.tv_totalmoney);
@@ -226,6 +235,9 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 				queryCashFlow();
 			}
 
+			break;
+		case R.id.btn_date:
+			showDialog(MONTHYEARDATESELECTOR_ID);
 			break;
 		case R.id.vg_content:
 			clickFlag = true;
@@ -638,4 +650,25 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 
 	}
 
+	@Override
+    protected Dialog onCreateDialog(int id) {
+        // this method is called after invoking 'showDialog' for the first time
+        // here we initiate the corresponding DateSlideSelector and return the dialog to its caller
+    	
+        final Calendar c = Calendar.getInstance();
+        switch (id) {
+        case MONTHYEARDATESELECTOR_ID:
+            return new MonthYearDateSlider(this,mMonthYearSetListener,c);
+        }
+        return null;
+    }
+	
+	 private DateSlider.OnDateSetListener mMonthYearSetListener =
+		        new DateSlider.OnDateSetListener() {
+		            public void onDateSet(DateSlider view, Calendar selectedDate) {
+		                // update the dateText view with the corresponding date
+		                btn_date.setText(String.format("%n%tB %tY", selectedDate, selectedDate));
+		                Log.i("month:", selectedDate.get(Calendar.YEAR)+" "+selectedDate.get(Calendar.MONTH)+1);
+		            }
+		    };
 }

@@ -76,6 +76,13 @@
         </attr>
     </declare-styleable>
     
+     <declare-styleable name="ScrollLayout">
+        <attr name="labelerClass" format="string"/>
+        <attr name="labelerFormat" format="string"/>
+        <attr name="childWidth" format="dimension"/>
+        <attr name="childHeight" format="dimension"/>
+    </declare-styleable>
+    
     <string-array name="plantes">  
         <item>NOKIA</item>  
         <item>MOTO</item>  
