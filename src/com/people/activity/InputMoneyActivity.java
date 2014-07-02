@@ -158,9 +158,9 @@ public class InputMoneyActivity extends BaseActivity {
 		
 		@Override
 		public boolean onLongClick(View arg0) {
-			switch (Integer.valueOf((String) arg0.getTag())) {
+			switch ((Integer)(arg0.getTag())) {
 			case 1009://长按删除
-				
+				tv_show_money.setText("0");
 				break;
 
 			default:
@@ -182,7 +182,7 @@ public class InputMoneyActivity extends BaseActivity {
 
 				layout_swip.startAnimation(AnimationUtils.loadAnimation(InputMoneyActivity.this, R.anim.inputmoney_anim));
 
-				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
+				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
 					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
 					toast.show();
@@ -195,7 +195,7 @@ public class InputMoneyActivity extends BaseActivity {
 					intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
 					intent.putExtra("PCSIM", "获取不到");
 					intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
-					intent.putExtra("CTXNAT", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString()))));
+					intent.putExtra("CTXNAT", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", "")))));
 					intent.putExtra("CRDNO", "");
 					intent.putExtra("CHECKX", "0.0");
 					intent.putExtra("CHECKY", "0.0");
@@ -208,7 +208,7 @@ public class InputMoneyActivity extends BaseActivity {
 				}
 
 			} else if (arg0.getId() == R.id.btn_cash) { // 现金记账
-				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString())).equals("0.00")) {
+				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
 					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
 					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
 					toast.show();
@@ -226,7 +226,7 @@ public class InputMoneyActivity extends BaseActivity {
 				
 			} else {
 				String tmp = "";
-				String tv_str = tv_show_money.getText().toString();
+				String tv_str = tv_show_money.getText().toString().replace(",", "");
 				switch ((Integer) arg0.getTag()) {
 				case 1000:
 				case 1001:
@@ -242,7 +242,7 @@ public class InputMoneyActivity extends BaseActivity {
 						break;
 					}
 
-					if (tv_show_money.getText().toString().contains(".")) {
+					if (tv_str.contains(".")) {
 						int index = tv_str.indexOf(".");
 						if (tv_str.length() - index == 3) {
 							break;
@@ -252,7 +252,8 @@ public class InputMoneyActivity extends BaseActivity {
 					if (tv_str.length() == 1 && tv_str.equals("0")) {
 						tv_show_money.setText("");
 					}
-					tv_show_money.setText(tv_show_money.getText() + tmp);
+					String t = StringUtil.addCommaDouble(Double.valueOf(tv_str + tmp));
+					tv_show_money.setText(t);
 					break;
 
 				case 1009: // 删除
@@ -261,22 +262,33 @@ public class InputMoneyActivity extends BaseActivity {
 						tv_show_money.setText("0");
 
 					} else {
-						tv_show_money.setText(tv_str.toString().substring(0, tv_str.length() - 1));
+						String t9 = "";
+						if (tv_str.contains(".")) {
+							t9 = tv_show_money.getText().toString().substring(0, tv_show_money.getText().toString().length()-1);
+						}else{
+							t9 = StringUtil.addCommaDouble(Double.valueOf(tv_str.toString().substring(0, tv_str.length() - 1)));
+						}
+						tv_show_money.setText(t9);
 					}
 					break;
 
 				case 1010: // 0
-					if (tv_str.length() > 11 || tv_str.equals("0") || tv_str.equals("0.0") || tv_str.equals("0.00")) {
+					String temp0 = String.format("%1$.2f", Double.valueOf(tv_str));
+					if (temp0.length() > 10 || tv_str.equals("0") || tv_str.equals("0.0") || tv_str.equals("0.00")) {
 						break;
 					}
 
-					if (tv_show_money.getText().toString().contains(".")) {
+					String t0 = "";
+					if (tv_str.contains(".")) {
 						int index = tv_str.indexOf(".");
 						if (tv_str.length() - index == 3) {
 							break;
 						}
+						t0 = tv_show_money.getText().toString()+"0";
+					}else{
+						t0 = StringUtil.addCommaDouble(Double.valueOf(tv_str + "0"));
 					}
-					tv_show_money.setText(tv_show_money.getText() + "0");
+					tv_show_money.setText(t0);
 					break;
 
 				case 1011: // dot
@@ -284,10 +296,10 @@ public class InputMoneyActivity extends BaseActivity {
 						break;
 					}
 
-					if (tv_show_money.getText().toString().contains(".")) {
+					if (tv_str.contains(".")) {
 
 					} else {
-						tv_show_money.setText(tv_str + ".");
+						tv_show_money.setText(tv_show_money.getText().toString()+".");
 					}
 					break;
 
@@ -333,7 +345,7 @@ public class InputMoneyActivity extends BaseActivity {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("transType", "01");
 		tempMap.put("curType", "CNY");
-		tempMap.put("transAmt", tv_show_money.getText().toString());
+		tempMap.put("transAmt", tv_show_money.getText().toString().replace(",", ""));
 		tempMap.put("phoneNum", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CashCharge, tempMap, cashChargeHandler());

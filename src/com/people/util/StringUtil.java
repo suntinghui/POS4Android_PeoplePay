@@ -408,4 +408,13 @@ public class StringUtil {
         return Pattern.matches(regex,idCard);
     }
      
+	public static String addCommaDouble(Double d){
+		
+		 DecimalFormat df = new DecimalFormat();
+		 String style = "0.0";//定义要显示的数字的格式
+		 style = ",###.##";
+		 df.applyPattern(style);
+		 System.out.println("采用style: " + style + "格式化之后: " + df.format(d));
+		 return df.format(d);
+	}
 }
