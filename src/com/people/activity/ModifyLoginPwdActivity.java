@@ -91,7 +91,7 @@ public class ModifyLoginPwdActivity extends BaseActivity implements OnClickListe
 				
 				if (obj instanceof HashMap){
 					Log.e("success:", obj.toString());
-					if(((HashMap<?, ?>) obj).get("RSPCOD").toString().equals("000000")){
+					if(((HashMap<?, ?>) obj).get("RSPCOD").toString().equals("00")){
 						LKAlertDialog dialog1 = new LKAlertDialog(ModifyLoginPwdActivity.this);
 						dialog1.setTitle("提示");
 						dialog1.setMessage("密码修改成功");
