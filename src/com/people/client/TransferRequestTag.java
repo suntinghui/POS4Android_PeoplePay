@@ -55,55 +55,55 @@ public class TransferRequestTag {
 		if (null == requestTagMap) {	
 			requestTagMap = new HashMap<Integer, String>();
 
-			requestTagMap.put(Login, "http://211.147.87.29:8092/Vpm/199002.tranm");// http://211.147.87.24:8092/posm/199002.tran5
-			//http://211.147.87.29:8092/Vpm/199002.tranm
-			requestTagMap.put(Register, "http://211.147.87.29:8092/Vpm/199001.tranm");
-			requestTagMap.put(ModifyLoginPwd, "http://211.147.87.29:8092/Vpm/199003.tranm");
-			requestTagMap.put(ForgetLoginPwd, "http://211.147.87.29:8092/Vpm/199004.tranm");
-			requestTagMap.put(SignIn, "http://211.147.87.29:8092/Vpm/199029.tranm");
-			requestTagMap.put(Consume, "http://211.147.87.29:8092/Vpm/199005.tranm");
+			requestTagMap.put(Login, "http://211.147.87.20:8092/Vpm/199002.tranm");// http://211.147.87.24:8092/posm/199002.tran5
+			//http://211.147.87.20:8092/Vpm/199002.tranm
+			requestTagMap.put(Register, "http://211.147.87.20:8092/Vpm/199001.tranm");
+			requestTagMap.put(ModifyLoginPwd, "http://211.147.87.20:8092/Vpm/199003.tranm");
+			requestTagMap.put(ForgetLoginPwd, "http://211.147.87.20:8092/Vpm/199004.tranm");
+			requestTagMap.put(SignIn, "http://211.147.87.20:8092/Vpm/199020.tranm");
+			requestTagMap.put(Consume, "http://211.147.87.20:8092/Vpm/199005.tranm");
 			requestTagMap.put(ConsumeCancel, "http://211.147.87.23:8088/posp/199006.tran");
 			requestTagMap.put(BalanceQuery, "http://211.147.87.23:8088/posp/199007.tran");
-			requestTagMap.put(FlowQuery, "http://211.147.87.29:8092/Vpm/199008.tranm"); // 流水查询
+			requestTagMap.put(FlowQuery, "http://211.147.87.20:8092/Vpm/199008.tranm"); // 流水查询
 			requestTagMap.put(CreditCardApply, "http://211.147.87.23:8080/posp/199010.tran");// 信用卡额度申请
 			requestTagMap.put(ClearQuery, "http://211.147.87.23:8080/posp/199009.tran");
 			requestTagMap.put(AppCommend, "http://211.147.87.24:8092/posm/199011.tran5");
-			requestTagMap.put(ReferenceMsg, "http://211.147.87.29:8092/Vpm/199012.tranm");
+			requestTagMap.put(ReferenceMsg, "http://211.147.87.20:8092/Vpm/199012.tranm");
 			requestTagMap.put(ShareTransfer, "http://211.147.87.24:8092/posm/199015.tran5");
 			requestTagMap.put(ExaminePhone, "http://211.147.87.24:8092/posm/199016.tran5");
 			requestTagMap.put(CompareOldPwd, "http://211.147.87.24:8092/posm/199017.tran5");
-			requestTagMap.put(SmsSend, "http://211.147.87.29:8092/Vpm/199018.tranm");
-			requestTagMap.put(SmsCheck, "http://211.147.87.29:8092/Vpm/199019.tranm");
-			requestTagMap.put(MerchantQuery, "http://211.147.87.29:8092/Vpm/199022.tranm");
+			requestTagMap.put(SmsSend, "http://211.147.87.20:8092/Vpm/199018.tranm");
+			requestTagMap.put(SmsCheck, "http://211.147.87.20:8092/Vpm/199019.tranm");
+			requestTagMap.put(MerchantQuery, "http://211.147.87.20:8092/Vpm/199022.tranm");
 			
-			requestTagMap.put(CashCharge, "http://229.194.46.46:8080/zfb/mpos/transProcess.do?operationId=addTransaction");
-			requestTagMap.put(GetCashCharge, "http://229.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getTransaction");
-			requestTagMap.put(CashDelete, "http://229.194.46.46:8080/zfb/mpos/transProcess.do?operationId=delTransaInfo");
+			requestTagMap.put(CashCharge, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=addTransaction");
+			requestTagMap.put(GetCashCharge, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getTransaction");
+			requestTagMap.put(CashDelete, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=delTransaInfo");
 
-			requestTagMap.put(LoadUpHead, "http://229.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");
-			requestTagMap.put(GetDownLoadHead, "http://229.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
-			requestTagMap.put(LoadUpStreetImg, "http://229.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setStreetImg");
-			requestTagMap.put(GetDownLoadStreetImg, "http://229.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getStreetImg");
-			// 229.194.46.46  194.46.46
-			requestTagMap.put(GetProvinceName, "http://211.147.87.29:8092/Vpm/199031.tranm");
-			requestTagMap.put(GetCityName, "http://211.147.87.29:8092/Vpm/199032.tranm");
-			requestTagMap.put(GetBank, "http://211.147.87.29:8092/Vpm/199035.tranm");
-			requestTagMap.put(GetBankBranch, "http://211.147.87.29:8092/Vpm/199034.tranm");
-			requestTagMap.put(UpLoadImage, "http://211.147.87.29:8092/Vpm/199021.tran");
-			requestTagMap.put(CheckTicket, "http://211.147.87.29:8092/Vpm/199036.tranm");
-			requestTagMap.put(SendTicket, "http://211.147.87.29:8092/Vpm/199037.tranm");
-			requestTagMap.put(DrawMoney, "http://211.147.87.29:8092/Vpm/199025.tranm");
-			requestTagMap.put(MyAccount, "http://211.147.87.29:8092/Vpm/199026.tranm");
-			requestTagMap.put(PhoneRecharge, "http://211.147.87.29:8092/Vpm/708103.tranp");
-			requestTagMap.put(Authentication, "http://211.147.87.29:8092/Vpm/199030.tranm");
-			requestTagMap.put(CardCard, "http://211.147.87.29:8092/Vpm/708101.tranm");
-			requestTagMap.put(CreditCard, "http://211.147.87.29:8092/Vpm/708102.tranm");
-			requestTagMap.put(UploadSignImage, "http://211.147.87.29:8092/Vpm/199010.tranm");
+			requestTagMap.put(LoadUpHead, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");
+			requestTagMap.put(GetDownLoadHead, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
+			requestTagMap.put(LoadUpStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setStreetImg");
+			requestTagMap.put(GetDownLoadStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getStreetImg");
+			// 220.194.46.46  194.46.46
+			requestTagMap.put(GetProvinceName, "http://211.147.87.20:8092/Vpm/199031.tranm");
+			requestTagMap.put(GetCityName, "http://211.147.87.20:8092/Vpm/199032.tranm");
+			requestTagMap.put(GetBank, "http://211.147.87.20:8092/Vpm/199035.tranm");
+			requestTagMap.put(GetBankBranch, "http://211.147.87.20:8092/Vpm/199034.tranm");
+			requestTagMap.put(UpLoadImage, "http://211.147.87.20:8092/Vpm/199021.tran");
+			requestTagMap.put(CheckTicket, "http://211.147.87.20:8092/Vpm/199036.tranm");
+			requestTagMap.put(SendTicket, "http://211.147.87.20:8092/Vpm/199037.tranm");
+			requestTagMap.put(DrawMoney, "http://211.147.87.20:8092/Vpm/199025.tranm");
+			requestTagMap.put(MyAccount, "http://211.147.87.20:8092/Vpm/199026.tranm");
+			requestTagMap.put(PhoneRecharge, "http://211.147.87.20:8092/Vpm/708103.tranp");
+			requestTagMap.put(Authentication, "http://211.147.87.20:8092/Vpm/199030.tranm");
+			requestTagMap.put(CardCard, "http://211.147.87.20:8092/Vpm/708101.tranm");
+			requestTagMap.put(CreditCard, "http://211.147.87.20:8092/Vpm/708102.tranm");
+			requestTagMap.put(UploadSignImage, "http://211.147.87.20:8092/Vpm/199010.tranm");
 			
 			
 			
 			// 192.168.4.115:8080  测试服务器地址
-			// 59.49.29.154:8586 外网
+			// 59.49.20.154:8586 外网
 			
 		}
 

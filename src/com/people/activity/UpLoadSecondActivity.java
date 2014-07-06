@@ -90,7 +90,7 @@ public class UpLoadSecondActivity extends BaseActivity implements OnClickListene
 
 				Intent intent = new Intent(UpLoadSecondActivity.this, UploadImagesActivity.class);
 				intent.putExtra("map", fromForeMap);
-				startActivity(intent);
+				startActivityForResult(intent, 105);
 			}
 
 			break;

@@ -178,6 +178,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
 						
 						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+						RegisterActivity.this.finish();
 					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
 						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
 					}

@@ -92,6 +92,17 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dip"
             android:background="@drawable/ip_shuaka_pos" />
+        
+        <TextView
+            android:id="@+id/tv_tips"
+            style="@style/black_18"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="205dip"
+            android:gravity="center"
+            android:text="请刷卡，并输入密码..."
+             />
+
     </RelativeLayout>
 
 </LinearLayout>

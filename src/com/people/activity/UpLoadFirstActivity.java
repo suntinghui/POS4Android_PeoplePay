@@ -81,7 +81,7 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 				
 				Intent intent = new Intent(UpLoadFirstActivity.this, UpLoadSecondActivity.class);
 				intent.putExtra("map", map);
-				startActivity(intent);
+				startActivityForResult(intent, 106);
 			}
 
 			break;
@@ -122,7 +122,7 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
 					if (((HashMap) obj).get("RSPCOD").toString()
-							.equals("000000")) {
+							.equals("00")) {
 						Toast.makeText(getApplicationContext(),
 								"短信发送成功，请注意查收！", Toast.LENGTH_SHORT).show();
 					} else if (((HashMap) obj).get("RSPMSG").toString() != null

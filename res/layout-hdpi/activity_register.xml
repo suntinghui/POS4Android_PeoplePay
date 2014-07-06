@@ -144,7 +144,7 @@
             android:layout_marginLeft="18dip"
             android:background="@null"
             android:hint="@string/forgetpwd_pwd_hint"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:singleLine="true" />
     </LinearLayout>
 
@@ -185,7 +185,7 @@
             android:layout_marginLeft="18dip"
             android:background="@null"
             android:hint="@string/forgetpwd_pwd_confirm_hint"
-            android:inputType="number"
+            android:inputType="textPassword"
             android:singleLine="true" />
     </LinearLayout>
 

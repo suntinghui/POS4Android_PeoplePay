@@ -67,7 +67,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 		backBtn = (Button) this.findViewById(R.id.btn_back);
 		backBtn.setOnClickListener(this);
-
+		
 		bluetoothBtn = (Button) this.findViewById(R.id.bluetooth_btn);
 		bluetoothBtn.setOnClickListener(this);
 		if (QPOS.getCardReader().getMode() == CardReader.BLUETOOTHMODE) {

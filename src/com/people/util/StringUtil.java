@@ -404,8 +404,11 @@ public class StringUtil {
 	}
 	
 	public static boolean checkIdCard(String idCard) {
-        String regex = "\\d{15}|\\d{18}";
-        return Pattern.matches(regex,idCard);
+        if(idCard.length() != 15 && idCard.length() != 18){
+        	return false;
+        }
+        return true;
+        
     }
      
 	public static String addCommaDouble(Double d){
