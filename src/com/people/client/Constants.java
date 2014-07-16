@@ -4,7 +4,7 @@ package com.people.client;
 public class Constants {
 
 	// 当前系统的版本号
-	public static final int VERSION = 3;
+	public static final int VERSION = 1;
 
 	public static final String AESKEY = "dynamicode";
 
@@ -18,7 +18,8 @@ public class Constants {
 	public static final String kUSERNAME = "kUSERNAME";
 	public static final String kPASSWORD = "kPASSWORD";
 
-	public static final String DOWNLOADURL = "http://59.49.20.154:8586/zfb/mpos/transProcess.do?operationId=getVersion";
+	public static final String ip = "http://211.147.87.20:8092/Vpm/";
+	public static final String DOWNLOADURL = "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getVersion";
 	// public static final String DOWNLOADURL =
 	// "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getVersion";
 

@@ -381,6 +381,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			tempMap.put("CHECKY", intent.getStringExtra("CHECKY")); // 纵坐标
 			tempMap.put("TTXNTM", intent.getStringExtra("TTXNTM")); // 交易时间
 			tempMap.put("TTXNDT", intent.getStringExtra("TTXNDT")); // 交易日期
+			tempMap.put("IDFID", intent.getStringExtra("IDFID")); // 扣率ID
 			tempMap.put("PSAMCARDNO", pid); // PSAM卡号 "UN201410000046"
 			tempMap.put("MAC", map.get("MAC")); // MAC
 

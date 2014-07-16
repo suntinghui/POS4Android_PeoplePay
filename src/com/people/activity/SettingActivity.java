@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -38,6 +39,11 @@ import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.client.DownloadFileRequest;
+import com.people.client.TransferRequestTag;
+import com.people.network.LKAsyncHttpResponseHandler;
+import com.people.network.LKHttpRequest;
+import com.people.network.LKHttpRequestQueue;
+import com.people.network.LKHttpRequestQueueDone;
 import com.people.view.LKAlertDialog;
 
 public class SettingActivity extends BaseActivity implements OnClickListener {
@@ -45,7 +51,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private ListView listView = null;
 	private Adapter adapter = null;
 
-	private Integer[] imageIds = {R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
+	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
 
 	private String[] titles = { "修改密码", "关于系统", "意见反馈", "检查更新", "帮助" };
 	private ImageButton ibtn_gesture;
@@ -91,31 +97,31 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				switch (arg2) {
-				
+
 				case 0: // 修改密码
 					Intent intent0 = new Intent(SettingActivity.this, ModifyLoginPwdActivity.class);
 					startActivity(intent0);
 					break;
-				
+
 				case 1: // 关于系统
 					Intent intent1 = new Intent(SettingActivity.this, AboutSystemActivity.class);
 					SettingActivity.this.startActivity(intent1);
 					break;
-					
+
 				case 2: // 意见反馈
 					Intent intent2 = new Intent(SettingActivity.this, FeedBackActivity.class);
 					SettingActivity.this.startActivity(intent2);
 					break;
-					
+
 				case 3: // 检查更新
-					checkUpdate();
+					updateVersion();
 					break;
-					
+
 				case 4: // 帮助
 					Intent intent4 = new Intent(SettingActivity.this, HelpActivity.class);
 					SettingActivity.this.startActivity(intent4);
 					break;
-					
+
 				default:
 					break;
 
@@ -125,73 +131,6 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		});
 	}
 
-	private void checkUpdate() {
-		try {
-			this.showDialog(BaseActivity.PROGRESS_DIALOG, "正在检查更新");
-
-			URL myURL = new URL(Constants.DOWNLOADURL);
-			URLConnection ucon = myURL.openConnection();
-			ucon.setConnectTimeout(20000);
-			ucon.setReadTimeout(20000);
-			InputStream is = ucon.getInputStream();
-
-			XmlPullParser parser = Xml.newPullParser();
-			parser.setInput(is, "UTF-8");
-
-			int event = parser.getEventType();
-			while (event != XmlPullParser.END_DOCUMENT) {
-				switch (event) {
-				case XmlPullParser.START_TAG:
-					if ("version".equals(parser.getName())) {
-						this.hideDialog(BaseActivity.PROGRESS_DIALOG);
-
-						serviceVersion = Integer.parseInt(parser.nextText());
-
-					} else if ("url".equals(parser.getName())) {
-						downloadAPKURL = parser.nextText();
-					} else if ("des".equals(parser.getName())) {
-						descrition = parser.nextText();
-						if (descrition == null || descrition.trim().equals("")) {
-							descrition = "发现新版本，是否立即更新？";
-						}
-					}
-
-					break;
-
-				case XmlPullParser.END_TAG:
-					if ("root".equals(parser.getName())) {
-						if (serviceVersion > Constants.VERSION) {
-							showUpdateDialog();
-						} else {
-							showNoUpdateDialog();
-						}
-					}
-					break;
-				}
-
-				event = parser.next();
-			}
-
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
-
-		} catch (IOException e) {
-			e.printStackTrace();
-			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
-
-		} catch (XmlPullParserException e) {
-			e.printStackTrace();
-			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "服务器异常，请稍候再试");
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			BaseActivity.getTopActivity().showDialog(BaseActivity.MODAL_DIALOG, "连接服务器超时，请稍候再试。");
-
-		} finally {
-			this.hideDialog(BaseActivity.PROGRESS_DIALOG);
-		}
-	}
 
 	private void showUpdateDialog() {
 		LKAlertDialog dialog = new LKAlertDialog(this);
@@ -232,7 +171,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void Update() {
-		DownloadFileRequest.sharedInstance().downloadAndOpen(this, downloadAPKURL, "PeoplePayV" + this.serviceVersion + ".apk");
+		DownloadFileRequest.sharedInstance().downloadAndOpen(this, downloadAPKURL, "PeoplePayQPOS" + this.serviceVersion + ".apk");
 	}
 
 	public final class ViewHolder {
@@ -301,7 +240,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 				editor.putString(Constants.kLOCKKEY, "");
 				editor.putBoolean(Constants.kGESTRUECLOSE, false);
 			}
-			
+
 			editor.commit();
 
 			if (isOpen) {
@@ -348,4 +287,49 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
+
+	// 检查版本
+	private void updateVersion() {
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("type", "1");
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpdateVersion, tempMap, updateVersionHandler());
+
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在检查更新...", new LKHttpRequestQueueDone() {
+
+			@Override
+			public void onComplete() {
+				super.onComplete();
+
+			}
+
+		});
+	}
+
+	private LKAsyncHttpResponseHandler updateVersionHandler() {
+		return new LKAsyncHttpResponseHandler() {
+
+			@SuppressWarnings("rawtypes")
+			@Override
+			public void successAction(Object obj) {
+				if (obj instanceof HashMap) {
+					HashMap<String, Object> map = (HashMap<String, Object>) obj;
+					int serviceVersion = (Integer) (map.get("version"));
+					downloadAPKURL = (String) map.get("url");
+					descrition = (String) map.get("des");
+					if (descrition == null || descrition.trim().equals("")) {
+						descrition = "发现新版本，是否立即更新？";
+					}
+					if (serviceVersion > Constants.VERSION) {
+						showUpdateDialog();
+					} else {
+						showNoUpdateDialog();
+					}
+				} else {
+				}
+
+			}
+
+		};
+	}
+	
 }

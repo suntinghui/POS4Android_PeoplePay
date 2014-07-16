@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Pattern;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -33,6 +35,7 @@ import com.people.client.AppDataCenter;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
+import com.people.model.RateModel;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
@@ -40,6 +43,7 @@ import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 import com.people.view.LKAlertDialog;
+import com.tencent.mm.sdk.platformtools.CharSequences;
 
 public class InputMoneyActivity extends BaseActivity {
 	private GridView gridView = null;
@@ -51,9 +55,11 @@ public class InputMoneyActivity extends BaseActivity {
 
 	private long exitTimeMillis = 0;
 	private long common_btnn = 0;
+	private ArrayList<RateModel> rateList;
+	private ArrayList<String> rates = new ArrayList<String>();
 
 	Button btn_calculator;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -71,12 +77,15 @@ public class InputMoneyActivity extends BaseActivity {
 
 		Button btn_cash = (Button) findViewById(R.id.btn_cash);
 		btn_cash.setOnClickListener(listener);
+		
+		Button btn_help = (Button) findViewById(R.id.btn_help);
+		btn_help.setOnClickListener(listener);
 
 		btn_calculator = (Button) findViewById(R.id.btn_calculator);
 		btn_calculator.setOnClickListener(listener);
 
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -153,13 +162,13 @@ public class InputMoneyActivity extends BaseActivity {
 			return false;
 		}
 	};
-	
+
 	private OnLongClickListener longListener = new OnLongClickListener() {
-		
+
 		@Override
 		public boolean onLongClick(View arg0) {
-			switch ((Integer)(arg0.getTag())) {
-			case 1009://长按删除
+			switch ((Integer) (arg0.getTag())) {
+			case 1009:// 长按删除
 				tv_show_money.setText("0");
 				break;
 
@@ -169,7 +178,7 @@ public class InputMoneyActivity extends BaseActivity {
 			return false;
 		}
 	};
-	
+
 	private OnClickListener listener = new OnClickListener() {
 
 		@Override
@@ -188,23 +197,7 @@ public class InputMoneyActivity extends BaseActivity {
 					toast.show();
 
 				} else {
-					Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
-
-					intent.putExtra("TYPE", TransferRequestTag.Consume);
-					intent.putExtra("TRANCODE", "199005");
-					intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
-					intent.putExtra("PCSIM", "获取不到");
-					intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
-					intent.putExtra("CTXNAT", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", "")))));
-					intent.putExtra("CRDNO", "");
-					intent.putExtra("CHECKX", "0.0");
-					intent.putExtra("CHECKY", "0.0");
-					intent.putExtra("APPTOKEN", "APPTOKEN");
-					intent.putExtra("TTXNTM", DateUtil.getSystemTime());
-					intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
-
-					startActivity(intent);
-					tv_show_money.setText("0");
+					rateAction();
 				}
 
 			} else if (arg0.getId() == R.id.btn_cash) { // 现金记账
@@ -218,12 +211,15 @@ public class InputMoneyActivity extends BaseActivity {
 
 				}
 
+			} else if (arg0.getId() == R.id.btn_help) {
+				Intent intent_h = new Intent(InputMoneyActivity.this, RateInstructionActivity.class);
+				startActivity(intent_h);
 			} else if (arg0.getId() == R.id.btn_calculator) {
 				Animation myAnimation = AnimationUtils.loadAnimation(InputMoneyActivity.this, R.anim.calculator_scale_anim);
 				btn_calculator.startAnimation(myAnimation);
 				Intent intentc = new Intent(InputMoneyActivity.this, CalculatorActivity.class);
 				startActivityForResult(intentc, 0);
-				
+
 			} else {
 				String tmp = "";
 				String tv_str = tv_show_money.getText().toString().replace(",", "");
@@ -264,8 +260,8 @@ public class InputMoneyActivity extends BaseActivity {
 					} else {
 						String t9 = "";
 						if (tv_str.contains(".")) {
-							t9 = tv_show_money.getText().toString().substring(0, tv_show_money.getText().toString().length()-1);
-						}else{
+							t9 = tv_show_money.getText().toString().substring(0, tv_show_money.getText().toString().length() - 1);
+						} else {
 							t9 = StringUtil.addCommaDouble(Double.valueOf(tv_str.toString().substring(0, tv_str.length() - 1)));
 						}
 						tv_show_money.setText(t9);
@@ -284,8 +280,8 @@ public class InputMoneyActivity extends BaseActivity {
 						if (tv_str.length() - index == 3) {
 							break;
 						}
-						t0 = tv_show_money.getText().toString()+"0";
-					}else{
+						t0 = tv_show_money.getText().toString() + "0";
+					} else {
 						t0 = StringUtil.addCommaDouble(Double.valueOf(tv_str + "0"));
 					}
 					tv_show_money.setText(t0);
@@ -299,7 +295,7 @@ public class InputMoneyActivity extends BaseActivity {
 					if (tv_str.contains(".")) {
 
 					} else {
-						tv_show_money.setText(tv_show_money.getText().toString()+".");
+						tv_show_money.setText(tv_show_money.getText().toString() + ".");
 					}
 					break;
 
@@ -369,7 +365,7 @@ public class InputMoneyActivity extends BaseActivity {
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
 					if (((HashMap) obj).get("RSPCOD").toString().equals("000000")) {
-						
+
 						LKAlertDialog dialog = new LKAlertDialog(InputMoneyActivity.this);
 						dialog.setTitle("提示");
 						dialog.setMessage("记账成功！金额： ￥" + tv_show_money.getText().toString());
@@ -395,6 +391,48 @@ public class InputMoneyActivity extends BaseActivity {
 		};
 	}
 
+	// 扣率
+	private void rateAction() {
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("TRANCODE", "199038");
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.RateType, tempMap, rateHandler());
+
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(null, new LKHttpRequestQueueDone() {
+
+			@Override
+			public void onComplete() {
+				super.onComplete();
+
+			}
+
+		});
+	}
+
+	private LKAsyncHttpResponseHandler rateHandler() {
+		return new LKAsyncHttpResponseHandler() {
+
+			@SuppressWarnings("rawtypes")
+			@Override
+			public void successAction(Object obj) {
+				if (obj instanceof HashMap) {
+					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
+
+						rateList = (ArrayList<RateModel>) ((HashMap) obj).get("list");
+						showListDialog();
+						
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+					}
+				} else {
+				}
+
+			}
+
+		};
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -407,4 +445,52 @@ public class InputMoneyActivity extends BaseActivity {
 		}
 	}
 
+	private void showListDialog()
+
+	{
+		rates.clear();
+		for(int i = 0; i<rateList.size(); i++){
+			rates.add(rateList.get(i).getIDFCHANNEL());
+		}
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+		builder.setTitle("请选择扣率");
+		builder.setItems(rates.toArray(new CharSequence[rates.size()]), new DialogInterface.OnClickListener()
+
+		{
+
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+
+			{
+				String selectType = rateList.get(which).getIDFID();
+				swipAction(selectType);
+			}
+
+		});
+
+		builder.create().show();
+
+	}
+	
+	private void swipAction(String selectType){
+		Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
+
+		intent.putExtra("TYPE", TransferRequestTag.Consume);
+		intent.putExtra("TRANCODE", "199005");
+		intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
+		intent.putExtra("PCSIM", "获取不到");
+		intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
+		intent.putExtra("CTXNAT", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", "")))));
+		intent.putExtra("CRDNO", "");
+		intent.putExtra("CHECKX", "0.0");
+		intent.putExtra("CHECKY", "0.0");
+		intent.putExtra("APPTOKEN", "APPTOKEN");
+		intent.putExtra("IDFID", selectType);
+		intent.putExtra("TTXNTM", DateUtil.getSystemTime());
+		intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
+
+		startActivity(intent);
+		tv_show_money.setText("0");
+	}
 }
