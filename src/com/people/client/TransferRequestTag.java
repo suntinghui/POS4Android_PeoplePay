@@ -50,6 +50,8 @@ public class TransferRequestTag {
 	public static final int UploadSignImage = 40; // 上传签购单
 	public static final int UpdateVersion = 41; 
 	public static final int RateType = 42; 
+	public static final int UpLoadImage2 = 43; // 上传图片                  传到我们平台
+	public static final int Authentication2 = 44; // 实名认证				传到我们平台
 	
 	private static HashMap<Integer, String> requestTagMap = null;
 
@@ -57,6 +59,7 @@ public class TransferRequestTag {
 		if (null == requestTagMap) {	
 			requestTagMap = new HashMap<Integer, String>();
 
+//			requestTagMap.put(Login, "http://211.147.87.24:8092/posm/199002.tranm");
 			requestTagMap.put(Login, Constants.ip+"199002.tranm");// http://211.147.87.24:8092/posm/199002.tran5
 			//http://211.147.87.20:8092/Vpm/199002.tranm
 			requestTagMap.put(Register, Constants.ip+"199001.tranm");
@@ -89,6 +92,8 @@ public class TransferRequestTag {
 			requestTagMap.put(GetDownLoadHead, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
 			requestTagMap.put(LoadUpStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setStreetImg");
 			requestTagMap.put(GetDownLoadStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getStreetImg");
+			requestTagMap.put(UpLoadImage2,"http://192.168.4.15:8080/zfb/mpos/transProcess.do?operationId=Uploadfile");
+			requestTagMap.put(Authentication2,"http://192.168.4.15:8080/zfb/mpos/transProcess.do?operationId=initRealNameAuthentic");
 			// 220.194.46.46    116.228.88.115:18080
 			requestTagMap.put(GetProvinceName, Constants.ip+"199031.tranm");
 			requestTagMap.put(GetCityName, Constants.ip+"199032.tranm");
@@ -101,6 +106,7 @@ public class TransferRequestTag {
 			requestTagMap.put(MyAccount, Constants.ip+"199026.tranm");
 			requestTagMap.put(PhoneRecharge, Constants.ip+"708103.tranp");
 			requestTagMap.put(Authentication, Constants.ip+"199030.tranm");
+			
 			requestTagMap.put(CardCard, Constants.ip+"708101.tranm");
 			requestTagMap.put(CreditCard, Constants.ip+"708102.tranm");
 			requestTagMap.put(UploadSignImage, Constants.ip+"199010.tranm");
