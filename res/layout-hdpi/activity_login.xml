@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="70dip"
-        android:background="@drawable/login_logo" />
+        android:background="@drawable/login_logo"
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="fill_parent"

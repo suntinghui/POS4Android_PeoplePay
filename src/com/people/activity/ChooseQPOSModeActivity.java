@@ -35,6 +35,7 @@ import com.people.view.beginguide.ViewFlow.ViewSwitchListener;
 
 import dspread.voicemodem.CardReader;
 
+
 @SuppressWarnings("deprecation")
 public class ChooseQPOSModeActivity extends BaseActivity implements OnDrawerOpenListener, OnDrawerCloseListener {
 

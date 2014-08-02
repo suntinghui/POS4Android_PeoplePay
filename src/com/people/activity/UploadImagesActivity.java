@@ -135,7 +135,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Authentication, tempMap, getAuthenticationHandler());
 				LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.Authentication2, tempMap, getAuthenticationHandler2());
 
-				new LKHttpRequestQueue().addHttpRequest(req1, req2).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
 					@Override
 					public void onComplete() {
@@ -330,7 +330,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		
 		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.UpLoadImage2, tempMap, getUpLoadImageHandler2());
 
-		new LKHttpRequestQueue().addHttpRequest(req1,req2).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
 			@Override
 			public void onComplete() {
