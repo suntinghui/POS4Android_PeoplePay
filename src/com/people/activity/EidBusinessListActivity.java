@@ -18,21 +18,20 @@ import android.widget.TextView;
 
 import com.people.R;
 
-public class EidListActivity extends BaseActivity implements OnClickListener {
+public class EidBusinessListActivity extends BaseActivity implements OnClickListener {
 
 	private ListView listView = null;
 	private Adapter adapter = null;
 
-	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_3};
+	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_0, R.drawable.set_icon_1};
 
-	private String[] titles = { "EID验证", "EID卡信息", "EID业务"};
+	private String[] titles = { "业务模块一", "业务模块二","业务模块三", "业务模块四","业务模块五", "业务模块六",};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_eid_list);
-
+		setContentView(R.layout.activity_eid_business_list);
 
 		// 其他
 		listView = (ListView) this.findViewById(R.id.listview);
@@ -47,21 +46,17 @@ public class EidListActivity extends BaseActivity implements OnClickListener {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				switch (arg2) {
 
-				case 0: // EID验真
-					Intent intent0 = new Intent(EidListActivity.this, EidCheckActivity.class);
-					startActivity(intent0);
-					break;
+//				case 0: // EID验真
+//					Intent intent0 = new Intent(EidBusinessListActivity.this, EidCheckActivity.class);
+//					startActivity(intent0);
+//					break;
+//
+//				case 1: // EID卡信息
+//					Intent intent1 = new Intent(EidBusinessListActivity.this, EidMsgActivity.class);
+//					EidBusinessListActivity.this.startActivity(intent1);
+//					break;
 
-				case 1: // EID卡信息
-					Intent intent1 = new Intent(EidListActivity.this, EidMsgActivity.class);
-					EidListActivity.this.startActivity(intent1);
-					break;
 
-				case 2: // EID业务
-					Intent intent2 = new Intent(EidListActivity.this, EidBusinessListActivity.class);
-					EidListActivity.this.startActivity(intent2);
-					break;
-					
 				default:
 					break;
 

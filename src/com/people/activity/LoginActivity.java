@@ -62,6 +62,9 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		Button btn_register = (Button) findViewById(R.id.btn_register);
 		btn_register.setOnClickListener(this);
 
+		Button btn_eid_login = (Button) findViewById(R.id.btn_eid_login);
+		btn_eid_login.setOnClickListener(this);
+		
 		startPushService();
 	}
 
@@ -74,7 +77,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			}
 
 			break;
-
+			
+		case R.id.btn_eid_login:
+			Intent intent2 = new Intent(LoginActivity.this, EidLoginActivity.class);
+			this.startActivity(intent2);
+ 			  
+			 this.overridePendingTransition(R.anim.eid_login_open_anim,0);
+			break;
 		case R.id.btn_forget_pwd:
 
 			Intent intent = new Intent(LoginActivity.this, ForgetPwdActivity.class);
