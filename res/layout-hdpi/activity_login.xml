@@ -116,4 +116,20 @@
             android:textSize="19sp" />
     </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <Button
+            android:id="@+id/btn_eid_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/clear"
+            android:text="@string/eid_login"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="15dip"
+            android:textColor="@drawable/text_blue_gray"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
 </LinearLayout>

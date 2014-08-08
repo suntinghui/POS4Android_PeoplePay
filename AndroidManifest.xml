@@ -89,7 +89,14 @@
             </intent-filter>
         </activity>
         
-        <!-- 绝对不要加android:exported="false"  否则会造成NFC服务无法启动 -->
+        <activity android:name=".activity.EidLoginActivity"  android:exported="false"    android:theme="@android:style/Theme.Translucent"
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.EidLoginActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
         <activity android:name=".activity.EidMsgActivity"   
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
@@ -100,6 +107,14 @@
                 <action android:name="android.nfc.action.TECH_DISCOVERED" />
             </intent-filter>
             <meta-data android:name="android.nfc.action.TECH_DISCOVERED" android:resource="@xml/nfc_tech_filter" />
+        </activity>
+        
+        <activity android:name=".activity.EidBusinessListActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.EidBusinessListActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         
         <activity android:name=".activity.EidListActivity"  android:exported="false" 
