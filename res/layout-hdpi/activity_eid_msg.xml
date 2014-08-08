@@ -123,10 +123,11 @@
                     android:text="容器索引" />
 
                 <TextView
+                    android:id="@+id/tv_rqsy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:text="0000" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -150,10 +151,11 @@
                     android:text="文件索引" />
 
                 <TextView
+                    android:id="@+id/tv_wjsy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:text="000000000000000000000000" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -177,10 +179,11 @@
                     android:text="容器信息" />
 
                 <TextView
+                    android:id="@+id/tv_rqxx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:text="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -201,13 +204,14 @@
                     android:layout_width="100dip"
                     android:layout_height="wrap_content"
                     android:maxLines="2"
-                    android:text="选择载体信息" />
+                    android:text="载体信息" />
 
                 <TextView
+                    android:id="@+id/tv_ztxx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:text="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -230,10 +234,11 @@
                     android:text="载体能力" />
 
                 <TextView
+                    android:id="@+id/tv_ztnl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:text="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -257,10 +262,11 @@
                     android:text="EID MICX RSA2048公钥" />
 
                 <TextView
+                    android:id="@+id/tv_micx"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:text="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -284,10 +290,11 @@
                     android:text="MICX SM2公钥" />
 
                 <TextView
+                    android:id="@+id/tv_micxsm2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
-                    android:text="00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" />
+                    android:text="" />
             </LinearLayout>
 
             <View
@@ -353,10 +360,11 @@
                 style="@style/black_15"/>
 
             <TextView
+                android:id="@+id/tv_accountNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dip"
-                android:text="************198"
+                android:text=""
                 style="@style/black_15" />
         </LinearLayout>
 
@@ -380,10 +388,11 @@
                 style="@style/black_15"/>
 
             <TextView
+                android:id="@+id/tv_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dip"
-                android:text="198元"
+                android:text=""
                 style="@style/black_15" />
         </LinearLayout>
 
