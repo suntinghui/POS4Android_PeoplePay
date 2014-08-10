@@ -175,10 +175,12 @@ public class EidLoginActivity extends BaseActivity implements OnClickListener, O
 			switchTo(INDEX_PATH);
 			break;
 		case R.id.btn_left_confirm:
-			Toast.makeText(this, "left", Toast.LENGTH_SHORT).show();
+			Intent intent_l = new Intent(this, CatalogActivity.class);
+			this.startActivity(intent_l);
 			break;
 		case R.id.btn_right_confirm:
-			Toast.makeText(this, "right", Toast.LENGTH_SHORT).show();
+			Intent intent_r = new Intent(this, CatalogActivity.class);
+			this.startActivity(intent_r);
 			break;
 		default:
 			break;

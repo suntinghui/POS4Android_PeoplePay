@@ -135,7 +135,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Authentication, tempMap, getAuthenticationHandler());
 				LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.Authentication2, tempMap, getAuthenticationHandler2());
 
-				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+				new LKHttpRequestQueue().addHttpRequest(req1, req2).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
 					@Override
 					public void onComplete() {
@@ -224,7 +224,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 			myBitmap = decodeFile(file);
 
 		}
-		if (requestCode == 101 || null != data ) {
+		if (requestCode == 101 || null != data) {
 
 			try {
 				ContentResolver resolver = getContentResolver();
@@ -327,10 +327,10 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		tempMap.put("PHOTOS", imgToBase64(mImagePath));// bitmap_zoom
 														// imgToBase64(mImagePath)
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UpLoadImage, tempMap, getUpLoadImageHandler());
-		
+
 		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.UpLoadImage2, tempMap, getUpLoadImageHandler2());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1, req2).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
 			@Override
 			public void onComplete() {
@@ -381,7 +381,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 
 		};
 	}
-	
+
 	private LKAsyncHttpResponseHandler getUpLoadImageHandler2() {
 		return new LKAsyncHttpResponseHandler() {
 
@@ -471,7 +471,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		}
 	}
 
-
 	// 实名认证
 
 	private LKAsyncHttpResponseHandler getAuthenticationHandler() {
@@ -491,24 +490,24 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 
 		};
 	}
-	
+
 	// 实名认证
 
-		private LKAsyncHttpResponseHandler getAuthenticationHandler2() {
-			return new LKAsyncHttpResponseHandler() {
+	private LKAsyncHttpResponseHandler getAuthenticationHandler2() {
+		return new LKAsyncHttpResponseHandler() {
 
-				@Override
-				public void successAction(Object obj) {
-					HashMap<String, String> respMap = (HashMap<String, String>) obj;
-					if ("000000".equals(respMap.get("RSPCOD"))) {
-						
-					} else {
-						
-					}
+			@Override
+			public void successAction(Object obj) {
+				HashMap<String, String> respMap = (HashMap<String, String>) obj;
+				if ("000000".equals(respMap.get("RSPCOD"))) {
+
+				} else {
+
 				}
+			}
 
-			};
-		}
+		};
+	}
 
 	/*
 	 * 压缩图片，避免内存不足报错

@@ -356,7 +356,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dip"
-                android:text="************198"
+                android:text=""
                 style="@style/black_15" />
         </LinearLayout>
 
@@ -383,7 +383,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dip"
-                android:text="198元"
+                android:text=""
                 style="@style/black_15" />
         </LinearLayout>
 

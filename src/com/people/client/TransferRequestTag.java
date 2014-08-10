@@ -81,19 +81,19 @@ public class TransferRequestTag {
 			requestTagMap.put(SmsCheck, Constants.ip+"199019.tranm");
 			requestTagMap.put(MerchantQuery, Constants.ip+"199022.tranm");
 			
-			requestTagMap.put(CashCharge, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=addTransaction");
-			requestTagMap.put(GetCashCharge, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getTransaction");
-			requestTagMap.put(CashDelete, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=delTransaInfo");
+			requestTagMap.put(CashCharge, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=addTransaction");
+			requestTagMap.put(GetCashCharge, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=getTransaction");
+			requestTagMap.put(CashDelete, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=delTransaInfo");
 
-			requestTagMap.put(UpdateVersion, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getVersion&type=2");
+			requestTagMap.put(UpdateVersion, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=getVersion&type=2");
 			//http://192.168.4.126:8080/zfb/mpos/transProcess.do?operationId=getVersion&type=2
 			
-			requestTagMap.put(LoadUpHead, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setHeadImg");
-			requestTagMap.put(GetDownLoadHead, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getHeadImg");
-			requestTagMap.put(LoadUpStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=setStreetImg");
-			requestTagMap.put(GetDownLoadStreetImg, "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getStreetImg");
-			requestTagMap.put(UpLoadImage2,"http://192.168.4.15:8080/zfb/mpos/transProcess.do?operationId=Uploadfile");
-			requestTagMap.put(Authentication2,"http://192.168.4.15:8080/zfb/mpos/transProcess.do?operationId=initRealNameAuthentic");
+			requestTagMap.put(LoadUpHead, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=setHeadImg");
+			requestTagMap.put(GetDownLoadHead, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=getHeadImg");
+			requestTagMap.put(LoadUpStreetImg, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=setStreetImg");
+			requestTagMap.put(GetDownLoadStreetImg, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=getStreetImg");
+			requestTagMap.put(UpLoadImage2,"http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=Uploadfile");
+			requestTagMap.put(Authentication2,"http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=initRealNameAuthentic");
 			// 220.194.46.46    116.228.88.115:18080
 			requestTagMap.put(GetProvinceName, Constants.ip+"199031.tranm");
 			requestTagMap.put(GetCityName, Constants.ip+"199032.tranm");
