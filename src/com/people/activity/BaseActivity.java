@@ -99,9 +99,6 @@ public class BaseActivity extends Activity {
 			return stack.peek();
 
 		} catch (Exception e) {
-			// 重启系统
-			ApplicationEnvironment.getInstance().restartApp();
-
 			return null;
 		}
 

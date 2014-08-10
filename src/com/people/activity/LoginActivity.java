@@ -6,7 +6,6 @@ import java.util.HashMap;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -34,14 +33,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 	private ImageView logoImageView = null;
 	private EditText usernameEdit = null;
 	private EditText passwordEdit = null;
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.activity_login);
 
-//		Log.i("test----", getSer());
 		logoImageView = (ImageView) this.findViewById(R.id.logoImageView);
 		Animation myAnimation = AnimationUtils.loadAnimation(this, R.anim.login_logo_anim);
 		logoImageView.startAnimation(myAnimation);

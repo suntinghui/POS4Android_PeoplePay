@@ -80,16 +80,6 @@ public class ApplicationEnvironment {
 		return false;
 	}
 
-	public void restartApp() {
-		Intent intent = getApplication()
-				.getBaseContext()
-				.getPackageManager()
-				.getLaunchIntentForPackage(
-						getApplication().getBaseContext().getPackageName());
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		getApplication().startActivity(intent);
-	}
-
 	public void ForceLogout() {
 		try {
 
