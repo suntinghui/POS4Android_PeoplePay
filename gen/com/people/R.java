@@ -485,7 +485,7 @@ containing a value of this type.
         public static final int handle_selected=0x7f02004a;
         public static final int head_image=0x7f02004b;
         public static final int ic_launcher=0x7f02004c;
-        public static final int ic_launcher_e=0x7f02004d;
+        public static final int ic_launcher_p=0x7f02004d;
         public static final int icon_arrow_right=0x7f02004e;
         public static final int icon_calculator=0x7f02004f;
         public static final int icon_n_0=0x7f020050;
@@ -521,7 +521,7 @@ containing a value of this type.
         public static final int login_icon_user=0x7f02006e;
         public static final int login_line=0x7f02006f;
         public static final int login_logo=0x7f020070;
-        public static final int login_logo_e=0x7f020071;
+        public static final int login_logo_p=0x7f020071;
         public static final int me_head_bg=0x7f020072;
         public static final int merchant_icon_0=0x7f020073;
         public static final int merchant_icon_1=0x7f020074;
@@ -569,12 +569,12 @@ containing a value of this type.
         public static final int spinner_8=0x7f02009e;
         public static final int spinner_9=0x7f02009f;
         public static final int splash=0x7f0200a0;
-        public static final int splash_e=0x7f0200a1;
+        public static final int splash_p=0x7f0200a1;
         public static final int start_background=0x7f0200a2;
         public static final int swip_icon_n_0=0x7f0200a3;
         public static final int swip_icon_n_1=0x7f0200a4;
         public static final int swip_icon_n_2=0x7f0200a5;
-        public static final int swip_icon_n_2_e=0x7f0200a6;
+        public static final int swip_icon_n_2_p=0x7f0200a6;
         public static final int swip_icon_n_3=0x7f0200a7;
         public static final int swip_icon_n_4=0x7f0200a8;
         public static final int swip_icon_n_5=0x7f0200a9;
@@ -587,8 +587,8 @@ containing a value of this type.
         public static final int text_orange_blue=0x7f0200b0;
         public static final int text_white_blue=0x7f0200b1;
         public static final int tool_top=0x7f0200b2;
-        public static final int tool_top_e=0x7f0200b3;
-        public static final int tool_top_eid=0x7f0200b4;
+        public static final int tool_top_eid=0x7f0200b3;
+        public static final int tool_top_p=0x7f0200b4;
         public static final int top=0x7f0200b5;
         public static final int touming_bg=0x7f0200b6;
         public static final int transaction_fail=0x7f0200b7;

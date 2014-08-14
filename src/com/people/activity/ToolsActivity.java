@@ -71,9 +71,9 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 				break;
 
 			case 2:
-				Toast.makeText(ToolsActivity.this, "暂未开通，敬请期待", Toast.LENGTH_SHORT).show();
-//				Intent intent2 = new Intent(ToolsActivity.this, EidListActivity.class);
-//				startActivity(intent2);
+//				Toast.makeText(ToolsActivity.this, "暂未开通，敬请期待", Toast.LENGTH_SHORT).show();
+				Intent intent2 = new Intent(ToolsActivity.this, EidListActivity.class);
+				startActivity(intent2);
 				break;
 
 			case 3:// 卡卡转账
