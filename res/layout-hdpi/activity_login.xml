@@ -129,7 +129,8 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="15dip"
             android:textColor="@drawable/text_blue_gray"
-            android:textSize="20sp" />
+            android:textSize="20sp" 
+            android:visibility="visible"/>
     </RelativeLayout>
 
 </LinearLayout>
