@@ -201,15 +201,18 @@ public class InputMoneyActivity extends BaseActivity {
 				}
 
 			} else if (arg0.getId() == R.id.btn_cash) { // 现金记账
-				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
-					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
-					toast.show();
-
-				} else {
-					cashCharge();
-
-				}
+				Toast toast = Toast.makeText(InputMoneyActivity.this, "功能暂未开通", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
+				toast.show();
+//				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
+//					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
+//					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
+//					toast.show();
+//
+//				} else {
+//					cashCharge();
+//
+//				}
 
 			} else if (arg0.getId() == R.id.btn_help) {
 				Intent intent_h = new Intent(InputMoneyActivity.this, RateInstructionActivity.class);

@@ -80,15 +80,15 @@
             android:prompt="@string/recharge_tips" />
 
     
+
     <Button
-        android:id="@+id/btn_confirm"
+        android:id="@+id/btn_eid_confirm"
         style="@style/white_20"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
-        android:layout_marginTop="30dip"
+        android:layout_marginTop="20dip"
         android:background="@drawable/btn"
-        android:text="刷    卡" />
-
+        android:text="EID支付（95折优惠）" />
 </LinearLayout>

@@ -25,7 +25,7 @@ public class EidBusinessListActivity extends BaseActivity implements OnClickList
 
 	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_0, R.drawable.set_icon_1};
 
-	private String[] titles = { "业务模块一", "业务模块二","业务模块三", "业务模块四","业务模块五", "业务模块六",};
+	private String[] titles = { "手机充值", "业务模块二","业务模块三", "业务模块四","业务模块五", "业务模块六",};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -46,10 +46,10 @@ public class EidBusinessListActivity extends BaseActivity implements OnClickList
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				switch (arg2) {
 
-//				case 0: // EID验真
-//					Intent intent0 = new Intent(EidBusinessListActivity.this, EidCheckActivity.class);
-//					startActivity(intent0);
-//					break;
+				case 0: 
+					Intent intent0 = new Intent(EidBusinessListActivity.this, EIDMobileChargeActivity.class);
+					startActivity(intent0);
+					break;
 //
 //				case 1: // EID卡信息
 //					Intent intent1 = new Intent(EidBusinessListActivity.this, EidMsgActivity.class);

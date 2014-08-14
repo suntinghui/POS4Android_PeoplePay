@@ -24,7 +24,7 @@ import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 import com.people.view.LKAlertDialog;
 
-public class MobileChargeActivity extends BaseActivity implements OnClickListener, OnItemSelectedListener {
+public class EIDMobileChargeActivity extends BaseActivity implements OnClickListener, OnItemSelectedListener {
 
 	private EditText et_phone;
 
@@ -37,12 +37,12 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.activity_recharge);
+		setContentView(R.layout.activity_eid_recharge);
 
 		Button btn_back = (Button) findViewById(R.id.btn_back);
 		btn_back.setOnClickListener(this);
-		Button btn_confirm = (Button) findViewById(R.id.btn_confirm);
-		btn_confirm.setOnClickListener(this);
+		Button btn_eid_confirm = (Button) findViewById(R.id.btn_eid_confirm);
+		btn_eid_confirm.setOnClickListener(this);
 		Button btn_phone = (Button) findViewById(R.id.btn_phone);
 		btn_phone.setOnClickListener(this);
 
@@ -102,11 +102,11 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 		case R.id.btn_back:
 			finish();
 			break;
-		case R.id.btn_confirm:
+		case R.id.btn_eid_confirm:
 			if (checkValue()) {
 				LKAlertDialog dialog = new LKAlertDialog(this);
 				dialog.setTitle("提示");
-				dialog.setMessage("手机号		" +et_phone.getText().toString()+"\n充值金额		"+currentAmount+"元");
+				dialog.setMessage("手机号		" +et_phone.getText().toString()+"\n充值金额		"+currentAmount+"元"+"\n实际支付元  "+Integer.valueOf(currentAmount)*0.95+"元");
 				dialog.setCancelable(false);
 				dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 
@@ -125,9 +125,8 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 				dialog.create().show();
 			}
 			break;
-		
 		case R.id.btn_phone:
-			Intent intent_p = new Intent(MobileChargeActivity.this, ContactsActivity.class);
+			Intent intent_p = new Intent(EIDMobileChargeActivity.this, ContactsActivity.class);
 			startActivityForResult(intent_p, 110);
 			break;
 		}
@@ -135,24 +134,7 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 
 	// 充值
 	private void rechargeAction(){
-		HashMap<String, String> map = new HashMap<String, String>();
-		
-		map.put("TRANCODE", "708103");
-		map.put("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
-		
-		map.put("phoneNumber_B", et_phone.getText().toString());//接收信息手机号
-		map.put("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(currentAmount))));//交易金额
-		map.put("POSTYPE_B", "1");//POSTYPE_B   1 普通刷卡器 2 小刷卡器
-		map.put("CHECKX_B", "0.0");//当前经度
-		map.put("CHECKY_B", "0.0");//当前纬度
-		
-		map.put("TSeqNo_B", AppDataCenter.getTraceAuditNum());
-		map.put("TTxnTm_B", DateUtil.getSystemTime());
-		map.put("TTxnDt_B", DateUtil.getSystemMonthDay());
-		
-		Intent intent = new Intent(this, SearchAndSwipeActivity.class);
-		intent.putExtra("TYPE", TransferRequestTag.PhoneRecharge);
-		intent.putExtra("map", map);
+		Intent intent = new Intent(this, EIDSwipeActivity.class);
 		startActivityForResult(intent, 100);
 	}
 
