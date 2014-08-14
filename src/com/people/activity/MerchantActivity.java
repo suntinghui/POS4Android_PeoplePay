@@ -144,19 +144,10 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			break;
 
 		case R.id.layout_upload_image: // 实名认证
-			if (STATUS.equals("0")) {
-				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
-			} else if (STATUS.equals("1")) {
-				Toast.makeText(MerchantActivity.this, "账户已关闭", Toast.LENGTH_SHORT).show();
-			} else if (STATUS.equals("2")) {
-				Toast.makeText(MerchantActivity.this, "账户已开通", Toast.LENGTH_SHORT).show();
-			} else if (STATUS.equals("5")) {
-				Toast.makeText(MerchantActivity.this, "正在审核中", Toast.LENGTH_SHORT).show();
-			} else if (STATUS.equals("3") || STATUS.equals("6")) {
-				Intent intent = new Intent(MerchantActivity.this, UpLoadFirstActivity.class);
-				startActivity(intent);
-			}
-
+			
+			Intent intent = new Intent(MerchantActivity.this, AuthenticationTypeListActivity.class);
+			intent.putExtra("STATUS", STATUS);
+			startActivity(intent);
 			break;
 
 		case R.id.layout_2:
@@ -597,4 +588,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 				}
 			}
 		}
+		
+		
 }

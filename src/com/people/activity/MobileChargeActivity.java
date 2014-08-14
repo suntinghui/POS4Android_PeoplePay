@@ -43,6 +43,8 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 		btn_back.setOnClickListener(this);
 		Button btn_confirm = (Button) findViewById(R.id.btn_confirm);
 		btn_confirm.setOnClickListener(this);
+		Button btn_eid_confirm = (Button) findViewById(R.id.btn_eid_confirm);
+		btn_eid_confirm.setOnClickListener(this);
 		Button btn_phone = (Button) findViewById(R.id.btn_phone);
 		btn_phone.setOnClickListener(this);
 
@@ -107,6 +109,29 @@ public class MobileChargeActivity extends BaseActivity implements OnClickListene
 				LKAlertDialog dialog = new LKAlertDialog(this);
 				dialog.setTitle("提示");
 				dialog.setMessage("手机号		" +et_phone.getText().toString()+"\n充值金额		"+currentAmount+"元");
+				dialog.setCancelable(false);
+				dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+					@Override
+					public void onClick(DialogInterface dialog, int arg1) {
+						dialog.dismiss();
+						rechargeAction();
+					}
+				});
+				dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+				dialog.create().show();
+			}
+			break;
+		case R.id.btn_eid_confirm:
+			if (checkValue()) {
+				LKAlertDialog dialog = new LKAlertDialog(this);
+				dialog.setTitle("提示");
+				dialog.setMessage("手机号		" +et_phone.getText().toString()+"\n充值金额		"+currentAmount+"元"+"\n实际支付元  "+Integer.valueOf(currentAmount)*0.95+"元");
 				dialog.setCancelable(false);
 				dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 

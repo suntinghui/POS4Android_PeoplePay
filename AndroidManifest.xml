@@ -97,6 +97,15 @@
             </intent-filter>
         </activity>
         
+        <activity android:name=".activity.EIDUpLoadFirstActivity"  android:exported="false"    android:theme="@android:style/Theme.Translucent"
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.EIDUpLoadFirstActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        
         <activity android:name=".activity.EidMsgActivity"   
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
@@ -161,6 +170,14 @@
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
                 <action android:name="com.people.MerchantActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".activity.AuthenticationTypeListActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.AuthenticationTypeListActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -270,6 +287,15 @@
             </intent-filter>
         </activity>
         
+         <activity android:name=".activity.EIDUploadImagesActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.EIDUploadImagesActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+         
          <activity android:name=".activity.RateInstructionActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
@@ -326,6 +352,14 @@
             </intent-filter>
         </activity>
         
+         <activity android:name=".activity.EIDUpLoadSecondActivity"  android:exported="false" 
+            android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
+        	<intent-filter >
+                <action android:name="com.people.EIDUpLoadSecondActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+         
          <activity android:name=".activity.FeedBackActivity"  android:exported="false" 
             android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustPan">
         	<intent-filter >
