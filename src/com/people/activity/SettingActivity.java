@@ -1,24 +1,13 @@
 package com.people.activity;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.HashMap;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
 
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Looper;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,9 +40,9 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	private ListView listView = null;
 	private Adapter adapter = null;
 
-	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_4 };
+	private Integer[] imageIds = { R.drawable.set_icon_0, R.drawable.set_icon_1, R.drawable.set_icon_2, R.drawable.set_icon_3, R.drawable.set_icon_problem , R.drawable.set_icon_msg , R.drawable.set_icon_4 };
 
-	private String[] titles = { "修改密码", "关于系统", "意见反馈", "检查更新", "帮助" };
+	private String[] titles = { "修改密码", "关于系统", "意见反馈", "检查更新", "常见问题", "通知中心", "帮助" };
 	private ImageButton ibtn_gesture;
 	private Boolean isOpen = false;
 
@@ -116,10 +105,17 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 				case 3: // 检查更新
 					updateVersion();
 					break;
-
-				case 4: // 帮助
-					Intent intent4 = new Intent(SettingActivity.this, HelpActivity.class);
+				case 4: // 常见问题
+					Intent intent4 = new Intent(SettingActivity.this, FamiliarProblemActivity.class);
 					SettingActivity.this.startActivity(intent4);
+					break;
+				case 5: // 通知中心
+					Intent intent_n = new Intent(SettingActivity.this, NoticeCenterActivity.class);
+					SettingActivity.this.startActivity(intent_n);
+					break;
+				case 6: // 帮助
+					Intent intent_h = new Intent(SettingActivity.this, HelpActivity.class);
+					SettingActivity.this.startActivity(intent_h);
 					break;
 
 				default:

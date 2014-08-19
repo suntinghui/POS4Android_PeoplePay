@@ -145,9 +145,8 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 
 		case R.id.layout_upload_image: // 实名认证
 			
-			Intent intent = new Intent(MerchantActivity.this, AuthenticationTypeListActivity.class);
-			intent.putExtra("STATUS", STATUS);
-			startActivity(intent);
+			Intent intent0 = new Intent(MerchantActivity.this, UpLoadFirstActivity.class);
+			startActivity(intent0);
 			break;
 
 		case R.id.layout_2:
@@ -589,5 +588,42 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			}
 		}
 		
-		
+		// 获取实名认证信息
+		private void getMsg() {
+			HashMap<String, Object> tempMap = new HashMap<String, Object>();
+			tempMap.put("TRANCODE", "P77023");
+			tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetMsg, tempMap, getMsgHandler());
+
+			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据，请稍候...", new LKHttpRequestQueueDone() {
+
+				@Override
+				public void onComplete() {
+					super.onComplete();
+
+				}
+
+			});
+		}
+
+		private LKAsyncHttpResponseHandler getMsgHandler() {
+			return new LKAsyncHttpResponseHandler() {
+
+				@SuppressWarnings("rawtypes")
+				@Override
+				public void successAction(Object obj) {
+					if (obj instanceof HashMap) {
+						if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
+							
+							//TODO
+						} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
+							Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+						}
+					} else {
+					}
+
+				}
+
+			};
+		}
 }

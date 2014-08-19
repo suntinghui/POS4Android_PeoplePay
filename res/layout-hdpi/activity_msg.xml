@@ -20,42 +20,17 @@
             android:background="@drawable/btn_back" />
 
         <TextView
-            android:id="@+id/titleView"
             style="@style/white_20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Eid业务" />
+            android:text="通知中心" />
     </RelativeLayout>
 
-    <View
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_marginTop="30dip"
-        android:background="@color/gray" />
-
-
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
-        <ListView
-            android:id="@+id/listview"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:cacheColorHint="#00000000"
-            android:choiceMode="singleChoice"
-            android:descendantFocusability="blocksDescendants"
-            android:divider="@color/gray"
-            android:dividerHeight="0.8dip"
-            android:listSelector="@android:color/transparent" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:background="@color/gray" />
+        android:layout_height="fill_parent"
+        />
 
 </LinearLayout>

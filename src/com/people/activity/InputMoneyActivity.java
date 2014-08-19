@@ -42,7 +42,9 @@ import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
+import com.people.view.BLDeviceDialog;
 import com.people.view.LKAlertDialog;
+import com.people.view.BLDeviceDialog.OnSelectBLListener;
 import com.tencent.mm.sdk.platformtools.CharSequences;
 
 public class InputMoneyActivity extends BaseActivity {
@@ -480,7 +482,7 @@ public class InputMoneyActivity extends BaseActivity {
 		Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
 
 		intent.putExtra("TYPE", TransferRequestTag.Consume);
-		intent.putExtra("TRANCODE", "199005");
+		intent.putExtra("TRANCODE", "1990053");
 		intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
 		intent.putExtra("PCSIM", "获取不到");
 		intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());
@@ -496,4 +498,5 @@ public class InputMoneyActivity extends BaseActivity {
 		startActivity(intent);
 		tv_show_money.setText("0");
 	}
+	
 }

@@ -52,6 +52,9 @@ public class TransferRequestTag {
 	public static final int RateType = 42; 
 	public static final int UpLoadImage2 = 43; // 上传图片                  传到我们平台
 	public static final int Authentication2 = 44; // 实名认证				传到我们平台
+	public static final int CheckTermId = 45; // 校验机器号
+	public static final int UploadMsgTwo = 46; // 上传基本信息2
+	public static final int GetMsg = 47; // 获取实名认证信息
 	
 	private static HashMap<Integer, String> requestTagMap = null;
 
@@ -66,20 +69,15 @@ public class TransferRequestTag {
 			requestTagMap.put(ModifyLoginPwd, Constants.ip+"199003.tranm");
 			requestTagMap.put(ForgetLoginPwd, Constants.ip+"199004.tranm");
 			requestTagMap.put(SignIn, Constants.ip+"199020.tranm");
-			requestTagMap.put(Consume, Constants.ip+"199005.tranm");
-			requestTagMap.put(ConsumeCancel, "http://211.147.87.23:8088/posp/199006.tran");
-			requestTagMap.put(BalanceQuery, "http://211.147.87.23:8088/posp/199007.tran");
+			requestTagMap.put(Consume, Constants.ip+"1990053.tranm");
 			requestTagMap.put(FlowQuery, Constants.ip+"199008.tranm"); // 流水查询
-			requestTagMap.put(CreditCardApply, "http://211.147.87.23:8080/posp/199010.tran");// 信用卡额度申请
-			requestTagMap.put(ClearQuery, "http://211.147.87.23:8080/posp/199009.tran");
-			requestTagMap.put(AppCommend, "http://211.147.87.24:8092/posm/199011.tran5");
 			requestTagMap.put(ReferenceMsg, Constants.ip+"199012.tranm");
-			requestTagMap.put(ShareTransfer, "http://211.147.87.24:8092/posm/199015.tran5");
-			requestTagMap.put(ExaminePhone, "http://211.147.87.24:8092/posm/199016.tran5");
-			requestTagMap.put(CompareOldPwd, "http://211.147.87.24:8092/posm/199017.tran5");
 			requestTagMap.put(SmsSend, Constants.ip+"199018.tranm");
 			requestTagMap.put(SmsCheck, Constants.ip+"199019.tranm");
 			requestTagMap.put(MerchantQuery, Constants.ip+"199022.tranm");
+			requestTagMap.put(CheckTermId, Constants.ip+"P77024.tranm");
+			requestTagMap.put(UploadMsgTwo, Constants.ip+"P77025.tranm");
+			requestTagMap.put(GetMsg, Constants.ip+"P77023.tranm");
 			
 			requestTagMap.put(CashCharge, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=addTransaction");
 			requestTagMap.put(GetCashCharge, "http://"+Constants.ipCash+"/zfb/mpos/transProcess.do?operationId=getTransaction");
@@ -105,7 +103,7 @@ public class TransferRequestTag {
 			requestTagMap.put(DrawMoney, Constants.ip+"199025.tranm");
 			requestTagMap.put(MyAccount, Constants.ip+"199026.tranm");
 			requestTagMap.put(PhoneRecharge, Constants.ip+"708103.tranp");
-			requestTagMap.put(Authentication, Constants.ip+"199030.tranm");
+			requestTagMap.put(Authentication, Constants.ip+"P77022.tranm");
 			
 			requestTagMap.put(CardCard, Constants.ip+"708101.tranm");
 			requestTagMap.put(CreditCard, Constants.ip+"708102.tranm");

@@ -75,6 +75,8 @@ public class ForgetPwdActivity extends BaseActivity implements OnClickListener {
 	private void sendSMS() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "199018");
+		tempMap.put("TYPE", "100002");
+		tempMap.put("TOPHONENUMBER", et_phone.getText().toString());
 		tempMap.put("PHONENUMBER",  ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsSend,

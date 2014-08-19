@@ -20,7 +20,27 @@ public class Bank  implements Serializable {
      */
     private int code;
 
-    public Bank(String name, int code) {
+    private String bankNo;
+    
+    private String showBankName;
+    
+    public String getShowBankName() {
+		return showBankName;
+	}
+
+	public void setShowBankName(String showBankName) {
+		this.showBankName = showBankName;
+	}
+
+	public String getBankNo() {
+		return bankNo;
+	}
+
+	public void setBankNo(String bankNo) {
+		this.bankNo = bankNo;
+	}
+
+	public Bank(String name, int code) {
         super();
         this.name = name;
         this.code = code;

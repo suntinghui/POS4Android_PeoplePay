@@ -45,6 +45,7 @@ public class BankBranchActivity extends BaseActivity implements OnClickListener 
 				Intent intent = new Intent();
 				intent.putExtra("bankbranchid", arrayList.get(arg2).getCode()+"");
 				intent.putExtra("bankbranchname", arrayList.get(arg2).getName());
+				intent.putExtra("bankNo", arrayList.get(arg2).getBankNo());
 				BankBranchActivity.this.setResult(5, intent);
 				finish();
 

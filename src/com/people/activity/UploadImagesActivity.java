@@ -111,31 +111,41 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		case R.id.btn_next:
 			if (chechValue()) {
 
-				HashMap<String, Object> tempMap = new HashMap<String, Object>();
-				tempMap.put("TRANCODE", "199030");
-				tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
-				tempMap.put("USERNAME", fromForeMap.get("USERNAME"));
-				tempMap.put("IDNUMBER", fromForeMap.get("IDNUMBER"));
-				tempMap.put("MERNAME", fromForeMap.get("MERNAME"));
-				tempMap.put("SCOBUS", fromForeMap.get("SCOBUS"));
-				tempMap.put("MERADDRESS", fromForeMap.get("MERADDRESS"));
-				tempMap.put("TERMID", fromForeMap.get("TERMID"));
-				tempMap.put("BANKUSERNAME", fromForeMap.get("BANKUSERNAME"));
-				tempMap.put("BANKAREA", fromForeMap.get("BANKAREA"));
-				tempMap.put("BIGBANKCOD", fromForeMap.get("BIGBANKCOD"));
-				tempMap.put("BIGBANKNAM", fromForeMap.get("BIGBANKNAM"));
-				tempMap.put("BANKCOD", fromForeMap.get("BANKCOD"));
-				tempMap.put("BANKNAM", fromForeMap.get("BANKNAM"));
-				tempMap.put("BANKACCOUNT", fromForeMap.get("BANKACCOUNT"));
+				HashMap<String, Object> tempMap1 = new HashMap<String, Object>();
+				tempMap1.put("TRANCODE", "P77022");
+				tempMap1.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+				tempMap1.put("MYPIC", str_one);
+				tempMap1.put("IDPICURL", str_two);
+				tempMap1.put("CARDPIC2", str_three);
+				tempMap1.put("CARDPIC", str_four);
+				
+				HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
+				tempMap2.put("TRANCODE", "199030");
+				tempMap2.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+				tempMap2.put("USERNAME", fromForeMap.get("USERNAME"));
+				tempMap2.put("IDNUMBER", fromForeMap.get("IDNUMBER"));
+				tempMap2.put("MERNAME", fromForeMap.get("MERNAME"));
+				tempMap2.put("SCOBUS", fromForeMap.get("SCOBUS"));
+				tempMap2.put("MERADDRESS", fromForeMap.get("MERADDRESS"));
+				tempMap2.put("TERMID", fromForeMap.get("TERMID"));
+				tempMap2.put("BANKUSERNAME", fromForeMap.get("BANKUSERNAME"));
+				tempMap2.put("BANKAREA", fromForeMap.get("BANKAREA"));
+				tempMap2.put("BIGBANKCOD", fromForeMap.get("BIGBANKCOD"));
+				tempMap2.put("BIGBANKNAM", fromForeMap.get("BIGBANKNAM"));
+//				tempMap2.put("BANKCOD", fromForeMap.get("BANKCOD"));
+				tempMap2.put("BANKNAM", fromForeMap.get("BANKNAM"));
+				tempMap2.put("BANKACCOUNT", fromForeMap.get("BANKACCOUNT"));
 
-				tempMap.put("MYPIC", str_one);
-				tempMap.put("IDPICURL", str_two);
-				tempMap.put("CARDPIC2", str_three);
-				tempMap.put("CARDPIC", str_four);
-				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Authentication, tempMap, getAuthenticationHandler());
-				LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.Authentication2, tempMap, getAuthenticationHandler2());
+				tempMap2.put("MYPIC", str_one);
+				tempMap2.put("IDPICURL", str_two);
+				tempMap2.put("CARDPIC2", str_three);
+				tempMap2.put("CARDPIC", str_four);
+				
+				
+				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Authentication, tempMap1, getAuthenticationHandler());
+//				LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.Authentication2, tempMap, getAuthenticationHandler2());
 
-				new LKHttpRequestQueue().addHttpRequest(req1, req2).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
 					@Override
 					public void onComplete() {

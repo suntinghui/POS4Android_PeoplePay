@@ -311,4 +311,6 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 			this.finish();
 		}
 	}
+	
+	
 }
