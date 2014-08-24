@@ -586,17 +586,18 @@ containing a value of this type.
         public static final int text_orange_blue=0x7f0200af;
         public static final int text_white_blue=0x7f0200b0;
         public static final int tool_top=0x7f0200b1;
-        public static final int top=0x7f0200b2;
-        public static final int touming_bg=0x7f0200b3;
-        public static final int transaction_fail=0x7f0200b4;
-        public static final int transaction_success=0x7f0200b5;
-        public static final int transfer_detail_btn_revoke=0x7f0200b6;
-        public static final int transfer_detail_gou=0x7f0200b7;
-        public static final int transfer_item_normal=0x7f0200b8;
-        public static final int transfer_item_pressed=0x7f0200b9;
-        public static final int transfer_item_selector=0x7f0200ba;
-        public static final int usage_list_dark=0x7f0200bb;
-        public static final int usage_list_green=0x7f0200bc;
+        public static final int tool_top_p=0x7f0200b2;
+        public static final int top=0x7f0200b3;
+        public static final int touming_bg=0x7f0200b4;
+        public static final int transaction_fail=0x7f0200b5;
+        public static final int transaction_success=0x7f0200b6;
+        public static final int transfer_detail_btn_revoke=0x7f0200b7;
+        public static final int transfer_detail_gou=0x7f0200b8;
+        public static final int transfer_item_normal=0x7f0200b9;
+        public static final int transfer_item_pressed=0x7f0200ba;
+        public static final int transfer_item_selector=0x7f0200bb;
+        public static final int usage_list_dark=0x7f0200bc;
+        public static final int usage_list_green=0x7f0200bd;
     }
     public static final class id {
         public static final int RelativeLayout=0x7f0600cf;

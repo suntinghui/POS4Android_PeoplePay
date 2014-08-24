@@ -69,7 +69,7 @@ public class TransferRequestTag {
 			requestTagMap.put(ModifyLoginPwd, Constants.ip+"199003.tranm");
 			requestTagMap.put(ForgetLoginPwd, Constants.ip+"199004.tranm");
 			requestTagMap.put(SignIn, Constants.ip+"199020.tranm");
-			requestTagMap.put(Consume, Constants.ip+"1990053.tranm");
+			requestTagMap.put(Consume, Constants.ip+"199053.tranm");
 			requestTagMap.put(FlowQuery, Constants.ip+"199008.tranm"); // 流水查询
 			requestTagMap.put(ReferenceMsg, Constants.ip+"199012.tranm");
 			requestTagMap.put(SmsSend, Constants.ip+"199018.tranm");

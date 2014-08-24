@@ -805,6 +805,8 @@ public class ParseResponseXML {
 					respMap.put("CASHACBAL", parser.nextText());
 				} else if ("ACTNO".equalsIgnoreCase(parser.getName())) {
 					respMap.put("ACTNO", parser.nextText());
+				} else if ("ACSTATUS".equalsIgnoreCase(parser.getName())) {
+					respMap.put("ACSTATUS", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {

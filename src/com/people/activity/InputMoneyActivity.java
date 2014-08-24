@@ -203,18 +203,15 @@ public class InputMoneyActivity extends BaseActivity {
 				}
 
 			} else if (arg0.getId() == R.id.btn_cash) { // 现金记账
-				Toast toast = Toast.makeText(InputMoneyActivity.this, "功能暂未开通", Toast.LENGTH_SHORT);
-				toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
-				toast.show();
-//				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
-//					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
-//					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
-//					toast.show();
-//
-//				} else {
-//					cashCharge();
-//
-//				}
+				if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
+					Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
+					toast.show();
+
+				} else {
+					cashCharge();
+
+				}
 
 			} else if (arg0.getId() == R.id.btn_help) {
 				Intent intent_h = new Intent(InputMoneyActivity.this, RateInstructionActivity.class);
@@ -482,7 +479,7 @@ public class InputMoneyActivity extends BaseActivity {
 		Intent intent = new Intent(InputMoneyActivity.this, SearchAndSwipeActivity.class);
 
 		intent.putExtra("TYPE", TransferRequestTag.Consume);
-		intent.putExtra("TRANCODE", "1990053");
+		intent.putExtra("TRANCODE", "199053");
 		intent.putExtra("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(InputMoneyActivity.this).getString(Constants.kUSERNAME, ""));
 		intent.putExtra("PCSIM", "获取不到");
 		intent.putExtra("TSEQNO", AppDataCenter.getTraceAuditNum());

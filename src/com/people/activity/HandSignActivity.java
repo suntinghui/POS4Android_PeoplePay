@@ -48,7 +48,9 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 	private PaintView paintView = null;
 
 	private boolean hasSign = false; // 简单判断用户是否有签名
+	private HashMap<String, Object> sendMap;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -58,8 +60,10 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);// 设置成全屏模式
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);// 强制为横屏
 
+		sendMap = (HashMap<String, Object>) this.getIntent().getSerializableExtra("map");
+		
 		amountText = (TextView) this.findViewById(R.id.amount);
-		amountText.setText(StringUtil.String2SymbolAmount(getIntent().getStringExtra("AMOUNT")));
+		amountText.setText(StringUtil.String2SymbolAmount((String)(sendMap.get("CTXNAT"))));
 
 		okButton = (Button) this.findViewById(R.id.okButton);
 		okButton.setOnClickListener(this);
@@ -251,45 +255,11 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		protected void onPostExecute(Object result) {
 			super.onPostExecute(result);
 			
-			HashMap<String, Object> tempMap = new HashMap<String, Object>();
-			tempMap.put("TRANCODE", "199010");
-			tempMap.put("LOGNO", getIntent().getStringExtra("LOGNO"));
-			tempMap.put("ELESIGNA", photoStr);
-
-			LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.UploadSignImage, tempMap, getUploadImageHandler());
-
-			new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在上传图片请稍候...", new LKHttpRequestQueueDone() {
-
-				@Override
-				public void onComplete() {
-					super.onComplete();
-
-				}
-			});
+			transfer(photoStr);
 		}
 
 	}
 
-	private LKAsyncHttpResponseHandler getUploadImageHandler() {
-		return new LKAsyncHttpResponseHandler() {
-
-			@Override
-			public void successAction(Object obj) {
-
-				HashMap<String, String> respMap = (HashMap<String, String>) obj;
-				if ("00".equals(respMap.get("RSPCOD"))) {
-
-					Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
-					intent.putExtra("LOGNO", getIntent().getStringExtra("LOGNO"));
-					startActivityForResult(intent, 0);
-
-				} else {
-					Toast.makeText(HandSignActivity.this, respMap.get("RSPMSG"), Toast.LENGTH_SHORT).show();
-				}
-			}
-
-		};
-	}
 
 	public byte[] getBitmapByte(Bitmap bitmap) {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -312,5 +282,69 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 	
+	private void transfer(String imageStr) {
+		HashMap<String, Object> tempMap = new HashMap<String, Object>();
+		tempMap.put("TRANCODE", sendMap.get("TRANCODE"));
+		tempMap.put("PHONENUMBER", sendMap.get("PHONENUMBER")); // 手机号
+		tempMap.put("TERMINALNUMBER",  sendMap.get("TERMINALNUMBER")); // 终端号
+		tempMap.put("PCSIM", sendMap.get("PCSIM"));
+		tempMap.put("TRACK", sendMap.get("TRACK"));
+		tempMap.put("TSEQNO", sendMap.get("TSEQNO")); // 终端流水号
+		tempMap.put("CTXNAT", sendMap.get("CTXNAT")); // 消费金额
+		tempMap.put("TPINBLK", sendMap.get("TPINBLK")); // 支付密码???
+		tempMap.put("CRDNO", sendMap.get("CRDNO")); // 卡号
+		tempMap.put("CHECKX", sendMap.get("CHECKX")); // 横坐标
+		tempMap.put("CHECKY", sendMap.get("CHECKY")); // 纵坐标
+		tempMap.put("TTXNTM", sendMap.get("TTXNTM")); // 交易时间
+		tempMap.put("TTXNDT", sendMap.get("TTXNDT")); // 交易日期
+		tempMap.put("IDFID", sendMap.get("IDFID")); // 扣率ID
+		tempMap.put("ELESIGNA", imageStr);
+		tempMap.put("PSAMCARDNO", sendMap.get("PSAMCARDNO")); // PSAM卡号 "UN201410000046"
+		tempMap.put("MAC", sendMap.get("MAC")); // MAC
+
+		LKHttpRequest req = new LKHttpRequest(TransferRequestTag.Consume, tempMap, transferHandler());
+
+		new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在交易请稍候...", new LKHttpRequestQueueDone() {
+
+			@Override
+			public void onComplete() {
+				super.onComplete();
+
+			}
+
+		});
+	}
+
+	private LKAsyncHttpResponseHandler transferHandler() {
+		return new LKAsyncHttpResponseHandler() {
+
+			@Override
+			public void successAction(Object obj) {
+				@SuppressWarnings("unchecked")
+				HashMap<String, String> map = (HashMap<String, String>) obj;
+
+				if (map.get("RSPCOD").equals("00")) {
+					
+					Intent intent = new Intent(HandSignActivity.this, ConsumeSuccessActivity.class);
+					intent.putExtra("LOGNO", (map.get("LOGNO")));
+					startActivityForResult(intent, 0);
+
+				} else {
+					gotoTradeFailureActivity(map.get("RSPMSG"));
+				}
+
+			}
+
+		};
+	}
 	
+	private void gotoTradeFailureActivity(String msg) {
+		if (msg == null || msg.trim().equals("")) {
+			msg = "交易失败";
+		}
+
+		Intent intent = new Intent(this, TradeFaiureActivity.class);
+		intent.putExtra("MESSAGE", msg);
+		startActivityForResult(intent, 0);
+	}
 }

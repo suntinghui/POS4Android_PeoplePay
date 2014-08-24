@@ -181,13 +181,13 @@
                     android:id="@+id/et_brachkbank"
                     style="@style/black_17"
                     android:layout_width="fill_parent"
-                    android:layout_height="40dip"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="18dip"
                     android:background="@drawable/bg_borderbox"
                     android:hint="@string/upload_second_bank_address_h"
                     android:paddingLeft="8dip"
-                    android:singleLine="true" />
+                    />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dip"

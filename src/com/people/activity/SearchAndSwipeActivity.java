@@ -137,6 +137,7 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 
 			} else if (type == TransferRequestTag.PhoneRecharge) {
 				new PhoneRechargeAction().doAction();
+				
 			} else if (type == TransferRequestTag.CardCard) {
 				new CardCardAction().doAction();
 			} else if (type == TransferRequestTag.CreditCard) {
@@ -384,42 +385,14 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			tempMap.put("IDFID", intent.getStringExtra("IDFID")); // 扣率ID
 			tempMap.put("PSAMCARDNO", pid); // PSAM卡号 "UN201410000046"
 			tempMap.put("MAC", map.get("MAC")); // MAC
+			
+			Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
+			intent0.putExtra("map", tempMap);
+		
+			startActivityForResult(intent0, 10);
 
-			LKHttpRequest req = new LKHttpRequest(TransferRequestTag.Consume, tempMap, transferHandler());
-
-			new LKHttpRequestQueue().addHttpRequest(req).executeQueue("正在交易请稍候...", new LKHttpRequestQueueDone() {
-
-				@Override
-				public void onComplete() {
-					super.onComplete();
-
-				}
-
-			});
 		}
 
-		private LKAsyncHttpResponseHandler transferHandler() {
-			return new LKAsyncHttpResponseHandler() {
-
-				@Override
-				public void successAction(Object obj) {
-					@SuppressWarnings("unchecked")
-					HashMap<String, String> map = (HashMap<String, String>) obj;
-
-					if (map.get("RSPCOD").equals("00")) {
-						Intent intent0 = new Intent(SearchAndSwipeActivity.this, HandSignActivity.class);
-						intent0.putExtra("AMOUNT", intent.getStringExtra("CTXNAT"));
-						intent0.putExtra("LOGNO", map.get("LOGNO"));
-						startActivityForResult(intent0, 0);
-
-					} else {
-						gotoTradeFailureActivity(map.get("RSPMSG"));
-					}
-
-				}
-
-			};
-		}
 
 	}
 
@@ -720,12 +693,12 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 			tempMap.put("CRDNO1_B", intentMap.get("CARDNO1_B"));// 信用卡卡号
 			
 			tempMap.put("INCARDNAM_B", intentMap.get("INCARDNAM_B"));
-			tempMap.put("OUTCARDNAM_B", intentMap.get("OUTCARDNAM_B"));
+			tempMap.put("OUTCARDNAM_B", intentMap.get("OUTCARDNAM_B"));	
 			tempMap.put("OUT_IDTYP_B", intentMap.get("OUT_IDTYP_B"));
 			tempMap.put("OUT_IDTYPNAM_B", intentMap.get("OUT_IDTYPNAM_B"));
 			tempMap.put("OUT_IDCARD_B", intentMap.get("OUT_IDCARD_B"));
 			
-			tempMap.put("phoneNumber_B", intentMap.get("phoneNumber_B"));// 接收信息手机号
+			tempMap.put("MOBILE_B", intentMap.get("MOBILE_B"));// 接收信息手机号
 			tempMap.put("Track2_B", map.get("CARD"));
 			tempMap.put("CRDNOJLN_B", map.get("PIN")); // 支付密码???
 			tempMap.put("TXNAMT_B", intentMap.get("TXNAMT_B"));

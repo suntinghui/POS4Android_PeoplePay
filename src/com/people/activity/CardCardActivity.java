@@ -113,7 +113,7 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		map.put("TRANCODE", "708101");
-		map.put("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
+		map.put("SELLTEL_B", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));//用户手机号
 		map.put("CARDNO1_B", et_card_num.getText().toString());//接收转账卡号
 		map.put("INCARDNAM_B", et_in_name.getText().toString());
 		map.put("OUTCARDNAM_B", et_out_name.getText().toString());
@@ -121,7 +121,7 @@ public class CardCardActivity extends BaseActivity implements OnClickListener {
 		map.put("OUT_IDTYPNAM_B", scope[positon]);
 		map.put("OUT_IDCARD_B", et_papers_num.getText().toString());
 		
-		map.put("phoneNumber_B", et_phone.getText().toString());//接收信息手机号
+		map.put("MOBILE_B", et_phone.getText().toString());//接收信息手机号
 		map.put("TXNAMT_B", StringUtil.amount2String(String.format("%1$.2f", Double.valueOf(et_amount.getText().toString()))));//交易金额
 		map.put("POSTYPE_B", "1");//POSTYPE_B   1 普通刷卡器 2 小刷卡器
 		map.put("CHECKX_B", "0.0");//当前经度
