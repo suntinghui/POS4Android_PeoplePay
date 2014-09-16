@@ -225,7 +225,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:text="@string/cardcard_papers_amount" />
+                    android:text="@string/cardcard_turn_amount" />
 
                 <EditText
                     android:id="@+id/et_amount"

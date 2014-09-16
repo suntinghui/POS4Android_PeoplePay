@@ -79,6 +79,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			startActivity(intent);
 			break;
 		case R.id.btn_register:
+			
 			register();
 			break;
 		default:

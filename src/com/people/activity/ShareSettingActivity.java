@@ -38,7 +38,7 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
 
 	private String[] titles = { "新浪微博", "微信好友", "朋友圈" };
 
-	private static final String APP_ID = "wx1e4484ab6b577a3d";
+	private static final String APP_ID = "wx685188ae331de13a";
 	private IWXAPI api = null;
 
 	@Override
@@ -90,13 +90,13 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
 		}
 		
 		// 初始化一个WXTextObject对象  
-        String text = "我在用众付宝进行收款，移动互联网时代的刷卡利器，速来围观！！！"; 
+        String text = "我在用众易付进行收款，移动互联网时代的刷卡利器，速来围观！！！"; 
         
         WXWebpageObject webObj = new WXWebpageObject();
         webObj.webpageUrl = "http://www.people2000.net";
 
         WXMediaMessage msg = new WXMediaMessage(webObj);
-        msg.title = "众付宝";
+        msg.title = "众易付";
         msg.description = text;
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
         msg.thumbData = WXUtil.bmpToByteArray(thumb, true);
@@ -116,13 +116,13 @@ public class ShareSettingActivity extends BaseActivity implements OnClickListene
 		}
 		
 		// 初始化一个WXTextObject对象  
-        String text = "众付宝，惊呆了我和我的小伙伴，借记卡和信用卡都能刷，到账周期短，扣率低，真的是太好用了。"; 
+        String text = "众易付，惊呆了我和我的小伙伴，借记卡和信用卡都能刷，到账周期短，扣率低，真的是太好用了。"; 
         
         WXWebpageObject webObj = new WXWebpageObject();
         webObj.webpageUrl = "http://www.people2000.net";
 
         WXMediaMessage msg = new WXMediaMessage(webObj);
-        msg.title = "众付宝，刷新梦想 刷出未来";
+        msg.title = "众易付，刷新梦想 刷出未来";
         msg.description = text;
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
         msg.thumbData = WXUtil.bmpToByteArray(thumb, true);

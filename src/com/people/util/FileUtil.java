@@ -23,7 +23,7 @@ public class FileUtil {
 		// String path =
 		// ApplicationEnvironment.getInstance().getApplication().getFilesDir().getPath()+"/download/";
 		String path = Environment.getExternalStorageDirectory()
-				+ "/众付宝/Attachment/";
+				+ "/众易付/Attachment/";
 		File file = new File(path);
 		if (!file.exists()) {
 			// file.mkdir();

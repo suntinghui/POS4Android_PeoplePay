@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?><!--  hdip同样也需更改 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -40,15 +40,6 @@
                     android:layout_centerInParent="true" />
             </RelativeLayout>
 
-            <!--
-                 <ImageButton
-                android:id="@+id/ibtn_head"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/head_image" />
-            -->
-
             <TextView
                 android:id="@+id/tv_head"
                 style="@style/white_18"
@@ -82,18 +73,13 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/gray" />
 
-            <LinearLayout
-                android:id="@+id/layout_msg_top"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/inputmoney_btn_selector"
-                android:orientation="vertical" >
-
-                <RelativeLayout
+            <RelativeLayout
+                    android:id="@+id/layout_msg_top"
                     android:layout_width="fill_parent"
                     android:layout_height="40dip"
                     android:layout_marginBottom="5dip"
                     android:layout_marginTop="5dip"
+                    android:background="@drawable/inputmoney_btn_selector"
                     android:gravity="center_vertical" >
 
                     <ImageView
@@ -119,7 +105,6 @@
                         android:layout_marginRight="20dip"
                         android:background="@drawable/merchant_icon_pull" />
                 </RelativeLayout>
-            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
@@ -206,172 +191,189 @@
                 android:layout_marginTop="10dip"
                 android:background="@color/gray" />
 
-            <LinearLayout
+            <!-- <TextView android:id="@+id/tv_test"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="123"/> -->
+            <RelativeLayout
                 android:id="@+id/layout_1"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
                 android:background="@drawable/inputmoney_btn_selector"
-                android:orientation="vertical" >
+                android:gravity="center_vertical" >
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginBottom="5dip"
-                    android:layout_marginTop="5dip"
-                    android:gravity="center_vertical" >
+                <ImageView
+                    android:id="@+id/iv_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:background="@drawable/merchant_icon_1" />
 
-                    <ImageView
-                        android:id="@+id/iv_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dip"
-                        android:background="@drawable/merchant_icon_1" />
+                <TextView
+                    style="@style/black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dip"
+                    android:layout_toRightOf="@id/iv_1"
+                    android:text="@string/draw_money" />
 
-                    <TextView
-                        style="@style/black_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dip"
-                        android:layout_toRightOf="@id/iv_1"
-                        android:text="@string/draw_money" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/icon_arrow_right" />
+            </RelativeLayout>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="20dip"
-                        android:background="@drawable/icon_arrow_right" />
-                </RelativeLayout>
-            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/gray" />
+            
+            <RelativeLayout
+                android:id="@+id/layout_qr"
+                android:layout_width="fill_parent"
+                android:layout_height="40dip"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
+                android:background="@drawable/inputmoney_btn_selector"
+                android:gravity="center_vertical" >
+
+                <ImageView
+                    android:id="@+id/iv_qr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:background="@drawable/merchant_icon_qr" />
+
+                <TextView
+                    style="@style/black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dip"
+                    android:layout_toRightOf="@id/iv_qr"
+                    android:text="@string/qrcode" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/icon_arrow_right" />
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/gray" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/layout_upload_image"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
                 android:background="@drawable/inputmoney_btn_selector"
-                android:orientation="vertical" >
+                android:gravity="center_vertical" >
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginBottom="5dip"
-                    android:layout_marginTop="5dip"
-                    android:gravity="center_vertical" >
+                <ImageView
+                    android:id="@+id/iv_upload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:background="@drawable/merchant_icon_2" />
 
-                    <ImageView
-                        android:id="@+id/iv_upload"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dip"
-                        android:background="@drawable/merchant_icon_2" />
+                <TextView
+                    style="@style/black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dip"
+                    android:layout_toRightOf="@id/iv_upload"
+                    android:text="@string/upload_images" />
 
-                    <TextView
-                        style="@style/black_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dip"
-                        android:layout_toRightOf="@id/iv_upload"
-                        android:text="@string/upload_images" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="20dip"
-                        android:background="@drawable/icon_arrow_right" />
-                </RelativeLayout>
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/icon_arrow_right" />
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/gray" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/layout_2"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
                 android:background="@drawable/inputmoney_btn_selector"
-                android:orientation="vertical" >
+                android:gravity="center_vertical" >
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginBottom="5dip"
-                    android:layout_marginTop="5dip"
-                    android:gravity="center_vertical" >
+                <ImageView
+                    android:id="@+id/iv_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:background="@drawable/set_icon_0" />
 
-                    <ImageView
-                        android:id="@+id/iv_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dip"
-                        android:background="@drawable/set_icon_0" />
+                <TextView
+                    style="@style/black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dip"
+                    android:layout_toRightOf="@id/iv_2"
+                    android:text="@string/more_setting" />
 
-                    <TextView
-                        style="@style/black_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dip"
-                        android:layout_toRightOf="@id/iv_2"
-                        android:text="@string/more_setting" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="20dip"
-                        android:background="@drawable/icon_arrow_right" />
-                </RelativeLayout>
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/icon_arrow_right" />
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
                 android:background="@color/gray" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/layout_3"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dip"
+                android:layout_marginBottom="5dip"
+                android:layout_marginTop="5dip"
                 android:background="@drawable/inputmoney_btn_selector"
-                android:orientation="vertical" >
+                android:gravity="center_vertical" >
 
-                <RelativeLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="40dip"
-                    android:layout_marginBottom="5dip"
-                    android:layout_marginTop="5dip"
-                    android:gravity="center_vertical" >
+                <ImageView
+                    android:id="@+id/iv_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:background="@drawable/merchant_icon_3" />
 
-                    <ImageView
-                        android:id="@+id/iv_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="15dip"
-                        android:background="@drawable/merchant_icon_3" />
+                <TextView
+                    style="@style/black_16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dip"
+                    android:layout_toRightOf="@id/iv_3"
+                    android:text="@string/conect" />
 
-                    <TextView
-                        style="@style/black_16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dip"
-                        android:layout_toRightOf="@id/iv_3"
-                        android:text="@string/conect" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="20dip"
-                        android:background="@drawable/icon_arrow_right" />
-                </RelativeLayout>
-            </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/icon_arrow_right" />
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

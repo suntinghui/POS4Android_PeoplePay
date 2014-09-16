@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences.Editor;
@@ -34,12 +35,14 @@ import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.qpos.QPOS;
 import com.people.qpos.ThreadCancel;
+import com.people.qpos.ThreadCloseSwip;
 import com.people.qpos.ThreadDeviceID;
 import com.people.qpos.ThreadSwip_SixPass;
 import com.people.qpos.ThreadUpDataKey;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
 import com.people.view.BLDeviceDialog;
+import com.people.view.LKAlertDialog;
 import com.people.view.BLDeviceDialog.OnSelectBLListener;
 
 import dspread.voicemodem.CardReader;
@@ -149,7 +152,26 @@ public class SearchAndSwipeActivity extends BaseActivity implements OnClickListe
 	@Override
 	public void onBackPressed() {
 
-		this.backAction(null);
+		LKAlertDialog dialog = new LKAlertDialog(this);
+		dialog.setTitle("提示");
+		dialog.setMessage("是否取消交易");
+		dialog.setCancelable(false);
+		dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				dialog.dismiss();
+				SearchAndSwipeActivity.this.backAction(null);
+			}
+		});
+		dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});
+		dialog.create().show();
+		
 	}
 
 	public void backAction(View view) {

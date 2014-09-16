@@ -113,9 +113,9 @@ public class FeedBackActivity extends BaseActivity implements OnClickListener, T
 		protected Object doInBackground(Object... params) {
 			String content = contentText.getText().toString();
 			if (!"".equals(mailText.getText().trim())) {
-				this.sendEmail(content + "  【反馈信息来自:" + mailText.getText() + "】\n\n【众付宝】");
+				this.sendEmail(content + "  【反馈信息来自:" + mailText.getText() + "】\n\n【众易付】");
 			} else {
-				this.sendEmail(content + "\n\n【众付宝】" );
+				this.sendEmail(content + "\n\n【众易付】" );
 			}
 			return null;
 		}
