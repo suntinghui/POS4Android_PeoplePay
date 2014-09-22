@@ -97,7 +97,7 @@ public class UpLoadSecondActivity extends BaseActivity implements OnClickListene
 				if (checkValue()) {
 					fromForeMap.put("TRANCODE", "P77025");
 					fromForeMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
-					if (Constants.STATUS.equals("6")) {
+					if (Constants.AuthenticationIsEdit) {
 
 						fromForeMap.put("BANKUSERNAME", et_name.getText().toString()); 
 						fromForeMap.put("BANKAREA", currentCity.getCode()+"");
@@ -106,9 +106,6 @@ public class UpLoadSecondActivity extends BaseActivity implements OnClickListene
 						fromForeMap.put("BANKNO", currentBank.getBankNo());
 						fromForeMap.put("BANKNAM", et_brachBank.getText().toString());
 						fromForeMap.put("BANKACCOUNT", et_account.getText().toString());
-					}
-					{
-
 					}
 
 					uploadMsg();

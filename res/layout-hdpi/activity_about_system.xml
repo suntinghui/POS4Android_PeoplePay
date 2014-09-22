@@ -48,11 +48,12 @@
 
             <TextView
                 style="@style/gray_15"
+                android:id="@+id/tv_version"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
                 android:gravity="center_horizontal"
-                android:text="@string/str_about_version" />
+                />
 
             <Button
                 android:id="@+id/btn_access"

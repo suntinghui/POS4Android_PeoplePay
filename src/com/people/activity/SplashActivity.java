@@ -2,10 +2,14 @@ package com.people.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
@@ -20,6 +24,17 @@ public class SplashActivity extends BaseActivity {
         
         setContentView(R.layout.activity_splash);
 		
+        TextView tv_tips = (TextView) findViewById(R.id.tv_tips);
+        PackageManager pm = this.getPackageManager(); 
+		PackageInfo pi;
+		try {
+			pi = pm.getPackageInfo(this.getPackageName(), 0);
+			tv_tips.setText("众易付(zPOS) V"+pi.versionName);
+			
+		} catch (NameNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         new SplashTask().execute();
 	}
 	

@@ -7,6 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -315,11 +318,24 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 					if (descrition == null || descrition.trim().equals("")) {
 						descrition = "发现新版本，是否立即更新？";
 					}
-					if (serviceVersion > Constants.VERSION) {
-						showUpdateDialog();
-					} else {
-						showNoUpdateDialog();
+					
+					PackageManager pm = SettingActivity.this.getPackageManager(); 
+					PackageInfo pi;
+					try {
+						pi = pm.getPackageInfo(SettingActivity.this.getPackageName(), 0);
+						
+						int versionCode = pi.versionCode;
+						
+						if (serviceVersion > versionCode) {
+							showUpdateDialog();
+						} else {
+							showNoUpdateDialog();
+						}
+					} catch (NameNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
+					
 				} else {
 				}
 

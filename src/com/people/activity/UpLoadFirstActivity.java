@@ -176,10 +176,17 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 			map.put("BANKAREA", initMap.get("BANKAREA"));
 			map.put("BIGBANKCOD", initMap.get("BIGBANKCOD"));
 			map.put("BIGBANKNAM", initMap.get("BIGBANKNAM"));
-			map.put("BANKNO", initMap.get("BANKNO"));
+			if(initMap.get("BANKNO") != null){
+				map.put("BANKNO", initMap.get("BANKNO"));	
+			}
+			
 			map.put("BANKNAM", initMap.get("OPNBNK"));
 			map.put("BANKACCOUNT", initMap.get("ACTNO"));
-			map.put("PROCOD", initMap.get("PROCOD"));
+			
+			if(initMap.get("PROCOD") != null){
+				map.put("PROCOD", initMap.get("PROCOD"));
+			}
+			
 		}
 		
 		
@@ -237,6 +244,7 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		String TERMNO = (String) map.get("TERMNO");
 		String ADDRESS = (String) map.get("ADDRESS");
 		
+		//Status 认证状态 0开通 1关闭 2审核通过3审核未通过4黑名单5审核中6初始状态7只提交了文本信息
 		if(Constants.STATUS.equals("3") || Constants.STATUS.equals("7")){
 			Constants.AuthenticationIsEdit = true;
 			et_name.setText(BUSNAM);

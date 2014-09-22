@@ -84,6 +84,8 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		iv_four.setOnClickListener(this);
 		Button btn_next = (Button) findViewById(R.id.btn_next);
 		btn_next.setOnClickListener(this);
+		Button btn_back = (Button) findViewById(R.id.btn_back);
+		btn_back.setOnClickListener(this);
 	}
 
 	@Override
@@ -118,7 +120,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				tempMap1.put("IDPICURL", str_two);
 				tempMap1.put("CARDPIC2", str_three);
 				tempMap1.put("CARDPIC", str_four);
-				
+
 				HashMap<String, Object> tempMap2 = new HashMap<String, Object>();
 				tempMap2.put("TRANCODE", "199030");
 				tempMap2.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
@@ -132,7 +134,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				tempMap2.put("BANKAREA", fromForeMap.get("BANKAREA"));
 				tempMap2.put("BIGBANKCOD", fromForeMap.get("BIGBANKCOD"));
 				tempMap2.put("BIGBANKNAM", fromForeMap.get("BIGBANKNAM"));
-//				tempMap2.put("BANKCOD", fromForeMap.get("BANKCOD"));
+				// tempMap2.put("BANKCOD", fromForeMap.get("BANKCOD"));
 				tempMap2.put("BANKNAM", fromForeMap.get("BANKNAM"));
 				tempMap2.put("BANKACCOUNT", fromForeMap.get("BANKACCOUNT"));
 
@@ -140,10 +142,11 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				tempMap2.put("IDPICURL", str_two);
 				tempMap2.put("CARDPIC2", str_three);
 				tempMap2.put("CARDPIC", str_four);
-				
-				
+
 				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Authentication, tempMap1, getAuthenticationHandler());
-//				LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.Authentication2, tempMap, getAuthenticationHandler2());
+				// LKHttpRequest req2 = new
+				// LKHttpRequest(TransferRequestTag.Authentication2, tempMap,
+				// getAuthenticationHandler2());
 
 				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
@@ -245,8 +248,7 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				opt.inJustDecodeBounds = true;
 				opt.inDither = false;
 				opt.inPurgeable = true;
-				opt.inSampleSize = 3;
-				// opt.inTempStorage = new byte[12 * 1024];
+				opt.inSampleSize = calculateInSampleSize(opt, 480, 800);
 				opt.inJustDecodeBounds = false;
 				// 将字节数组转换为ImageView可调用的Bitmap对象
 				myBitmap = getPicFromBytes(mContent, opt);
@@ -278,54 +280,6 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		default:
 			break;
 		}
-	}
-
-	private String getPath(Uri originalUri) {
-		String[] imgs = { MediaStore.Images.Media.DATA };// 将图片URI转换成存储路径
-		Cursor cursor = this.managedQuery(originalUri, imgs, null, null, null);
-		int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-		cursor.moveToFirst();
-		return cursor.getString(index);
-	}
-
-	// 相机调用的方法getPicFromBytes，将字节数组转换为ImageView可调用的Bitmap对象
-	public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
-		if (bytes != null)
-			if (opts != null)
-				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
-			else
-				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-		return null;
-	}
-
-	// 相机调用readStream，将图片内容解析成字节数组
-	public static byte[] readStream(InputStream inStream) throws Exception {
-		byte[] buffer = new byte[1024];
-		int len = -1;
-		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-		while ((len = inStream.read(buffer)) != -1) {
-			outStream.write(buffer, 0, len);
-		}
-		byte[] data = outStream.toByteArray();
-		outStream.close();
-		inStream.close();
-		return data;
-	}
-
-	/**
-	 * 按正方形裁切图片
-	 */
-	public static Bitmap ImageCrop(Bitmap bitmap) {
-		int w = bitmap.getWidth(); // 得到图片的宽，高
-		int h = bitmap.getHeight();
-
-		int wh = w > h ? h : w;// 裁切后所取的正方形区域边长
-
-		int retX = w > h ? (w - h) / 2 : 0;// 基于原图，取正方形左上角x坐标
-		int retY = w > h ? 0 : (h - w) / 2;
-
-		// 下面这句是关键
-		return Bitmap.createBitmap(bitmap, retX, retY, wh, wh, null, false);
 	}
 
 	// 上传图片
@@ -405,80 +359,88 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		};
 	}
 
-	public String imgToBase64(String imgPath) {
-		WindowManager windowManager0 = getWindowManager();
-		Display display = windowManager0.getDefaultDisplay();
-		int height = display.getHeight();
-		int width = display.getWidth();
+	public String imgToBase64(String filePath) {
+		// WindowManager windowManager0 = getWindowManager();
+		// Display display = windowManager0.getDefaultDisplay();
+		// int height = display.getHeight();
+		// int width = display.getWidth();
+		//
+		// Bitmap bitmap = null;
+		// if (imgPath != null && imgPath.length() > 0) {
+		// FileDescriptor fd;
+		// try {
+		// fd = new FileInputStream(imgPath).getFD();
+		// BitmapFactory.Options options = new BitmapFactory.Options();
+		// options.inJustDecodeBounds = true;
+		// // BitmapFactory.decodeFile(imgFile, options);
+		// BitmapFactory.decodeFileDescriptor(fd, null, options);
+		//
+		// int bmpheight = options.outHeight;
+		// int bmpWidth = options.outWidth;
+		// int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight
+		// / height : bmpWidth / width;
+		//
+		// if (inSampleSize > 1)
+		// if (inSampleSize == 2) {// 小米3
+		// options.inSampleSize = inSampleSize * 6;// 设置缩放比例
+		// } else if (inSampleSize == 3) {// 华为C8220
+		// if (height > 800) {
+		// options.inSampleSize = inSampleSize * 4;
+		// } else {
+		// options.inSampleSize = inSampleSize * 2;// 设置缩放比例
+		// }
+		// } else if (inSampleSize == 4) {
+		// options.inSampleSize = inSampleSize * 2;
+		// } else if (inSampleSize == 5) {
+		// options.inSampleSize = inSampleSize * 2;
+		// } else {
+		// options.inSampleSize = inSampleSize * 2;
+		// }
+		// // 这里一定要将其设置回false，因为之前我们将其设置成了true
+		// //
+		// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
+		// options.inJustDecodeBounds = false;
+		// bitmap = BitmapFactory.decodeFile(imgPath, options);
+		// } catch (FileNotFoundException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		//
+		// }
+		// if (bitmap == null) {
+		// return null;
+		// }
+		// ByteArrayOutputStream out = null;
+		// try {
+		// out = new ByteArrayOutputStream();
+		// bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+		//
+		// out.flush();
+		// out.close();
+		//
+		// byte[] imgBytes = out.toByteArray();
+		// return Base64.encodeToString(imgBytes, Base64.DEFAULT);
+		// } catch (Exception e) {
+		// // TODO Auto-generated catch block
+		// return null;
+		// } finally {
+		// try {
+		// out.flush();
+		// out.close();
+		// } catch (IOException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
 
-		Bitmap bitmap = null;
-		if (imgPath != null && imgPath.length() > 0) {
-			FileDescriptor fd;
-			try {
-				fd = new FileInputStream(imgPath).getFD();
-				BitmapFactory.Options options = new BitmapFactory.Options();
-				options.inJustDecodeBounds = true;
-				// BitmapFactory.decodeFile(imgFile, options);
-				BitmapFactory.decodeFileDescriptor(fd, null, options);
-
-				int bmpheight = options.outHeight;
-				int bmpWidth = options.outWidth;
-				int inSampleSize = bmpheight / height > bmpWidth / width ? bmpheight / height : bmpWidth / width;
-
-				if (inSampleSize > 1)
-					if (inSampleSize == 2) {// 小米3
-						options.inSampleSize = inSampleSize * 6;// 设置缩放比例
-					} else if (inSampleSize == 3) {// 华为C8220
-						if (height > 800) {
-							options.inSampleSize = inSampleSize * 4;
-						} else {
-							options.inSampleSize = inSampleSize * 2;// 设置缩放比例
-						}
-					} else if (inSampleSize == 4) {
-						options.inSampleSize = inSampleSize * 2;
-					} else if (inSampleSize == 5) {
-						options.inSampleSize = inSampleSize * 2;
-					} else {
-						options.inSampleSize = inSampleSize * 2;
-					}
-				// 这里一定要将其设置回false，因为之前我们将其设置成了true
-				// 设置inJustDecodeBounds为true后，decodeFile并不分配空间，即，BitmapFactory解码出来的Bitmap为Null,但可计算出原始图片的长度和宽度
-				options.inJustDecodeBounds = false;
-				bitmap = BitmapFactory.decodeFile(imgPath, options);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		}
-		if (bitmap == null) {
-			return null;
-		}
-		ByteArrayOutputStream out = null;
-		try {
-			out = new ByteArrayOutputStream();
-			bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-
-			out.flush();
-			out.close();
-
-			byte[] imgBytes = out.toByteArray();
-			return Base64.encodeToString(imgBytes, Base64.DEFAULT);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			return null;
-		} finally {
-			try {
-				out.flush();
-				out.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		Bitmap bm = getSmallBitmap(filePath);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bm.compress(Bitmap.CompressFormat.JPEG, 40, baos);
+		byte[] b = baos.toByteArray();
+		return Base64.encodeToString(b, Base64.DEFAULT);
 	}
 
 	// 实名认证
@@ -519,6 +481,38 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 		};
 	}
 
+	private String getPath(Uri originalUri) {
+		String[] imgs = { MediaStore.Images.Media.DATA };// 将图片URI转换成存储路径
+		Cursor cursor = this.managedQuery(originalUri, imgs, null, null, null);
+		int index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(index);
+	}
+
+	// 相机调用的方法getPicFromBytes，将字节数组转换为ImageView可调用的Bitmap对象
+	public static Bitmap getPicFromBytes(byte[] bytes, BitmapFactory.Options opts) {
+		if (bytes != null)
+			if (opts != null)
+				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length, opts);
+			else
+				return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+		return null;
+	}
+
+	// 相机调用readStream，将图片内容解析成字节数组
+	public static byte[] readStream(InputStream inStream) throws Exception {
+		byte[] buffer = new byte[1024];
+		int len = -1;
+		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+		while ((len = inStream.read(buffer)) != -1) {
+			outStream.write(buffer, 0, len);
+		}
+		byte[] data = outStream.toByteArray();
+		outStream.close();
+		inStream.close();
+		return data;
+	}
+
 	/*
 	 * 压缩图片，避免内存不足报错
 	 */
@@ -533,14 +527,12 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 			BitmapFactory.decodeStream(fis, null, o);
 			fis.close();
 
-			int scale = 1;
-			if (o.outHeight > 100 || o.outWidth > 100) {
-				scale = (int) Math.pow(2, (int) Math.round(Math.log(100 / (double) Math.max(o.outHeight, o.outWidth)) / Math.log(0.5)));
-			}
-
-			// Decode with inSampleSize
 			BitmapFactory.Options o2 = new BitmapFactory.Options();
-			o2.inSampleSize = scale;
+			int width = o.outWidth;
+			int height = o.outHeight;
+			int test = calculateInSampleSize(o, 480, 800);
+			Log.i("照片长宽：", " width:" + width + " height:" + height + "insamplesize:" + test);
+			o2.inSampleSize = calculateInSampleSize(o, 480, 800);
 			fis = new FileInputStream(f);
 			b = BitmapFactory.decodeStream(fis, null, o2);
 			fis.close();
@@ -548,5 +540,34 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 			e.printStackTrace();
 		}
 		return b;
+	}
+
+	// 计算图片的缩放值
+	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+		final int height = options.outHeight;
+		final int width = options.outWidth;
+		int inSampleSize = 1;
+
+		if (height > reqHeight || width > reqWidth) {
+			final int heightRatio = Math.round((float) height / (float) reqHeight);
+			final int widthRatio = Math.round((float) width / (float) reqWidth);
+			inSampleSize = heightRatio < widthRatio ? heightRatio : widthRatio;
+		}
+		return inSampleSize;
+	}
+
+	// 根据路径获得图片并压缩，返回bitmap用于显示
+	public static Bitmap getSmallBitmap(String filePath) {
+		final BitmapFactory.Options options = new BitmapFactory.Options();
+		options.inJustDecodeBounds = true;
+		BitmapFactory.decodeFile(filePath, options);
+
+		// Calculate inSampleSize
+		options.inSampleSize = calculateInSampleSize(options, 480, 800);
+
+		// Decode bitmap with inSampleSize set
+		options.inJustDecodeBounds = false;
+
+		return BitmapFactory.decodeFile(filePath, options);
 	}
 }
