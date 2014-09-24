@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <resources>
+
     <string name="app_name">众易付</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
@@ -28,7 +29,7 @@
     <string name="login_forget_pwd">忘记密码？</string>
     <string name="login_register"><u>注册</u></string>
     <string name="eid_login"><u>EID登录</u></string>
-    <string name="register_deal">同意用户注册协议</string>
+    <string name="register_deal">同意《用户注册协议》</string>
     <string name="forgetpwd_title">忘记密码</string>
     <string name="contacts_title">联系人列表</string>
     <string name="bank_branch_title">支行</string>
@@ -127,17 +128,13 @@
     <string name="cardcard_papers_phone_h">请输入接收短信的手机号码</string>
     <string name="cardcard_papers_tips">资金到账后短信提醒</string>
     <string name="cardcard_papers_type_tips">请选择证件类型</string>
-    
     <string name="creditcard_titles">信用卡还款</string>
     <string name="creditcard_card_num">信用卡卡号</string>
-    
     <string name="recharge_title">手机充值</string>
     <string name="recharge_tips">请选择你要充值的面额</string>
-    
     <string name="contacts_prompt">手机号不能为空</string>
     <string name="contacts_prompt_phone_illeg">手机号不合法</string>
     <string name="contacts_querying">正在查询...</string>
-    
     <string name="my_account_title">我的帐户</string>
     <string name="my_account_balance">账户余额</string>
     <string name="my_account_amount">提现金额</string>
@@ -145,14 +142,11 @@
     <string name="my_account_type">请选择提现方式</string>
     <string name="my_account_nomal">普通提现（免手续费）</string>
     <string name="my_account_fast">快速提现</string>
-    
     <string name="drawmoney_tips">单日最低不得低于100元，最高不得高于100000元</string>
     <string name="drawmoney_pwd">密码</string>
     <string name="drawmoney_pwd_h">请输入登录密码</string>
-    
     <string name="check_ticket">查看交易小票</string>
     <string name="dateSliderTitle">选择日期</string>
-    
     <string name="one">1</string>
     <string name="two">2</string>
     <string name="three">3</string>
@@ -174,10 +168,8 @@
     <string name="kai">√x</string>
     <string name="shanchu">DEL</string>
     <string name="shan">C</string>
-    
     <string name="transferFlow">交易流水</string>
     <string name="cashFlow">现金流水</string>
-    
     <string name="deal">　众易付刷卡器申请人（以下简称“甲方”）基于知悉并理解银联卡业务运作规章和本合约各项条款，自愿申请众易付刷卡器。经与众易付刷卡器运营方—上海尤恩信息技术有限公司（以下简称“乙方”）协商一致，就甲方自愿使用乙方提供的众易付刷卡器（以下简称“终端”）实现收款业务及各项增值服务，达成如下协议：
 一、双方声明
 1、本合约双方均具有／或经授权等方式合法取得签约主体资格，以确保签约有效。
@@ -330,6 +322,6 @@ G、对甲方的身份真实性进行验证。
 若本协议部分条款被裁定无效或不能执行时，不影响其他条款的有效性、合法性，也不影响其他条款的履行。
 4、《众易付商户申请表》、《商户受理银联卡操作简要规则》是本协议附件，与本协议具有同等法律效力。
 5、甲方声明：乙方已采取合理方式提请其注意本协议（含附件及填写项）的全部条款并对此做了说明，甲方自愿同意按照本协议的规定行使权利和履行责任与义务。
-6、本协议有效期为1年，自乙方批准甲方申领众易付刷卡器申请之日起生效。本协议有效期满后若甲方或乙方无任何异议，本协议自动续展1年，且甲方应在到期日前一个月提供更新年检的各项证照。若任何一方拒绝续展，应本协议到期日前一个月书面通知另一方。
-　　</string>
+6、本协议有效期为1年，自乙方批准甲方申领众易付刷卡器申请之日起生效。本协议有效期满后若甲方或乙方无任何异议，本协议自动续展1年，且甲方应在到期日前一个月提供更新年检的各项证照。若任何一方拒绝续展，应本协议到期日前一个月书面通知另一方。</string>
+
 </resources>

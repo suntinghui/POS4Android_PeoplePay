@@ -3,6 +3,7 @@ package com.people.activity;
 import java.util.HashMap;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -80,7 +81,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			} else {
 				btn_select.setBackgroundResource(R.drawable.select_button_n);
 			}
-			
+
 			break;
 		case R.id.btn_deal:
 			dealAction();
@@ -92,19 +93,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void dealAction() {
-		dialog = new LKAlertDialog(this);
-		dialog.setTitle("服务协议");
-		dialog.setMessage(ApplicationEnvironment.getInstance().getApplication().getResources().getString(R.string.deal));
-		dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-
-			@Override
-			public void onClick(DialogInterface dialog, int arg1) {
-				dialog.dismiss();
-
-			}
-		});
-		dialog.create().show();
-		dialog.mSetCancelable(true);
+		Intent intent = new Intent(RegisterActivity.this, ProtocolActivity.class);
+		startActivity(intent);
 	}
 
 	// 发送短信
@@ -115,17 +105,19 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("TOPHONENUMBER ", et_phone.getText().toString().trim());
 		tempMap.put("TYPE", "100001"); // 100001－注册 100002－忘记密码
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsSend, tempMap, sendSMSHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsSend,
+				tempMap, sendSMSHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取短信验证码...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+				"正在获取短信验证码...", new LKHttpRequestQueueDone() {
 
-			@Override
-			public void onComplete() {
-				super.onComplete();
+					@Override
+					public void onComplete() {
+						super.onComplete();
 
-			}
+					}
 
-		});
+				});
 	}
 
 	private LKAsyncHttpResponseHandler sendSMSHandler() {
@@ -136,9 +128,14 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
 					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
-						Toast.makeText(getApplicationContext(), "短信发送成功，请注意查收！", Toast.LENGTH_SHORT).show();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(),
+								"短信发送成功，请注意查收！", Toast.LENGTH_SHORT).show();
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null
+							&& ((HashMap) obj).get("RSPMSG").toString()
+									.length() != 0) {
+						Toast.makeText(getApplicationContext(),
+								((HashMap) obj).get("RSPMSG").toString(),
+								Toast.LENGTH_SHORT).show();
 					}
 				} else {
 				}
@@ -157,16 +154,18 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("CPASSWORD", et_pwd_confirm.getText().toString());
 		tempMap.put("MSCODE", et_security_code.getText().toString());
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Register, tempMap, getRegisterHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Register,
+				tempMap, getRegisterHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在注册，请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+				"正在注册，请稍候...", new LKHttpRequestQueueDone() {
 
-			@Override
-			public void onComplete() {
-				super.onComplete();
+					@Override
+					public void onComplete() {
+						super.onComplete();
 
-			}
-		});
+					}
+				});
 	}
 
 	private LKAsyncHttpResponseHandler getRegisterHandler() {
@@ -176,11 +175,17 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
 					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
-						
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+
+						Toast.makeText(getApplicationContext(),
+								((HashMap) obj).get("RSPMSG").toString(),
+								Toast.LENGTH_SHORT).show();
 						RegisterActivity.this.finish();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null
+							&& ((HashMap) obj).get("RSPMSG").toString()
+									.length() != 0) {
+						Toast.makeText(getApplicationContext(),
+								((HashMap) obj).get("RSPMSG").toString(),
+								Toast.LENGTH_SHORT).show();
 					}
 				} else {
 				}
@@ -216,7 +221,8 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 			return false;
 		}
 
-		if (!et_pwd_confirm.getText().toString().equals(et_pwd.getText().toString())) {
+		if (!et_pwd_confirm.getText().toString()
+				.equals(et_pwd.getText().toString())) {
 			Toast.makeText(this, "密码两次输入不正确!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
@@ -231,17 +237,19 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 		tempMap.put("CHECKCODE", et_security_code.getText().toString()); // 100001－注册
 																			// 100002－忘记密码
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsCheck, tempMap, checkSMSHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.SmsCheck,
+				tempMap, checkSMSHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在验证短信验证码...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+				"正在验证短信验证码...", new LKHttpRequestQueueDone() {
 
-			@Override
-			public void onComplete() {
-				super.onComplete();
+					@Override
+					public void onComplete() {
+						super.onComplete();
 
-			}
+					}
 
-		});
+				});
 	}
 
 	private LKAsyncHttpResponseHandler checkSMSHandler() {
@@ -254,8 +262,12 @@ public class RegisterActivity extends BaseActivity implements OnClickListener {
 					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
 						registerAction();
 
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null
+							&& ((HashMap) obj).get("RSPMSG").toString()
+									.length() != 0) {
+						Toast.makeText(getApplicationContext(),
+								((HashMap) obj).get("RSPMSG").toString(),
+								Toast.LENGTH_SHORT).show();
 					}
 				} else {
 				}
