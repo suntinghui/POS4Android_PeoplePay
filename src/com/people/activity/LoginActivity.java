@@ -4,8 +4,11 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
@@ -27,13 +30,17 @@ import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.push.BPushUtil;
+import com.people.util.LocationUtil;
 
 public class LoginActivity extends BaseActivity implements OnClickListener {
 
 	private ImageView logoImageView = null;
 	private EditText usernameEdit = null;
 	private EditText passwordEdit = null;
+	private ImageView iv_remeber_pwd = null;
+	private Boolean  isRemeberPwd = false;
 	
+	private SharedPreferences preferences = ApplicationEnvironment.getInstance().getPreferences();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,9 +67,43 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		Button btn_register = (Button) findViewById(R.id.btn_register);
 		btn_register.setOnClickListener(this);
 		
+	    iv_remeber_pwd = (ImageView) findViewById(R.id.iv_remeber_pwd);
+		iv_remeber_pwd.setOnClickListener(this);
+		
+		isRemeberPwd = ApplicationEnvironment.getInstance().getPreferences().getBoolean(Constants.kISREMEBER, false);
+		setRemeberImageView(isRemeberPwd);
+		if (isRemeberPwd) {
+			passwordEdit.setText(ApplicationEnvironment.getInstance().getPreferences().getString(Constants.LOGINPWD, ""));
+		}
+		
 		startPushService();
+		new LoginTask().execute();
 	}
 
+	class LoginTask extends AsyncTask<Object, Object, Object> {
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+
+		}
+
+		@Override
+		protected Object doInBackground(Object... arg0) {
+			LoginActivity.this.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					LocationUtil.getInstance().initLocation(LoginActivity.this.getApplication());
+				}
+
+			});
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Object obj) {
+		}
+
+	}
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -82,12 +123,23 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			
 			register();
 			break;
+		case R.id.iv_remeber_pwd:
+			isRemeberPwd = !isRemeberPwd;
+			setRemeberImageView(isRemeberPwd);
+			break;
 		default:
 			break;
 		}
 
 	}
 
+	private void setRemeberImageView(Boolean remember) {
+		if (remember) {
+			iv_remeber_pwd.setBackgroundResource(R.drawable.remeberpwd_s);
+		} else {
+			iv_remeber_pwd.setBackgroundResource(R.drawable.remeberpwd_n);
+		}
+	}
 	private boolean checkValue() {
 		if ("".equals(usernameEdit.getText().toString().trim())) {
 			Toast.makeText(this, "请输入账号", Toast.LENGTH_SHORT).show();
@@ -116,6 +168,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 			public void onComplete() {
 				super.onComplete();
 
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putBoolean(Constants.kISREMEBER, LoginActivity.this.isRemeberPwd);
+				if (LoginActivity.this.isRemeberPwd) {
+					editor.putString(Constants.LOGINPWD, passwordEdit.getText().toString());
+				} else {
+					editor.putString(Constants.LOGINPWD, "");
+				}
+				editor.commit();
+				
 				passwordEdit.setText("");
 			}
 		});

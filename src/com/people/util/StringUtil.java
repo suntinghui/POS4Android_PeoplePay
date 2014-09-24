@@ -420,4 +420,22 @@ public class StringUtil {
 		 System.out.println("采用style: " + style + "格式化之后: " + df.format(d));
 		 return df.format(d);
 	}
+	
+	/**
+	 * 中文转Unicode码
+	 * @param str
+	 * @return
+	 */
+	public static String chinaToUnicode(String str){  
+        String result="";  
+        for (int i = 0; i < str.length(); i++){  
+            int chr1 = (char) str.charAt(i);  
+            if(chr1>=19968&&chr1<=171941){//汉字范围 \u4e00-\u9fa5 (中文)  
+                result+="\\u" + Integer.toHexString(chr1);  
+            }else{  
+                result+=str.charAt(i);  
+            }  
+        }  
+        return result;  
+    }
 }
