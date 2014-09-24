@@ -5,6 +5,8 @@ import android.content.SharedPreferences.Editor;
 
 public class AppDataCenter {
 
+	private static String __ADDRESS = "UNKNOWN";
+	
 	// 取系统追踪号，6个字节数字定长域
 	public static String getTraceAuditNum() {
 		SharedPreferences preferences = ApplicationEnvironment.getInstance().getPreferences();
@@ -19,4 +21,12 @@ public class AppDataCenter {
 		return no;
 	}
 
+	
+	public static void setAddress(String address) {
+		__ADDRESS = address;
+	}
+	
+	public static String getAddress(){
+		return __ADDRESS;
+	}
 }

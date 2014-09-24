@@ -26,6 +26,9 @@ public class Constants {
 	public static boolean HASSETBLUETOOTH = false;
 	public static int DEVICEMODEL = 0; // 蓝牙 0: POSManage.BLUETOOTHMODE, 音频 1:  POSManage.XAUDIOHMODE    
 
+	public static String 	LOGINPWD								= "kLoginPwd";
+	public static final String kISREMEBER 							= "kISREMEBER";
+	
 	// 上次签到日期 MMdd。一天签到一次
 	public static String kPRESIGNDATE = "kPRESIGNDATE";
 
