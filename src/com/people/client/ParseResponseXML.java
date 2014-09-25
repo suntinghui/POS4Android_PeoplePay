@@ -32,7 +32,7 @@ public class ParseResponseXML {
 
 	public static Object parseXML(int reqType, String responseStr) {
 		Log.e("response:", responseStr);
-		
+
 		try {
 			inStream = new ByteArrayInputStream(responseStr.getBytes("UTF-8"));
 		} catch (UnsupportedEncodingException e1) {
@@ -46,7 +46,7 @@ public class ParseResponseXML {
 
 			case TransferRequestTag.Register:
 				return register();
-				
+
 			case TransferRequestTag.ModifyLoginPwd:
 				return modifyLoginPwd();
 
@@ -67,10 +67,10 @@ public class ParseResponseXML {
 
 			case TransferRequestTag.FlowQuery:
 				return flowQuery();
-				
+
 			case TransferRequestTag.RateType:
 				return rateType();
-				
+
 			case TransferRequestTag.CreditCardApply:
 				return creditCardApply();
 
@@ -94,87 +94,91 @@ public class ParseResponseXML {
 
 			case TransferRequestTag.SmsCheck:
 				return smsCheck();
-				
+
 			case TransferRequestTag.CheckTermId:
 				return termIdCheck();
-				
+
 			case TransferRequestTag.UploadMsgTwo:
 				return uploadMsgTwo();
-				
+
 			case TransferRequestTag.UpdateVersion:
 				return updateVersion();
-				
+
 			case TransferRequestTag.MerchantQuery:
 				return merchantQuery();
-				
+
 			case TransferRequestTag.LoadUpHead:
 				return loadUpHead();
-				
+
 			case TransferRequestTag.GetDownLoadHead:
 				return downLoadHead();
-			
+
 			case TransferRequestTag.LoadUpStreetImg:
 				return loadUpStreetImg();
-				
+
 			case TransferRequestTag.CashCharge:
 				return cashCharge();
-			
+
 			case TransferRequestTag.GetCashCharge:
 				return getCashChargeList();
-				
+
 			case TransferRequestTag.CashDelete:
 				return cashDelete();
-			
+
 			case TransferRequestTag.GetProvinceName:
 				return getProvinceName();
-				
+
 			case TransferRequestTag.GetCityName:
 				return getCityName();
-				
+
 			case TransferRequestTag.GetBank:
 				return getBank();
-				
+
 			case TransferRequestTag.GetBankBranch:
 				return getBranchBank();
-				
+
 			case TransferRequestTag.UpLoadImage:
 				return upLoadImages(responseStr);
-				
+
 			case TransferRequestTag.UpLoadImage2:
 				return upLoadImages2(responseStr);
-			
+
 			case TransferRequestTag.Authentication:
 				return authentication();
-				
+
 			case TransferRequestTag.Authentication2:
 				return authentication();
-			
+
 			case TransferRequestTag.CardCard:
 				return cardCardAction();
-				
+
 			case TransferRequestTag.CreditCard:
 				return creditCardAction();
-				
+
 			case TransferRequestTag.PhoneRecharge:
 				return phoneRechargeAction();
-				
+
 			case TransferRequestTag.MyAccount:
 				return myAccountAction();
-				
+
 			case TransferRequestTag.GetMsg:
 				return getMsgAction();
-				
+
 			case TransferRequestTag.DrawMoney:
 				return drawMoneyAction();
-				
+
 			case TransferRequestTag.SendTicket:
 				return sendTicket();
-				
+
 			case TransferRequestTag.CheckTicket:
 				return checkTicketAction();
-				
+
 			case TransferRequestTag.UploadSignImage:
 				return upLoadSignImageAction();
+
+			case TransferRequestTag.Login_adr:
+				return login_adr();
+
 			}
 
 		} catch (XmlPullParserException e) {
@@ -199,7 +203,8 @@ public class ParseResponseXML {
 	}
 
 	// 登录
-	private static HashMap<String, Object> login() throws XmlPullParserException, IOException {
+	private static HashMap<String, Object> login()
+			throws XmlPullParserException, IOException {
 		HashMap<String, Object> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -256,8 +261,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object authentication() throws XmlPullParserException, IOException {
+
+	private static Object authentication() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -283,8 +289,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object getProvinceName() throws XmlPullParserException, IOException {
+
+	private static Object getProvinceName() throws XmlPullParserException,
+			IOException {
 		HashMap<String, Object> respMap = null;
 
 		ArrayList<Province> list = new ArrayList<Province>();
@@ -303,11 +310,11 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
-				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
 					model = new Province();
-				} else if ("AREACOD".equalsIgnoreCase(parser.getName())){
+				} else if ("AREACOD".equalsIgnoreCase(parser.getName())) {
 					model.setCode(Integer.valueOf(parser.nextText()));
-				} else if ("AREANAM".equalsIgnoreCase(parser.getName())){
+				} else if ("AREANAM".equalsIgnoreCase(parser.getName())) {
 					model.setName(parser.nextText());
 				}
 				break;
@@ -325,8 +332,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object getCityName() throws XmlPullParserException, IOException {
+
+	private static Object getCityName() throws XmlPullParserException,
+			IOException {
 		HashMap<String, Object> respMap = null;
 
 		ArrayList<CityModel> list = new ArrayList<CityModel>();
@@ -345,11 +353,11 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
-				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
 					model = new CityModel();
-				} else if ("AREACOD".equalsIgnoreCase(parser.getName())){
+				} else if ("AREACOD".equalsIgnoreCase(parser.getName())) {
 					model.setCode(Integer.valueOf(parser.nextText()));
-				} else if ("AREANAM".equalsIgnoreCase(parser.getName())){
+				} else if ("AREANAM".equalsIgnoreCase(parser.getName())) {
 					model.setName(parser.nextText());
 				}
 				break;
@@ -367,7 +375,7 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
+
 	private static Object getBank() throws XmlPullParserException, IOException {
 		HashMap<String, Object> respMap = null;
 
@@ -387,15 +395,15 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
-				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
 					model = new Bank();
-				} else if ("BANKCOD".equalsIgnoreCase(parser.getName())){
+				} else if ("BANKCOD".equalsIgnoreCase(parser.getName())) {
 					model.setCode(Integer.valueOf(parser.nextText()));
-				} else if ("BANKNAM".equalsIgnoreCase(parser.getName())){
+				} else if ("BANKNAM".equalsIgnoreCase(parser.getName())) {
 					model.setName(parser.nextText());
-				} else if ("SHOWBANKNAME".equalsIgnoreCase(parser.getName())){
+				} else if ("SHOWBANKNAME".equalsIgnoreCase(parser.getName())) {
 					model.setShowBankName(parser.nextText());
-				} else if ("BANKNO".equalsIgnoreCase(parser.getName())){
+				} else if ("BANKNO".equalsIgnoreCase(parser.getName())) {
 					model.setBankNo(parser.nextText());
 				}
 				break;
@@ -413,8 +421,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object getBranchBank() throws XmlPullParserException, IOException {
+
+	private static Object getBranchBank() throws XmlPullParserException,
+			IOException {
 		HashMap<String, Object> respMap = null;
 
 		ArrayList<Bank> list = new ArrayList<Bank>();
@@ -433,13 +442,13 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
 					respMap.put("PACKAGEMAC", parser.nextText());
-				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())){
+				} else if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
 					model = new Bank();
-				} else if ("BANKCOD".equalsIgnoreCase(parser.getName())){
+				} else if ("BANKCOD".equalsIgnoreCase(parser.getName())) {
 					model.setCode(Integer.valueOf(parser.nextText()));
-				} else if ("BANKNAM".equalsIgnoreCase(parser.getName())){
+				} else if ("BANKNAM".equalsIgnoreCase(parser.getName())) {
 					model.setName(parser.nextText());
-				} else if ("BANKNO".equalsIgnoreCase(parser.getName())){
+				} else if ("BANKNO".equalsIgnoreCase(parser.getName())) {
 					model.setName(parser.nextText());
 				}
 				break;
@@ -457,15 +466,16 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object upLoadImages(String reponseStr) throws JSONException {
-		HashMap<String, String> respMap = StringUtil.JSONObject2Map(new JSONObject(reponseStr));
 
+	private static Object upLoadImages(String reponseStr) throws JSONException {
+		HashMap<String, String> respMap = StringUtil
+				.JSONObject2Map(new JSONObject(reponseStr));
 
 		return respMap;
 	}
-	
-	private static Object upLoadImages2(String reponseStr)  throws XmlPullParserException, IOException {
+
+	private static Object upLoadImages2(String reponseStr)
+			throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -489,8 +499,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object modifyLoginPwd() throws XmlPullParserException, IOException {
+
+	private static Object modifyLoginPwd() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -519,7 +530,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object forgetLoginPwd() throws XmlPullParserException, IOException {
+	private static Object forgetLoginPwd() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -617,8 +629,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object creditCardAction() throws XmlPullParserException, IOException {
+
+	private static Object creditCardAction() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -646,8 +659,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object phoneRechargeAction() throws XmlPullParserException, IOException {
+
+	private static Object phoneRechargeAction() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -675,8 +689,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object drawMoneyAction() throws XmlPullParserException, IOException {
+
+	private static Object drawMoneyAction() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -702,8 +717,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object upLoadSignImageAction() throws XmlPullParserException, IOException {
+
+	private static Object upLoadSignImageAction()
+			throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -729,8 +745,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object checkTicketAction() throws XmlPullParserException, IOException {
+
+	private static Object checkTicketAction() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -756,8 +773,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object cardCardAction() throws XmlPullParserException, IOException {
+
+	private static Object cardCardAction() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -785,8 +803,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object myAccountAction() throws XmlPullParserException, IOException {
+
+	private static Object myAccountAction() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -820,8 +839,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object getMsgAction() throws XmlPullParserException, IOException {
+
+	private static Object getMsgAction() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -862,7 +882,8 @@ public class ParseResponseXML {
 					respMap.put("PRONAM", parser.nextText());
 				} else if ("AREANAM".equalsIgnoreCase(parser.getName())) {
 					respMap.put("AREANAM", parser.nextText());
-				} else if ("CORPORATEIDENTITY".equalsIgnoreCase(parser.getName())) {
+				} else if ("CORPORATEIDENTITY".equalsIgnoreCase(parser
+						.getName())) {
 					respMap.put("CORPORATEIDENTITY", parser.nextText());
 				} else if ("SCOBUS".equalsIgnoreCase(parser.getName())) {
 					respMap.put("SCOBUS", parser.nextText());
@@ -882,7 +903,7 @@ public class ParseResponseXML {
 					respMap.put("PACKAGEMAC", parser.nextText());
 				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
 					respMap.put("RSPMSG", parser.nextText());
-				} 
+				}
 				break;
 			}
 
@@ -891,8 +912,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object consumeCancel() throws XmlPullParserException, IOException {
+
+	private static Object consumeCancel() throws XmlPullParserException,
+			IOException {
 
 		HashMap<String, String> respMap = null;
 
@@ -923,7 +945,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object balanceQuery() throws XmlPullParserException, IOException {
+	private static Object balanceQuery() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -943,8 +966,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object flowQuery() throws XmlPullParserException, IOException {
+
+	private static Object flowQuery() throws XmlPullParserException,
+			IOException {
 		HashMap<String, Object> respMap = null;
 
 		ArrayList<TradeModel> list = new ArrayList<TradeModel>();
@@ -998,7 +1022,7 @@ public class ParseResponseXML {
 		}
 		return respMap;
 	}
-	
+
 	private static Object rateType() throws XmlPullParserException, IOException {
 		HashMap<String, Object> respMap = null;
 
@@ -1028,7 +1052,7 @@ public class ParseResponseXML {
 					model.setIDFID(parser.nextText());
 				} else if ("DFEERAT".equalsIgnoreCase(parser.getName())) {
 					model.setDFEERAT(parser.nextText());
-				} 
+				}
 				break;
 			case XmlPullParser.END_TAG:
 				if ("TRANDETAIL".equalsIgnoreCase(parser.getName())) {
@@ -1043,7 +1067,9 @@ public class ParseResponseXML {
 		}
 		return respMap;
 	}
-	private static Object getCashChargeList() throws XmlPullParserException, IOException {
+
+	private static Object getCashChargeList() throws XmlPullParserException,
+			IOException {
 		HashMap<String, Object> respMap = null;
 
 		ArrayList<CashModel> list = new ArrayList<CashModel>();
@@ -1064,7 +1090,7 @@ public class ParseResponseXML {
 					respMap.put("RSPMSG", parser.nextText());
 				} else if ("TOTALPAGE".equalsIgnoreCase(parser.getName())) {
 					respMap.put("TOTALPAGE", parser.nextText());
-				} else if ("TOTALTRANSAMT".equalsIgnoreCase(parser.getName())){
+				} else if ("TOTALTRANSAMT".equalsIgnoreCase(parser.getName())) {
 					respMap.put("TOTALTRANSAMT", parser.nextText());
 				} else if ("CURRENTROWNUMS".equalsIgnoreCase(parser.getName())) {
 					respMap.put("CURRENTROWNUMS", parser.nextText());
@@ -1082,7 +1108,7 @@ public class ParseResponseXML {
 					model.setAmount(parser.nextText());
 				} else if ("TRANSID".equalsIgnoreCase(parser.getName())) {
 					model.setTransId(parser.nextText());
-				} 
+				}
 				break;
 			case XmlPullParser.END_TAG:
 				if ("ROW".equalsIgnoreCase(parser.getName())) {
@@ -1097,7 +1123,9 @@ public class ParseResponseXML {
 		}
 		return respMap;
 	}
-	private static Object creditCardApply() throws XmlPullParserException, IOException {
+
+	private static Object creditCardApply() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1120,7 +1148,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object appCommend() throws XmlPullParserException, IOException {
+	private static Object appCommend() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1143,7 +1172,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object clearQuery() throws XmlPullParserException, IOException {
+	private static Object clearQuery() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1166,7 +1196,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object referenceMsg() throws XmlPullParserException, IOException {
+	private static Object referenceMsg() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1198,7 +1229,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object shareTransfer() throws XmlPullParserException, IOException {
+	private static Object shareTransfer() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1228,7 +1260,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object examinePhone() throws XmlPullParserException, IOException {
+	private static Object examinePhone() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1287,8 +1320,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object sendTicket() throws XmlPullParserException, IOException {
+
+	private static Object sendTicket() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1316,37 +1350,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object loadUpHead() throws XmlPullParserException, IOException {
-		HashMap<String, String> respMap = null;
-
-		XmlPullParser parser = Xml.newPullParser();
-		parser.setInput(inStream, "UTF-8");
-		int eventType = parser.getEventType();
-		while (eventType != XmlPullParser.END_DOCUMENT) {
-			switch (eventType) {
-			case XmlPullParser.START_TAG:
-				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
-					respMap = new HashMap<String, String>();
-				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
-					respMap.put("RSPCOD", parser.nextText());
-				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
-					respMap.put("PHONENUMBER", parser.nextText());
-				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
-					respMap.put("RSPMSG", parser.nextText());
-				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
-					respMap.put("PACKAGEMAC", parser.nextText());
-				}
-				break;
-
-			}
-
-			eventType = parser.next();
-		}
-
-		return respMap;
-	}
-	
-	private static Object loadUpStreetImg() throws XmlPullParserException, IOException {
+	private static Object loadUpHead() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1375,8 +1380,40 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object downLoadHead() throws XmlPullParserException, IOException {
+
+	private static Object loadUpStreetImg() throws XmlPullParserException,
+			IOException {
+		HashMap<String, String> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, String>();
+				} else if ("RSPCOD".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPCOD", parser.nextText());
+				} else if ("PHONENUMBER".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PHONENUMBER", parser.nextText());
+				} else if ("RSPMSG".equalsIgnoreCase(parser.getName())) {
+					respMap.put("RSPMSG", parser.nextText());
+				} else if ("PACKAGEMAC".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PACKAGEMAC", parser.nextText());
+				}
+				break;
+
+			}
+
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+
+	private static Object downLoadHead() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1407,8 +1444,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object cashCharge() throws XmlPullParserException, IOException {
+
+	private static Object cashCharge() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1433,8 +1471,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object cashDelete() throws XmlPullParserException, IOException {
+
+	private static Object cashDelete() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1459,7 +1498,7 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
+
 	private static Object smsCheck() throws XmlPullParserException, IOException {
 		HashMap<String, String> respMap = null;
 
@@ -1489,8 +1528,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object termIdCheck() throws XmlPullParserException, IOException {
+
+	private static Object termIdCheck() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1519,8 +1559,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object uploadMsgTwo() throws XmlPullParserException, IOException {
+
+	private static Object uploadMsgTwo() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1549,8 +1590,9 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
-	
-	private static Object updateVersion() throws XmlPullParserException, IOException {
+
+	private static Object updateVersion() throws XmlPullParserException,
+			IOException {
 		HashMap<String, Object> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1561,8 +1603,8 @@ public class ParseResponseXML {
 			case XmlPullParser.START_TAG:
 				if ("root".equalsIgnoreCase(parser.getName())) {
 					respMap = new HashMap<String, Object>();
-				} 
-				
+				}
+
 				if ("version".equals(parser.getName())) {
 					respMap.put("version", Integer.parseInt(parser.nextText()));
 
@@ -1570,7 +1612,7 @@ public class ParseResponseXML {
 					respMap.put("url", parser.nextText());
 				} else if ("des".equals(parser.getName())) {
 					respMap.put("des", parser.nextText());
-					
+
 				}
 				break;
 
@@ -1582,7 +1624,8 @@ public class ParseResponseXML {
 		return respMap;
 	}
 
-	private static Object merchantQuery() throws XmlPullParserException, IOException {
+	private static Object merchantQuery() throws XmlPullParserException,
+			IOException {
 		HashMap<String, String> respMap = null;
 
 		XmlPullParser parser = Xml.newPullParser();
@@ -1621,4 +1664,35 @@ public class ParseResponseXML {
 
 		return respMap;
 	}
+
+	// 登录
+	private static HashMap<String, Object> login_adr()
+			throws XmlPullParserException, IOException {
+		HashMap<String, Object> respMap = null;
+
+		XmlPullParser parser = Xml.newPullParser();
+		parser.setInput(inStream, "UTF-8");
+		int eventType = parser.getEventType();
+		while (eventType != XmlPullParser.END_DOCUMENT) {
+			switch (eventType) {
+			case XmlPullParser.START_TAG:
+				if ("EPOSPROTOCOL".equalsIgnoreCase(parser.getName())) {
+					respMap = new HashMap<String, Object>();
+				} else if ("PHONENUM".equalsIgnoreCase(parser.getName())) {
+					respMap.put("PHONENUM", parser.nextText());
+				} else if ("LATITUDE".equalsIgnoreCase(parser.getName())) {
+					respMap.put("LATITUDE", parser.nextText());
+				} else if ("LONGITUDE".equalsIgnoreCase(parser.getName())) {
+					respMap.put("LONGITUDE", parser.nextText());
+				} else if ("LOGIN_ADR".equalsIgnoreCase(parser.getName())) {
+					respMap.put("LOGIN_ADR", parser.nextText());
+				}
+				break;
+			}
+			eventType = parser.next();
+		}
+
+		return respMap;
+	}
+
 }

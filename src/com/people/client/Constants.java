@@ -1,6 +1,5 @@
 package com.people.client;
 
-
 public class Constants {
 
 	public static final String AESKEY = "dynamicode";
@@ -11,7 +10,7 @@ public class Constants {
 
 	// assets下的文件保存路径
 	public static final String ASSETSPATH = APPFILEPATH + "/assets/";
-	
+
 	public static final String kUSERNAME = "kUSERNAME";
 	public static final String kPASSWORD = "kPASSWORD";
 
@@ -24,11 +23,12 @@ public class Constants {
 	public static final int OVERTIME = 20;// 超时时间
 
 	public static boolean HASSETBLUETOOTH = false;
-	public static int DEVICEMODEL = 0; // 蓝牙 0: POSManage.BLUETOOTHMODE, 音频 1:  POSManage.XAUDIOHMODE    
+	public static int DEVICEMODEL = 0; // 蓝牙 0: POSManage.BLUETOOTHMODE, 音频 1:
+										// POSManage.XAUDIOHMODE
 
-	public static String 	LOGINPWD								= "kLoginPwd";
-	public static final String kISREMEBER 							= "kISREMEBER";
-	
+	public static String LOGINPWD = "kLoginPwd";
+	public static final String kISREMEBER = "kISREMEBER";
+
 	// 上次签到日期 MMdd。一天签到一次
 	public static String kPRESIGNDATE = "kPRESIGNDATE";
 
@@ -54,11 +54,17 @@ public class Constants {
 	public static final String MAC = "5391ea1af354f4fa9e8a084baa1a7bc9";
 	public static final String PIN = "efe3d80d7dd858266e4fbb247333e884";
 	public static String TCK = "00112233445566778899aabbccddeeff";
-	
+
 	public static final String TCKPreferences = "TCKPreferences";
-	
+
 	public static String APPTOKEN = "";
-	
-	public static Boolean AuthenticationIsEdit  = false; 
+
+	public static Boolean AuthenticationIsEdit = false;
 	public static String STATUS = "";
+
+	public static String PHONENUM = "";
+	public static String LONGITUDE = "";
+	public static String LATITUDE = "";
+	public static String LOGIN_ADR = "";
+
 }
