@@ -184,7 +184,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 		LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.Login_adr,
 				tempMap2, getLoginadrHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).addHttpRequest(req2)
+		new LKHttpRequestQueue().addHttpRequest(req1, req2)
 				.executeQueue("正在登录请稍候...", new LKHttpRequestQueueDone() {
 
 					@Override

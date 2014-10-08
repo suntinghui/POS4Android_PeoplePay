@@ -184,14 +184,14 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 		case R.id.layout_3:
 			LKAlertDialog dialog = new LKAlertDialog(this);
 			dialog.setTitle("提示");
-			dialog.setMessage("客服热线：4006269987");
+			dialog.setMessage("客服热线：400-616-8529");
 			dialog.setCancelable(false);
 			dialog.setPositiveButton("拨打", new DialogInterface.OnClickListener() {
 
 				@Override
 				public void onClick(DialogInterface dialog, int arg1) {
 					dialog.dismiss();
-					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006269987"));
+					Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "4006168529"));
 					startActivity(intent);
 				}
 			});

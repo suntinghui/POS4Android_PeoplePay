@@ -221,14 +221,14 @@ public class HandSignActivity extends BaseActivity implements OnClickListener {
 		}
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-			// 此处写处理的事件
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+//			// 此处写处理的事件
+//			return true;
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
 	
 	// 上传签购单
 	class UploadSignImageTask extends AsyncTask{

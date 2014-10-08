@@ -144,11 +144,9 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 				tempMap2.put("CARDPIC", str_four);
 
 				LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.Authentication, tempMap1, getAuthenticationHandler());
-				// LKHttpRequest req2 = new
-				// LKHttpRequest(TransferRequestTag.Authentication2, tempMap,
-				// getAuthenticationHandler2());
+				LKHttpRequest req2 = new LKHttpRequest(TransferRequestTag.Authentication2, tempMap2, getAuthenticationHandler2());
 
-				new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
+				new LKHttpRequestQueue().addHttpRequest(req1 ,req2).executeQueue("正在获取数据请稍候...", new LKHttpRequestQueueDone() {
 
 					@Override
 					public void onComplete() {
@@ -259,7 +257,10 @@ public class UploadImagesActivity extends BaseActivity implements OnClickListene
 			}
 
 		}
-
+ 
+		if(resultCode == RESULT_CANCELED){
+			return;
+		}
 		switch (index) {// MYPIC、IDPIC、IDPIC2、CARDPIC
 		case 1:
 			iv_one.setImageBitmap(myBitmap);
