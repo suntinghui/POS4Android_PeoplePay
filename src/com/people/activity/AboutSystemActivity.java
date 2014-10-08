@@ -48,7 +48,7 @@ public class AboutSystemActivity extends BaseActivity implements OnClickListener
 			this.finish();
 			break;
 		case R.id.btn_access:
-			Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.people2000.net/"));
+			Intent viewIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://www.zryf.net/"));
 			startActivity(viewIntent);
 			break;
 		default:
