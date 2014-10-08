@@ -253,15 +253,40 @@
                 android:layout_marginTop="12dip"
                 android:background="@color/gray" />
 
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btn_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/select_button_n" />
+
+                <Button
+                    android:id="@+id/btn_deal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dip"
+                    android:background="@color/clear"
+                    android:text="@string/register_deal"
+                    android:textColor="@drawable/text_orange_blue"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
             <Button
                 android:id="@+id/btn_confirm"
                 style="@style/white_20"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="20dip"
                 android:layout_marginLeft="25dip"
                 android:layout_marginRight="25dip"
                 android:layout_marginTop="35dip"
-                android:layout_marginBottom="20dip"
                 android:background="@drawable/btn"
                 android:text="确 定" />
         </LinearLayout>

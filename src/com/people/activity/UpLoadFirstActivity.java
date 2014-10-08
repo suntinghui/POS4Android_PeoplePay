@@ -25,18 +25,24 @@ import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.StringUtil;
 
 // 基本信息
-public class UpLoadFirstActivity extends BaseActivity implements OnClickListener {
+public class UpLoadFirstActivity extends BaseActivity implements
+		OnClickListener {
 	private EditText et_name;
 	private EditText et_id;
 	private EditText et_merchant_name;
 	private EditText et_address;
 	private EditText et_serial;
-	private String[] scope = { "服装","3c家电", "美容化妆、健身养身", "品牌直销", "办公用品印刷", "家居建材家具", "商业服务、成人教育", "生活服务", "箱包皮具服饰", "食品饮料烟酒零售", "文化体育休闲玩意", "杂货超市", "餐饮娱乐、休闲度假", "汽车、自行车", "珠宝工艺、古董花鸟", "彩票充值票务旅游", "药店及医疗服务", "物流、租赁", "公益类" };
+	private String[] scope = { "服装", "3c家电", "美容化妆、健身养身", "品牌直销", "办公用品印刷",
+			"家居建材家具", "商业服务、成人教育", "生活服务", "箱包皮具服饰", "食品饮料烟酒零售", "文化体育休闲玩意",
+			"杂货超市", "餐饮娱乐、休闲度假", "汽车、自行车", "珠宝工艺、古董花鸟", "彩票充值票务旅游", "药店及医疗服务",
+			"物流、租赁", "公益类" };
 	private int positon = 0;
 	private Spinner s;
-	private HashMap<String, Object> initMap ;
+	private HashMap<String, Object> initMap;
 	private ArrayAdapter<CharSequence> adapter;
-
+	private Boolean isSelected = false;
+	private Button btn_select;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -53,20 +59,27 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		et_address = (EditText) findViewById(R.id.et_address);
 		et_serial = (EditText) findViewById(R.id.et_serial);
 
+		Button btn_deal = (Button) findViewById(R.id.btn_deal);
+		btn_deal.setOnClickListener(this);
+		btn_select = (Button) findViewById(R.id.btn_select);
+		btn_select.setOnClickListener(this);
+
 		s = (Spinner) findViewById(R.id.spinner);
-		adapter = ArrayAdapter.createFromResource(this, R.array.scope, android.R.layout.simple_spinner_item);
+		adapter = ArrayAdapter.createFromResource(this, R.array.scope,
+				android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		s.setAdapter(adapter);
-		
+
 		s.setOnItemSelectedListener(new OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemSelected(AdapterView<?> parent, View view,
+					int position, long id) {
 				positon = position;
 			}
 
 			public void onNothingSelected(AdapterView<?> parent) {
 			}
 		});
-		
+
 		getMsg();
 	}
 
@@ -75,11 +88,11 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		switch (v.getId()) {
 		case R.id.btn_confirm:
 			if (checkValue()) {
-				if(Constants.AuthenticationIsEdit){
-					//可编辑
+				if (Constants.AuthenticationIsEdit) {
+					// 可编辑
 					uploadMsg();
-				}else{
-					//不可编辑
+				} else {
+					// 不可编辑
 					HashMap<String, Object> map = new HashMap<String, Object>();
 					map.put("USERNAME", et_name.getText().toString());
 					map.put("IDNUMBER", et_id.getText().toString());
@@ -87,8 +100,9 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 					map.put("SCOBUS", scope[positon]);
 					map.put("MERADDRESS", et_address.getText().toString());
 					map.put("TERMID", et_serial.getText().toString());
-					
-					map.put("BANKUSERNAME", initMap.get("ACTNAM")); //  ACTNAM 开户名
+
+					map.put("BANKUSERNAME", initMap.get("ACTNAM")); // ACTNAM
+																	// 开户名
 					map.put("BANKAREA", initMap.get("BANKAREA"));
 					map.put("BIGBANKCOD", initMap.get("BIGBANKCOD"));
 					map.put("BIGBANKNAM", initMap.get("BIGBANKNAM"));
@@ -96,12 +110,12 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 					map.put("BANKNAM", initMap.get("OPNBNK"));
 					map.put("BANKACCOUNT", initMap.get("ACTNO"));
 					map.put("PROCOD", initMap.get("PROCOD"));
-					
-					Intent intent = new Intent(UpLoadFirstActivity.this, UpLoadSecondActivity.class);
+
+					Intent intent = new Intent(UpLoadFirstActivity.this,
+							UpLoadSecondActivity.class);
 					intent.putExtra("map", map);
 					startActivityForResult(intent, 10);
 				}
-				
 
 			}
 
@@ -109,31 +123,50 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		case R.id.btn_back:
 			this.finish();
 			break;
+		case R.id.btn_deal:
+			dealAction();
+			break;
+		case R.id.btn_select:
+			isSelected = !isSelected;
+			if (isSelected) {
+				btn_select.setBackgroundResource(R.drawable.select_button_s);
+			} else {
+				btn_select.setBackgroundResource(R.drawable.select_button_n);
+			}
+			break;
 		default:
 			break;
 		}
 
 	}
 
+	private void dealAction() {
+		Intent intent = new Intent(UpLoadFirstActivity.this,
+				BusyAgreeMentActivity.class);
+		startActivity(intent);
+	}
+
 	// 上传基本信息
 	private void uploadMsg() {
-		
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		map.put("TRANCODE", "P77024");
 		map.put("TERMID", et_serial.getText().toString());
 
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CheckTermId, map, checkTermIdHandler());
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.CheckTermId,
+				map, checkTermIdHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在请求数据，请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+				"正在请求数据，请稍候...", new LKHttpRequestQueueDone() {
 
-			@Override
-			public void onComplete() {
-				super.onComplete();
+					@Override
+					public void onComplete() {
+						super.onComplete();
 
-			}
+					}
 
-		});
+				});
 	}
 
 	private LKAsyncHttpResponseHandler checkTermIdHandler() {
@@ -146,8 +179,12 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 					if (((HashMap) obj).get("RSPCOD").toString().equals("00")) {
 
 						toSecondActivity();
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null
+							&& ((HashMap) obj).get("RSPMSG").toString()
+									.length() != 0) {
+						Toast.makeText(getApplicationContext(),
+								((HashMap) obj).get("RSPMSG").toString(),
+								Toast.LENGTH_SHORT).show();
 					}
 				} else {
 				}
@@ -157,9 +194,8 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		};
 	}
 
-
-	//跳转到基本信息界面2
-	private void toSecondActivity(){
+	// 跳转到基本信息界面2
+	private void toSecondActivity() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("USERNAME", et_name.getText().toString());
 		map.put("IDNUMBER", et_id.getText().toString());
@@ -167,50 +203,53 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		map.put("SCOBUS", scope[positon]);
 		map.put("MERADDRESS", et_address.getText().toString());
 		map.put("TERMID", et_serial.getText().toString());
-		
-		// 分两种情况： 1、  状态为6时初始化 无须赋初值   2、状态不为6时 赋初值
-		if(Constants.STATUS.equals("6")){
-			
-		}else{
-			map.put("BANKUSERNAME", initMap.get("ACTNAM")); //  ACTNAM 开户名
+
+		// 分两种情况： 1、 状态为6时初始化 无须赋初值 2、状态不为6时 赋初值
+		if (Constants.STATUS.equals("6")) {
+
+		} else {
+			map.put("BANKUSERNAME", initMap.get("ACTNAM")); // ACTNAM 开户名
 			map.put("BANKAREA", initMap.get("BANKAREA"));
 			map.put("BIGBANKCOD", initMap.get("BIGBANKCOD"));
 			map.put("BIGBANKNAM", initMap.get("BIGBANKNAM"));
-			if(initMap.get("BANKNO") != null){
-				map.put("BANKNO", initMap.get("BANKNO"));	
+			if (initMap.get("BANKNO") != null) {
+				map.put("BANKNO", initMap.get("BANKNO"));
 			}
-			
+
 			map.put("BANKNAM", initMap.get("OPNBNK"));
 			map.put("BANKACCOUNT", initMap.get("ACTNO"));
-			
-			if(initMap.get("PROCOD") != null){
+
+			if (initMap.get("PROCOD") != null) {
 				map.put("PROCOD", initMap.get("PROCOD"));
 			}
-			
+
 		}
-		
-		
-		Intent intent = new Intent(UpLoadFirstActivity.this, UpLoadSecondActivity.class);
+
+		Intent intent = new Intent(UpLoadFirstActivity.this,
+				UpLoadSecondActivity.class);
 		intent.putExtra("map", map);
 		startActivityForResult(intent, 106);
 	}
-	
+
 	// 获取实名认证信息
 	private void getMsg() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("TRANCODE", "P77023");
-		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
-		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetMsg, tempMap, getMsgHandler());
+		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance()
+				.getPreferences(this).getString(Constants.kUSERNAME, ""));
+		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.GetMsg,
+				tempMap, getMsgHandler());
 
-		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue("正在获取数据，请稍候...", new LKHttpRequestQueueDone() {
+		new LKHttpRequestQueue().addHttpRequest(req1).executeQueue(
+				"正在获取数据，请稍候...", new LKHttpRequestQueueDone() {
 
-			@Override
-			public void onComplete() {
-				super.onComplete();
+					@Override
+					public void onComplete() {
+						super.onComplete();
 
-			}
+					}
 
-		});
+				});
 	}
 
 	private LKAsyncHttpResponseHandler getMsgHandler() {
@@ -220,12 +259,18 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 			@Override
 			public void successAction(Object obj) {
 				if (obj instanceof HashMap) {
-					if (((HashMap) obj).get("RSPCOD").toString().equals("00") || ((HashMap) obj).get("RSPCOD").toString().equals("000005")) {
+					if (((HashMap) obj).get("RSPCOD").toString().equals("00")
+							|| ((HashMap) obj).get("RSPCOD").toString()
+									.equals("000005")) {
 						initMap = (HashMap) obj;
 						initValue(initMap);
-						
-					} else if (((HashMap) obj).get("RSPMSG").toString() != null && ((HashMap) obj).get("RSPMSG").toString().length() != 0) {
-						Toast.makeText(getApplicationContext(), ((HashMap) obj).get("RSPMSG").toString(), Toast.LENGTH_SHORT).show();
+
+					} else if (((HashMap) obj).get("RSPMSG").toString() != null
+							&& ((HashMap) obj).get("RSPMSG").toString()
+									.length() != 0) {
+						Toast.makeText(getApplicationContext(),
+								((HashMap) obj).get("RSPMSG").toString(),
+								Toast.LENGTH_SHORT).show();
 					}
 				} else {
 				}
@@ -235,7 +280,7 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		};
 	}
 
-	private void initValue(HashMap<String, Object> map){
+	private void initValue(HashMap<String, Object> map) {
 		Constants.STATUS = (String) map.get("STATUS");
 		String MERCNAM = (String) map.get("MERCNAM");
 		String BUSNAM = (String) map.get("BUSNAM");
@@ -243,37 +288,37 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		String SCOBUS = (String) map.get("SCOBUS");
 		String TERMNO = (String) map.get("TERMNO");
 		String ADDRESS = (String) map.get("ADDRESS");
-		
-		//Status 认证状态 0开通 1关闭 2审核通过3审核未通过4黑名单5审核中6初始状态7只提交了文本信息
-		if(Constants.STATUS.equals("3") || Constants.STATUS.equals("7")){
+
+		// Status 认证状态 0开通 1关闭 2审核通过3审核未通过4黑名单5审核中6初始状态7只提交了文本信息
+		if (Constants.STATUS.equals("3") || Constants.STATUS.equals("7")) {
 			Constants.AuthenticationIsEdit = true;
 			et_name.setText(BUSNAM);
 			et_merchant_name.setText(MERCNAM);
 			et_id.setText(CORPORATEIDENTITY);
-			for(int i = 0; i<scope.length; i++){
-				if(scope[i].equals(SCOBUS)){
-					
+			for (int i = 0; i < scope.length; i++) {
+				if (scope[i].equals(SCOBUS)) {
+
 					s.setSelection(i);
 				}
 			}
 			et_address.setText(ADDRESS);
 			et_serial.setText(TERMNO);
-			
-		}else if(Constants.STATUS.equals("6")){
+
+		} else if (Constants.STATUS.equals("6")) {
 			Constants.AuthenticationIsEdit = true;
-		}else{
+		} else {
 			Constants.AuthenticationIsEdit = false;
 			et_name.setText(BUSNAM);
 			et_merchant_name.setText(MERCNAM);
 			et_id.setText(CORPORATEIDENTITY);
-			for(int i = 0; i<scope.length; i++){
-				if(scope[i].equals(SCOBUS)){
+			for (int i = 0; i < scope.length; i++) {
+				if (scope[i].equals(SCOBUS)) {
 					s.setSelection(i);
 				}
 			}
 			et_address.setText(ADDRESS);
 			et_serial.setText(TERMNO);
-			
+
 		}
 		et_address.setEnabled(Constants.AuthenticationIsEdit);
 		et_id.setEnabled(Constants.AuthenticationIsEdit);
@@ -282,6 +327,7 @@ public class UpLoadFirstActivity extends BaseActivity implements OnClickListener
 		et_serial.setEnabled(Constants.AuthenticationIsEdit);
 		s.setEnabled(Constants.AuthenticationIsEdit);
 	}
+
 	public Boolean checkValue() {
 		if (et_name.getText().length() == 0) {
 			Toast.makeText(this, "姓名不能为空！", Toast.LENGTH_SHORT).show();
