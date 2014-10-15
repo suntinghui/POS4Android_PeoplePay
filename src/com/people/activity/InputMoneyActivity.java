@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.graphics.Color;
@@ -498,11 +499,18 @@ public class InputMoneyActivity extends BaseActivity implements SensorEventListe
 
 	{
 		rates.clear();
+		
 		for(int i = 0; i<rateList.size(); i++){
 			rates.add(rateList.get(i).getIDFCHANNEL());
 		}
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
+		builder.setOnCancelListener(new OnCancelListener() {
+			
+			public void onCancel(DialogInterface arg0) {
+				rateShowed = false;
+				
+			}
+		});
 		builder.setTitle("请选择扣率");
 		builder.setItems(rates.toArray(new CharSequence[rates.size()]), new DialogInterface.OnClickListener()
 
@@ -512,6 +520,7 @@ public class InputMoneyActivity extends BaseActivity implements SensorEventListe
 			public void onClick(DialogInterface dialog, int which)
 
 			{
+				rateShowed = false;
 				String selectType = rateList.get(which).getIDFID();
 				swipAction(selectType);
 			}
