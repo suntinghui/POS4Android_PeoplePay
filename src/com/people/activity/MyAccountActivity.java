@@ -67,7 +67,7 @@ public class MyAccountActivity extends BaseActivity implements OnClickListener {
 					intent_n.putExtra("PAYAMT", et_amount.getText().toString());
 					intent_n.putExtra("PAYTYPE", "2");
 					intent_n.putExtra("PAYDATE", PAYDATE);
-					startActivity(intent_n);
+					startActivityForResult(intent_n, 11);
 				}
 			}
 			

@@ -7,11 +7,17 @@ import java.util.regex.Pattern;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnKeyListener;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -23,9 +29,11 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,12 +55,14 @@ import com.people.view.LKAlertDialog;
 import com.people.view.BLDeviceDialog.OnSelectBLListener;
 import com.tencent.mm.sdk.platformtools.CharSequences;
 
-public class InputMoneyActivity extends BaseActivity {
+public class InputMoneyActivity extends BaseActivity implements SensorEventListener {
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
 	private String[] num = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "C", "0", "." };
 
 	private TextView tv_show_money;
+	private TextView tv_tip;
+	private ImageView iv_hand;
 	private RelativeLayout layout_swip;
 
 	private long exitTimeMillis = 0;
@@ -61,13 +71,31 @@ public class InputMoneyActivity extends BaseActivity {
 	private ArrayList<String> rates = new ArrayList<String>();
 
 	Button btn_calculator;
+	private SensorManager sensorManager = null;
+	// 速度阈值，当摇晃速度达到这值后产生作用  
+    private static final int SPEED_SHRESHOLD = 350;  
+    // 两次检测的时间间隔  
+    private static final int UPTATE_INTERVAL_TIME = 70; 
+ // 手机上一个位置时重力感应坐标  
+    private float lastX;  
+    private float lastY;  
+    private float lastZ;  
+    // 上次检测时间  
+    private long lastUpdateTime;  
+    
+	private Boolean rateShowed = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_inputmoney);
 
+		sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+		
 		tv_show_money = (TextView) findViewById(R.id.tv_show_money);
+		iv_hand = (ImageView) findViewById(R.id.iv_hand);
+		tv_tip = (TextView) findViewById(R.id.tv_tip);
+		
 		gridView = (GridView) findViewById(R.id.gridveiw);
 		gridView.setSelector(new ColorDrawable(Color.TRANSPARENT));
 
@@ -85,14 +113,23 @@ public class InputMoneyActivity extends BaseActivity {
 
 		btn_calculator = (Button) findViewById(R.id.btn_calculator);
 		btn_calculator.setOnClickListener(listener);
+		
+		
 
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
+		sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL);
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		sensorManager.unregisterListener(this);
+	}
+	
 	public final class CatalogHolder {
 		public Button btn_num;
 	}
@@ -199,7 +236,11 @@ public class InputMoneyActivity extends BaseActivity {
 					toast.show();
 
 				} else {
-					rateAction();
+					if(!rateShowed){
+						rateAction();
+						rateShowed = true;
+					}
+					
 				}
 
 			} else if (arg0.getId() == R.id.btn_cash) { // 现金记账
@@ -235,6 +276,7 @@ public class InputMoneyActivity extends BaseActivity {
 				case 1006:
 				case 1007:
 				case 1008:
+					ivHandAnimation();
 					String temp = String.format("%1$.2f", Double.valueOf(tv_str));
 					if (temp.length() > 10) {
 						break;
@@ -257,6 +299,8 @@ public class InputMoneyActivity extends BaseActivity {
 				case 1009: // 删除
 
 					if (tv_str.length() == 1) {
+						iv_hand.clearAnimation();
+						iv_hand.setVisibility(View.GONE);
 						tv_show_money.setText("0");
 
 					} else {
@@ -471,6 +515,17 @@ public class InputMoneyActivity extends BaseActivity {
 
 		});
 
+		builder.setOnKeyListener(new OnKeyListener(){
+
+			@Override
+			public boolean onKey(DialogInterface arg0, int arg1, KeyEvent arg2) {
+				 if (arg1 == KeyEvent.KEYCODE_BACK  
+	                        && arg2.getRepeatCount() == 0) {  
+					 rateShowed = false;	                }  
+	                return false;
+			}
+			
+		});
 		builder.create().show();
 
 	}
@@ -495,5 +550,67 @@ public class InputMoneyActivity extends BaseActivity {
 		startActivity(intent);
 		tv_show_money.setText("0");
 	}
+
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent arg0) {
+		// 现在检测时间  
+        long currentUpdateTime = System.currentTimeMillis();  
+        // 两次检测的时间间隔  
+        long timeInterval = currentUpdateTime - lastUpdateTime;  
+        // 判断是否达到了检测时间间隔  
+        if (timeInterval < UPTATE_INTERVAL_TIME)  
+            return;  
+        // 现在的时间变成last时间  
+        lastUpdateTime = currentUpdateTime;  
+  
+        // 获得x,y,z坐标  
+        float x = arg0.values[0];  
+        float y = arg0.values[1];  
+        float z = arg0.values[2];  
+  
+        // 获得x,y,z的变化值  
+        float deltaX = x - lastX;  
+        float deltaY = y - lastY;  
+        float deltaZ = z - lastZ;  
+  
+        // 将现在的坐标变成last坐标  
+        lastX = x;  
+        lastY = y;  
+        lastZ = z;  
+  
+        double speed = Math.sqrt(deltaX * deltaX + deltaY * deltaY + deltaZ  
+                * deltaZ)  
+                / timeInterval * 10000;  
+        // 达到速度阀值，发出提示  
+        
+        if (speed >= SPEED_SHRESHOLD) { 
+        	if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
+				Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.NO_GRAVITY, 0, 0);
+				toast.show();
+
+			} else {
+				if(!rateShowed){
+					rateAction();	
+					rateShowed = true;
+				}
+				
+			}
+        }
+		
+	}
 	
+	private void ivHandAnimation(){
+		iv_hand.setVisibility(View.VISIBLE);
+		Animation myAnimation1 = AnimationUtils.loadAnimation(this, R.anim.swip_scale_anim);
+		LinearInterpolator lir1 = new LinearInterpolator();
+		myAnimation1.setInterpolator(lir1);
+		iv_hand.startAnimation(myAnimation1);
+	}
 }

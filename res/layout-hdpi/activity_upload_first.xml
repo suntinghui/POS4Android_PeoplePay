@@ -253,15 +253,15 @@
                 android:layout_marginTop="12dip"
                 android:background="@color/gray" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dip"
                 android:layout_marginTop="10dip"
                 android:gravity="center_vertical"
                 android:orientation="horizontal" >
 
                 <Button
+                    android:visibility="gone"
                     android:id="@+id/btn_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -271,12 +271,12 @@
                     android:id="@+id/btn_deal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dip"
                     android:background="@color/clear"
-                    android:text="@string/register_deal"
+                    android:text="@string/uploadimage_deal"
+                    android:layout_centerInParent="true"
                     android:textColor="@drawable/text_orange_blue"
                     android:textSize="17sp" />
-            </LinearLayout>
+            </RelativeLayout>
 
             <Button
                 android:id="@+id/btn_confirm"
