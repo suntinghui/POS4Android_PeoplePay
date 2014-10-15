@@ -483,11 +483,14 @@ public class InputMoneyActivity extends BaseActivity implements SensorEventListe
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		// super.onActivityResult(requestCode, resultCode, data);
-
+		rateShowed = false;
 		if (resultCode == RESULT_OK) {
 			Bundle b = data.getExtras(); // data为B中回传的Intent
 			String str = b.getString("amount");
 			tv_show_money.setText(str);
+		}else {
+			iv_hand.clearAnimation();
+			iv_hand.setVisibility(View.GONE);
 		}
 	}
 
@@ -547,7 +550,7 @@ public class InputMoneyActivity extends BaseActivity implements SensorEventListe
 		intent.putExtra("TTXNTM", DateUtil.getSystemTime());
 		intent.putExtra("TTXNDT", DateUtil.getSystemMonthDay());
 
-		startActivity(intent);
+		startActivityForResult(intent, 10);
 		tv_show_money.setText("0");
 	}
 
@@ -588,7 +591,7 @@ public class InputMoneyActivity extends BaseActivity implements SensorEventListe
                 * deltaZ)  
                 / timeInterval * 10000;  
         // 达到速度阀值，发出提示  
-        
+        Log.i("speed+++", speed+"");
         if (speed >= SPEED_SHRESHOLD) { 
         	if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
 				Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);
