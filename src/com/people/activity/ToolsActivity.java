@@ -24,7 +24,7 @@ import com.people.R;
 
 // 工具
 public class ToolsActivity extends BaseActivity implements OnClickListener {
-	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 };
+	private Integer[] imageIds = { R.drawable.swip_icon_n_0, R.drawable.swip_icon_n_1, R.drawable.swip_icon_n_2, R.drawable.swip_icon_n_3, R.drawable.swip_icon_n_4, R.drawable.swip_icon_n_5, R.drawable.swip_icon_n_6, R.drawable.swip_icon_n_7, R.drawable.swip_icon_n_8 , R.drawable.swip_icon_n_8 };
 
 	private GridView gridView = null;
 	private CatalogAdapter adapter = null;
@@ -99,6 +99,9 @@ public class ToolsActivity extends BaseActivity implements OnClickListener {
 				break;
 
 			case 8:
+				Toast.makeText(ToolsActivity.this, "暂未开通，敬请期待", Toast.LENGTH_SHORT).show();
+				break;
+			case 9:
 				Toast.makeText(ToolsActivity.this, "暂未开通，敬请期待", Toast.LENGTH_SHORT).show();
 				break;
 				
