@@ -24,7 +24,6 @@ import android.os.Environment;
 import android.os.SystemClock;
 import android.provider.MediaStore;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,7 +35,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +55,6 @@ import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.AESUtil;
 import com.people.util.BitmapUtil;
 import com.people.util.MD5Util;
-import com.people.util.MyLog;
 import com.people.util.StringUtil;
 import com.people.view.CircularImage;
 import com.people.view.LKAlertDialog;
@@ -336,7 +333,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 	private void loadUpHead() {
 		HashMap<String, Object> tempMap = new HashMap<String, Object>();
 		tempMap.put("HEADIMG", imgToBase64(mImagePath));
-		Log.i("bitmap:", bitmap_str.length() + "");
 		tempMap.put("PHONENUMBER", ApplicationEnvironment.getInstance().getPreferences(this).getString(Constants.kUSERNAME, ""));
 
 		LKHttpRequest req1 = new LKHttpRequest(TransferRequestTag.LoadUpHead, tempMap, getLoadUpHeadHandler());
@@ -617,7 +613,6 @@ public class MerchantActivity extends BaseActivity implements OnClickListener {
 			out.close();
 
 			byte[] imgBytes = out.toByteArray();
-			Log.i("image size: ", Base64.encodeToString(imgBytes, Base64.DEFAULT).length() + "");
 			return Base64.encodeToString(imgBytes, Base64.DEFAULT);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

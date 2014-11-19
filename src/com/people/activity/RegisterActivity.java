@@ -2,10 +2,8 @@ package com.people.activity;
 
 import java.util.HashMap;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -13,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.people.R;
-import com.people.client.ApplicationEnvironment;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;

@@ -120,7 +120,6 @@ public class DownloadFileRequest {
 				
 				totalSize = conn.getContentLength(); // 获取响应文件的总大小
 				
-				// TODO exception totalSize = -1; stream == null, android UnknownlengthInputstream
 				if (null == inStream || totalSize == -1){
 					throw new ConnectException();
 				}

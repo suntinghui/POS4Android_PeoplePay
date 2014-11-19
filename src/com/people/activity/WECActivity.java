@@ -23,7 +23,6 @@ public class WECActivity extends BaseActivity implements OnClickListener {
 	}
 
 
-
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {

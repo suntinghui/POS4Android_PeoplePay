@@ -122,8 +122,6 @@ public class ConsumeSuccessActivity extends BaseActivity implements OnClickListe
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		
-//		super.onActivityResult(requestCode, resultCode, data);
-		
 		if(resultCode == RESULT_OK){
 			this.setResult(RESULT_OK);
 			this.finish();

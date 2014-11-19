@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -482,7 +481,6 @@ public class TransferListActivity extends BaseActivity implements OnClickListene
 	public void deleteCashItem(final String index) {
 		currentDelete = Integer.valueOf(index);
 
-		Log.i("delete tag:", currentDelete + "");
 		LKAlertDialog dialog = new LKAlertDialog(this);
 		dialog.setTitle("提示");
 		dialog.setMessage("确定删除当前记账");

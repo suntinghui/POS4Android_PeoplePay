@@ -17,8 +17,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -51,10 +49,7 @@ import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
 import com.people.util.DateUtil;
 import com.people.util.StringUtil;
-import com.people.view.BLDeviceDialog;
 import com.people.view.LKAlertDialog;
-import com.people.view.BLDeviceDialog.OnSelectBLListener;
-import com.tencent.mm.sdk.platformtools.CharSequences;
 
 public class InputMoneyActivity extends BaseActivity implements SensorEventListener {
 	private GridView gridView = null;
@@ -600,7 +595,6 @@ public class InputMoneyActivity extends BaseActivity implements SensorEventListe
                 * deltaZ)  
                 / timeInterval * 10000;  
         // 达到速度阀值，发出提示  
-        Log.i("speed+++", speed+"");
         if (speed >= SPEED_SHRESHOLD) { 
         	if (String.format("%1$.2f", Double.valueOf(tv_show_money.getText().toString().replace(",", ""))).equals("0.00")) {
 				Toast toast = Toast.makeText(InputMoneyActivity.this, "输入金额无效", Toast.LENGTH_SHORT);

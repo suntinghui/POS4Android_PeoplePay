@@ -27,11 +27,9 @@ public class MyCycle {
 		this.r = r;
 	}
 	public Integer getNum() {
-		Log.i("num", num+"");
 		return num;
 	}
 	public void setNum(Integer num) {
-		Log.i("num", num+"");
 		this.num = num;
 	}
 	public boolean isOnTouch() {

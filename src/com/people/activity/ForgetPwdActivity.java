@@ -2,9 +2,7 @@ package com.people.activity;
 
 import java.util.HashMap;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,14 +11,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.people.R;
-import com.people.client.ApplicationEnvironment;
-import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.network.LKAsyncHttpResponseHandler;
 import com.people.network.LKHttpRequest;
 import com.people.network.LKHttpRequestQueue;
 import com.people.network.LKHttpRequestQueueDone;
-import com.people.view.LKAlertDialog;
 
 // 忘记密码
 public class ForgetPwdActivity extends BaseActivity implements OnClickListener {

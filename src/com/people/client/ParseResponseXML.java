@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,8 +15,6 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.util.Log;
 import android.util.Xml;
 
-import com.people.activity.BaseActivity;
-import com.people.activity.SettingActivity;
 import com.people.model.Bank;
 import com.people.model.CashModel;
 import com.people.model.CityModel;

@@ -1,7 +1,5 @@
 package com.people.util;
 
-import java.util.Locale;
-
 public class ByteUtil {
 
 	public static byte[] cancat(byte[] a, byte[] b) {

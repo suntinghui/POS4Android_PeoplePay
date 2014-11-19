@@ -57,7 +57,6 @@ public class PushMessageReceiver extends BroadcastReceiver {
 			String message = intent.getExtras().getString(PushConstants.EXTRA_PUSH_MESSAGE_STRING);
 
 			//消息的用户自定义内容读取方式
-			Log.i(TAG, "onMessage: " + message);
 
 			//用户在此自定义处理消息,以下代码为demo界面展示用
 			Intent responseIntent = null;

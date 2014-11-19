@@ -2,7 +2,6 @@ package com.people.activity;
 
 
 import com.people.R;
-import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;
 
 import android.annotation.SuppressLint;

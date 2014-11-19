@@ -10,7 +10,6 @@ public class AppInit extends Application {
 	@Override
 	public void onCreate() {
 		context = getApplicationContext();
-		// TODO Auto-generated method stub
 		super.onCreate();
 	}
 

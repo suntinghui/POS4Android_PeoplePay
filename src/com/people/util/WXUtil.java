@@ -83,7 +83,6 @@ public class WXUtil {
 
 		File file = new File(fileName);
 		if (!file.exists()) {
-			Log.i(TAG, "readFromFile: file not found");
 			return null;
 		}
 
@@ -167,14 +166,12 @@ public class WXUtil {
 
 			options.inJustDecodeBounds = false;
 
-			Log.i(TAG, "bitmap required size=" + newWidth + "x" + newHeight + ", orig=" + options.outWidth + "x" + options.outHeight + ", sample=" + options.inSampleSize);
 			Bitmap bm = BitmapFactory.decodeFile(path, options);
 			if (bm == null) {
 				Log.e(TAG, "bitmap decode failed");
 				return null;
 			}
 
-			Log.i(TAG, "bitmap decoded size=" + bm.getWidth() + "x" + bm.getHeight());
 			final Bitmap scale = Bitmap.createScaledBitmap(bm, newWidth, newHeight, true);
 			if (scale != null) {
 				bm.recycle();
@@ -189,7 +186,6 @@ public class WXUtil {
 
 				bm.recycle();
 				bm = cropped;
-				Log.i(TAG, "bitmap croped size=" + bm.getWidth() + "x" + bm.getHeight());
 			}
 			return bm;
 

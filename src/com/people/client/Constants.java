@@ -17,8 +17,6 @@ public class Constants {
 	public static final String ip = "http://211.147.87.20:8092/Vpm/";
 	public static final String ipCash = "111.198.29.38:8891";
 	public static final String DOWNLOADURL = "http://220.194.46.46:8080/zfb/mpos/transProcess.do?operationId=getVersion";
-	// public static final String DOWNLOADURL =
-	// "http://192.168.1.46:8080/zfb/mpos/transProcess.do?operationId=getVersion";
 
 	public static final int OVERTIME = 20;// 超时时间
 

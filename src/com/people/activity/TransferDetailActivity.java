@@ -72,18 +72,12 @@ public class TransferDetailActivity extends BaseActivity implements OnClickListe
 		btn_revoke = (Button) findViewById(R.id.btn_revoke);
 		btn_revoke.setOnClickListener(this);
 
-//		if (model.getTxncd().equals("0200000000") && model.getTxnsts().equalsIgnoreCase("S") && model.getLogDate().equalsIgnoreCase(DateUtil.formatDate2(new Date()))) {
-//			btn_revoke.setVisibility(View.VISIBLE);
-//		} else {
-//			btn_revoke.setVisibility(View.GONE);
-//		}
 	}
 
 	@Override
 	public void onClick(View arg0) {
 		switch (arg0.getId()) {
 		case R.id.btn_revoke:
-//			revokeTransfer();
 			if (checkBox.isChecked()) {
 				String phoneNum = phoneNumEdit.getText().toString();
 				if (phoneNum.equals("")) {

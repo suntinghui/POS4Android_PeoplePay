@@ -1,7 +1,6 @@
 package com.people.util;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -9,11 +8,9 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.people.R;
 import com.people.activity.BaseActivity;
-import com.people.client.ApplicationEnvironment;
 
 public class FileUtil {
 

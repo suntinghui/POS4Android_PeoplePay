@@ -24,7 +24,6 @@ public class GMailSenderUtil extends javax.mail.Authenticator {
  
     static {    
         Security.addProvider(new JSSEProvider()); 
-        Log.i("jsseprovider: %@", "jsseprovider");
     }   
 	
     public GMailSenderUtil() {    

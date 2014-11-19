@@ -8,9 +8,10 @@ import java.util.List;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
+
+import android.util.Log;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.people.client.ApplicationEnvironment;
@@ -18,10 +19,6 @@ import com.people.client.Constants;
 import com.people.client.TransferRequestTag;
 import com.people.util.AESUtil;
 import com.people.util.MD5Util;
-import com.people.util.MyLog;
-
-import android.content.SharedPreferences;
-import android.util.Log;
 
 public class LKHttpRequest {
 
@@ -124,7 +121,6 @@ public class LKHttpRequest {
 		try {
 			AESValue = AESUtil.encryptString(result, MD5Util.MD5Crypto(Constants.AESKEY));
 			
-			MyLog.i("AESValue", AESValue);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}

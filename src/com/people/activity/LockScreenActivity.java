@@ -2,7 +2,6 @@ package com.people.activity;
 
 import java.util.HashMap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -12,7 +11,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.baidu.android.common.logging.Log;
 import com.people.R;
 import com.people.client.ApplicationEnvironment;
 import com.people.client.Constants;

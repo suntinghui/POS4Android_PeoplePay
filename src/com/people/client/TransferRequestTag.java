@@ -63,10 +63,7 @@ public class TransferRequestTag {
 		if (null == requestTagMap) {
 			requestTagMap = new HashMap<Integer, String>();
 
-			// requestTagMap.put(Login,
-			// "http://211.147.87.24:8092/posm/199002.tranm");
-			requestTagMap.put(Login, Constants.ip + "199002.tranm");// http://211.147.87.24:8092/posm/199002.tran5
-			// http://211.147.87.20:8092/Vpm/199002.tranm
+			requestTagMap.put(Login, Constants.ip + "199002.tranm");
 			requestTagMap.put(Register, Constants.ip + "199001.tranm");
 			requestTagMap.put(ModifyLoginPwd, Constants.ip + "199003.tranm");
 			requestTagMap.put(ForgetLoginPwd, Constants.ip + "199004.tranm");
@@ -81,36 +78,19 @@ public class TransferRequestTag {
 			requestTagMap.put(UploadMsgTwo, Constants.ip + "P77025.tranm");
 			requestTagMap.put(GetMsg, Constants.ip + "P77023.tranm");
 
-			requestTagMap.put(CashCharge, "http://" + Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=addTransaction");
-			requestTagMap.put(GetCashCharge, "http://" + Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=getTransaction");
-			requestTagMap.put(CashDelete, "http://" + Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=delTransaInfo");
+			requestTagMap.put(CashCharge, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=addTransaction");
+			requestTagMap.put(GetCashCharge, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=getTransaction");
+			requestTagMap.put(CashDelete, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=delTransaInfo");
 
-			requestTagMap
-					.put(UpdateVersion,
-							"http://"
-									+ Constants.ipCash
-									+ "/zfb/mpos/transProcess.do?operationId=getVersion&type=2");
+			requestTagMap.put(UpdateVersion, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=getVersion&type=2");
 			// http://192.168.4.126:8080/zfb/mpos/transProcess.do?operationId=getVersion&type=2
 
-			requestTagMap.put(LoadUpHead, "http://" + Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=setHeadImg");
-			requestTagMap.put(GetDownLoadHead, "http://" + Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=getHeadImg");
-			requestTagMap.put(LoadUpStreetImg, "http://" + Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=setStreetImg");
-			requestTagMap.put(GetDownLoadStreetImg, "http://"
-					+ Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=getStreetImg");
-			requestTagMap.put(UpLoadImage2, "http://" + Constants.ipCash
-					+ "/zfb/mpos/transProcess.do?operationId=Uploadfile");
-			requestTagMap
-					.put(Authentication2,
-							"http://"
-									+ Constants.ipCash
-									+ "/zfb/mpos/transProcess.do?operationId=initRealNameAuthentic");
+			requestTagMap.put(LoadUpHead, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=setHeadImg");
+			requestTagMap.put(GetDownLoadHead, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=getHeadImg");
+			requestTagMap.put(LoadUpStreetImg, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=setStreetImg");
+			requestTagMap.put(GetDownLoadStreetImg, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=getStreetImg");
+			requestTagMap.put(UpLoadImage2, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=Uploadfile");
+			requestTagMap.put(Authentication2, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=initRealNameAuthentic");
 			// 220.194.46.46 116.228.88.115:18080
 			requestTagMap.put(GetProvinceName, Constants.ip + "199031.tranm");
 			requestTagMap.put(GetCityName, Constants.ip + "199032.tranm");
@@ -130,14 +110,7 @@ public class TransferRequestTag {
 			requestTagMap.put(RateType, Constants.ip + "199038.tranm");
 			requestTagMap.put(RateType, Constants.ip + "199038.tranm");
 
-			// requestTagMap.put(Login_adr,"http://192.168.4.102:8080/");
-
-			// requestTagMap.put(Login_adr,"http://111.198.29.38:8891/");
-			requestTagMap
-					.put(Login_adr,
-							"http://"
-									+ Constants.ipCash
-									+ "/zfb/mpos/transProcess.do?operationId=setMerAddressInfo");
+			requestTagMap.put(Login_adr, "http://" + Constants.ipCash + "/zfb/mpos/transProcess.do?operationId=setMerAddressInfo");
 			// 192.168.4.115:8080 测试服务器地址
 			// 59.49.20.154:8586 外网
 
